@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace ZeroFramework.DataNode
+namespace ZeroFramework
 {
     /// <summary>
     /// 数据结点接口。

@@ -7,7 +7,7 @@
 
 using UnityEngine;
 
-namespace ZeroFramework.DataTable
+namespace ZeroFramework
 {
     /// <summary>
     /// 数据表辅助器基类。

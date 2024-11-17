@@ -5,8 +5,6 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework.ObjectPool;
-
 namespace ZeroFramework.UI
 {
     public sealed partial class UIManager : GameFrameworkModule, IUIManager

@@ -8,7 +8,7 @@
 using System;
 using System.IO;
 
-namespace ZeroFramework.Extension
+namespace ZeroFramework
 {
 
     /// <summary>

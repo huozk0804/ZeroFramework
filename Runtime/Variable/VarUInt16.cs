@@ -5,7 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-namespace ZeroFramework.Variables
+namespace ZeroFramework
 {
     /// <summary>
     /// System.UInt16 变量类。

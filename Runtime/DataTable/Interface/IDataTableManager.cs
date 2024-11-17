@@ -5,11 +5,10 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework.Resource;
 using System;
 using System.Collections.Generic;
 
-namespace ZeroFramework.DataTable
+namespace ZeroFramework
 {
     /// <summary>
     /// 数据表管理器接口。

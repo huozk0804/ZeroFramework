@@ -9,9 +9,6 @@ using System;
 using System.IO;
 using System.Text;
 using UnityEngine;
-using ZeroFramework.Runtime;
-using ZeroFramework.Extension;
-using ZeroFramework.Resource;
 
 namespace ZeroFramework.Localization
 {

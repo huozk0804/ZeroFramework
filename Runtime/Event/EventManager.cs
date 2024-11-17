@@ -7,7 +7,7 @@
 
 using System;
 
-namespace ZeroFramework.Event
+namespace ZeroFramework
 {
     /// <summary>
     /// 事件管理器。

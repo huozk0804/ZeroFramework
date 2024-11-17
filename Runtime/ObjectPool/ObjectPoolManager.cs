@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ZeroFramework.ObjectPool
+namespace ZeroFramework
 {
     /// <summary>
     /// 对象池管理器。

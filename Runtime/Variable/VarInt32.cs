@@ -5,7 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-namespace ZeroFramework.Variables
+namespace ZeroFramework
 {
     /// <summary>
     /// System.Int32 变量类。

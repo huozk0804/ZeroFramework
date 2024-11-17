@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using ZeroFramework.Config;
-using ZeroFramework.DataTable;
 using ZeroFramework.Download;
 using ZeroFramework.Entity;
 using ZeroFramework.FileSystem;

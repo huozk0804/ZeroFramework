@@ -5,10 +5,9 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework.Fsm;
-using ProcedureOwner = ZeroFramework.Fsm.IFsm<ZeroFramework.Procedure.IProcedureManager>;
+using ProcedureOwner = ZeroFramework.IFsm<ZeroFramework.IProcedureManager>;
 
-namespace ZeroFramework.Procedure
+namespace ZeroFramework
 {
     /// <summary>
     /// 流程基类。

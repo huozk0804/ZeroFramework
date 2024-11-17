@@ -5,7 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-namespace ZeroFramework.DataNode
+namespace ZeroFramework
 {
     /// <summary>
     /// 数据结点管理器接口。

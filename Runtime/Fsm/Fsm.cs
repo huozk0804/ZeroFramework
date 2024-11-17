@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ZeroFramework.Fsm
+namespace ZeroFramework
 {
     /// <summary>
     /// 有限状态机。

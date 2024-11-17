@@ -5,7 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-namespace ZeroFramework.Event
+namespace ZeroFramework
 {
     /// <summary>
     /// 游戏逻辑事件基类。

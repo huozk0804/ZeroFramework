@@ -5,7 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework.ObjectPool;
+using ZeroFramework;
 using UnityEngine;
 
 namespace ZeroFramework.Debugger

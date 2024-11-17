@@ -5,7 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-namespace ZeroFramework.DataTable
+namespace ZeroFramework
 {
     /// <summary>
     /// 数据表行接口。

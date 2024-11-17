@@ -5,7 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-namespace ZeroFramework.Event
+namespace ZeroFramework
 {
     internal sealed partial class EventPool<T> where T : BaseEventArgs
     {

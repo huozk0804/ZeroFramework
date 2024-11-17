@@ -7,9 +7,8 @@
 
 using System.IO;
 using System.Text;
-using ZeroFramework.Extension;
 
-namespace ZeroFramework.Runtime
+namespace ZeroFramework.Resource
 {
     /// <summary>
     /// 内置版本资源列表序列化器。

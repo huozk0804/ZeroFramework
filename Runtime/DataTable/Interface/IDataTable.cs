@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ZeroFramework.DataTable
+namespace ZeroFramework
 {
     /// <summary>
     /// 数据表接口。

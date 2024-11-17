@@ -7,7 +7,7 @@
 
 using UnityEngine;
 
-namespace ZeroFramework.Variables
+namespace ZeroFramework
 {
     /// <summary>
     /// UnityEngine.Transform 变量类。

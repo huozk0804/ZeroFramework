@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ZeroFramework.DataTable
+namespace ZeroFramework
 {
     public sealed partial class DataTableManager : GameFrameworkModule, IDataTableManager
     {

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace ZeroFramework.ObjectPool
+namespace ZeroFramework
 {
     public sealed partial class ObjectPoolManager : GameFrameworkModule, IObjectPoolManager
     {

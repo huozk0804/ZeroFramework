@@ -9,11 +9,8 @@ using System;
 using System.IO;
 using System.Text;
 using UnityEngine;
-using ZeroFramework.Runtime;
-using ZeroFramework.Extension;
-using ZeroFramework.Resource;
 
-namespace ZeroFramework.DataTable
+namespace ZeroFramework
 {
     /// <summary>
     /// 默认数据表辅助器。

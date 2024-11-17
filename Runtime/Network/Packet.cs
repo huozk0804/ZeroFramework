@@ -5,8 +5,6 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework.Event;
-
 namespace ZeroFramework.Network
 {
     /// <summary>

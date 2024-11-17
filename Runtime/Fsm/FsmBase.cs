@@ -7,7 +7,7 @@
 
 using System;
 
-namespace ZeroFramework.Fsm
+namespace ZeroFramework
 {
     /// <summary>
     /// 有限状态机基类。

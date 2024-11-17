@@ -5,8 +5,6 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework.ObjectPool;
-using ZeroFramework.Resource;
 using System;
 using System.Collections.Generic;
 

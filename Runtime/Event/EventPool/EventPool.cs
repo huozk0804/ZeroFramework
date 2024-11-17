@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ZeroFramework.Event
+namespace ZeroFramework
 {
     /// <summary>
     /// 事件池。

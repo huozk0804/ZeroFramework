@@ -8,7 +8,7 @@
 using ZeroFramework.Resource;
 using System;
 
-namespace ZeroFramework.DataTable
+namespace ZeroFramework
 {
     /// <summary>
     /// 数据表基类。

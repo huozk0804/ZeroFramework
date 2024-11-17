@@ -7,7 +7,7 @@
 
 using System;
 
-namespace ZeroFramework.ObjectPool
+namespace ZeroFramework
 {
     /// <summary>
     /// 对象池接口。

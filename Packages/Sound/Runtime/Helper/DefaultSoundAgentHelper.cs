@@ -10,7 +10,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using ZeroFramework.Entity;
-using ZeroFramework.Extension;
 
 namespace ZeroFramework.Sound
 {

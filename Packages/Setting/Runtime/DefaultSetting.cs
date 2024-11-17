@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using ZeroFramework.Extension;
 
 namespace ZeroFramework.Setting
 {

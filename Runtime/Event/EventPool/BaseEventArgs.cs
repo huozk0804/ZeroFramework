@@ -5,7 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-namespace ZeroFramework.Event
+namespace ZeroFramework
 {
     /// <summary>
     /// 事件基类。

@@ -7,7 +7,7 @@
 
 using UnityEngine;
 
-namespace ZeroFramework.Variables
+namespace ZeroFramework
 {
     /// <summary>
     /// UnityEngine.Rect 变量类。

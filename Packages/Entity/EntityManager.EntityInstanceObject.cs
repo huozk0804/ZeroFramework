@@ -5,8 +5,6 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework.ObjectPool;
-
 namespace ZeroFramework.Entity
 {
     public sealed partial class EntityManager : GameFrameworkModule, IEntityManager

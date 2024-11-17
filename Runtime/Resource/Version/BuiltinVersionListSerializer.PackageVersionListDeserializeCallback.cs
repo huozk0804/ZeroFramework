@@ -5,15 +5,12 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework;
-using ZeroFramework.Resource;
-using ZeroFramework.Extension;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ZeroFramework.Runtime
+namespace ZeroFramework.Resource
 {
     /// <summary>
     /// 内置版本资源列表序列化器。

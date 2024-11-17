@@ -8,7 +8,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace ZeroFramework.ObjectPool
+namespace ZeroFramework
 {
     /// <summary>
     /// 对象信息。

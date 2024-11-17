@@ -1,18 +1,9 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using ZeroFramework;
-using ZeroFramework.Config;
-using ZeroFramework.DataNode;
-using ZeroFramework.DataTable;
 using ZeroFramework.Download;
-using ZeroFramework.Entity;
-using ZeroFramework.Event;
 using ZeroFramework.FileSystem;
-using ZeroFramework.Fsm;
 using ZeroFramework.Network;
-using ZeroFramework.ObjectPool;
-using ZeroFramework.Procedure;
 using ZeroFramework.Resource;
 using ZeroFramework.Runtime;
 using ZeroFramework.WebRequest;
@@ -170,18 +161,16 @@ namespace ZeroFramework
 
         private readonly GameFrameworkLinkedList<GameFrameworkModule> _frameworkModules =
             new GameFrameworkLinkedList<GameFrameworkModule>();
-
-        public IConfigManager Config => GetModule<IConfigManager>();
+        
+        public IObjectPoolManager ObjectPool => GetModule<IObjectPoolManager>();
+        public IProcedureManager Procedure => GetModule<IProcedureManager>();
+        public IEventManager Event => GetModule<IEventManager>();
+        public IFsmManager Fsm => GetModule<IFsmManager>();
         public IDataNodeManager DataNode => GetModule<IDataNodeManager>();
         public IDataTableManager DataTable => GetModule<IDataTableManager>();
         public IDownloadManager Download => GetModule<IDownloadManager>();
-        public IEntityManager Entity => GetModule<IEntityManager>();
-        public IEventManager Event => GetModule<IEventManager>();
         public IFileSystemManager FileSystem => GetModule<IFileSystemManager>();
-        public IFsmManager Fsm => GetModule<IFsmManager>();
         public INetworkManager Network => GetModule<INetworkManager>();
-        public IObjectPoolManager ObjectPool => GetModule<IObjectPoolManager>();
-        public IProcedureManager Procedure => GetModule<IProcedureManager>();
         public IResourceManager Resource => GetModule<IResourceManager>();
         public IWebRequestManager WebRequest => GetModule<IWebRequestManager>();
 

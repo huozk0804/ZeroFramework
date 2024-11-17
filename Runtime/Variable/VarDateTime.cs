@@ -7,7 +7,7 @@
 
 using System;
 
-namespace ZeroFramework.Variables
+namespace ZeroFramework
 {
     /// <summary>
     /// System.DateTime 变量类。

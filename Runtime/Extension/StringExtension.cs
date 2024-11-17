@@ -5,7 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-namespace ZeroFramework.Extension
+namespace ZeroFramework
 {
     /// <summary>
     /// 对 string 的扩展方法。

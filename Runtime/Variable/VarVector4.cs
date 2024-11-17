@@ -7,7 +7,7 @@
 
 using UnityEngine;
 
-namespace ZeroFramework.Variables
+namespace ZeroFramework
 {
     /// <summary>
     /// UnityEngine.Vector4 变量类。

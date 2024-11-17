@@ -7,7 +7,6 @@
 
 using ZeroFramework.Download;
 using ZeroFramework.FileSystem;
-using ZeroFramework.ObjectPool;
 using System;
 using System.Collections.Generic;
 

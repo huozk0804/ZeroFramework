@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ZeroFramework.ObjectPool
+namespace ZeroFramework
 {
     public sealed partial class ObjectPoolManager : GameFrameworkModule, IObjectPoolManager
     {

@@ -5,10 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework;
-using ZeroFramework.Event;
-
-namespace ZeroFramework.Runtime
+namespace ZeroFramework.Resource
 {
     /// <summary>
     /// 资源应用失败事件。

@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using ZeroFramework.ObjectPool;
-using ZeroFramework.Resource;
 
 namespace ZeroFramework.Entity
 {

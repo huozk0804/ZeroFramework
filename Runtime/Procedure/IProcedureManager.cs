@@ -5,10 +5,9 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework.Fsm;
 using System;
 
-namespace ZeroFramework.Procedure
+namespace ZeroFramework
 {
     /// <summary>
     /// 流程管理器接口。

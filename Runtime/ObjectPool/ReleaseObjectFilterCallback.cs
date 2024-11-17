@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ZeroFramework.ObjectPool
+namespace ZeroFramework
 {
     /// <summary>
     /// 释放对象筛选函数。

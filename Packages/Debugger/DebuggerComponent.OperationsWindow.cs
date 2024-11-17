@@ -6,8 +6,6 @@
 //------------------------------------------------------------
 
 using UnityEngine;
-using ZeroFramework.Runtime;
-using ZeroFramework.ObjectPool;
 using ZeroFramework.Resource;
 
 namespace ZeroFramework.Debugger

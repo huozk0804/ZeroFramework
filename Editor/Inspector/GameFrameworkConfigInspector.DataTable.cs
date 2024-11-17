@@ -1,5 +1,4 @@
 ﻿using UnityEditor;
-using ZeroFramework.DataTable;
 
 namespace ZeroFramework.Editor
 {

@@ -6,9 +6,7 @@
 //------------------------------------------------------------
 
 using UnityEngine;
-using ZeroFramework.Extension;
 using ZeroFramework.Resource;
-using ZeroFramework.Runtime;
 
 namespace ZeroFramework.Entity
 {

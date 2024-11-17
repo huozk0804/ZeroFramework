@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace ZeroFramework.DataNode
+namespace ZeroFramework
 {
     public sealed partial class DataNodeManager : GameFrameworkModule, IDataNodeManager
     {
