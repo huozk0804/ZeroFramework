@@ -99,7 +99,11 @@ namespace ZeroFramework
             /// <returns>CRC32 数值的二进制数组。</returns>
             public static byte[] GetCrc32Bytes(int crc32)
             {
-                return new byte[] { (byte)((crc32 >> 24) & 0xff), (byte)((crc32 >> 16) & 0xff), (byte)((crc32 >> 8) & 0xff), (byte)(crc32 & 0xff) };
+                return new byte[]
+                {
+                    (byte)((crc32 >> 24) & 0xff), (byte)((crc32 >> 16) & 0xff), (byte)((crc32 >> 8) & 0xff),
+                    (byte)(crc32 & 0xff)
+                };
             }
 
             /// <summary>

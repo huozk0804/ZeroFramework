@@ -122,7 +122,8 @@ namespace ZeroFramework
                         throw;
                     }
 
-                    throw new GameFrameworkException(Text.Format("Can not compress with exception '{0}'.", exception), exception);
+                    throw new GameFrameworkException(Text.Format("Can not compress with exception '{0}'.", exception),
+                        exception);
                 }
             }
 
@@ -180,7 +181,8 @@ namespace ZeroFramework
                         throw;
                     }
 
-                    throw new GameFrameworkException(Text.Format("Can not compress with exception '{0}'.", exception), exception);
+                    throw new GameFrameworkException(Text.Format("Can not compress with exception '{0}'.", exception),
+                        exception);
                 }
             }
 
@@ -278,7 +280,8 @@ namespace ZeroFramework
                         throw;
                     }
 
-                    throw new GameFrameworkException(Text.Format("Can not decompress with exception '{0}'.", exception), exception);
+                    throw new GameFrameworkException(Text.Format("Can not decompress with exception '{0}'.", exception),
+                        exception);
                 }
             }
 
@@ -336,7 +339,8 @@ namespace ZeroFramework
                         throw;
                     }
 
-                    throw new GameFrameworkException(Text.Format("Can not decompress with exception '{0}'.", exception), exception);
+                    throw new GameFrameworkException(Text.Format("Can not decompress with exception '{0}'.", exception),
+                        exception);
                 }
             }
         }

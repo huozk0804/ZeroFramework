@@ -11,7 +11,7 @@ using ZeroFramework.WebRequest;
 namespace ZeroFramework
 {
     [DisallowMultipleComponent]
-    [MonoSingletonPath("FrameworkRoot")]
+    [MonoSingletonPath("ZeroFramework")]
     public class Zero : MonoSingleton<Zero>
     {
         private const int DefaultDpi = 96; // default windows dpi
@@ -91,8 +91,8 @@ namespace ZeroFramework
             NeverSleep = GameFrameworkConfig.Instance.m_NeverSleep;
 
             //引用池设置处理
-            var m_EnableStrictCheck = GameFrameworkConfig.Instance.m_EnableStrictCheck;
-            switch (m_EnableStrictCheck)
+            var enableStrictCheck = GameFrameworkConfig.Instance.m_EnableStrictCheck;
+            switch (enableStrictCheck)
             {
                 case ReferenceStrictCheckType.AlwaysEnable:
                     ReferencePool.EnableStrictCheck = true;

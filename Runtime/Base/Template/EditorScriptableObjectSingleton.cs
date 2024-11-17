@@ -43,7 +43,7 @@ namespace ZeroFramework
                     }
 
                     stringBuilder.Append("Use " + AssetDatabase.GUIDToAssetPath(array[0]));
-                    Debug.LogWarning(stringBuilder);
+                    Log.Warning(stringBuilder);
                 }
 
                 string text2 = AssetDatabase.GUIDToAssetPath(array[0]);

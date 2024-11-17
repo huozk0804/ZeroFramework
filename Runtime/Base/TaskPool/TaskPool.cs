@@ -116,7 +116,9 @@ namespace ZeroFramework
                 T workingTask = workingAgent.Task;
                 if (workingTask.SerialId == serialId)
                 {
-                    return new TaskInfo(workingTask.SerialId, workingTask.Tag, workingTask.Priority, workingTask.UserData, workingTask.Done ? TaskStatus.Done : TaskStatus.Doing, workingTask.Description);
+                    return new TaskInfo(workingTask.SerialId, workingTask.Tag, workingTask.Priority,
+                        workingTask.UserData, workingTask.Done ? TaskStatus.Done : TaskStatus.Doing,
+                        workingTask.Description);
                 }
             }
 
@@ -124,7 +126,8 @@ namespace ZeroFramework
             {
                 if (waitingTask.SerialId == serialId)
                 {
-                    return new TaskInfo(waitingTask.SerialId, waitingTask.Tag, waitingTask.Priority, waitingTask.UserData, TaskStatus.Todo, waitingTask.Description);
+                    return new TaskInfo(waitingTask.SerialId, waitingTask.Tag, waitingTask.Priority,
+                        waitingTask.UserData, TaskStatus.Todo, waitingTask.Description);
                 }
             }
 
@@ -161,7 +164,9 @@ namespace ZeroFramework
                 T workingTask = workingAgent.Task;
                 if (workingTask.Tag == tag)
                 {
-                    results.Add(new TaskInfo(workingTask.SerialId, workingTask.Tag, workingTask.Priority, workingTask.UserData, workingTask.Done ? TaskStatus.Done : TaskStatus.Doing, workingTask.Description));
+                    results.Add(new TaskInfo(workingTask.SerialId, workingTask.Tag, workingTask.Priority,
+                        workingTask.UserData, workingTask.Done ? TaskStatus.Done : TaskStatus.Doing,
+                        workingTask.Description));
                 }
             }
 
@@ -169,7 +174,8 @@ namespace ZeroFramework
             {
                 if (waitingTask.Tag == tag)
                 {
-                    results.Add(new TaskInfo(waitingTask.SerialId, waitingTask.Tag, waitingTask.Priority, waitingTask.UserData, TaskStatus.Todo, waitingTask.Description));
+                    results.Add(new TaskInfo(waitingTask.SerialId, waitingTask.Tag, waitingTask.Priority,
+                        waitingTask.UserData, TaskStatus.Todo, waitingTask.Description));
                 }
             }
         }
@@ -185,12 +191,15 @@ namespace ZeroFramework
             foreach (ITaskAgent<T> workingAgent in m_WorkingAgents)
             {
                 T workingTask = workingAgent.Task;
-                results[index++] = new TaskInfo(workingTask.SerialId, workingTask.Tag, workingTask.Priority, workingTask.UserData, workingTask.Done ? TaskStatus.Done : TaskStatus.Doing, workingTask.Description);
+                results[index++] = new TaskInfo(workingTask.SerialId, workingTask.Tag, workingTask.Priority,
+                    workingTask.UserData, workingTask.Done ? TaskStatus.Done : TaskStatus.Doing,
+                    workingTask.Description);
             }
 
             foreach (T waitingTask in m_WaitingTasks)
             {
-                results[index++] = new TaskInfo(waitingTask.SerialId, waitingTask.Tag, waitingTask.Priority, waitingTask.UserData, TaskStatus.Todo, waitingTask.Description);
+                results[index++] = new TaskInfo(waitingTask.SerialId, waitingTask.Tag, waitingTask.Priority,
+                    waitingTask.UserData, TaskStatus.Todo, waitingTask.Description);
             }
 
             return results;
@@ -211,12 +220,15 @@ namespace ZeroFramework
             foreach (ITaskAgent<T> workingAgent in m_WorkingAgents)
             {
                 T workingTask = workingAgent.Task;
-                results.Add(new TaskInfo(workingTask.SerialId, workingTask.Tag, workingTask.Priority, workingTask.UserData, workingTask.Done ? TaskStatus.Done : TaskStatus.Doing, workingTask.Description));
+                results.Add(new TaskInfo(workingTask.SerialId, workingTask.Tag, workingTask.Priority,
+                    workingTask.UserData, workingTask.Done ? TaskStatus.Done : TaskStatus.Doing,
+                    workingTask.Description));
             }
 
             foreach (T waitingTask in m_WaitingTasks)
             {
-                results.Add(new TaskInfo(waitingTask.SerialId, waitingTask.Tag, waitingTask.Priority, waitingTask.UserData, TaskStatus.Todo, waitingTask.Description));
+                results.Add(new TaskInfo(waitingTask.SerialId, waitingTask.Tag, waitingTask.Priority,
+                    waitingTask.UserData, TaskStatus.Todo, waitingTask.Description));
             }
         }
 
@@ -390,14 +402,16 @@ namespace ZeroFramework
                 T task = current.Value;
                 LinkedListNode<T> next = current.Next;
                 StartTaskStatus status = agent.Start(task);
-                if (status == StartTaskStatus.Done || status == StartTaskStatus.HasToWait || status == StartTaskStatus.UnknownError)
+                if (status == StartTaskStatus.Done || status == StartTaskStatus.HasToWait ||
+                    status == StartTaskStatus.UnknownError)
                 {
                     agent.Reset();
                     m_FreeAgents.Push(agent);
                     m_WorkingAgents.Remove(agentNode);
                 }
 
-                if (status == StartTaskStatus.Done || status == StartTaskStatus.CanResume || status == StartTaskStatus.UnknownError)
+                if (status == StartTaskStatus.Done || status == StartTaskStatus.CanResume ||
+                    status == StartTaskStatus.UnknownError)
                 {
                     m_WaitingTasks.Remove(current);
                 }

@@ -63,7 +63,7 @@ namespace ZeroFramework
             }
 
             helper.name = typeof(T).Name;
-            helper.transform.SetParent(Zero.Instance.transform);
+            helper.transform.SetParent(parent);
             return helper;
         }
     }

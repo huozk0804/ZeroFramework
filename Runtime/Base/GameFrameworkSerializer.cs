@@ -135,8 +135,7 @@ namespace ZeroFramework
             stream.WriteByte(header[1]);
             stream.WriteByte(header[2]);
             stream.WriteByte(version);
-            SerializeCallback callback = null;
-            if (!m_SerializeCallbacks.TryGetValue(version, out callback))
+            if (!m_SerializeCallbacks.TryGetValue(version, out var callback))
             {
                 throw new GameFrameworkException(Utility.Text.Format("Serialize callback '{0}' is not exist.", version));
             }
@@ -161,8 +160,7 @@ namespace ZeroFramework
             }
 
             byte version = (byte)stream.ReadByte();
-            DeserializeCallback callback = null;
-            if (!m_DeserializeCallbacks.TryGetValue(version, out callback))
+            if (!m_DeserializeCallbacks.TryGetValue(version, out var callback))
             {
                 throw new GameFrameworkException(Utility.Text.Format("Deserialize callback '{0}' is not exist.", version));
             }
@@ -190,8 +188,7 @@ namespace ZeroFramework
             }
 
             byte version = (byte)stream.ReadByte();
-            TryGetValueCallback callback = null;
-            if (!m_TryGetValueCallbacks.TryGetValue(version, out callback))
+            if (!m_TryGetValueCallbacks.TryGetValue(version, out var callback))
             {
                 return false;
             }

@@ -79,8 +79,7 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Type name is invalid.");
                 }
 
-                Type type = null;
-                if (s_CachedTypes.TryGetValue(typeName, out type))
+                if (s_CachedTypes.TryGetValue(typeName, out var type))
                 {
                     return type;
                 }

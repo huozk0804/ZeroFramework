@@ -12,7 +12,7 @@ namespace ZeroFramework
     /// </summary>
     public static partial class Version
     {
-        private const string GameFrameworkVersionString = "2021.05.31";
+        private const string GameFrameworkVersionString = "2024.11.11";
         private static IVersionHelper s_VersionHelper = null;
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace ZeroFramework
             }
         }
 
-        public static string GameVersionString
+        public static string GameResVersion
         {
             get
             {
