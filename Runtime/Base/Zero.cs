@@ -191,7 +191,7 @@ namespace ZeroFramework
                     Utility.Text.Format("You must get module by interface, but '{0}' is not.", interfaceType.FullName));
             }
 
-            if (!interfaceType.FullName.StartsWith("Zero.", StringComparison.Ordinal))
+            if (!interfaceType.FullName.StartsWith("ZeroFramework.", StringComparison.Ordinal))
             {
                 throw new GameFrameworkException(
                     Utility.Text.Format("You must get a Game Framework module, but '{0}' is not.",

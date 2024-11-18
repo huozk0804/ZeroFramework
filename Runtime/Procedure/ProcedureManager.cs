@@ -95,14 +95,14 @@ namespace ZeroFramework
         /// </summary>
         /// <param name="fsmManager">有限状态机管理器。</param>
         /// <param name="procedures">流程管理器包含的流程。</param>
-        public void Initialize(IFsmManager fsmManager, params ProcedureBase[] procedures)
+        public void Initialize(params ProcedureBase[] procedures)
         {
-            if (fsmManager == null)
+            if (Zero.Instance.Fsm == null)
             {
                 throw new GameFrameworkException("FSM manager is invalid.");
             }
 
-            m_FsmManager = fsmManager;
+            m_FsmManager = Zero.Instance.Fsm;
             m_ProcedureFsm = m_FsmManager.CreateFsm(this, procedures);
         }
 
