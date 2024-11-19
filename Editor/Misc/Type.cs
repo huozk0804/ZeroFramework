@@ -19,7 +19,7 @@ namespace ZeroFramework.Editor
         private static readonly string[] RuntimeAssemblyNames =
         {
 #if UNITY_2017_3_OR_NEWER
-            "ZeroFramework.Runtime",
+            "ZeroFramework",
 #endif
             "Assembly-CSharp",
         };
@@ -27,7 +27,7 @@ namespace ZeroFramework.Editor
         private static readonly string[] RuntimeOrEditorAssemblyNames =
         {
 #if UNITY_2017_3_OR_NEWER
-            "ZeroFramework.Runtime",
+            "ZeroFramework",
 #endif
             "Assembly-CSharp",
 #if UNITY_2017_3_OR_NEWER

@@ -5,10 +5,9 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework.Resource;
 using UnityEngine;
 
-namespace ZeroFramework.Runtime
+namespace ZeroFramework.Resource
 {
     /// <summary>
     /// 资源辅助器基类。

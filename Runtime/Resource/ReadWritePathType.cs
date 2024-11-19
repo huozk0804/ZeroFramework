@@ -5,7 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-namespace ZeroFramework.Runtime
+namespace ZeroFramework.Resource
 {
     /// <summary>
     /// 读写区路径类型。

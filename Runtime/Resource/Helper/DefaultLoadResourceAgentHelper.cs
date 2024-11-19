@@ -5,18 +5,17 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework;
-using ZeroFramework.FileSystem;
-using ZeroFramework.Resource;
 using System;
 using UnityEngine;
 #if UNITY_5_4_OR_NEWER
 using UnityEngine.Networking;
 #endif
 using UnityEngine.SceneManagement;
+using ZeroFramework;
+using ZeroFramework.FileSystem;
 using Utility = ZeroFramework.Utility;
 
-namespace ZeroFramework.Runtime
+namespace ZeroFramework.Resource
 {
     /// <summary>
     /// 默认加载资源代理辅助器。

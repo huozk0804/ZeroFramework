@@ -6,11 +6,10 @@
 //------------------------------------------------------------
 
 using ZeroFramework.FileSystem;
-using ZeroFramework.Resource;
 using System;
 using UnityEngine;
 
-namespace ZeroFramework.Runtime
+namespace ZeroFramework.Resource
 {
     /// <summary>
     /// 加载资源代理辅助器基类。

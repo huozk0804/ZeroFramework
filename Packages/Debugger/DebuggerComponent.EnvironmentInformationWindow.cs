@@ -6,7 +6,6 @@
 //------------------------------------------------------------
 
 using UnityEngine;
-using ZeroFramework.Runtime;
 using ZeroFramework.Resource;
 
 #if UNITY_5_5_OR_NEWER

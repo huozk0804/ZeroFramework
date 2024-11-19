@@ -5,7 +5,6 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework.Resource;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -16,7 +15,7 @@ using UnityEngine.Networking;
 #endif
 using UnityEngine.SceneManagement;
 
-namespace ZeroFramework.Runtime
+namespace ZeroFramework.Resource
 {
     /// <summary>
     /// 默认资源辅助器。

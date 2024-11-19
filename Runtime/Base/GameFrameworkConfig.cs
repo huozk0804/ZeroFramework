@@ -4,7 +4,6 @@ using ZeroFramework.Config;
 using ZeroFramework.Download;
 using ZeroFramework.Entity;
 using ZeroFramework.FileSystem;
-using ZeroFramework.Runtime;
 using ZeroFramework.WebRequest;
 
 namespace ZeroFramework

@@ -5,7 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-namespace ZeroFramework.Runtime
+namespace ZeroFramework
 {
     /// <summary>
     /// 引用强制检查类型。

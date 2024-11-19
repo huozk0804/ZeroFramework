@@ -5,7 +5,7 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-namespace ZeroFramework.Runtime
+namespace ZeroFramework.Resource
 {
     internal sealed class SceneAsset
     {
