@@ -8,7 +8,7 @@ using ZeroFramework.WebRequest;
 
 namespace ZeroFramework
 {
-    [CreateAssetMenu(fileName = "GameFrameworkConfig", menuName = "X/Game Framework Config")]
+    [CreateAssetMenu(fileName = "GameFrameworkConfig", menuName = "Zero/Game Framework Config")]
     public sealed partial class GameFrameworkConfig : ScriptableObjectSingleton<GameFrameworkConfig>
     {
         //Base Config
