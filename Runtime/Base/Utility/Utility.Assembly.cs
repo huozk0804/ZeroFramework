@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ZeroFramework
 {
@@ -18,7 +19,9 @@ namespace ZeroFramework
         public static class Assembly
         {
             private static readonly System.Reflection.Assembly[] s_Assemblies = null;
-            private static readonly Dictionary<string, Type> s_CachedTypes = new Dictionary<string, Type>(StringComparer.Ordinal);
+
+            private static readonly Dictionary<string, Type> s_CachedTypes =
+                new Dictionary<string, Type>(StringComparer.Ordinal);
 
             static Assembly()
             {

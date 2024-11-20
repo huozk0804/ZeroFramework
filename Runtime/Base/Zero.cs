@@ -112,6 +112,11 @@ namespace ZeroFramework
             InitVersionHelper();
             InitJsonHelper();
             InitCompressionHelper();
+
+            Log.Info("Game Framework Version: {0}", Version.GameFrameworkVersion);
+            Log.Info("Unity Version: {0}", Application.unityVersion);
+            Log.Info("Game Version: {0} ({1})", Version.GameVersion, Version.InternalGameVersion);
+            Log.Info("Game Resources Version: {0}", Version.GameResVersion);
         }
 
         private void Start()
@@ -160,7 +165,7 @@ namespace ZeroFramework
 
         private readonly GameFrameworkLinkedList<GameFrameworkModule> _frameworkModules =
             new GameFrameworkLinkedList<GameFrameworkModule>();
-        
+
         public IObjectPoolManager ObjectPool => GetModule<IObjectPoolManager>();
         public IProcedureManager Procedure => GetModule<IProcedureManager>();
         public IEventManager Event => GetModule<IEventManager>();
@@ -197,9 +202,10 @@ namespace ZeroFramework
                         interfaceType.FullName));
             }
 
+            //此处拼接除了增加命名空间外，通过Substring(1)去除接口的I
             string moduleName =
                 Utility.Text.Format("{0}.{1}", interfaceType.Namespace, interfaceType.Name.Substring(1));
-            Type moduleType = Type.GetType(moduleName);
+            Type moduleType = Utility.Assembly.GetType(moduleName);
             if (moduleType == null)
             {
                 throw new GameFrameworkException(Utility.Text.Format("Can not find Game Framework module type '{0}'.",
@@ -207,6 +213,24 @@ namespace ZeroFramework
             }
 
             return GetModule(moduleType) as T;
+        }
+
+        public bool HasModule<T>() where T : class
+        {
+            Type interfaceType = typeof(T);
+            string moduleName =
+                Utility.Text.Format("{0}.{1}", interfaceType.Namespace, interfaceType.Name.Substring(1));
+            Type moduleType = Utility.Assembly.GetType(moduleName);
+
+            foreach (GameFrameworkModule module in _frameworkModules)
+            {
+                if (module.GetType() == moduleType)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -304,7 +328,7 @@ namespace ZeroFramework
                     name));
             }
 
-           Version.IVersionHelper versionHelper = (Version.IVersionHelper)Activator.CreateInstance(versionHelperType);
+            Version.IVersionHelper versionHelper = (Version.IVersionHelper)Activator.CreateInstance(versionHelperType);
             if (versionHelper == null)
             {
                 throw new GameFrameworkException(Utility.Text.Format("Can not create version helper instance '{0}'.",
