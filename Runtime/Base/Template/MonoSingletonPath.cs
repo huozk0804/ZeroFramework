@@ -3,7 +3,7 @@ using System;
 namespace ZeroFramework
 {
     [AttributeUsage(AttributeTargets.Class)] //这个特性只能标记在Class上
-    internal class MonoSingletonPath : Attribute
+    public class MonoSingletonPath : Attribute
     {
         private string _pathInHierarchy;
 
