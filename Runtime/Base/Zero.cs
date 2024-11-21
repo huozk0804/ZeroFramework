@@ -113,7 +113,7 @@ namespace ZeroFramework
             InitJsonHelper();
             InitCompressionHelper();
 
-            Log.Info("Game Framework Version: {0}", Version.GameFrameworkVersion);
+            Log.Info("Zero Framework Version: {0}", Version.GameFrameworkVersion);
             Log.Info("Unity Version: {0}", Application.unityVersion);
             Log.Info("Game Version: {0} ({1})", Version.GameVersion, Version.InternalGameVersion);
             Log.Info("Game Resources Version: {0}", Version.GameResVersion);

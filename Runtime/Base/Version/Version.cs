@@ -12,13 +12,13 @@ namespace ZeroFramework
     /// </summary>
     public static partial class Version
     {
-        private const string GameFrameworkVersionString = "2024.11.11";
+        private const string FrameworkVersionString = "2021.12.29";
         private static IVersionHelper s_VersionHelper = null;
 
         /// <summary>
         /// 获取游戏框架版本号。
         /// </summary>
-        public static string GameFrameworkVersion => GameFrameworkVersionString;
+        public static string GameFrameworkVersion => FrameworkVersionString;
 
         /// <summary>
         /// 获取游戏版本号。
