@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace ZeroFramework
+namespace ZeroFramework.Editor
 {
     public abstract class EditorScriptableObjectSingleton<T> : ScriptableObject
         where T : EditorScriptableObjectSingleton<T>

@@ -71,8 +71,7 @@ namespace ZeroFramework.Debugger
 
             private string GetResolutionString(Resolution resolution)
             {
-                return Utility.Text.Format("{0} x {1} @ {2}Hz", resolution.width, resolution.height,
-                    resolution.refreshRate);
+                return Utility.Text.Format("{0} x {1} @ {2}Hz", resolution.width, resolution.height, resolution.refreshRate);
             }
 
             private string GetCutoutsString(Rect[] cutouts)

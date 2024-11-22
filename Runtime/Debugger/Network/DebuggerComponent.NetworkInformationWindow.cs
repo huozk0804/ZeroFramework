@@ -14,16 +14,16 @@ namespace ZeroFramework.Debugger
     {
         private sealed class NetworkInformationWindow : ScrollableDebuggerWindowBase
         {
-            // private NetworkComponent m_NetworkComponent = null;
+             private INetworkManager m_NetworkComponent = null;
 
             public override void Initialize(params object[] args)
             {
-                //m_NetworkComponent = GameEntry.GetComponent<NetworkComponent>();
-                // if (m_NetworkComponent == null)
-                // {
-                //     Log.Fatal("Network component is invalid.");
-                //     return;
-                // }
+                //TODO: 当我不使用的时候是否可以隐藏不要渲染到Debugger上
+                m_NetworkComponent = Zero.Instance.GetModule<INetworkManager>();
+                if (m_NetworkComponent == null) {
+                    Log.Fatal("Network component is invalid.");
+                    return;
+                }
             }
 
             protected override void OnDrawScrollableWindow()
@@ -31,14 +31,13 @@ namespace ZeroFramework.Debugger
                 GUILayout.Label("<b>Network Information</b>");
                 GUILayout.BeginVertical("box");
                 {
-                    // DrawItem("Network Channel Count", m_NetworkComponent.NetworkChannelCount.ToString());
+                    DrawItem("Network Channel Count", m_NetworkComponent.NetworkChannelCount.ToString());
                 }
                 GUILayout.EndVertical();
-                // INetworkChannel[] networkChannels = m_NetworkComponent.GetAllNetworkChannels();
-                // for (int i = 0; i < networkChannels.Length; i++)
-                // {
-                //     DrawNetworkChannel(networkChannels[i]);
-                // }
+                INetworkChannel[] networkChannels = m_NetworkComponent.GetAllNetworkChannels();
+                for (int i = 0; i < networkChannels.Length; i++) {
+                    DrawNetworkChannel(networkChannels[i]);
+                }
             }
 
             private void DrawNetworkChannel(INetworkChannel networkChannel)

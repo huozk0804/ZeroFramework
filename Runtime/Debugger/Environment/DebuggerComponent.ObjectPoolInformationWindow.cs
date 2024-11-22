@@ -5,7 +5,6 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework;
 using UnityEngine;
 
 namespace ZeroFramework.Debugger
@@ -14,12 +13,12 @@ namespace ZeroFramework.Debugger
     {
         private sealed class ObjectPoolInformationWindow : ScrollableDebuggerWindowBase
         {
-            private ObjectPoolManager m_ObjectPoolComponent = null;
+            private IObjectPoolManager m_ObjectPoolManager = null;
 
             public override void Initialize(params object[] args)
             {
-                //m_ObjectPoolComponent = X.ObjectPool;
-                if (m_ObjectPoolComponent == null)
+                m_ObjectPoolManager = Zero.Instance.GetModule<ObjectPoolManager>();
+                if (m_ObjectPoolManager == null)
                 {
                     Log.Fatal("Object pool component is invalid.");
                     return;
@@ -31,10 +30,10 @@ namespace ZeroFramework.Debugger
                 GUILayout.Label("<b>Object Pool Information</b>");
                 GUILayout.BeginVertical("box");
                 {
-                    DrawItem("Object Pool Count", m_ObjectPoolComponent.Count.ToString());
+                    DrawItem("Object Pool Count", m_ObjectPoolManager.Count.ToString());
                 }
                 GUILayout.EndVertical();
-                ObjectPoolBase[] objectPools = m_ObjectPoolComponent.GetAllObjectPools(true);
+                ObjectPoolBase[] objectPools = m_ObjectPoolManager.GetAllObjectPools(true);
                 for (int i = 0; i < objectPools.Length; i++)
                 {
                     DrawObjectPool(objectPools[i]);

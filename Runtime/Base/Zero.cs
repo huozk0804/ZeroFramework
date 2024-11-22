@@ -129,11 +129,10 @@ namespace ZeroFramework
 
         private void Update()
         {
-            foreach (var module in _frameworkModules)
-            {
-                module.Update(Time.deltaTime, Time.unscaledDeltaTime);
-            }
-        }
+			for (var current = _frameworkModules.First; current != null; current = current.Previous) {
+				current.Value.Update(Time.deltaTime, Time.unscaledDeltaTime);
+			}
+		}
 
         protected override void OnApplicationQuit()
         {

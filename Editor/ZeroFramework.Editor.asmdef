@@ -1,11 +1,12 @@
 {
-    "name": "ZeroFramework.Runtime",
+    "name": "ZeroFramework.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:8210a3d1b5d22904fbff539d5ac88908"
+        "GUID:21ca74cfeee5d4c4aa1c43b51a796cdb"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": true,
     "overrideReferences": false,

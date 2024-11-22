@@ -123,7 +123,7 @@ namespace ZeroFramework.Debugger
 
             public void Initialize(params object[] args)
             {
-                //m_SettingComponent = X.Setting;
+                // TODO:m_SettingComponent = X.Setting;
                 if (m_SettingComponent == null)
                 {
                     Log.Fatal("Setting component is invalid.");

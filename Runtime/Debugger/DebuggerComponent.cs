@@ -14,7 +14,6 @@ namespace ZeroFramework.Debugger
     /// 调试器组件。
     /// </summary>
     [DisallowMultipleComponent]
-    [AddComponentMenu("ZeroFramework/Debugger")]
     public sealed partial class DebuggerComponent : GameFrameworkComponent
     {
         /// <summary>
@@ -162,7 +161,7 @@ namespace ZeroFramework.Debugger
         /// </summary>
         void Awake()
         {
-            //m_DebuggerManager = GameFrameworkEntry.GetModule<IDebuggerManager>();
+            m_DebuggerManager = Zero.Instance.GetModule<IDebuggerManager>();
             if (m_DebuggerManager == null)
             {
                 Log.Fatal("Debugger manager is invalid.");

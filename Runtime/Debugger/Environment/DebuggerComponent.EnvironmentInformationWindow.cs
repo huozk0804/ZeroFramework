@@ -18,20 +18,16 @@ namespace ZeroFramework.Debugger
     {
         private sealed class EnvironmentInformationWindow : ScrollableDebuggerWindowBase
         {
-            // private BaseComponent m_BaseComponent = null;
-            private ResourceManager m_ResourceComponent = null;
+            private IResourceManager m_ResourceManager = null;
+            private bool m_EditorResourceMode = false;
 
-            public override void Initialize(params object[] args)
+
+			public override void Initialize(params object[] args)
             {
-                //m_BaseComponent = GameEntry.GetComponent<BaseComponent>();
-                // if (m_BaseComponent == null)
-                // {
-                //     Log.Fatal("Base component is invalid.");
-                //     return;
-                // }
-
-                //m_ResourceComponent = GameEntry.GetComponent<ResourceComponent>();
-                if (m_ResourceComponent == null)
+                //TODO: 
+                //m_EditorResourceMode = GameFrameworkConfig.Instance
+                m_ResourceManager = Zero.Instance.Resource;
+                if (m_ResourceManager == null)
                 {
                     Log.Fatal("Resource component is invalid.");
                     return;
@@ -52,7 +48,7 @@ namespace ZeroFramework.Debugger
 #endif
                     DrawItem("Game Framework Version", Version.GameFrameworkVersion);
                     DrawItem("Game Version", Utility.Text.Format("{0} ({1})", Version.GameVersion, Version.InternalGameVersion));
-                    // DrawItem("Resource Version", m_BaseComponent.EditorResourceMode ? "Unavailable in editor resource mode" : (string.IsNullOrEmpty(m_ResourceComponent.ApplicableGameVersion) ? "Unknown" : Utility.Text.Format("{0} ({1})", m_ResourceComponent.ApplicableGameVersion, m_ResourceComponent.InternalResourceVersion)));
+                    DrawItem("Resource Version", m_EditorResourceMode ? "Unavailable in editor resource mode" : (string.IsNullOrEmpty(m_ResourceManager.ApplicableGameVersion) ? "Unknown" : Utility.Text.Format("{0} ({1})", m_ResourceManager.ApplicableGameVersion, m_ResourceManager.InternalResourceVersion)));
                     DrawItem("Application Version", Application.version);
                     DrawItem("Unity Version", Application.unityVersion);
                     DrawItem("Platform", Application.platform.ToString());
