@@ -23,6 +23,17 @@ namespace ZeroFramework.Setting
         public SettingManager()
         {
             m_SettingHelper = null;
+
+            var typeName = GameFrameworkConfig.Instance.m_SettingHelperTypeName;
+            var helperBase = GameFrameworkConfig.Instance.m_CustomSettingHelper;
+            SettingHelperBase settingHelper = Helper.CreateHelper(typeName, helperBase);
+            if (settingHelper == null)
+            {
+                Log.Error("Can not create setting helper.");
+                return;
+            }
+
+            SetSettingHelper(settingHelper);
         }
 
         /// <summary>

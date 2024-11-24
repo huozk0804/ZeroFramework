@@ -25,48 +25,16 @@ namespace ZeroFramework.Editor
         void OnSceneInspectorGUI()
         {
             EditorGUILayout.LabelField("Scene", EditorStyles.boldLabel);
-            //SceneComponent t = (SceneComponent)target;
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
             {
                 EditorGUILayout.PropertyField(m_EnableLoadSceneUpdateEvent);
                 EditorGUILayout.PropertyField(m_EnableLoadSceneDependencyAssetEvent);
             }
             EditorGUI.EndDisabledGroup();
-
-            //if (EditorApplication.isPlaying && IsPrefabInHierarchy(t.gameObject))
-            //{
-            //	EditorGUILayout.LabelField("Loaded Scene Asset Names", GetSceneNameString(t.GetLoadedSceneAssetNames()));
-            //	EditorGUILayout.LabelField("Loading Scene Asset Names", GetSceneNameString(t.GetLoadingSceneAssetNames()));
-            //	EditorGUILayout.LabelField("Unloading Scene Asset Names", GetSceneNameString(t.GetUnloadingSceneAssetNames()));
-            //	EditorGUILayout.ObjectField("Main Camera", t.MainCamera, typeof(Camera), true);
-
-            //	Repaint();
-            //}
         }
 
         void OnSceneComplete()
         {
-        }
-
-        private string GetSceneNameString(string[] sceneAssetNames)
-        {
-            if (sceneAssetNames == null || sceneAssetNames.Length <= 0)
-            {
-                return "<Empty>";
-            }
-
-            string sceneNameString = string.Empty;
-            foreach (string sceneAssetName in sceneAssetNames)
-            {
-                if (!string.IsNullOrEmpty(sceneNameString))
-                {
-                    sceneNameString += ", ";
-                }
-
-                //sceneNameString += SceneComponent.GetSceneName(sceneAssetName);
-            }
-
-            return sceneNameString;
         }
     }
 }

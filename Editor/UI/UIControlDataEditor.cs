@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using System;
+using ZeroFramework.UI;
 
-namespace ZeroFramework.UI
+namespace ZeroFramework.Editor
 {
     [CustomEditor(typeof(UIControlData))]
     public class UIControlDataEditor : UnityEditor.Editor
@@ -14,7 +14,7 @@ namespace ZeroFramework.UI
         public static GUIStyle textFieldStyle;
         public static GUIStyle popupAlignLeft;
         public string[] allTypeNames;
-        public Type[] allTypes;
+        public System.Type[] allTypes;
 
         private List<CtrlItemData> _ctrlItemDatas;
         private List<SubUIItemData> _subUIItemDatas;

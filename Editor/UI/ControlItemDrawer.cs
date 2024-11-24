@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using ZeroFramework.UI;
 
-namespace ZeroFramework.UI
+namespace ZeroFramework.Editor
 {
     public class ControlItemDrawer
     {

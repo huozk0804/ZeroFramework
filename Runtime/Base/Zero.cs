@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
+using ZeroFramework.Debugger;
 using ZeroFramework.Download;
 using ZeroFramework.FileSystem;
 using ZeroFramework.Network;
@@ -16,13 +18,13 @@ namespace ZeroFramework
         private const int DefaultDpi = 96; // default windows dpi
 
         private float m_GameSpeedBeforePause = 1f;
-        private bool isInit;
+        [SerializeField] private bool isInitialize;
         private int m_FrameRate;
         private float m_GameSpeed;
         private bool m_RunInBackground;
         private bool m_NeverSleep;
 
-        public bool IsInit => isInit;
+        public bool IsInitialize => isInitialize;
 
         /// <summary>
         /// 获取或设置游戏帧率。
@@ -64,6 +66,56 @@ namespace ZeroFramework
             }
         }
 
+        /// <summary>
+        /// 暂停游戏。
+        /// </summary>
+        public void PauseGame()
+        {
+            if (IsGamePaused)
+            {
+                return;
+            }
+
+            m_GameSpeedBeforePause = GameSpeed;
+            GameSpeed = 0f;
+        }
+
+        /// <summary>
+        /// 获取游戏是否暂停。
+        /// </summary>
+        public bool IsGamePaused => m_GameSpeed <= 0f;
+
+        /// <summary>
+        /// 恢复游戏。
+        /// </summary>
+        public void ResumeGame()
+        {
+            if (!IsGamePaused)
+            {
+                return;
+            }
+
+            GameSpeed = m_GameSpeedBeforePause;
+        }
+
+        /// <summary>
+        /// 重置为正常游戏速度。
+        /// </summary>
+        public void ResetNormalGameSpeed()
+        {
+            if (IsNormalGameSpeed)
+            {
+                return;
+            }
+
+            GameSpeed = 1f;
+        }
+        
+        /// <summary>
+        /// 获取是否正常游戏速度。
+        /// </summary>
+        public bool IsNormalGameSpeed => m_GameSpeed == 1f;
+
         #region Unity Message
 
         private void Awake()
@@ -82,7 +134,7 @@ namespace ZeroFramework
 #if UNITY_5_6_OR_NEWER
             Application.lowMemory += OnLowMemory;
 #endif
-            isInit = true;
+            isInitialize = true;
 
             FrameRate = GameFrameworkConfig.Instance.m_FrameRate;
             GameSpeed = GameFrameworkConfig.Instance.m_GameSpeed;
@@ -112,7 +164,13 @@ namespace ZeroFramework
             InitVersionHelper();
             InitJsonHelper();
             InitCompressionHelper();
-
+            
+            var debuggerType = GameFrameworkConfig.Instance.m_ActiveWindow;
+            if (debuggerType != DebuggerActiveWindowType.AlwaysClose)
+            {
+                gameObject.AddComponent<DebuggerComponent>();
+            }
+            
             Log.Info("Zero Framework Version: {0}", Version.GameFrameworkVersion);
             Log.Info("Unity Version: {0}", Application.unityVersion);
             Log.Info("Game Version: {0} ({1})", Version.GameVersion, Version.InternalGameVersion);
@@ -121,6 +179,7 @@ namespace ZeroFramework
 
         private void Start()
         {
+            
         }
 
         private void FixedUpdate()
@@ -129,10 +188,11 @@ namespace ZeroFramework
 
         private void Update()
         {
-			for (var current = _frameworkModules.First; current != null; current = current.Previous) {
-				current.Value.Update(Time.deltaTime, Time.unscaledDeltaTime);
-			}
-		}
+            for (var current = _frameworkModules.First; current != null; current = current.Previous)
+            {
+                current.Value.Update(Time.deltaTime, Time.unscaledDeltaTime);
+            }
+        }
 
         protected override void OnApplicationQuit()
         {
@@ -155,7 +215,7 @@ namespace ZeroFramework
             Utility.Marshal.FreeCachedHGlobal();
             GameFrameworkLog.SetLogHelper(null);
             base.OnDestory();
-            isInit = false;
+            isInitialize = false;
         }
 
         #endregion
@@ -182,7 +242,7 @@ namespace ZeroFramework
         /// </summary>
         public T GetModule<T>() where T : class
         {
-            if (!isInit)
+            if (!isInitialize)
             {
                 throw new GameFrameworkException("Get module before must be initialized.");
             }

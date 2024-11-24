@@ -1,7 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using ZeroFramework.UI;
 
-namespace ZeroFramework.UI
+namespace ZeroFramework.Editor
 {
     public class SubUIItemDrawer
     {

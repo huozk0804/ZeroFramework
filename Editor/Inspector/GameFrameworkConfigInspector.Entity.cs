@@ -32,17 +32,6 @@ namespace ZeroFramework.Editor
                 EditorGUILayout.PropertyField(m_EntityGroups, true);
             }
             EditorGUI.EndDisabledGroup();
-
-            //if (EditorApplication.isPlaying && IsPrefabInHierarchy(t.gameObject))
-            //{
-            //    EditorGUILayout.LabelField("Entity Group Count", t.EntityGroupCount.ToString());
-            //    EditorGUILayout.LabelField("Entity Count (Total)", t.EntityCount.ToString());
-            //    IEntityGroup[] entityGroups = t.GetAllEntityGroups();
-            //    foreach (IEntityGroup entityGroup in entityGroups)
-            //    {
-            //        EditorGUILayout.LabelField(Utility.Text.Format("Entity Count ({0})", entityGroup.Name), entityGroup.EntityCount.ToString());
-            //    }
-            //}
         }
 
         void OnEntityEnable()

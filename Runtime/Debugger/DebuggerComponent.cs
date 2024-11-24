@@ -14,8 +14,10 @@ namespace ZeroFramework.Debugger
     /// 调试器组件。
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed partial class DebuggerComponent : GameFrameworkComponent
+    internal sealed class DebuggerComponent : GameFrameworkComponent
     {
+        public static DebuggerComponent Instance;
+
         /// <summary>
         /// 默认调试器漂浮框大小。
         /// </summary>
@@ -37,14 +39,10 @@ namespace ZeroFramework.Debugger
         private Rect m_IconRect = DefaultIconRect;
         private Rect m_WindowRect = DefaultWindowRect;
         private float m_WindowScale = DefaultWindowScale;
-
-        [SerializeField] private GUISkin m_Skin = null;
-
-        [SerializeField] private DebuggerActiveWindowType m_ActiveWindow = DebuggerActiveWindowType.AlwaysOpen;
-
-        [SerializeField] private bool m_ShowFullWindow = false;
-
-        [SerializeField] private ConsoleWindow m_ConsoleWindow = new ConsoleWindow();
+        private GUISkin m_Skin = null;
+        private DebuggerActiveWindowType m_ActiveWindow = DebuggerActiveWindowType.AlwaysOpen;
+        private bool m_ShowFullWindow = false;
+        private ConsoleWindow m_ConsoleWindow = new ConsoleWindow();
 
         private SystemInformationWindow m_SystemInformationWindow = new SystemInformationWindow();
         private EnvironmentInformationWindow m_EnvironmentInformationWindow = new EnvironmentInformationWindow();
@@ -104,6 +102,8 @@ namespace ZeroFramework.Debugger
         private NetworkInformationWindow m_NetworkInformationWindow = new NetworkInformationWindow();
         private SettingsWindow m_SettingsWindow = new SettingsWindow();
         private OperationsWindow m_OperationsWindow = new OperationsWindow();
+        private CommandWindow m_CommandWindow = new CommandWindow();
+        private HierarchyWindow m_HierarchyWindow = new HierarchyWindow();
 
         private FpsCounter m_FpsCounter = null;
 
@@ -161,6 +161,7 @@ namespace ZeroFramework.Debugger
         /// </summary>
         void Awake()
         {
+            Instance = this;
             m_DebuggerManager = Zero.Instance.GetModule<IDebuggerManager>();
             if (m_DebuggerManager == null)
             {
@@ -173,7 +174,14 @@ namespace ZeroFramework.Debugger
 
         private void Start()
         {
+            m_Skin = GameFrameworkConfig.Instance.m_Skin;
+            m_ActiveWindow = GameFrameworkConfig.Instance.m_ActiveWindow;
+            m_ShowFullWindow = GameFrameworkConfig.Instance.m_ShowFullWindow;
+            m_ConsoleWindow = GameFrameworkConfig.Instance.m_ConsoleWindow;
+
             RegisterDebuggerWindow("Console", m_ConsoleWindow);
+            RegisterDebuggerWindow("Command", m_CommandWindow);
+            RegisterDebuggerWindow("Hierarchy", m_HierarchyWindow);
             RegisterDebuggerWindow("Information/System", m_SystemInformationWindow);
             RegisterDebuggerWindow("Information/Environment", m_EnvironmentInformationWindow);
             RegisterDebuggerWindow("Information/Screen", m_ScreenInformationWindow);
@@ -413,7 +421,7 @@ namespace ZeroFramework.Debugger
             }
         }
 
-        private static void CopyToClipboard(string content)
+        public static void CopyToClipboard(string content)
         {
             s_TextEditor.text = content;
             s_TextEditor.OnFocus();

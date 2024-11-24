@@ -39,8 +39,6 @@ namespace ZeroFramework.Editor
 
         void OnSoundInspectorGUI()
         {
-            //SoundComponent t = (SoundComponent)target;
-
             EditorGUILayout.LabelField("Sound", EditorStyles.boldLabel);
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
             {
@@ -53,11 +51,6 @@ namespace ZeroFramework.Editor
                 EditorGUILayout.PropertyField(m_SoundGroups, true);
             }
             EditorGUI.EndDisabledGroup();
-
-            //if (EditorApplication.isPlaying && IsPrefabInHierarchy(t.gameObject))
-            //{
-            //    EditorGUILayout.LabelField("Sound Group Count", t.SoundGroupCount.ToString());
-            //}
         }
 
         void OnSoundComplete()

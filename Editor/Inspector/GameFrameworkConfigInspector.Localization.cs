@@ -40,14 +40,6 @@ namespace ZeroFramework.Editor
                 EditorGUILayout.PropertyField(m_LocalizationCachedBytesSize);
             }
             EditorGUI.EndDisabledGroup();
-
-            //if (EditorApplication.isPlaying && IsPrefabInHierarchy(t.gameObject))
-            //{
-            //    EditorGUILayout.LabelField("Language", t.Language.ToString());
-            //    EditorGUILayout.LabelField("System Language", t.SystemLanguage.ToString());
-            //    EditorGUILayout.LabelField("Dictionary Count", t.DictionaryCount.ToString());
-            //    EditorGUILayout.LabelField("Cached Bytes Size", t.CachedBytesSize.ToString());
-            //}
         }
 
         void OnLocalizationComplete()
