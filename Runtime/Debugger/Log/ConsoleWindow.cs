@@ -128,7 +128,7 @@ namespace ZeroFramework.Debugger
                 m_SettingManager.GetBool("Debugger.Console.WarningFilter", true);
             m_ErrorFilter = m_LastErrorFilter = m_SettingManager.GetBool("Debugger.Console.ErrorFilter", true);
             m_FatalFilter = m_LastFatalFilter = m_SettingManager.GetBool("Debugger.Console.FatalFilter", true);
-        }
+		}
 
         public void Shutdown()
         {

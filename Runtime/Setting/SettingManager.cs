@@ -81,6 +81,7 @@ namespace ZeroFramework.Setting
             }
 
             m_SettingHelper = settingHelper;
+            Load();
         }
 
         /// <summary>

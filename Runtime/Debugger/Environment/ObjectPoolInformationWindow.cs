@@ -15,7 +15,7 @@ namespace ZeroFramework.Debugger
 
         public override void Initialize(params object[] args)
         {
-            m_ObjectPoolManager = Zero.Instance.GetModule<IObjectPoolManager>();
+            m_ObjectPoolManager = Zero.Instance.ObjectPool;
             if (m_ObjectPoolManager == null)
             {
                 Log.Fatal("Object pool component is invalid.");

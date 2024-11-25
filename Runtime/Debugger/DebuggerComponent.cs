@@ -14,7 +14,7 @@ namespace ZeroFramework.Debugger
     /// 调试器组件。
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class DebuggerComponent : GameFrameworkComponent
+    internal sealed class DebuggerComponent : MonoBehaviour
     {
         public static DebuggerComponent Instance;
 
@@ -42,8 +42,8 @@ namespace ZeroFramework.Debugger
         private GUISkin m_Skin = null;
         private DebuggerActiveWindowType m_ActiveWindow = DebuggerActiveWindowType.AlwaysOpen;
         private bool m_ShowFullWindow = false;
-        private ConsoleWindow m_ConsoleWindow = new ConsoleWindow();
 
+        private ConsoleWindow m_ConsoleWindow = new ConsoleWindow();
         private SystemInformationWindow m_SystemInformationWindow = new SystemInformationWindow();
         private EnvironmentInformationWindow m_EnvironmentInformationWindow = new EnvironmentInformationWindow();
         private ScreenInformationWindow m_ScreenInformationWindow = new ScreenInformationWindow();
@@ -51,13 +51,8 @@ namespace ZeroFramework.Debugger
         private InputSummaryInformationWindow m_InputSummaryInformationWindow = new InputSummaryInformationWindow();
         private InputTouchInformationWindow m_InputTouchInformationWindow = new InputTouchInformationWindow();
         private InputLocationInformationWindow m_InputLocationInformationWindow = new InputLocationInformationWindow();
-
-        private InputAccelerationInformationWindow m_InputAccelerationInformationWindow =
-            new InputAccelerationInformationWindow();
-
-        private InputGyroscopeInformationWindow m_InputGyroscopeInformationWindow =
-            new InputGyroscopeInformationWindow();
-
+        private InputAccelerationInformationWindow m_InputAccelerationInformationWindow = new InputAccelerationInformationWindow();
+        private InputGyroscopeInformationWindow m_InputGyroscopeInformationWindow = new InputGyroscopeInformationWindow();
         private InputCompassInformationWindow m_InputCompassInformationWindow = new InputCompassInformationWindow();
         private PathInformationWindow m_PathInformationWindow = new PathInformationWindow();
         private SceneInformationWindow m_SceneInformationWindow = new SceneInformationWindow();
@@ -66,37 +61,16 @@ namespace ZeroFramework.Debugger
         private ProfilerInformationWindow m_ProfilerInformationWindow = new ProfilerInformationWindow();
         private WebPlayerInformationWindow m_WebPlayerInformationWindow = new WebPlayerInformationWindow();
         private RuntimeMemorySummaryWindow m_RuntimeMemorySummaryWindow = new RuntimeMemorySummaryWindow();
-
-        private RuntimeMemoryInformationWindow<Object> m_RuntimeMemoryAllInformationWindow =
-            new RuntimeMemoryInformationWindow<Object>();
-
-        private RuntimeMemoryInformationWindow<Texture> m_RuntimeMemoryTextureInformationWindow =
-            new RuntimeMemoryInformationWindow<Texture>();
-
-        private RuntimeMemoryInformationWindow<Mesh> m_RuntimeMemoryMeshInformationWindow =
-            new RuntimeMemoryInformationWindow<Mesh>();
-
-        private RuntimeMemoryInformationWindow<Material> m_RuntimeMemoryMaterialInformationWindow =
-            new RuntimeMemoryInformationWindow<Material>();
-
-        private RuntimeMemoryInformationWindow<Shader> m_RuntimeMemoryShaderInformationWindow =
-            new RuntimeMemoryInformationWindow<Shader>();
-
-        private RuntimeMemoryInformationWindow<AnimationClip> m_RuntimeMemoryAnimationClipInformationWindow =
-            new RuntimeMemoryInformationWindow<AnimationClip>();
-
-        private RuntimeMemoryInformationWindow<AudioClip> m_RuntimeMemoryAudioClipInformationWindow =
-            new RuntimeMemoryInformationWindow<AudioClip>();
-
-        private RuntimeMemoryInformationWindow<Font> m_RuntimeMemoryFontInformationWindow =
-            new RuntimeMemoryInformationWindow<Font>();
-
-        private RuntimeMemoryInformationWindow<TextAsset> m_RuntimeMemoryTextAssetInformationWindow =
-            new RuntimeMemoryInformationWindow<TextAsset>();
-
-        private RuntimeMemoryInformationWindow<ScriptableObject> m_RuntimeMemoryScriptableObjectInformationWindow =
-            new RuntimeMemoryInformationWindow<ScriptableObject>();
-
+        private RuntimeMemoryInformationWindow<Object> m_RuntimeMemoryAllInformationWindow = new RuntimeMemoryInformationWindow<Object>();
+        private RuntimeMemoryInformationWindow<Texture> m_RuntimeMemoryTextureInformationWindow = new RuntimeMemoryInformationWindow<Texture>();
+        private RuntimeMemoryInformationWindow<Mesh> m_RuntimeMemoryMeshInformationWindow = new RuntimeMemoryInformationWindow<Mesh>();
+        private RuntimeMemoryInformationWindow<Material> m_RuntimeMemoryMaterialInformationWindow = new RuntimeMemoryInformationWindow<Material>();
+        private RuntimeMemoryInformationWindow<Shader> m_RuntimeMemoryShaderInformationWindow = new RuntimeMemoryInformationWindow<Shader>();
+        private RuntimeMemoryInformationWindow<AnimationClip> m_RuntimeMemoryAnimationClipInformationWindow = new RuntimeMemoryInformationWindow<AnimationClip>();
+        private RuntimeMemoryInformationWindow<AudioClip> m_RuntimeMemoryAudioClipInformationWindow = new RuntimeMemoryInformationWindow<AudioClip>();
+        private RuntimeMemoryInformationWindow<Font> m_RuntimeMemoryFontInformationWindow = new RuntimeMemoryInformationWindow<Font>();
+        private RuntimeMemoryInformationWindow<TextAsset> m_RuntimeMemoryTextAssetInformationWindow = new RuntimeMemoryInformationWindow<TextAsset>();
+        private RuntimeMemoryInformationWindow<ScriptableObject> m_RuntimeMemoryScriptableObjectInformationWindow = new RuntimeMemoryInformationWindow<ScriptableObject>();
         private ObjectPoolInformationWindow m_ObjectPoolInformationWindow = new ObjectPoolInformationWindow();
         private ReferencePoolInformationWindow m_ReferencePoolInformationWindow = new ReferencePoolInformationWindow();
         private NetworkInformationWindow m_NetworkInformationWindow = new NetworkInformationWindow();
@@ -104,7 +78,6 @@ namespace ZeroFramework.Debugger
         private OperationsWindow m_OperationsWindow = new OperationsWindow();
         private CommandWindow m_CommandWindow = new CommandWindow();
         private HierarchyWindow m_HierarchyWindow = new HierarchyWindow();
-
         private FpsCounter m_FpsCounter = null;
 
         /// <summary>
@@ -156,10 +129,10 @@ namespace ZeroFramework.Debugger
             set => m_WindowScale = value;
         }
 
-        /// <summary>
-        /// 游戏框架组件初始化。
-        /// </summary>
-        void Awake()
+		/// <summary>
+		/// 游戏框架组件初始化。
+		/// </summary>
+		void Awake()
         {
             Instance = this;
             m_DebuggerManager = Zero.Instance.GetModule<IDebuggerManager>();
@@ -169,16 +142,35 @@ namespace ZeroFramework.Debugger
                 return;
             }
 
-            m_FpsCounter = new FpsCounter(0.5f);
+			m_Skin = GameFrameworkConfig.Instance.m_Skin;
+			m_ActiveWindow = GameFrameworkConfig.Instance.m_ActiveWindow;
+			m_ShowFullWindow = GameFrameworkConfig.Instance.m_ShowFullWindow;
+			m_ConsoleWindow = GameFrameworkConfig.Instance.m_ConsoleWindow;
+
+			switch (m_ActiveWindow) {
+				case DebuggerActiveWindowType.AlwaysOpen:
+					ActiveWindow = true;
+					break;
+
+				case DebuggerActiveWindowType.OnlyOpenWhenDevelopment:
+					ActiveWindow = Debug.isDebugBuild;
+					break;
+
+				case DebuggerActiveWindowType.OnlyOpenInEditor:
+					ActiveWindow = Application.isEditor;
+					break;
+
+				default:
+					ActiveWindow = false;
+					break;
+			}
+
+			m_FpsCounter = new FpsCounter(0.5f);
+			BatchRegistrationWindow();
         }
 
-        private void Start()
+        private void BatchRegistrationWindow ()
         {
-            m_Skin = GameFrameworkConfig.Instance.m_Skin;
-            m_ActiveWindow = GameFrameworkConfig.Instance.m_ActiveWindow;
-            m_ShowFullWindow = GameFrameworkConfig.Instance.m_ShowFullWindow;
-            m_ConsoleWindow = GameFrameworkConfig.Instance.m_ConsoleWindow;
-
             RegisterDebuggerWindow("Console", m_ConsoleWindow);
             RegisterDebuggerWindow("Command", m_CommandWindow);
             RegisterDebuggerWindow("Hierarchy", m_HierarchyWindow);
@@ -215,26 +207,7 @@ namespace ZeroFramework.Debugger
             RegisterDebuggerWindow("Profiler/Network", m_NetworkInformationWindow);
             RegisterDebuggerWindow("Other/Settings", m_SettingsWindow);
             RegisterDebuggerWindow("Other/Operations", m_OperationsWindow);
-
-            switch (m_ActiveWindow)
-            {
-                case DebuggerActiveWindowType.AlwaysOpen:
-                    ActiveWindow = true;
-                    break;
-
-                case DebuggerActiveWindowType.OnlyOpenWhenDevelopment:
-                    ActiveWindow = Debug.isDebugBuild;
-                    break;
-
-                case DebuggerActiveWindowType.OnlyOpenInEditor:
-                    ActiveWindow = Application.isEditor;
-                    break;
-
-                default:
-                    ActiveWindow = false;
-                    break;
-            }
-        }
+		}
 
         private void Update()
         {

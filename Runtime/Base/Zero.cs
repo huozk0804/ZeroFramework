@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using ZeroFramework.Debugger;
 using ZeroFramework.Download;
 using ZeroFramework.FileSystem;
@@ -120,8 +119,43 @@ namespace ZeroFramework
 
         private void Awake()
         {
+			isInitialize = true;
+
+			FrameRate = GameFrameworkConfig.Instance.m_FrameRate;
+			GameSpeed = GameFrameworkConfig.Instance.m_GameSpeed;
+			RunInBackground = GameFrameworkConfig.Instance.m_RunInBackground;
+			NeverSleep = GameFrameworkConfig.Instance.m_NeverSleep;
+
+			//引用池设置处理
+			var enableStrictCheck = GameFrameworkConfig.Instance.m_EnableStrictCheck;
+			switch (enableStrictCheck) {
+				case ReferenceStrictCheckType.AlwaysEnable:
+					ReferencePool.EnableStrictCheck = true;
+					break;
+				case ReferenceStrictCheckType.OnlyEnableWhenDevelopment:
+					ReferencePool.EnableStrictCheck = Debug.isDebugBuild;
+					break;
+				case ReferenceStrictCheckType.OnlyEnableInEditor:
+					ReferencePool.EnableStrictCheck = Application.isEditor;
+					break;
+				default:
+					ReferencePool.EnableStrictCheck = false;
+					break;
+			}
+
+			InitTextHelper();
+			InitLogHelper();
+			InitVersionHelper();
+			InitJsonHelper();
+			InitCompressionHelper();
+
+			var debuggerType = GameFrameworkConfig.Instance.m_ActiveWindow;
+			if (debuggerType != DebuggerActiveWindowType.AlwaysClose) {
+				gameObject.AddComponent<DebuggerComponent>();
+			}
+
 #if UNITY_5_3_OR_NEWER || UNITY_5_3
-            Utility.Converter.ScreenDpi = Screen.dpi;
+			Utility.Converter.ScreenDpi = Screen.dpi;
             if (Utility.Converter.ScreenDpi <= 0)
             {
                 Utility.Converter.ScreenDpi = DefaultDpi;
@@ -134,47 +168,12 @@ namespace ZeroFramework
 #if UNITY_5_6_OR_NEWER
             Application.lowMemory += OnLowMemory;
 #endif
-            isInitialize = true;
-
-            FrameRate = GameFrameworkConfig.Instance.m_FrameRate;
-            GameSpeed = GameFrameworkConfig.Instance.m_GameSpeed;
-            RunInBackground = GameFrameworkConfig.Instance.m_RunInBackground;
-            NeverSleep = GameFrameworkConfig.Instance.m_NeverSleep;
-
-            //引用池设置处理
-            var enableStrictCheck = GameFrameworkConfig.Instance.m_EnableStrictCheck;
-            switch (enableStrictCheck)
-            {
-                case ReferenceStrictCheckType.AlwaysEnable:
-                    ReferencePool.EnableStrictCheck = true;
-                    break;
-                case ReferenceStrictCheckType.OnlyEnableWhenDevelopment:
-                    ReferencePool.EnableStrictCheck = Debug.isDebugBuild;
-                    break;
-                case ReferenceStrictCheckType.OnlyEnableInEditor:
-                    ReferencePool.EnableStrictCheck = Application.isEditor;
-                    break;
-                default:
-                    ReferencePool.EnableStrictCheck = false;
-                    break;
-            }
-
-            InitTextHelper();
-            InitLogHelper();
-            InitVersionHelper();
-            InitJsonHelper();
-            InitCompressionHelper();
-            
-            var debuggerType = GameFrameworkConfig.Instance.m_ActiveWindow;
-            if (debuggerType != DebuggerActiveWindowType.AlwaysClose)
-            {
-                gameObject.AddComponent<DebuggerComponent>();
-            }
-            
+       
             Log.Info("Zero Framework Version: {0}", Version.GameFrameworkVersion);
             Log.Info("Unity Version: {0}", Application.unityVersion);
             Log.Info("Game Version: {0} ({1})", Version.GameVersion, Version.InternalGameVersion);
             Log.Info("Game Resources Version: {0}", Version.GameResVersion);
+            Log.Info("Zero Frame Launch Succeed.");
         }
 
         private void Start()
@@ -188,7 +187,7 @@ namespace ZeroFramework
 
         private void Update()
         {
-            for (var current = _frameworkModules.First; current != null; current = current.Previous)
+            for (var current = _frameworkModules.First; current != null; current = current.Next)
             {
                 current.Value.Update(Time.deltaTime, Time.unscaledDeltaTime);
             }

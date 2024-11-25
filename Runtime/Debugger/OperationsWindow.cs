@@ -17,9 +17,8 @@ namespace ZeroFramework.Debugger
             GUILayout.Label("<b>Operations</b>");
             GUILayout.BeginVertical("box");
             {
-                //ObjectPoolComponent objectPoolComponent = GameEntry.GetComponent<ObjectPoolComponent>();
-                ObjectPoolManager objectPoolComponent = null;
-                if (objectPoolComponent != null)
+                var objectPoolComponent = Zero.Instance.ObjectPool;
+				if (objectPoolComponent != null)
                 {
                     if (GUILayout.Button("Object Pool Release", GUILayout.Height(30f)))
                     {
@@ -32,34 +31,34 @@ namespace ZeroFramework.Debugger
                     }
                 }
 
-                //ResourceComponent resourceCompoent = GameEntry.GetComponent<ResourceComponent>();
-                ResourceManager resourceCompoent = null;
-                if (resourceCompoent != null)
-                {
-                    if (GUILayout.Button("Unload Unused Assets", GUILayout.Height(30f)))
-                    {
-                        //resourceCompoent.ForceUnloadUnusedAssets(false);
-                    }
+                //TODO: 待处理
+                //var resourceCompoent = Zero.Instance.Resource;
+                //if (resourceCompoent != null)
+                //{
+                //    if (GUILayout.Button("Unload Unused Assets", GUILayout.Height(30f)))
+                //    {
+                //        resourceCompoent.ForceUnloadUnusedAssets(false);
+                //    }
 
-                    if (GUILayout.Button("Unload Unused Assets and Garbage Collect", GUILayout.Height(30f)))
-                    {
-                        //resourceCompoent.ForceUnloadUnusedAssets(true);
-                    }
-                }
+                //    if (GUILayout.Button("Unload Unused Assets and Garbage Collect", GUILayout.Height(30f)))
+                //    {
+                //        resourceCompoent.ForceUnloadUnusedAssets(true);
+                //    }
+                //}
 
                 if (GUILayout.Button("Shutdown Game Framework (None)", GUILayout.Height(30f)))
                 {
-                    //GameEntry.Shutdown(ShutdownType.None);
+                    Zero.Instance.Shutdown(ShutdownType.None);
                 }
 
                 if (GUILayout.Button("Shutdown Game Framework (Restart)", GUILayout.Height(30f)))
                 {
-                    //GameEntry.Shutdown(ShutdownType.Restart);
+					Zero.Instance.Shutdown(ShutdownType.Restart);
                 }
 
                 if (GUILayout.Button("Shutdown Game Framework (Quit)", GUILayout.Height(30f)))
                 {
-                    //GameEntry.Shutdown(ShutdownType.Quit);
+					Zero.Instance.Shutdown(ShutdownType.Quit);
                 }
             }
             GUILayout.EndVertical();
