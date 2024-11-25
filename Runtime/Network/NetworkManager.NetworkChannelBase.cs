@@ -32,7 +32,7 @@ namespace ZeroFramework.Network
             protected readonly SendState m_SendState;
             protected readonly ReceiveState m_ReceiveState;
             protected readonly HeartBeatState m_HeartBeatState;
-            protected int m_SentPacketCount;
+            protected int m_SendPacketCount;
             protected int m_ReceivedPacketCount;
             protected bool m_Active;
             private bool m_Disposed;
@@ -61,7 +61,7 @@ namespace ZeroFramework.Network
                 m_SendState = new SendState();
                 m_ReceiveState = new ReceiveState();
                 m_HeartBeatState = new HeartBeatState();
-                m_SentPacketCount = 0;
+                m_SendPacketCount = 0;
                 m_ReceivedPacketCount = 0;
                 m_Active = false;
                 m_Disposed = false;
@@ -122,7 +122,7 @@ namespace ZeroFramework.Network
             /// <summary>
             /// 获取累计发送的消息包数量。
             /// </summary>
-            public int SentPacketCount => m_SentPacketCount;
+            public int SentPacketCount => m_SendPacketCount;
 
             /// <summary>
             /// 获取已接收未处理的消息包数量。
@@ -328,7 +328,7 @@ namespace ZeroFramework.Network
                         }
                     }
 
-                    m_SentPacketCount = 0;
+                    m_SendPacketCount = 0;
                     m_ReceivedPacketCount = 0;
 
                     lock (m_SendPacketPool)

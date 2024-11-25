@@ -136,8 +136,7 @@ namespace ZeroFramework.Network
         /// <returns>要获取的网络频道。</returns>
         public INetworkChannel GetNetworkChannel(string name)
         {
-            NetworkChannelBase networkChannel = null;
-            if (m_NetworkChannels.TryGetValue(name ?? string.Empty, out networkChannel))
+            if (m_NetworkChannels.TryGetValue(name ?? string.Empty, out var networkChannel))
             {
                 return networkChannel;
             }
@@ -234,19 +233,18 @@ namespace ZeroFramework.Network
         /// <returns>是否销毁网络频道成功。</returns>
         public bool DestroyNetworkChannel(string name)
         {
-            NetworkChannelBase networkChannel = null;
-            if (m_NetworkChannels.TryGetValue(name ?? string.Empty, out networkChannel))
+            if (!m_NetworkChannels.TryGetValue(name ?? string.Empty, out var networkChannel))
             {
-                networkChannel.NetworkChannelConnected -= OnNetworkChannelConnected;
-                networkChannel.NetworkChannelClosed -= OnNetworkChannelClosed;
-                networkChannel.NetworkChannelMissHeartBeat -= OnNetworkChannelMissHeartBeat;
-                networkChannel.NetworkChannelError -= OnNetworkChannelError;
-                networkChannel.NetworkChannelCustomError -= OnNetworkChannelCustomError;
-                networkChannel.Shutdown();
-                return m_NetworkChannels.Remove(name);
-            }
+				return false;
+			}
 
-            return false;
+			networkChannel.NetworkChannelConnected -= OnNetworkChannelConnected;
+			networkChannel.NetworkChannelClosed -= OnNetworkChannelClosed;
+			networkChannel.NetworkChannelMissHeartBeat -= OnNetworkChannelMissHeartBeat;
+			networkChannel.NetworkChannelError -= OnNetworkChannelError;
+			networkChannel.NetworkChannelCustomError -= OnNetworkChannelCustomError;
+			networkChannel.Shutdown();
+			return m_NetworkChannels.Remove(name);
         }
 
         private void OnNetworkChannelConnected(NetworkChannelBase networkChannel, object userData)

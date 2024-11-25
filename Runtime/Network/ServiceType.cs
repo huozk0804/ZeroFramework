@@ -23,12 +23,12 @@ namespace ZeroFramework.Network
         TcpWithSyncReceive,
 
         /// <summary>
-        ///
+        /// UDP网络服务
         /// </summary>
         Udp,
 
         /// <summary>
-        ///
+        /// KCP网络服务
         /// </summary>
         Kcp,
     }

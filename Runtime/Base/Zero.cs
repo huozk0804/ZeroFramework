@@ -204,7 +204,8 @@ namespace ZeroFramework
 
         protected override void OnDestory()
         {
-            for (var current = _frameworkModules.Last; current != null; current = current.Previous)
+			base.OnDestory();
+			for (var current = _frameworkModules.Last; current != null; current = current.Previous)
             {
                 current.Value.Shutdown();
             }
@@ -213,7 +214,6 @@ namespace ZeroFramework
             ReferencePool.ClearAll();
             Utility.Marshal.FreeCachedHGlobal();
             GameFrameworkLog.SetLogHelper(null);
-            base.OnDestory();
             isInitialize = false;
         }
 

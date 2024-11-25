@@ -120,7 +120,7 @@ namespace ZeroFramework.Network
                     throw;
                 }
 
-                m_SentPacketCount = 0;
+                m_SendPacketCount = 0;
                 m_ReceivedPacketCount = 0;
 
                 lock (m_SendPacketPool)
@@ -197,7 +197,7 @@ namespace ZeroFramework.Network
                     return;
                 }
 
-                m_SentPacketCount++;
+                m_SendPacketCount++;
                 m_SendState.Reset();
             }
 
