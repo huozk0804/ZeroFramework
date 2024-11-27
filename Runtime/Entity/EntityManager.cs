@@ -70,7 +70,7 @@ namespace ZeroFramework.Entity
                 var baseEntityGroupHelper = GameFrameworkConfig.Instance.m_CustomEntityGroupHelper;
                 for (int i = 0; i < preEntityGroups.Length; i++)
                 {
-                    var name = preEntityGroups[i].m_Name;
+                    var name = preEntityGroups[i].Name;
                     if (HasEntityGroup(name))
                     {
                         continue;
@@ -85,9 +85,9 @@ namespace ZeroFramework.Entity
                     }
 
                     entityGroupHelper.name = Utility.Text.Format("Entity Group - {0}", name);
-                    AddEntityGroup(name, preEntityGroups[i].m_InstanceAutoReleaseInterval,
-                        preEntityGroups[i].m_InstanceCapacity, preEntityGroups[i].m_InstanceExpireTime,
-                        preEntityGroups[i].m_InstancePriority, entityGroupHelper);
+                    AddEntityGroup(name, preEntityGroups[i].InstanceAutoReleaseInterval,
+                        preEntityGroups[i].InstanceCapacity, preEntityGroups[i].InstanceExpireTime,
+                        preEntityGroups[i].InstancePriority, entityGroupHelper);
                 }
             }
         }

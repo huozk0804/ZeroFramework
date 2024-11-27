@@ -228,17 +228,7 @@ namespace ZeroFramework.Localization
         /// <param name="dictionaryAsset">要释放的字典资源。</param>
         public override void ReleaseDataAsset(ILocalizationManager localizationManager, object dictionaryAsset)
         {
-            // m_ResourceComponent.UnloadAsset(dictionaryAsset);
-        }
-
-        private void Start()
-        {
-            //m_ResourceComponent = GameEntry.GetComponent<ResourceComponent>();
-            // if (m_ResourceComponent == null)
-            // {
-            //     Log.Fatal("Resource component is invalid.");
-            //     return;
-            // }
+            Zero.Instance.Resource.UnloadAsset(dictionaryAsset);
         }
     }
 }
