@@ -5,7 +5,6 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +22,7 @@ namespace ZeroFramework.Editor.ResourceTools
         private readonly List<string[]> m_CircularDependencyDatas;
         private readonly HashSet<Stamp> m_AnalyzedStamps;
 
-        public ResourceAnalyzerController()
-            : this(null)
+        public ResourceAnalyzerController() : this(null)
         {
         }
 
@@ -32,7 +30,7 @@ namespace ZeroFramework.Editor.ResourceTools
         {
             m_ResourceCollection = resourceCollection != null ? resourceCollection : new ResourceCollection();
 
-            m_ResourceCollection.OnLoadingResource += delegate (int index, int count)
+            m_ResourceCollection.OnLoadingResource += delegate(int index, int count)
             {
                 if (OnLoadingResource != null)
                 {
@@ -40,7 +38,7 @@ namespace ZeroFramework.Editor.ResourceTools
                 }
             };
 
-            m_ResourceCollection.OnLoadingAsset += delegate (int index, int count)
+            m_ResourceCollection.OnLoadingAsset += delegate(int index, int count)
             {
                 if (OnLoadingAsset != null)
                 {
@@ -48,7 +46,7 @@ namespace ZeroFramework.Editor.ResourceTools
                 }
             };
 
-            m_ResourceCollection.OnLoadCompleted += delegate ()
+            m_ResourceCollection.OnLoadCompleted += delegate()
             {
                 if (OnLoadCompleted != null)
                 {
@@ -130,7 +128,8 @@ namespace ZeroFramework.Editor.ResourceTools
             }
         }
 
-        private void AnalyzeAsset(string assetName, Asset hostAsset, DependencyData dependencyData, HashSet<string> scriptAssetNames)
+        private void AnalyzeAsset(string assetName, Asset hostAsset, DependencyData dependencyData,
+            HashSet<string> scriptAssetNames)
         {
             string[] dependencyAssetNames = AssetDatabase.GetDependencies(assetName, false);
             foreach (string dependencyAssetName in dependencyAssetNames)
@@ -202,7 +201,8 @@ namespace ZeroFramework.Editor.ResourceTools
         public string[] GetAssetNames(AssetsOrder order, string filter)
         {
             HashSet<string> filteredAssetNames = GetFilteredAssetNames(filter);
-            IEnumerable<KeyValuePair<string, DependencyData>> filteredResult = m_DependencyDatas.Where(pair => filteredAssetNames.Contains(pair.Key));
+            IEnumerable<KeyValuePair<string, DependencyData>> filteredResult =
+                m_DependencyDatas.Where(pair => filteredAssetNames.Contains(pair.Key));
             IEnumerable<KeyValuePair<string, DependencyData>> orderedResult = null;
             switch (order)
             {
@@ -265,7 +265,8 @@ namespace ZeroFramework.Editor.ResourceTools
         public string[] GetScatteredAssetNames(ScatteredAssetsOrder order, string filter)
         {
             HashSet<string> filterAssetNames = GetFilteredAssetNames(filter);
-            IEnumerable<KeyValuePair<string, List<Asset>>> filteredResult = m_ScatteredAssets.Where(pair => filterAssetNames.Contains(pair.Key) && pair.Value.Count > 1);
+            IEnumerable<KeyValuePair<string, List<Asset>>> filteredResult =
+                m_ScatteredAssets.Where(pair => filterAssetNames.Contains(pair.Key) && pair.Value.Count > 1);
             IEnumerable<KeyValuePair<string, List<Asset>>> orderedResult = null;
             switch (order)
             {

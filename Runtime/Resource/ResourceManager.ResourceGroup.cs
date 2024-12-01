@@ -52,24 +52,12 @@ namespace ZeroFramework.Resource
             /// <summary>
             /// 获取资源组是否准备完毕。
             /// </summary>
-            public bool Ready
-            {
-                get
-                {
-                    return ReadyCount >= TotalCount;
-                }
-            }
+            public bool Ready => ReadyCount >= TotalCount;
 
             /// <summary>
             /// 获取资源组包含资源数量。
             /// </summary>
-            public int TotalCount
-            {
-                get
-                {
-                    return m_ResourceNames.Count;
-                }
-            }
+            public int TotalCount => m_ResourceNames.Count;
 
             /// <summary>
             /// 获取资源组中已准备完成资源数量。
@@ -81,8 +69,7 @@ namespace ZeroFramework.Resource
                     int readyCount = 0;
                     foreach (ResourceName resourceName in m_ResourceNames)
                     {
-                        ResourceInfo resourceInfo = null;
-                        if (m_ResourceInfos.TryGetValue(resourceName, out resourceInfo) && resourceInfo.Ready)
+                        if (m_ResourceInfos.TryGetValue(resourceName, out var resourceInfo) && resourceInfo.Ready)
                         {
                             readyCount++;
                         }
@@ -95,24 +82,12 @@ namespace ZeroFramework.Resource
             /// <summary>
             /// 获取资源组包含资源的总大小。
             /// </summary>
-            public long TotalLength
-            {
-                get
-                {
-                    return m_TotalLength;
-                }
-            }
+            public long TotalLength => m_TotalLength;
 
             /// <summary>
             /// 获取资源组包含资源压缩后的总大小。
             /// </summary>
-            public long TotalCompressedLength
-            {
-                get
-                {
-                    return m_TotalCompressedLength;
-                }
-            }
+            public long TotalCompressedLength => m_TotalCompressedLength;
 
             /// <summary>
             /// 获取资源组中已准备完成资源的总大小。
@@ -124,8 +99,7 @@ namespace ZeroFramework.Resource
                     long readyLength = 0L;
                     foreach (ResourceName resourceName in m_ResourceNames)
                     {
-                        ResourceInfo resourceInfo = null;
-                        if (m_ResourceInfos.TryGetValue(resourceName, out resourceInfo) && resourceInfo.Ready)
+                        if (m_ResourceInfos.TryGetValue(resourceName, out var resourceInfo) && resourceInfo.Ready)
                         {
                             readyLength += resourceInfo.Length;
                         }
@@ -145,8 +119,7 @@ namespace ZeroFramework.Resource
                     long readyCompressedLength = 0L;
                     foreach (ResourceName resourceName in m_ResourceNames)
                     {
-                        ResourceInfo resourceInfo = null;
-                        if (m_ResourceInfos.TryGetValue(resourceName, out resourceInfo) && resourceInfo.Ready)
+                        if (m_ResourceInfos.TryGetValue(resourceName, out var resourceInfo) && resourceInfo.Ready)
                         {
                             readyCompressedLength += resourceInfo.CompressedLength;
                         }
@@ -159,13 +132,7 @@ namespace ZeroFramework.Resource
             /// <summary>
             /// 获取资源组的完成进度。
             /// </summary>
-            public float Progress
-            {
-                get
-                {
-                    return m_TotalLength > 0L ? (float)ReadyLength / m_TotalLength : 1f;
-                }
-            }
+            public float Progress => m_TotalLength > 0L ? (float)ReadyLength / m_TotalLength : 1f;
 
             /// <summary>
             /// 获取资源组包含的资源名称列表。

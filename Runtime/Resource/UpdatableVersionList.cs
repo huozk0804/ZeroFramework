@@ -37,7 +37,8 @@ namespace ZeroFramework.Resource
         /// <param name="resources">包含的资源集合。</param>
         /// <param name="fileSystems">包含的文件系统集合。</param>
         /// <param name="resourceGroups">包含的资源组集合。</param>
-        public UpdatableVersionList(string applicableGameVersion, int internalResourceVersion, Asset[] assets, Resource[] resources, FileSystem[] fileSystems, ResourceGroup[] resourceGroups)
+        public UpdatableVersionList(string applicableGameVersion, int internalResourceVersion, Asset[] assets,
+            Resource[] resources, FileSystem[] fileSystems, ResourceGroup[] resourceGroups)
         {
             m_IsValid = true;
             m_ApplicableGameVersion = applicableGameVersion;

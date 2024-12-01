@@ -123,7 +123,8 @@ namespace ZeroFramework.Resource
                 {
                     binaryWriter.WriteEncryptedString(resource.Name, s_CachedHashBytes);
                     binaryWriter.WriteEncryptedString(resource.Variant, s_CachedHashBytes);
-                    binaryWriter.WriteEncryptedString(resource.Extension != DefaultExtension ? resource.Extension : null, s_CachedHashBytes);
+                    binaryWriter.WriteEncryptedString(
+                        resource.Extension != DefaultExtension ? resource.Extension : null, s_CachedHashBytes);
                     binaryWriter.Write(resource.LoadType);
                     binaryWriter.Write7BitEncodedInt32(resource.Length);
                     binaryWriter.Write(resource.HashCode);
@@ -193,7 +194,8 @@ namespace ZeroFramework.Resource
                 {
                     binaryWriter.WriteEncryptedString(resource.Name, s_CachedHashBytes);
                     binaryWriter.WriteEncryptedString(resource.Variant, s_CachedHashBytes);
-                    binaryWriter.WriteEncryptedString(resource.Extension != DefaultExtension ? resource.Extension : null, s_CachedHashBytes);
+                    binaryWriter.WriteEncryptedString(
+                        resource.Extension != DefaultExtension ? resource.Extension : null, s_CachedHashBytes);
                     binaryWriter.Write(resource.LoadType);
                     binaryWriter.Write7BitEncodedInt32(resource.Length);
                     binaryWriter.Write(resource.HashCode);

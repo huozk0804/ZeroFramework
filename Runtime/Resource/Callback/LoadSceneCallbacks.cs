@@ -31,7 +31,8 @@ namespace ZeroFramework.Resource
         /// </summary>
         /// <param name="loadSceneSuccessCallback">加载场景成功回调函数。</param>
         /// <param name="loadSceneFailureCallback">加载场景失败回调函数。</param>
-        public LoadSceneCallbacks(LoadSceneSuccessCallback loadSceneSuccessCallback, LoadSceneFailureCallback loadSceneFailureCallback)
+        public LoadSceneCallbacks(LoadSceneSuccessCallback loadSceneSuccessCallback,
+            LoadSceneFailureCallback loadSceneFailureCallback)
             : this(loadSceneSuccessCallback, loadSceneFailureCallback, null, null)
         {
         }
@@ -41,7 +42,8 @@ namespace ZeroFramework.Resource
         /// </summary>
         /// <param name="loadSceneSuccessCallback">加载场景成功回调函数。</param>
         /// <param name="loadSceneUpdateCallback">加载场景更新回调函数。</param>
-        public LoadSceneCallbacks(LoadSceneSuccessCallback loadSceneSuccessCallback, LoadSceneUpdateCallback loadSceneUpdateCallback)
+        public LoadSceneCallbacks(LoadSceneSuccessCallback loadSceneSuccessCallback,
+            LoadSceneUpdateCallback loadSceneUpdateCallback)
             : this(loadSceneSuccessCallback, null, loadSceneUpdateCallback, null)
         {
         }
@@ -51,7 +53,8 @@ namespace ZeroFramework.Resource
         /// </summary>
         /// <param name="loadSceneSuccessCallback">加载场景成功回调函数。</param>
         /// <param name="loadSceneDependencyAssetCallback">加载场景时加载依赖资源回调函数。</param>
-        public LoadSceneCallbacks(LoadSceneSuccessCallback loadSceneSuccessCallback, LoadSceneDependencyAssetCallback loadSceneDependencyAssetCallback)
+        public LoadSceneCallbacks(LoadSceneSuccessCallback loadSceneSuccessCallback,
+            LoadSceneDependencyAssetCallback loadSceneDependencyAssetCallback)
             : this(loadSceneSuccessCallback, null, null, loadSceneDependencyAssetCallback)
         {
         }
@@ -62,7 +65,8 @@ namespace ZeroFramework.Resource
         /// <param name="loadSceneSuccessCallback">加载场景成功回调函数。</param>
         /// <param name="loadSceneFailureCallback">加载场景失败回调函数。</param>
         /// <param name="loadSceneUpdateCallback">加载场景更新回调函数。</param>
-        public LoadSceneCallbacks(LoadSceneSuccessCallback loadSceneSuccessCallback, LoadSceneFailureCallback loadSceneFailureCallback, LoadSceneUpdateCallback loadSceneUpdateCallback)
+        public LoadSceneCallbacks(LoadSceneSuccessCallback loadSceneSuccessCallback,
+            LoadSceneFailureCallback loadSceneFailureCallback, LoadSceneUpdateCallback loadSceneUpdateCallback)
             : this(loadSceneSuccessCallback, loadSceneFailureCallback, loadSceneUpdateCallback, null)
         {
         }
@@ -73,7 +77,9 @@ namespace ZeroFramework.Resource
         /// <param name="loadSceneSuccessCallback">加载场景成功回调函数。</param>
         /// <param name="loadSceneFailureCallback">加载场景失败回调函数。</param>
         /// <param name="loadSceneDependencyAssetCallback">加载场景时加载依赖资源回调函数。</param>
-        public LoadSceneCallbacks(LoadSceneSuccessCallback loadSceneSuccessCallback, LoadSceneFailureCallback loadSceneFailureCallback, LoadSceneDependencyAssetCallback loadSceneDependencyAssetCallback)
+        public LoadSceneCallbacks(LoadSceneSuccessCallback loadSceneSuccessCallback,
+            LoadSceneFailureCallback loadSceneFailureCallback,
+            LoadSceneDependencyAssetCallback loadSceneDependencyAssetCallback)
             : this(loadSceneSuccessCallback, loadSceneFailureCallback, null, loadSceneDependencyAssetCallback)
         {
         }
@@ -85,7 +91,9 @@ namespace ZeroFramework.Resource
         /// <param name="loadSceneFailureCallback">加载场景失败回调函数。</param>
         /// <param name="loadSceneUpdateCallback">加载场景更新回调函数。</param>
         /// <param name="loadSceneDependencyAssetCallback">加载场景时加载依赖资源回调函数。</param>
-        public LoadSceneCallbacks(LoadSceneSuccessCallback loadSceneSuccessCallback, LoadSceneFailureCallback loadSceneFailureCallback, LoadSceneUpdateCallback loadSceneUpdateCallback, LoadSceneDependencyAssetCallback loadSceneDependencyAssetCallback)
+        public LoadSceneCallbacks(LoadSceneSuccessCallback loadSceneSuccessCallback,
+            LoadSceneFailureCallback loadSceneFailureCallback, LoadSceneUpdateCallback loadSceneUpdateCallback,
+            LoadSceneDependencyAssetCallback loadSceneDependencyAssetCallback)
         {
             if (loadSceneSuccessCallback == null)
             {

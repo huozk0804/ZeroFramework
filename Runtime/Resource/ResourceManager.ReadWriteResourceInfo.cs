@@ -31,29 +31,11 @@ namespace ZeroFramework.Resource
 
             public string FileSystemName => m_FileSystemName;
 
-            public LoadType LoadType
-            {
-                get
-                {
-                    return m_LoadType;
-                }
-            }
+            public LoadType LoadType => m_LoadType;
 
-            public int Length
-            {
-                get
-                {
-                    return m_Length;
-                }
-            }
+            public int Length => m_Length;
 
-            public int HashCode
-            {
-                get
-                {
-                    return m_HashCode;
-                }
-            }
+            public int HashCode => m_HashCode;
         }
     }
 }

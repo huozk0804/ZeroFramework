@@ -18,7 +18,8 @@ namespace ZeroFramework.Editor.ResourceTools
         private readonly List<Asset> m_Assets;
         private readonly List<string> m_ResourceGroups;
 
-        private Resource(string name, string variant, string fileSystem, LoadType loadType, bool packed, string[] resourceGroups)
+        private Resource(string name, string variant, string fileSystem, LoadType loadType, bool packed,
+            string[] resourceGroups)
         {
             m_Assets = new List<Asset>();
             m_ResourceGroups = new List<string>();
@@ -36,47 +37,26 @@ namespace ZeroFramework.Editor.ResourceTools
             }
         }
 
-        public string Name
-        {
-            get;
-            private set;
-        }
+        public string Name { get; private set; }
 
-        public string Variant
-        {
-            get;
-            private set;
-        }
+        public string Variant { get; private set; }
 
         public string FullName => Variant != null ? Utility.Text.Format("{0}.{1}", Name, Variant) : Name;
 
-        public AssetType AssetType
-        {
-            get;
-            private set;
-        }
+        public AssetType AssetType { get; private set; }
 
-        public bool IsLoadFromBinary => LoadType == LoadType.LoadFromBinary || LoadType == LoadType.LoadFromBinaryAndQuickDecrypt || LoadType == LoadType.LoadFromBinaryAndDecrypt;
+        public bool IsLoadFromBinary => LoadType == LoadType.LoadFromBinary ||
+                                        LoadType == LoadType.LoadFromBinaryAndQuickDecrypt ||
+                                        LoadType == LoadType.LoadFromBinaryAndDecrypt;
 
-        public string FileSystem
-        {
-            get;
-            set;
-        }
+        public string FileSystem { get; set; }
 
-        public LoadType LoadType
-        {
-            get;
-            set;
-        }
+        public LoadType LoadType { get; set; }
 
-        public bool Packed
-        {
-            get;
-            set;
-        }
+        public bool Packed { get; set; }
 
-        public static Resource Create(string name, string variant, string fileSystem, LoadType loadType, bool packed, string[] resourceGroups)
+        public static Resource Create(string name, string variant, string fileSystem, LoadType loadType, bool packed,
+            string[] resourceGroups)
         {
             return new Resource(name, variant, fileSystem, loadType, packed, resourceGroups ?? new string[0]);
         }

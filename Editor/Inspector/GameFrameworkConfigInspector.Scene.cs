@@ -11,7 +11,7 @@ namespace ZeroFramework.Editor
         void SceneInspectorInit()
         {
             _enableFunc.AddLast(OnSceneEnable);
-            _inspectorFunc.AddLast(OnSceneInspectorGUI);
+            m_InspectorFunc.AddLast(OnSceneInspectorGUI);
             _completeFunc.AddLast(OnSceneComplete);
         }
 

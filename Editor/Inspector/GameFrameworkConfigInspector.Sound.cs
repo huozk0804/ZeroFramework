@@ -18,7 +18,7 @@ namespace ZeroFramework.Editor
         void SoundInspectorInit()
         {
             _enableFunc.AddLast(OnSoundEnable);
-            _inspectorFunc.AddLast(OnSoundInspectorGUI);
+            m_InspectorFunc.AddLast(OnSoundInspectorGUI);
             _completeFunc.AddLast(OnSoundComplete);
         }
 

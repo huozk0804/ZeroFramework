@@ -30,19 +30,13 @@ namespace ZeroFramework.Editor.ResourceTools
                 Folder = folder;
             }
 
-            public string Name
-            {
-                get;
-                private set;
-            }
+            public string Name { get; private set; }
 
-            public ResourceFolder Folder
-            {
-                get;
-                private set;
-            }
+            public ResourceFolder Folder { get; private set; }
 
-            public string FromRootPath => Folder == null ? string.Empty : (Folder.Folder == null ? Name : Utility.Text.Format("{0}/{1}", Folder.FromRootPath, Name));
+            public string FromRootPath => Folder == null
+                ? string.Empty
+                : (Folder.Folder == null ? Name : Utility.Text.Format("{0}/{1}", Folder.FromRootPath, Name));
 
             public int Depth => Folder != null ? Folder.Depth + 1 : 0;
 

@@ -28,12 +28,14 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 加载资源代理辅助器异步读取资源二进制流完成事件。
         /// </summary>
-        event EventHandler<LoadResourceAgentHelperReadBytesCompleteEventArgs_0> LoadResourceAgentHelperReadBytesComplete;
+        event EventHandler<LoadResourceAgentHelperReadBytesCompleteEventArgs_0>
+            LoadResourceAgentHelperReadBytesComplete;
 
         /// <summary>
         /// 加载资源代理辅助器异步将资源二进制流转换为加载对象完成事件。
         /// </summary>
-        event EventHandler<LoadResourceAgentHelperParseBytesCompleteEventArgs_0> LoadResourceAgentHelperParseBytesComplete;
+        event EventHandler<LoadResourceAgentHelperParseBytesCompleteEventArgs_0>
+            LoadResourceAgentHelperParseBytesComplete;
 
         /// <summary>
         /// 加载资源代理辅助器异步加载资源完成事件。

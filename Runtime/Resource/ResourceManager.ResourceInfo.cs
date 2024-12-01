@@ -34,7 +34,8 @@ namespace ZeroFramework.Resource
             /// <param name="compressedLength">压缩后资源大小。</param>
             /// <param name="storageInReadOnly">资源是否在只读区。</param>
             /// <param name="ready">资源是否准备完毕。</param>
-            public ResourceInfo(ResourceName resourceName, string fileSystemName, LoadType loadType, int length, int hashCode, int compressedLength, bool storageInReadOnly, bool ready)
+            public ResourceInfo(ResourceName resourceName, string fileSystemName, LoadType loadType, int length,
+                int hashCode, int compressedLength, bool storageInReadOnly, bool ready)
             {
                 m_ResourceName = resourceName;
                 m_FileSystemName = fileSystemName;
@@ -54,101 +55,49 @@ namespace ZeroFramework.Resource
             /// <summary>
             /// 获取资源是否使用文件系统。
             /// </summary>
-            public bool UseFileSystem
-            {
-                get
-                {
-                    return !string.IsNullOrEmpty(m_FileSystemName);
-                }
-            }
+            public bool UseFileSystem => !string.IsNullOrEmpty(m_FileSystemName);
 
             /// <summary>
             /// 获取文件系统名称。
             /// </summary>
-            public string FileSystemName
-            {
-                get
-                {
-                    return m_FileSystemName;
-                }
-            }
+            public string FileSystemName => m_FileSystemName;
 
             /// <summary>
             /// 获取资源是否通过二进制方式加载。
             /// </summary>
-            public bool IsLoadFromBinary
-            {
-                get
-                {
-                    return m_LoadType == LoadType.LoadFromBinary || m_LoadType == LoadType.LoadFromBinaryAndQuickDecrypt || m_LoadType == LoadType.LoadFromBinaryAndDecrypt;
-                }
-            }
+            public bool IsLoadFromBinary => m_LoadType == LoadType.LoadFromBinary ||
+                                            m_LoadType == LoadType.LoadFromBinaryAndQuickDecrypt ||
+                                            m_LoadType == LoadType.LoadFromBinaryAndDecrypt;
 
             /// <summary>
             /// 获取资源加载方式。
             /// </summary>
-            public LoadType LoadType
-            {
-                get
-                {
-                    return m_LoadType;
-                }
-            }
+            public LoadType LoadType => m_LoadType;
 
             /// <summary>
             /// 获取资源大小。
             /// </summary>
-            public int Length
-            {
-                get
-                {
-                    return m_Length;
-                }
-            }
+            public int Length => m_Length;
 
             /// <summary>
             /// 获取资源哈希值。
             /// </summary>
-            public int HashCode
-            {
-                get
-                {
-                    return m_HashCode;
-                }
-            }
+            public int HashCode => m_HashCode;
 
             /// <summary>
             /// 获取压缩后资源大小。
             /// </summary>
-            public int CompressedLength
-            {
-                get
-                {
-                    return m_CompressedLength;
-                }
-            }
+            public int CompressedLength => m_CompressedLength;
 
             /// <summary>
             /// 获取资源是否在只读区。
             /// </summary>
-            public bool StorageInReadOnly
-            {
-                get
-                {
-                    return m_StorageInReadOnly;
-                }
-            }
+            public bool StorageInReadOnly => m_StorageInReadOnly;
 
             /// <summary>
             /// 获取资源是否准备完毕。
             /// </summary>
-            public bool Ready
-            {
-                get
-                {
-                    return m_Ready;
-                }
-            }
+            public bool Ready => m_Ready;
 
             /// <summary>
             /// 标记资源准备完毕。

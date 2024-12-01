@@ -27,7 +27,8 @@ namespace ZeroFramework.Resource
             /// </summary>
             /// <param name="resourceGroups">资源组集合。</param>
             /// <param name="resourceInfos">资源信息引用。</param>
-            public ResourceGroupCollection(ResourceGroup[] resourceGroups, Dictionary<ResourceName, ResourceInfo> resourceInfos)
+            public ResourceGroupCollection(ResourceGroup[] resourceGroups,
+                Dictionary<ResourceName, ResourceInfo> resourceInfos)
             {
                 if (resourceGroups == null || resourceGroups.Length < 1)
                 {
@@ -44,21 +45,24 @@ namespace ZeroFramework.Resource
                 {
                     if (resourceGroups[i] == null)
                     {
-                        throw new GameFrameworkException(Utility.Text.Format("Resource group index '{0}' is invalid.", i));
+                        throw new GameFrameworkException(Utility.Text.Format("Resource group index '{0}' is invalid.",
+                            i));
                     }
 
                     for (int j = i + 1; j < resourceGroups.Length; j++)
                     {
                         if (resourceGroups[i] == resourceGroups[j])
                         {
-                            throw new GameFrameworkException(Utility.Text.Format("Resource group '{0}' duplicated.", resourceGroups[i].Name));
+                            throw new GameFrameworkException(Utility.Text.Format("Resource group '{0}' duplicated.",
+                                resourceGroups[i].Name));
                         }
                     }
                 }
 
                 if (resourceGroups[lastIndex] == null)
                 {
-                    throw new GameFrameworkException(Utility.Text.Format("Resource group index '{0}' is invalid.", lastIndex));
+                    throw new GameFrameworkException(Utility.Text.Format("Resource group index '{0}' is invalid.",
+                        lastIndex));
                 }
 
                 m_ResourceGroups = resourceGroups;
@@ -73,10 +77,10 @@ namespace ZeroFramework.Resource
                     resourceGroup.InternalGetResourceNames(cachedResourceNames);
                     foreach (ResourceName resourceName in cachedResourceNames)
                     {
-                        ResourceInfo resourceInfo = null;
-                        if (!m_ResourceInfos.TryGetValue(resourceName, out resourceInfo))
+                        if (!m_ResourceInfos.TryGetValue(resourceName, out var resourceInfo))
                         {
-                            throw new GameFrameworkException(Utility.Text.Format("Resource info '{0}' is invalid.", resourceName.FullName));
+                            throw new GameFrameworkException(Utility.Text.Format("Resource info '{0}' is invalid.",
+                                resourceName.FullName));
                         }
 
                         if (m_ResourceNames.Add(resourceName))
@@ -96,13 +100,7 @@ namespace ZeroFramework.Resource
             /// <summary>
             /// 获取资源组集合包含资源数量。
             /// </summary>
-            public int TotalCount
-            {
-                get
-                {
-                    return m_ResourceNames.Count;
-                }
-            }
+            public int TotalCount => m_ResourceNames.Count;
 
             /// <summary>
             /// 获取资源组集合中已准备完成资源数量。
@@ -114,8 +112,7 @@ namespace ZeroFramework.Resource
                     int readyCount = 0;
                     foreach (ResourceName resourceName in m_ResourceNames)
                     {
-                        ResourceInfo resourceInfo = null;
-                        if (m_ResourceInfos.TryGetValue(resourceName, out resourceInfo) && resourceInfo.Ready)
+                        if (m_ResourceInfos.TryGetValue(resourceName, out var resourceInfo) && resourceInfo.Ready)
                         {
                             readyCount++;
                         }
@@ -128,24 +125,12 @@ namespace ZeroFramework.Resource
             /// <summary>
             /// 获取资源组集合包含资源的总大小。
             /// </summary>
-            public long TotalLength
-            {
-                get
-                {
-                    return m_TotalLength;
-                }
-            }
+            public long TotalLength => m_TotalLength;
 
             /// <summary>
             /// 获取资源组集合包含资源压缩后的总大小。
             /// </summary>
-            public long TotalCompressedLength
-            {
-                get
-                {
-                    return m_TotalCompressedLength;
-                }
-            }
+            public long TotalCompressedLength => m_TotalCompressedLength;
 
             /// <summary>
             /// 获取资源组集合中已准备完成资源的总大小。
@@ -157,8 +142,7 @@ namespace ZeroFramework.Resource
                     long readyLength = 0L;
                     foreach (ResourceName resourceName in m_ResourceNames)
                     {
-                        ResourceInfo resourceInfo = null;
-                        if (m_ResourceInfos.TryGetValue(resourceName, out resourceInfo) && resourceInfo.Ready)
+                        if (m_ResourceInfos.TryGetValue(resourceName, out var resourceInfo) && resourceInfo.Ready)
                         {
                             readyLength += resourceInfo.Length;
                         }
@@ -178,8 +162,7 @@ namespace ZeroFramework.Resource
                     long readyCompressedLength = 0L;
                     foreach (ResourceName resourceName in m_ResourceNames)
                     {
-                        ResourceInfo resourceInfo = null;
-                        if (m_ResourceInfos.TryGetValue(resourceName, out resourceInfo) && resourceInfo.Ready)
+                        if (m_ResourceInfos.TryGetValue(resourceName, out var resourceInfo) && resourceInfo.Ready)
                         {
                             readyCompressedLength += resourceInfo.CompressedLength;
                         }
@@ -192,13 +175,7 @@ namespace ZeroFramework.Resource
             /// <summary>
             /// 获取资源组集合的完成进度。
             /// </summary>
-            public float Progress
-            {
-                get
-                {
-                    return m_TotalLength > 0L ? (float)ReadyLength / m_TotalLength : 1f;
-                }
-            }
+            public float Progress => m_TotalLength > 0L ? (float)ReadyLength / m_TotalLength : 1f;
 
             /// <summary>
             /// 获取资源组集合包含的资源组列表。

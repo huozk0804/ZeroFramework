@@ -34,9 +34,11 @@ namespace ZeroFramework.Editor.ResourceTools
 
         public ResourceEditorController()
         {
-            m_ConfigurationPath = Type.GetConfigurationPath<ResourceEditorConfigPathAttribute>() ?? Utility.Path.GetRegularPath(Path.Combine(Application.dataPath, "ZeroFramework/Configs/ResourceEditor.xml"));
+            m_ConfigurationPath = Type.GetConfigurationPath<ResourceEditorConfigPathAttribute>() ??
+                                  Utility.Path.GetRegularPath(Path.Combine(Application.dataPath,
+                                      "ZeroFramework/Configs/ResourceEditor.xml"));
             m_ResourceCollection = new ResourceCollection();
-            m_ResourceCollection.OnLoadingResource += delegate (int index, int count)
+            m_ResourceCollection.OnLoadingResource += delegate(int index, int count)
             {
                 if (OnLoadingResource != null)
                 {
@@ -44,7 +46,7 @@ namespace ZeroFramework.Editor.ResourceTools
                 }
             };
 
-            m_ResourceCollection.OnLoadingAsset += delegate (int index, int count)
+            m_ResourceCollection.OnLoadingAsset += delegate(int index, int count)
             {
                 if (OnLoadingAsset != null)
                 {
@@ -52,7 +54,7 @@ namespace ZeroFramework.Editor.ResourceTools
                 }
             };
 
-            m_ResourceCollection.OnLoadCompleted += delegate ()
+            m_ResourceCollection.OnLoadCompleted += delegate()
             {
                 if (OnLoadCompleted != null)
                 {
@@ -190,6 +192,7 @@ namespace ZeroFramework.Editor.ResourceTools
                 XmlNode xmlRoot = xmlDocument.SelectSingleNode("ZeroFramework");
                 XmlNode xmlEditor = xmlRoot.SelectSingleNode("ResourceEditor");
                 XmlNode xmlSettings = xmlEditor.SelectSingleNode("Settings");
+                XmlNode xmlRules = xmlEditor.SelectSingleNode("Rules");
 
                 XmlNodeList xmlNodeList = null;
                 XmlNode xmlNode = null;
@@ -216,8 +219,10 @@ namespace ZeroFramework.Editor.ResourceTools
                                     continue;
                                 }
 
-                                m_SourceAssetSearchRelativePaths.Add(xmlNodeInner.Attributes.GetNamedItem("RelativePath").Value);
+                                m_SourceAssetSearchRelativePaths.Add(xmlNodeInner.Attributes
+                                    .GetNamedItem("RelativePath").Value);
                             }
+
                             break;
 
                         case "SourceAssetUnionTypeFilter":
@@ -240,6 +245,18 @@ namespace ZeroFramework.Editor.ResourceTools
                             AssetSorter = (AssetSorterType)Enum.Parse(typeof(AssetSorterType), xmlNode.InnerText);
                             break;
                     }
+                }
+
+                xmlNodeList = xmlSettings.ChildNodes;
+                for (int i = 0; i < xmlNodeList.Count; i++)
+                {
+                    xmlNode = xmlNodeList.Item(i);
+                    if (xmlNode.Name != "Rule")
+                    {
+                        continue;
+                    }
+                    
+                    //Todo:
                 }
 
                 RefreshSourceAssetSearchPaths();
@@ -307,6 +324,10 @@ namespace ZeroFramework.Editor.ResourceTools
                 xmlElement = xmlDocument.CreateElement("AssetSorter");
                 xmlElement.InnerText = AssetSorter.ToString();
                 xmlSettings.AppendChild(xmlElement);
+                
+                XmlElement xmlRules = xmlDocument.CreateElement("Rules");
+                xmlEditor.AppendChild(xmlRules);
+                //Todo:
 
                 string configurationDirectoryName = Path.GetDirectoryName(m_ConfigurationPath);
                 if (!Directory.Exists(configurationDirectoryName))
@@ -394,7 +415,8 @@ namespace ZeroFramework.Editor.ResourceTools
         public int RemoveUnusedResources()
         {
             List<Resource> resources = new List<Resource>(m_ResourceCollection.GetResources());
-            List<Resource> removeResources = resources.FindAll(resource => GetAssets(resource.Name, resource.Variant).Length <= 0);
+            List<Resource> removeResources =
+                resources.FindAll(resource => GetAssets(resource.Name, resource.Variant).Length <= 0);
             foreach (Resource removeResource in removeResources)
             {
                 m_ResourceCollection.RemoveResource(removeResource.Name, removeResource.Variant);
@@ -552,7 +574,9 @@ namespace ZeroFramework.Editor.ResourceTools
             {
                 foreach (string sourceAssetSearchRelativePath in m_SourceAssetSearchRelativePaths)
                 {
-                    m_SourceAssetSearchPaths.Add(Utility.Path.GetRegularPath(Path.Combine(m_SourceAssetRootPath, sourceAssetSearchRelativePath)));
+                    m_SourceAssetSearchPaths.Add(
+                        Utility.Path.GetRegularPath(Path.Combine(m_SourceAssetRootPath,
+                            sourceAssetSearchRelativePath)));
                 }
             }
             else

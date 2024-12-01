@@ -20,35 +20,15 @@ namespace ZeroFramework.Editor.ResourceTools
                 CompressedHashCode = compressedHashCode;
             }
 
-            public string Path
-            {
-                get;
-                private set;
-            }
+            public string Path { get; private set; }
 
-            public int Length
-            {
-                get;
-                private set;
-            }
+            public int Length { get; private set; }
 
-            public int HashCode
-            {
-                get;
-                private set;
-            }
+            public int HashCode { get; private set; }
 
-            public int CompressedLength
-            {
-                get;
-                private set;
-            }
+            public int CompressedLength { get; private set; }
 
-            public int CompressedHashCode
-            {
-                get;
-                private set;
-            }
+            public int CompressedHashCode { get; private set; }
         }
     }
 }

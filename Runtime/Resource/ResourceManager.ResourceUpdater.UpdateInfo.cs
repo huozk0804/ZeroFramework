@@ -38,7 +38,8 @@ namespace ZeroFramework.Resource
                 /// <param name="compressedLength">压缩后大小。</param>
                 /// <param name="compressedHashCode">压缩后哈希值。</param>
                 /// <param name="resourcePath">资源路径。</param>
-                public UpdateInfo(ResourceName resourceName, string fileSystemName, LoadType loadType, int length, int hashCode, int compressedLength, int compressedHashCode, string resourcePath)
+                public UpdateInfo(ResourceName resourceName, string fileSystemName, LoadType loadType, int length,
+                    int hashCode, int compressedLength, int compressedHashCode, string resourcePath)
                 {
                     m_ResourceName = resourceName;
                     m_FileSystemName = fileSystemName;
@@ -60,104 +61,50 @@ namespace ZeroFramework.Resource
                 /// <summary>
                 /// 获取资源是否使用文件系统。
                 /// </summary>
-                public bool UseFileSystem
-                {
-                    get
-                    {
-                        return !string.IsNullOrEmpty(m_FileSystemName);
-                    }
-                }
+                public bool UseFileSystem => !string.IsNullOrEmpty(m_FileSystemName);
 
                 /// <summary>
                 /// 获取资源所在的文件系统名称。
                 /// </summary>
-                public string FileSystemName
-                {
-                    get
-                    {
-                        return m_FileSystemName;
-                    }
-                }
+                public string FileSystemName => m_FileSystemName;
 
                 /// <summary>
                 /// 获取资源加载方式。
                 /// </summary>
-                public LoadType LoadType
-                {
-                    get
-                    {
-                        return m_LoadType;
-                    }
-                }
+                public LoadType LoadType => m_LoadType;
 
                 /// <summary>
                 /// 获取资源大小。
                 /// </summary>
-                public int Length
-                {
-                    get
-                    {
-                        return m_Length;
-                    }
-                }
+                public int Length => m_Length;
 
                 /// <summary>
                 /// 获取资源哈希值。
                 /// </summary>
-                public int HashCode
-                {
-                    get
-                    {
-                        return m_HashCode;
-                    }
-                }
+                public int HashCode => m_HashCode;
 
                 /// <summary>
                 /// 获取压缩后大小。
                 /// </summary>
-                public int CompressedLength
-                {
-                    get
-                    {
-                        return m_CompressedLength;
-                    }
-                }
+                public int CompressedLength => m_CompressedLength;
 
                 /// <summary>
                 /// 获取压缩后哈希值。
                 /// </summary>
-                public int CompressedHashCode
-                {
-                    get
-                    {
-                        return m_CompressedHashCode;
-                    }
-                }
+                public int CompressedHashCode => m_CompressedHashCode;
 
                 /// <summary>
                 /// 获取资源路径。
                 /// </summary>
-                public string ResourcePath
-                {
-                    get
-                    {
-                        return m_ResourcePath;
-                    }
-                }
+                public string ResourcePath => m_ResourcePath;
 
                 /// <summary>
                 /// 获取或设置下载状态。
                 /// </summary>
                 public bool Downloading
                 {
-                    get
-                    {
-                        return m_Downloading;
-                    }
-                    set
-                    {
-                        m_Downloading = value;
-                    }
+                    get => m_Downloading;
+                    set => m_Downloading = value;
                 }
 
                 /// <summary>
@@ -165,14 +112,8 @@ namespace ZeroFramework.Resource
                 /// </summary>
                 public int RetryCount
                 {
-                    get
-                    {
-                        return m_RetryCount;
-                    }
-                    set
-                    {
-                        m_RetryCount = value;
-                    }
+                    get => m_RetryCount;
+                    set => m_RetryCount = value;
                 }
             }
         }

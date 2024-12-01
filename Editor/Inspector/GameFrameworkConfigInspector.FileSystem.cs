@@ -12,7 +12,7 @@ namespace ZeroFramework.Editor
         void FileSystemInspectorInit()
         {
             _enableFunc.AddLast(OnFileSystemEnable);
-            _inspectorFunc.AddLast(OnFileSystemInspectorGUI);
+            m_InspectorFunc.AddLast(OnFileSystemInspectorGUI);
             _completeFunc.AddLast(OnFileSystemComplete);
         }
 

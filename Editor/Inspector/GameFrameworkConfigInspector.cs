@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Reflection;
 using UnityEditor;
-using UnityEngine;
 
 namespace ZeroFramework.Editor
 {
     [CustomEditor(typeof(GameFrameworkConfig))]
     public sealed partial class GameFrameworkConfigInspector : GameFrameworkInspector
     {
-        private readonly GameFrameworkLinkedList<Action> _inspectorFunc =
+        private readonly GameFrameworkLinkedList<Action> m_InspectorFunc =
             new GameFrameworkLinkedList<Action>();
 
         private readonly GameFrameworkLinkedList<Action> _enableFunc =
@@ -21,7 +20,7 @@ namespace ZeroFramework.Editor
         {
             base.OnInspectorGUI();
             serializedObject.Update();
-            foreach (var item in _inspectorFunc)
+            foreach (var item in m_InspectorFunc)
             {
                 item.Invoke();
                 EditorGUILayout.Space(20);
@@ -61,8 +60,6 @@ namespace ZeroFramework.Editor
             }
 
             serializedObject.ApplyModifiedProperties();
-
-            Debug.Log("刷新测试");
         }
     }
 

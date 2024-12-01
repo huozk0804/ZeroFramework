@@ -29,7 +29,8 @@ namespace ZeroFramework.Resource
         /// </summary>
         /// <param name="loadBytesSuccessCallback">加载数据流成功回调函数。</param>
         /// <param name="loadBytesFailureCallback">加载数据流失败回调函数。</param>
-        public LoadBytesCallbacks(LoadBytesSuccessCallback loadBytesSuccessCallback, LoadBytesFailureCallback loadBytesFailureCallback)
+        public LoadBytesCallbacks(LoadBytesSuccessCallback loadBytesSuccessCallback,
+            LoadBytesFailureCallback loadBytesFailureCallback)
         {
             if (loadBytesSuccessCallback == null)
             {

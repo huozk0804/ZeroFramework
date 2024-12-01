@@ -23,7 +23,7 @@ namespace ZeroFramework.Editor
         void UIInspectorInit()
         {
             _enableFunc.AddLast(OnUIEnable);
-            _inspectorFunc.AddLast(OnUIInspectorGUI);
+            m_InspectorFunc.AddLast(OnUIInspectorGUI);
             _completeFunc.AddLast(OnUIComplete);
         }
 

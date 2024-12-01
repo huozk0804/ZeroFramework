@@ -141,7 +141,10 @@ namespace ZeroFramework.Resource
                 }
 
                 m_VerifyResourceLengthPerFrame = verifyResourceLengthPerFrame;
-                m_ResourceManager.m_ResourceHelper.LoadBytes(Utility.Path.GetRemotePath(Path.Combine(m_ResourceManager.m_ReadWritePath, LocalVersionListFileName)), new LoadBytesCallbacks(OnLoadReadWriteVersionListSuccess, OnLoadReadWriteVersionListFailure), null);
+                m_ResourceManager.m_ResourceHelper.LoadBytes(
+                    Utility.Path.GetRemotePath(
+                        Path.Combine(m_ResourceManager.m_ReadWritePath, LocalVersionListFileName)),
+                    new LoadBytesCallbacks(OnLoadReadWriteVersionListSuccess, OnLoadReadWriteVersionListFailure), null);
             }
 
             private bool VerifyResource(VerifyInfo verifyInfo)
@@ -163,17 +166,23 @@ namespace ZeroFramework.Resource
                         fileSystem.ReadFile(fileName, m_ResourceManager.m_CachedStream);
                         m_ResourceManager.m_CachedStream.Position = 0L;
                         int hashCode = 0;
-                        if (verifyInfo.LoadType == LoadType.LoadFromMemoryAndQuickDecrypt || verifyInfo.LoadType == LoadType.LoadFromMemoryAndDecrypt
-                            || verifyInfo.LoadType == LoadType.LoadFromBinaryAndQuickDecrypt || verifyInfo.LoadType == LoadType.LoadFromBinaryAndDecrypt)
+                        if (verifyInfo.LoadType == LoadType.LoadFromMemoryAndQuickDecrypt ||
+                            verifyInfo.LoadType == LoadType.LoadFromMemoryAndDecrypt
+                            || verifyInfo.LoadType == LoadType.LoadFromBinaryAndQuickDecrypt ||
+                            verifyInfo.LoadType == LoadType.LoadFromBinaryAndDecrypt)
                         {
                             Utility.Converter.GetBytes(verifyInfo.HashCode, m_CachedHashBytes);
-                            if (verifyInfo.LoadType == LoadType.LoadFromMemoryAndQuickDecrypt || verifyInfo.LoadType == LoadType.LoadFromBinaryAndQuickDecrypt)
+                            if (verifyInfo.LoadType == LoadType.LoadFromMemoryAndQuickDecrypt ||
+                                verifyInfo.LoadType == LoadType.LoadFromBinaryAndQuickDecrypt)
                             {
-                                hashCode = Utility.Verifier.GetCrc32(m_ResourceManager.m_CachedStream, m_CachedHashBytes, Utility.Encryption.QuickEncryptLength);
+                                hashCode = Utility.Verifier.GetCrc32(m_ResourceManager.m_CachedStream,
+                                    m_CachedHashBytes, Utility.Encryption.QuickEncryptLength);
                             }
-                            else if (verifyInfo.LoadType == LoadType.LoadFromMemoryAndDecrypt || verifyInfo.LoadType == LoadType.LoadFromBinaryAndDecrypt)
+                            else if (verifyInfo.LoadType == LoadType.LoadFromMemoryAndDecrypt ||
+                                     verifyInfo.LoadType == LoadType.LoadFromBinaryAndDecrypt)
                             {
-                                hashCode = Utility.Verifier.GetCrc32(m_ResourceManager.m_CachedStream, m_CachedHashBytes, length);
+                                hashCode = Utility.Verifier.GetCrc32(m_ResourceManager.m_CachedStream,
+                                    m_CachedHashBytes, length);
                             }
 
                             Array.Clear(m_CachedHashBytes, 0, CachedHashBytesLength);
@@ -194,7 +203,8 @@ namespace ZeroFramework.Resource
                 }
                 else
                 {
-                    string resourcePath = Utility.Path.GetRegularPath(Path.Combine(m_ResourceManager.ReadWritePath, verifyInfo.ResourceName.FullName));
+                    string resourcePath = Utility.Path.GetRegularPath(Path.Combine(m_ResourceManager.ReadWritePath,
+                        verifyInfo.ResourceName.FullName));
                     if (!File.Exists(resourcePath))
                     {
                         return false;
@@ -206,15 +216,20 @@ namespace ZeroFramework.Resource
                         if (length == verifyInfo.Length)
                         {
                             int hashCode = 0;
-                            if (verifyInfo.LoadType == LoadType.LoadFromMemoryAndQuickDecrypt || verifyInfo.LoadType == LoadType.LoadFromMemoryAndDecrypt
-                                || verifyInfo.LoadType == LoadType.LoadFromBinaryAndQuickDecrypt || verifyInfo.LoadType == LoadType.LoadFromBinaryAndDecrypt)
+                            if (verifyInfo.LoadType == LoadType.LoadFromMemoryAndQuickDecrypt ||
+                                verifyInfo.LoadType == LoadType.LoadFromMemoryAndDecrypt
+                                || verifyInfo.LoadType == LoadType.LoadFromBinaryAndQuickDecrypt ||
+                                verifyInfo.LoadType == LoadType.LoadFromBinaryAndDecrypt)
                             {
                                 Utility.Converter.GetBytes(verifyInfo.HashCode, m_CachedHashBytes);
-                                if (verifyInfo.LoadType == LoadType.LoadFromMemoryAndQuickDecrypt || verifyInfo.LoadType == LoadType.LoadFromBinaryAndQuickDecrypt)
+                                if (verifyInfo.LoadType == LoadType.LoadFromMemoryAndQuickDecrypt ||
+                                    verifyInfo.LoadType == LoadType.LoadFromBinaryAndQuickDecrypt)
                                 {
-                                    hashCode = Utility.Verifier.GetCrc32(fileStream, m_CachedHashBytes, Utility.Encryption.QuickEncryptLength);
+                                    hashCode = Utility.Verifier.GetCrc32(fileStream, m_CachedHashBytes,
+                                        Utility.Encryption.QuickEncryptLength);
                                 }
-                                else if (verifyInfo.LoadType == LoadType.LoadFromMemoryAndDecrypt || verifyInfo.LoadType == LoadType.LoadFromBinaryAndDecrypt)
+                                else if (verifyInfo.LoadType == LoadType.LoadFromMemoryAndDecrypt ||
+                                         verifyInfo.LoadType == LoadType.LoadFromBinaryAndDecrypt)
                                 {
                                     hashCode = Utility.Verifier.GetCrc32(fileStream, m_CachedHashBytes, length);
                                 }
@@ -240,27 +255,36 @@ namespace ZeroFramework.Resource
 
             private void GenerateReadWriteVersionList()
             {
-                string readWriteVersionListFileName = Utility.Path.GetRegularPath(Path.Combine(m_ResourceManager.m_ReadWritePath, LocalVersionListFileName));
-                string readWriteVersionListTempFileName = Utility.Text.Format("{0}.{1}", readWriteVersionListFileName, TempExtension);
-                SortedDictionary<string, List<int>> cachedFileSystemsForGenerateReadWriteVersionList = new SortedDictionary<string, List<int>>(StringComparer.Ordinal);
+                string readWriteVersionListFileName =
+                    Utility.Path.GetRegularPath(Path.Combine(m_ResourceManager.m_ReadWritePath,
+                        LocalVersionListFileName));
+                string readWriteVersionListTempFileName =
+                    Utility.Text.Format("{0}.{1}", readWriteVersionListFileName, TempExtension);
+                SortedDictionary<string, List<int>> cachedFileSystemsForGenerateReadWriteVersionList =
+                    new SortedDictionary<string, List<int>>(StringComparer.Ordinal);
                 FileStream fileStream = null;
                 try
                 {
                     fileStream = new FileStream(readWriteVersionListTempFileName, FileMode.Create, FileAccess.Write);
-                    LocalVersionList.Resource[] resources = m_VerifyInfos.Count > 0 ? new LocalVersionList.Resource[m_VerifyInfos.Count] : null;
+                    LocalVersionList.Resource[] resources = m_VerifyInfos.Count > 0
+                        ? new LocalVersionList.Resource[m_VerifyInfos.Count]
+                        : null;
                     if (resources != null)
                     {
                         int index = 0;
                         foreach (VerifyInfo i in m_VerifyInfos)
                         {
-                            resources[index] = new LocalVersionList.Resource(i.ResourceName.Name, i.ResourceName.Variant, i.ResourceName.Extension, (byte)i.LoadType, i.Length, i.HashCode);
+                            resources[index] = new LocalVersionList.Resource(i.ResourceName.Name,
+                                i.ResourceName.Variant, i.ResourceName.Extension, (byte)i.LoadType, i.Length,
+                                i.HashCode);
                             if (i.UseFileSystem)
                             {
-                                List<int> resourceIndexes = null;
-                                if (!cachedFileSystemsForGenerateReadWriteVersionList.TryGetValue(i.FileSystemName, out resourceIndexes))
+                                if (!cachedFileSystemsForGenerateReadWriteVersionList.TryGetValue(i.FileSystemName,
+                                        out var resourceIndexes))
                                 {
                                     resourceIndexes = new List<int>();
-                                    cachedFileSystemsForGenerateReadWriteVersionList.Add(i.FileSystemName, resourceIndexes);
+                                    cachedFileSystemsForGenerateReadWriteVersionList.Add(i.FileSystemName,
+                                        resourceIndexes);
                                 }
 
                                 resourceIndexes.Add(index);
@@ -270,7 +294,10 @@ namespace ZeroFramework.Resource
                         }
                     }
 
-                    LocalVersionList.FileSystem[] fileSystems = cachedFileSystemsForGenerateReadWriteVersionList.Count > 0 ? new LocalVersionList.FileSystem[cachedFileSystemsForGenerateReadWriteVersionList.Count] : null;
+                    LocalVersionList.FileSystem[] fileSystems =
+                        cachedFileSystemsForGenerateReadWriteVersionList.Count > 0
+                            ? new LocalVersionList.FileSystem[cachedFileSystemsForGenerateReadWriteVersionList.Count]
+                            : null;
                     if (fileSystems != null)
                     {
                         int index = 0;
@@ -306,7 +333,8 @@ namespace ZeroFramework.Resource
                         File.Delete(readWriteVersionListTempFileName);
                     }
 
-                    throw new GameFrameworkException(Utility.Text.Format("Generate read-write version list exception '{0}'.", exception), exception);
+                    throw new GameFrameworkException(
+                        Utility.Text.Format("Generate read-write version list exception '{0}'.", exception), exception);
                 }
 
                 if (File.Exists(readWriteVersionListFileName))
@@ -317,13 +345,15 @@ namespace ZeroFramework.Resource
                 File.Move(readWriteVersionListTempFileName, readWriteVersionListFileName);
             }
 
-            private void OnLoadReadWriteVersionListSuccess(string fileUri, byte[] bytes, float duration, object userData)
+            private void OnLoadReadWriteVersionListSuccess(string fileUri, byte[] bytes, float duration,
+                object userData)
             {
                 MemoryStream memoryStream = null;
                 try
                 {
                     memoryStream = new MemoryStream(bytes, false);
-                    LocalVersionList versionList = m_ResourceManager.m_ReadWriteVersionListSerializer.Deserialize(memoryStream);
+                    LocalVersionList versionList =
+                        m_ResourceManager.m_ReadWriteVersionListSerializer.Deserialize(memoryStream);
                     if (!versionList.IsValid)
                     {
                         throw new GameFrameworkException("Deserialize read write version list failure.");
@@ -338,18 +368,20 @@ namespace ZeroFramework.Resource
                         foreach (int resourceIndex in resourceIndexes)
                         {
                             LocalVersionList.Resource resource = resources[resourceIndex];
-                            resourceInFileSystemNames.Add(new ResourceName(resource.Name, resource.Variant, resource.Extension), fileSystem.Name);
+                            resourceInFileSystemNames.Add(
+                                new ResourceName(resource.Name, resource.Variant, resource.Extension), fileSystem.Name);
                         }
                     }
 
                     long totalLength = 0L;
                     foreach (LocalVersionList.Resource resource in resources)
                     {
-                        ResourceName resourceName = new ResourceName(resource.Name, resource.Variant, resource.Extension);
-                        string fileSystemName = null;
-                        resourceInFileSystemNames.TryGetValue(resourceName, out fileSystemName);
+                        ResourceName resourceName =
+                            new ResourceName(resource.Name, resource.Variant, resource.Extension);
+                        resourceInFileSystemNames.TryGetValue(resourceName, out var fileSystemName);
                         totalLength += resource.Length;
-                        m_VerifyInfos.Add(new VerifyInfo(resourceName, fileSystemName, (LoadType)resource.LoadType, resource.Length, resource.HashCode));
+                        m_VerifyInfos.Add(new VerifyInfo(resourceName, fileSystemName, (LoadType)resource.LoadType,
+                            resource.Length, resource.HashCode));
                     }
 
                     m_LoadReadWriteVersionListComplete = true;
@@ -365,7 +397,8 @@ namespace ZeroFramework.Resource
                         throw;
                     }
 
-                    throw new GameFrameworkException(Utility.Text.Format("Parse read-write version list exception '{0}'.", exception), exception);
+                    throw new GameFrameworkException(
+                        Utility.Text.Format("Parse read-write version list exception '{0}'.", exception), exception);
                 }
                 finally
                 {

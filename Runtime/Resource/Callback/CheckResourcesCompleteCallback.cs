@@ -15,5 +15,6 @@ namespace ZeroFramework.Resource
     /// <param name="updateCount">可更新的资源数量。</param>
     /// <param name="updateTotalLength">可更新的资源总大小。</param>
     /// <param name="updateTotalCompressedLength">可更新的压缩后总大小。</param>
-    public delegate void CheckResourcesCompleteCallback(int movedCount, int removedCount, int updateCount, long updateTotalLength, long updateTotalCompressedLength);
+    public delegate void CheckResourcesCompleteCallback(int movedCount, int removedCount, int updateCount,
+        long updateTotalLength, long updateTotalCompressedLength);
 }

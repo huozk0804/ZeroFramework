@@ -229,9 +229,7 @@ namespace ZeroFramework.Resource
             public void LoadAsset(string assetName, Type assetType, int priority, LoadAssetCallbacks loadAssetCallbacks,
                 object userData)
             {
-                ResourceInfo resourceInfo = null;
-                string[] dependencyAssetNames = null;
-                if (!CheckAsset(assetName, out resourceInfo, out dependencyAssetNames))
+                if (!CheckAsset(assetName, out var resourceInfo, out var dependencyAssetNames))
                 {
                     string errorMessage = Utility.Text.Format("Can not load asset '{0}'.", assetName);
                     if (loadAssetCallbacks.LoadAssetFailureCallback != null)
@@ -306,9 +304,7 @@ namespace ZeroFramework.Resource
             public void LoadScene(string sceneAssetName, int priority, LoadSceneCallbacks loadSceneCallbacks,
                 object userData)
             {
-                ResourceInfo resourceInfo = null;
-                string[] dependencyAssetNames = null;
-                if (!CheckAsset(sceneAssetName, out resourceInfo, out dependencyAssetNames))
+                if (!CheckAsset(sceneAssetName, out var resourceInfo, out var dependencyAssetNames))
                 {
                     string errorMessage = Utility.Text.Format("Can not load scene '{0}'.", sceneAssetName);
                     if (loadSceneCallbacks.LoadSceneFailureCallback != null)
@@ -377,8 +373,7 @@ namespace ZeroFramework.Resource
                     throw new GameFrameworkException("You must set resource helper first.");
                 }
 
-                object asset = null;
-                if (m_SceneToAssetMap.TryGetValue(sceneAssetName, out asset))
+                if (m_SceneToAssetMap.TryGetValue(sceneAssetName, out var asset))
                 {
                     m_SceneToAssetMap.Remove(sceneAssetName);
                     m_AssetPool.Unspawn(asset);
@@ -812,9 +807,7 @@ namespace ZeroFramework.Resource
                     throw new GameFrameworkException("Main task is invalid.");
                 }
 
-                ResourceInfo resourceInfo = null;
-                string[] dependencyAssetNames = null;
-                if (!CheckAsset(assetName, out resourceInfo, out dependencyAssetNames))
+                if (!CheckAsset(assetName, out var resourceInfo, out var dependencyAssetNames))
                 {
                     return false;
                 }
@@ -882,9 +875,7 @@ namespace ZeroFramework.Resource
                 }
 
                 dependencyAssetNames = assetInfo.GetDependencyAssetNames();
-                return m_ResourceManager.m_ResourceMode == ResourceMode.UpdatableWhilePlaying
-                    ? true
-                    : resourceInfo.Ready;
+                return m_ResourceManager.m_ResourceMode == ResourceMode.UpdatableWhilePlaying || resourceInfo.Ready;
             }
 
             private void DefaultDecryptResourceCallback(byte[] bytes, int startIndex, int count, string name,

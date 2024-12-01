@@ -41,74 +41,29 @@ namespace ZeroFramework.Resource
 
                 public string AssetName => m_AssetName;
 
-                public Type AssetType
-                {
-                    get
-                    {
-                        return m_AssetType;
-                    }
-                }
+                public Type AssetType => m_AssetType;
 
-                public ResourceInfo ResourceInfo
-                {
-                    get
-                    {
-                        return m_ResourceInfo;
-                    }
-                }
+                public ResourceInfo ResourceInfo => m_ResourceInfo;
 
-                public ResourceObject ResourceObject
-                {
-                    get
-                    {
-                        return m_ResourceObject;
-                    }
-                }
+                public ResourceObject ResourceObject => m_ResourceObject;
 
-                public abstract bool IsScene
-                {
-                    get;
-                }
+                public abstract bool IsScene { get; }
 
                 public DateTime StartTime
                 {
-                    get
-                    {
-                        return m_StartTime;
-                    }
-                    set
-                    {
-                        m_StartTime = value;
-                    }
+                    get => m_StartTime;
+                    set => m_StartTime = value;
                 }
 
-                public int LoadedDependencyAssetCount
-                {
-                    get
-                    {
-                        return m_DependencyAssets.Count;
-                    }
-                }
+                public int LoadedDependencyAssetCount => m_DependencyAssets.Count;
 
                 public int TotalDependencyAssetCount
                 {
-                    get
-                    {
-                        return m_TotalDependencyAssetCount;
-                    }
-                    set
-                    {
-                        m_TotalDependencyAssetCount = value;
-                    }
+                    get => m_TotalDependencyAssetCount;
+                    set => m_TotalDependencyAssetCount = value;
                 }
 
-                public override string Description
-                {
-                    get
-                    {
-                        return m_AssetName;
-                    }
-                }
+                public override string Description => m_AssetName;
 
                 public override void Clear()
                 {
@@ -143,20 +98,24 @@ namespace ZeroFramework.Resource
                 {
                 }
 
-                public virtual void OnLoadAssetFailure(LoadResourceAgent agent, LoadResourceStatus status, string errorMessage)
+                public virtual void OnLoadAssetFailure(LoadResourceAgent agent, LoadResourceStatus status,
+                    string errorMessage)
                 {
                 }
 
-                public virtual void OnLoadAssetUpdate(LoadResourceAgent agent, LoadResourceProgress type, float progress)
+                public virtual void OnLoadAssetUpdate(LoadResourceAgent agent, LoadResourceProgress type,
+                    float progress)
                 {
                 }
 
-                public virtual void OnLoadDependencyAsset(LoadResourceAgent agent, string dependencyAssetName, object dependencyAsset)
+                public virtual void OnLoadDependencyAsset(LoadResourceAgent agent, string dependencyAssetName,
+                    object dependencyAsset)
                 {
                     m_DependencyAssets.Add(dependencyAsset);
                 }
 
-                protected void Initialize(string assetName, Type assetType, int priority, ResourceInfo resourceInfo, string[] dependencyAssetNames, object userData)
+                protected void Initialize(string assetName, Type assetType, int priority, ResourceInfo resourceInfo,
+                    string[] dependencyAssetNames, object userData)
                 {
                     Initialize(++s_Serial, null, priority, userData);
                     m_AssetName = assetName;

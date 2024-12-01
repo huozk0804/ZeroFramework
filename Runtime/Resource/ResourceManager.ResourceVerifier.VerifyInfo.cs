@@ -30,7 +30,8 @@ namespace ZeroFramework.Resource
                 /// <param name="loadType">资源加载方式。</param>
                 /// <param name="length">资源大小。</param>
                 /// <param name="hashCode">资源哈希值。</param>
-                public VerifyInfo(ResourceName resourceName, string fileSystemName, LoadType loadType, int length, int hashCode)
+                public VerifyInfo(ResourceName resourceName, string fileSystemName, LoadType loadType, int length,
+                    int hashCode)
                 {
                     m_ResourceName = resourceName;
                     m_FileSystemName = fileSystemName;
@@ -47,57 +48,27 @@ namespace ZeroFramework.Resource
                 /// <summary>
                 /// 获取资源是否使用文件系统。
                 /// </summary>
-                public bool UseFileSystem
-                {
-                    get
-                    {
-                        return !string.IsNullOrEmpty(m_FileSystemName);
-                    }
-                }
+                public bool UseFileSystem => !string.IsNullOrEmpty(m_FileSystemName);
 
                 /// <summary>
                 /// 获取资源所在的文件系统名称。
                 /// </summary>
-                public string FileSystemName
-                {
-                    get
-                    {
-                        return m_FileSystemName;
-                    }
-                }
+                public string FileSystemName => m_FileSystemName;
 
                 /// <summary>
                 /// 获取资源加载方式。
                 /// </summary>
-                public LoadType LoadType
-                {
-                    get
-                    {
-                        return m_LoadType;
-                    }
-                }
+                public LoadType LoadType => m_LoadType;
 
                 /// <summary>
                 /// 获取资源大小。
                 /// </summary>
-                public int Length
-                {
-                    get
-                    {
-                        return m_Length;
-                    }
-                }
+                public int Length => m_Length;
 
                 /// <summary>
                 /// 获取资源哈希值。
                 /// </summary>
-                public int HashCode
-                {
-                    get
-                    {
-                        return m_HashCode;
-                    }
-                }
+                public int HashCode => m_HashCode;
             }
         }
     }

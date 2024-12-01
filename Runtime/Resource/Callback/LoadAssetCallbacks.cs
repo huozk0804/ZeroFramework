@@ -31,7 +31,8 @@ namespace ZeroFramework.Resource
         /// </summary>
         /// <param name="loadAssetSuccessCallback">加载资源成功回调函数。</param>
         /// <param name="loadAssetFailureCallback">加载资源失败回调函数。</param>
-        public LoadAssetCallbacks(LoadAssetSuccessCallback loadAssetSuccessCallback, LoadAssetFailureCallback loadAssetFailureCallback)
+        public LoadAssetCallbacks(LoadAssetSuccessCallback loadAssetSuccessCallback,
+            LoadAssetFailureCallback loadAssetFailureCallback)
             : this(loadAssetSuccessCallback, loadAssetFailureCallback, null, null)
         {
         }
@@ -41,7 +42,8 @@ namespace ZeroFramework.Resource
         /// </summary>
         /// <param name="loadAssetSuccessCallback">加载资源成功回调函数。</param>
         /// <param name="loadAssetUpdateCallback">加载资源更新回调函数。</param>
-        public LoadAssetCallbacks(LoadAssetSuccessCallback loadAssetSuccessCallback, LoadAssetUpdateCallback loadAssetUpdateCallback)
+        public LoadAssetCallbacks(LoadAssetSuccessCallback loadAssetSuccessCallback,
+            LoadAssetUpdateCallback loadAssetUpdateCallback)
             : this(loadAssetSuccessCallback, null, loadAssetUpdateCallback, null)
         {
         }
@@ -51,7 +53,8 @@ namespace ZeroFramework.Resource
         /// </summary>
         /// <param name="loadAssetSuccessCallback">加载资源成功回调函数。</param>
         /// <param name="loadAssetDependencyAssetCallback">加载资源时加载依赖资源回调函数。</param>
-        public LoadAssetCallbacks(LoadAssetSuccessCallback loadAssetSuccessCallback, LoadAssetDependencyAssetCallback loadAssetDependencyAssetCallback)
+        public LoadAssetCallbacks(LoadAssetSuccessCallback loadAssetSuccessCallback,
+            LoadAssetDependencyAssetCallback loadAssetDependencyAssetCallback)
             : this(loadAssetSuccessCallback, null, null, loadAssetDependencyAssetCallback)
         {
         }
@@ -62,7 +65,8 @@ namespace ZeroFramework.Resource
         /// <param name="loadAssetSuccessCallback">加载资源成功回调函数。</param>
         /// <param name="loadAssetFailureCallback">加载资源失败回调函数。</param>
         /// <param name="loadAssetUpdateCallback">加载资源更新回调函数。</param>
-        public LoadAssetCallbacks(LoadAssetSuccessCallback loadAssetSuccessCallback, LoadAssetFailureCallback loadAssetFailureCallback, LoadAssetUpdateCallback loadAssetUpdateCallback)
+        public LoadAssetCallbacks(LoadAssetSuccessCallback loadAssetSuccessCallback,
+            LoadAssetFailureCallback loadAssetFailureCallback, LoadAssetUpdateCallback loadAssetUpdateCallback)
             : this(loadAssetSuccessCallback, loadAssetFailureCallback, loadAssetUpdateCallback, null)
         {
         }
@@ -73,7 +77,9 @@ namespace ZeroFramework.Resource
         /// <param name="loadAssetSuccessCallback">加载资源成功回调函数。</param>
         /// <param name="loadAssetFailureCallback">加载资源失败回调函数。</param>
         /// <param name="loadAssetDependencyAssetCallback">加载资源时加载依赖资源回调函数。</param>
-        public LoadAssetCallbacks(LoadAssetSuccessCallback loadAssetSuccessCallback, LoadAssetFailureCallback loadAssetFailureCallback, LoadAssetDependencyAssetCallback loadAssetDependencyAssetCallback)
+        public LoadAssetCallbacks(LoadAssetSuccessCallback loadAssetSuccessCallback,
+            LoadAssetFailureCallback loadAssetFailureCallback,
+            LoadAssetDependencyAssetCallback loadAssetDependencyAssetCallback)
             : this(loadAssetSuccessCallback, loadAssetFailureCallback, null, loadAssetDependencyAssetCallback)
         {
         }
@@ -85,7 +91,9 @@ namespace ZeroFramework.Resource
         /// <param name="loadAssetFailureCallback">加载资源失败回调函数。</param>
         /// <param name="loadAssetUpdateCallback">加载资源更新回调函数。</param>
         /// <param name="loadAssetDependencyAssetCallback">加载资源时加载依赖资源回调函数。</param>
-        public LoadAssetCallbacks(LoadAssetSuccessCallback loadAssetSuccessCallback, LoadAssetFailureCallback loadAssetFailureCallback, LoadAssetUpdateCallback loadAssetUpdateCallback, LoadAssetDependencyAssetCallback loadAssetDependencyAssetCallback)
+        public LoadAssetCallbacks(LoadAssetSuccessCallback loadAssetSuccessCallback,
+            LoadAssetFailureCallback loadAssetFailureCallback, LoadAssetUpdateCallback loadAssetUpdateCallback,
+            LoadAssetDependencyAssetCallback loadAssetDependencyAssetCallback)
         {
             if (loadAssetSuccessCallback == null)
             {

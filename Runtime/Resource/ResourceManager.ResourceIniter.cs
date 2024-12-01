@@ -61,7 +61,10 @@ namespace ZeroFramework.Resource
                     throw new GameFrameworkException("Read-only path is invalid.");
                 }
 
-                m_ResourceManager.m_ResourceHelper.LoadBytes(Utility.Path.GetRemotePath(Path.Combine(m_ResourceManager.m_ReadOnlyPath, RemoteVersionListFileName)), new LoadBytesCallbacks(OnLoadPackageVersionListSuccess, OnLoadPackageVersionListFailure), null);
+                m_ResourceManager.m_ResourceHelper.LoadBytes(
+                    Utility.Path.GetRemotePath(
+                        Path.Combine(m_ResourceManager.m_ReadOnlyPath, RemoteVersionListFileName)),
+                    new LoadBytesCallbacks(OnLoadPackageVersionListSuccess, OnLoadPackageVersionListFailure), null);
             }
 
             private void OnLoadPackageVersionListSuccess(string fileUri, byte[] bytes, float duration, object userData)
@@ -70,7 +73,8 @@ namespace ZeroFramework.Resource
                 try
                 {
                     memoryStream = new MemoryStream(bytes, false);
-                    PackageVersionList versionList = m_ResourceManager.m_PackageVersionListSerializer.Deserialize(memoryStream);
+                    PackageVersionList versionList =
+                        m_ResourceManager.m_PackageVersionListSerializer.Deserialize(memoryStream);
                     if (!versionList.IsValid)
                     {
                         throw new GameFrameworkException("Deserialize package version list failure.");
@@ -82,8 +86,10 @@ namespace ZeroFramework.Resource
                     PackageVersionList.ResourceGroup[] resourceGroups = versionList.GetResourceGroups();
                     m_ResourceManager.m_ApplicableGameVersion = versionList.ApplicableGameVersion;
                     m_ResourceManager.m_InternalResourceVersion = versionList.InternalResourceVersion;
-                    m_ResourceManager.m_AssetInfos = new Dictionary<string, AssetInfo>(assets.Length, StringComparer.Ordinal);
-                    m_ResourceManager.m_ResourceInfos = new Dictionary<ResourceName, ResourceInfo>(resources.Length, new ResourceNameComparer());
+                    m_ResourceManager.m_AssetInfos =
+                        new Dictionary<string, AssetInfo>(assets.Length, StringComparer.Ordinal);
+                    m_ResourceManager.m_ResourceInfos =
+                        new Dictionary<ResourceName, ResourceInfo>(resources.Length, new ResourceNameComparer());
                     ResourceGroup defaultResourceGroup = m_ResourceManager.GetOrAddResourceGroup(string.Empty);
 
                     foreach (PackageVersionList.FileSystem fileSystem in fileSystems)
@@ -97,7 +103,8 @@ namespace ZeroFramework.Resource
                                 continue;
                             }
 
-                            m_CachedFileSystemNames.Add(new ResourceName(resource.Name, resource.Variant, resource.Extension), fileSystem.Name);
+                            m_CachedFileSystemNames.Add(
+                                new ResourceName(resource.Name, resource.Variant, resource.Extension), fileSystem.Name);
                         }
                     }
 
@@ -108,7 +115,8 @@ namespace ZeroFramework.Resource
                             continue;
                         }
 
-                        ResourceName resourceName = new ResourceName(resource.Name, resource.Variant, resource.Extension);
+                        ResourceName resourceName =
+                            new ResourceName(resource.Name, resource.Variant, resource.Extension);
                         int[] assetIndexes = resource.GetAssetIndexes();
                         foreach (int assetIndex in assetIndexes)
                         {
@@ -121,16 +129,18 @@ namespace ZeroFramework.Resource
                                 dependencyAssetNames[index++] = assets[dependencyAssetIndex].Name;
                             }
 
-                            m_ResourceManager.m_AssetInfos.Add(asset.Name, new AssetInfo(asset.Name, resourceName, dependencyAssetNames));
+                            m_ResourceManager.m_AssetInfos.Add(asset.Name,
+                                new AssetInfo(asset.Name, resourceName, dependencyAssetNames));
                         }
 
-                        string fileSystemName = null;
-                        if (!m_CachedFileSystemNames.TryGetValue(resourceName, out fileSystemName))
+                        if (!m_CachedFileSystemNames.TryGetValue(resourceName, out var fileSystemName))
                         {
                             fileSystemName = null;
                         }
 
-                        m_ResourceManager.m_ResourceInfos.Add(resourceName, new ResourceInfo(resourceName, fileSystemName, (LoadType)resource.LoadType, resource.Length, resource.HashCode, resource.Length, true, true));
+                        m_ResourceManager.m_ResourceInfos.Add(resourceName,
+                            new ResourceInfo(resourceName, fileSystemName, (LoadType)resource.LoadType, resource.Length,
+                                resource.HashCode, resource.Length, true, true));
                         defaultResourceGroup.AddResource(resourceName, resource.Length, resource.Length);
                     }
 
@@ -146,7 +156,8 @@ namespace ZeroFramework.Resource
                                 continue;
                             }
 
-                            group.AddResource(new ResourceName(resource.Name, resource.Variant, resource.Extension), resource.Length, resource.Length);
+                            group.AddResource(new ResourceName(resource.Name, resource.Variant, resource.Extension),
+                                resource.Length, resource.Length);
                         }
                     }
 
@@ -159,7 +170,8 @@ namespace ZeroFramework.Resource
                         throw;
                     }
 
-                    throw new GameFrameworkException(Utility.Text.Format("Parse package version list exception '{0}'.", exception), exception);
+                    throw new GameFrameworkException(
+                        Utility.Text.Format("Parse package version list exception '{0}'.", exception), exception);
                 }
                 finally
                 {
@@ -174,7 +186,9 @@ namespace ZeroFramework.Resource
 
             private void OnLoadPackageVersionListFailure(string fileUri, string errorMessage, object userData)
             {
-                throw new GameFrameworkException(Utility.Text.Format("Package version list '{0}' is invalid, error message is '{1}'.", fileUri, string.IsNullOrEmpty(errorMessage) ? "<Empty>" : errorMessage));
+                throw new GameFrameworkException(Utility.Text.Format(
+                    "Package version list '{0}' is invalid, error message is '{1}'.", fileUri,
+                    string.IsNullOrEmpty(errorMessage) ? "<Empty>" : errorMessage));
             }
         }
     }

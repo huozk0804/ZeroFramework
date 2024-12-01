@@ -33,13 +33,13 @@ namespace ZeroFramework.Resource
                 {
                     get
                     {
-                        int targetReferenceCount = 0;
-                        m_ResourceLoader.m_ResourceDependencyCount.TryGetValue(Target, out targetReferenceCount);
+                        m_ResourceLoader.m_ResourceDependencyCount.TryGetValue(Target, out var targetReferenceCount);
                         return base.CustomCanReleaseFlag && targetReferenceCount <= 0;
                     }
                 }
 
-                public static ResourceObject Create(string name, object target, IResourceHelper resourceHelper, ResourceLoader resourceLoader)
+                public static ResourceObject Create(string name, object target, IResourceHelper resourceHelper,
+                    ResourceLoader resourceLoader)
                 {
                     if (resourceHelper == null)
                     {
@@ -80,8 +80,7 @@ namespace ZeroFramework.Resource
 
                     m_DependencyResources.Add(dependencyResource);
 
-                    int referenceCount = 0;
-                    if (m_ResourceLoader.m_ResourceDependencyCount.TryGetValue(dependencyResource, out referenceCount))
+                    if (m_ResourceLoader.m_ResourceDependencyCount.TryGetValue(dependencyResource, out var referenceCount))
                     {
                         m_ResourceLoader.m_ResourceDependencyCount[dependencyResource] = referenceCount + 1;
                     }
@@ -95,22 +94,25 @@ namespace ZeroFramework.Resource
                 {
                     if (!isShutdown)
                     {
-                        int targetReferenceCount = 0;
-                        if (m_ResourceLoader.m_ResourceDependencyCount.TryGetValue(Target, out targetReferenceCount) && targetReferenceCount > 0)
+                        if (m_ResourceLoader.m_ResourceDependencyCount.TryGetValue(Target, out var targetReferenceCount) &&
+                            targetReferenceCount > 0)
                         {
-                            throw new GameFrameworkException(Utility.Text.Format("Resource target '{0}' reference count is '{1}' larger than 0.", Name, targetReferenceCount));
+                            throw new GameFrameworkException(Utility.Text.Format(
+                                "Resource target '{0}' reference count is '{1}' larger than 0.", Name,
+                                targetReferenceCount));
                         }
 
                         foreach (object dependencyResource in m_DependencyResources)
                         {
-                            int referenceCount = 0;
-                            if (m_ResourceLoader.m_ResourceDependencyCount.TryGetValue(dependencyResource, out referenceCount))
+                            if (m_ResourceLoader.m_ResourceDependencyCount.TryGetValue(dependencyResource,
+                                    out var referenceCount))
                             {
                                 m_ResourceLoader.m_ResourceDependencyCount[dependencyResource] = referenceCount - 1;
                             }
                             else
                             {
-                                throw new GameFrameworkException(Utility.Text.Format("Resource target '{0}' dependency asset reference count is invalid.", Name));
+                                throw new GameFrameworkException(Utility.Text.Format(
+                                    "Resource target '{0}' dependency asset reference count is invalid.", Name));
                             }
                         }
                     }

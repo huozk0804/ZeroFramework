@@ -16,7 +16,7 @@ namespace ZeroFramework.Editor
         void DownloadInspectorInit()
         {
             _enableFunc.AddLast(OnDownloadEnable);
-            _inspectorFunc.AddLast(OnDownloadInspectorGUI);
+            m_InspectorFunc.AddLast(OnDownloadInspectorGUI);
             _completeFunc.AddLast(OnDownloadComplete);
         }
 

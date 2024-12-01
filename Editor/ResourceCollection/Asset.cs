@@ -21,19 +21,11 @@ namespace ZeroFramework.Editor.ResourceTools
             Resource = resource;
         }
 
-        public string Guid
-        {
-            get;
-            private set;
-        }
+        public string Guid { get; private set; }
 
         public string Name => AssetDatabase.GUIDToAssetPath(Guid);
 
-        public Resource Resource
-        {
-            get;
-            set;
-        }
+        public Resource Resource { get; set; }
 
         public int CompareTo(Asset asset)
         {

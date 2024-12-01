@@ -17,7 +17,8 @@ namespace ZeroFramework.Editor.ResourceTools
             private readonly int m_CompressedLength;
             private readonly int m_CompressedHashCode;
 
-            public ResourceCode(Platform platform, int length, int hashCode, int compressedLength, int compressedHashCode)
+            public ResourceCode(Platform platform, int length, int hashCode, int compressedLength,
+                int compressedHashCode)
             {
                 m_Platform = platform;
                 m_Length = length;

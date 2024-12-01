@@ -13,6 +13,7 @@ namespace ZeroFramework.Editor
             { "0x", "0.01x", "0.1x", "0.25x", "0.5x", "1x", "1.5x", "2x", "4x", "8x" };
 
         private SerializedProperty m_EditorResourceMode = null;
+        private SerializedProperty m_EditorLanguage = null;
         private SerializedProperty m_TextHelperTypeName = null;
         private SerializedProperty m_VersionHelperTypeName = null;
         private SerializedProperty m_LogHelperTypeName = null;
@@ -38,13 +39,14 @@ namespace ZeroFramework.Editor
         void BaseInspectorInit()
         {
             _enableFunc.AddFirst(OnBaseEnable);
-            _inspectorFunc.AddFirst(OnBaseInspectorGUI);
+            m_InspectorFunc.AddFirst(OnBaseInspectorGUI);
             _completeFunc.AddFirst(OnBaseComplete);
         }
 
         void OnBaseEnable()
         {
             m_EditorResourceMode = serializedObject.FindProperty("m_EditorResourceMode");
+            m_EditorLanguage = serializedObject.FindProperty("m_EditorLanguage");
             m_TextHelperTypeName = serializedObject.FindProperty("m_TextHelperTypeName");
             m_VersionHelperTypeName = serializedObject.FindProperty("m_VersionHelperTypeName");
             m_LogHelperTypeName = serializedObject.FindProperty("m_LogHelperTypeName");
@@ -65,6 +67,7 @@ namespace ZeroFramework.Editor
             {
                 EditorGUILayout.LabelField("Base", EditorStyles.boldLabel);
                 bool editorResource = EditorGUILayout.Toggle("Editor Resource Mode", m_EditorResourceMode.boolValue);
+                EditorGUILayout.PropertyField(m_EditorLanguage);
                 if (editorResource != m_EditorResourceMode.boolValue)
                 {
                     if (EditorApplication.isPlaying)
@@ -76,6 +79,7 @@ namespace ZeroFramework.Editor
                         m_EditorResourceMode.boolValue = editorResource;
                     }
                 }
+
                 EditorGUILayout.BeginVertical("box");
                 {
                     EditorGUILayout.LabelField("Global Helpers", EditorStyles.boldLabel);

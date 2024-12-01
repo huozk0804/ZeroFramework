@@ -5,7 +5,6 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework;
 using ZeroFramework.Resource;
 using System;
 using System.Collections.Generic;
@@ -22,7 +21,9 @@ namespace ZeroFramework.Editor.ResourceTools
         private const string DefaultExtension = "dat";
         private const string NoneOptionName = "<None>";
         private static readonly string[] EmptyStringArray = new string[0];
-        private static readonly UpdatableVersionList.Resource[] EmptyResourceArray = new UpdatableVersionList.Resource[0];
+
+        private static readonly UpdatableVersionList.Resource[] EmptyResourceArray =
+            new UpdatableVersionList.Resource[0];
 
         private readonly string m_ConfigurationPath;
         private readonly List<string> m_CompressionHelperTypeNames;
@@ -31,22 +32,29 @@ namespace ZeroFramework.Editor.ResourceTools
 
         public ResourcePackBuilderController()
         {
-            m_ConfigurationPath = Type.GetConfigurationPath<ResourceBuilderConfigPathAttribute>() ?? Utility.Path.GetRegularPath(Path.Combine(Application.dataPath, "ZeroFramework/Configs/ResourceBuilder.xml"));
+            m_ConfigurationPath = Type.GetConfigurationPath<ResourceBuilderConfigPathAttribute>() ??
+                                  Utility.Path.GetRegularPath(Path.Combine(Application.dataPath,
+                                      "ZeroFramework/Configs/ResourceBuilder.xml"));
 
             m_UpdatableVersionListSerializer = new UpdatableVersionListSerializer();
-            m_UpdatableVersionListSerializer.RegisterDeserializeCallback(0, BuiltinVersionListSerializer.UpdatableVersionListDeserializeCallback_V0);
-            m_UpdatableVersionListSerializer.RegisterDeserializeCallback(1, BuiltinVersionListSerializer.UpdatableVersionListDeserializeCallback_V1);
-            m_UpdatableVersionListSerializer.RegisterDeserializeCallback(2, BuiltinVersionListSerializer.UpdatableVersionListDeserializeCallback_V2);
+            m_UpdatableVersionListSerializer.RegisterDeserializeCallback(0,
+                BuiltinVersionListSerializer.UpdatableVersionListDeserializeCallback_V0);
+            m_UpdatableVersionListSerializer.RegisterDeserializeCallback(1,
+                BuiltinVersionListSerializer.UpdatableVersionListDeserializeCallback_V1);
+            m_UpdatableVersionListSerializer.RegisterDeserializeCallback(2,
+                BuiltinVersionListSerializer.UpdatableVersionListDeserializeCallback_V2);
 
             m_ResourcePackVersionListSerializer = new ResourcePackVersionListSerializer();
-            m_ResourcePackVersionListSerializer.RegisterSerializeCallback(0, BuiltinVersionListSerializer.ResourcePackVersionListSerializeCallback_V0);
+            m_ResourcePackVersionListSerializer.RegisterSerializeCallback(0,
+                BuiltinVersionListSerializer.ResourcePackVersionListSerializeCallback_V0);
 
             m_CompressionHelperTypeNames = new List<string>
             {
                 NoneOptionName
             };
 
-            m_CompressionHelperTypeNames.AddRange(Type.GetRuntimeOrEditorTypeNames(typeof(Utility.Compression.ICompressionHelper)));
+            m_CompressionHelperTypeNames.AddRange(
+                Type.GetRuntimeOrEditorTypeNames(typeof(Utility.Compression.ICompressionHelper)));
 
             Platform = Platform.Windows;
             CompressionHelperTypeName = string.Empty;
@@ -74,41 +82,17 @@ namespace ZeroFramework.Editor.ResourceTools
 
         public string ApplicableGameVersion => Application.version;
 
-        public string WorkingDirectory
-        {
-            get;
-            set;
-        }
+        public string WorkingDirectory { get; set; }
 
-        public Platform Platform
-        {
-            get;
-            set;
-        }
+        public Platform Platform { get; set; }
 
-        public string CompressionHelperTypeName
-        {
-            get;
-            set;
-        }
+        public string CompressionHelperTypeName { get; set; }
 
-        public bool BackupDiff
-        {
-            get;
-            set;
-        }
+        public bool BackupDiff { get; set; }
 
-        public bool BackupVersion
-        {
-            get;
-            set;
-        }
+        public bool BackupVersion { get; set; }
 
-        public int LengthLimit
-        {
-            get;
-            set;
-        }
+        public int LengthLimit { get; set; }
 
         public bool IsValidWorkingDirectory
         {
@@ -137,7 +121,8 @@ namespace ZeroFramework.Editor.ResourceTools
                     return string.Empty;
                 }
 
-                return Utility.Path.GetRegularPath(new DirectoryInfo(Utility.Text.Format("{0}/Full/", WorkingDirectory)).FullName);
+                return Utility.Path.GetRegularPath(new DirectoryInfo(Utility.Text.Format("{0}/Full/", WorkingDirectory))
+                    .FullName);
             }
         }
 
@@ -150,7 +135,8 @@ namespace ZeroFramework.Editor.ResourceTools
                     return string.Empty;
                 }
 
-                return Utility.Path.GetRegularPath(new DirectoryInfo(Utility.Text.Format("{0}/Full/*/{1}/", WorkingDirectory, Platform)).FullName);
+                return Utility.Path.GetRegularPath(
+                    new DirectoryInfo(Utility.Text.Format("{0}/Full/*/{1}/", WorkingDirectory, Platform)).FullName);
             }
         }
 
@@ -163,7 +149,9 @@ namespace ZeroFramework.Editor.ResourceTools
                     return string.Empty;
                 }
 
-                return Utility.Path.GetRegularPath(new DirectoryInfo(Utility.Text.Format("{0}/ResourcePack/{1}/", WorkingDirectory, Platform)).FullName);
+                return Utility.Path.GetRegularPath(
+                    new DirectoryInfo(Utility.Text.Format("{0}/ResourcePack/{1}/", WorkingDirectory, Platform))
+                        .FullName);
             }
         }
 
@@ -261,13 +249,15 @@ namespace ZeroFramework.Editor.ResourceTools
                     continue;
                 }
 
-                DirectoryInfo platformDirectoryInfo = new DirectoryInfo(Path.Combine(directoryInfo.FullName, platformName));
+                DirectoryInfo platformDirectoryInfo =
+                    new DirectoryInfo(Path.Combine(directoryInfo.FullName, platformName));
                 if (!platformDirectoryInfo.Exists)
                 {
                     continue;
                 }
 
-                FileInfo[] versionListFiles = platformDirectoryInfo.GetFiles("GameFrameworkVersion.*.dat", SearchOption.TopDirectoryOnly);
+                FileInfo[] versionListFiles =
+                    platformDirectoryInfo.GetFiles("GameFrameworkVersion.*.dat", SearchOption.TopDirectoryOnly);
                 if (versionListFiles.Length != 1)
                 {
                     continue;
@@ -278,7 +268,8 @@ namespace ZeroFramework.Editor.ResourceTools
 
             versionNames.Sort((x, y) =>
             {
-                return int.Parse(x.Substring(x.LastIndexOf('_') + 1)).CompareTo(int.Parse(y.Substring(y.LastIndexOf('_') + 1)));
+                return int.Parse(x.Substring(x.LastIndexOf('_') + 1))
+                    .CompareTo(int.Parse(y.Substring(y.LastIndexOf('_') + 1)));
             });
 
             return versionNames.ToArray();
@@ -287,12 +278,14 @@ namespace ZeroFramework.Editor.ResourceTools
         public bool RefreshCompressionHelper()
         {
             bool retVal = false;
-            if (!string.IsNullOrEmpty(CompressionHelperTypeName) && m_CompressionHelperTypeNames.Contains(CompressionHelperTypeName))
+            if (!string.IsNullOrEmpty(CompressionHelperTypeName) &&
+                m_CompressionHelperTypeNames.Contains(CompressionHelperTypeName))
             {
                 System.Type compressionHelperType = Utility.Assembly.GetType(CompressionHelperTypeName);
                 if (compressionHelperType != null)
                 {
-                    Utility.Compression.ICompressionHelper compressionHelper = (Utility.Compression.ICompressionHelper)Activator.CreateInstance(compressionHelperType);
+                    Utility.Compression.ICompressionHelper compressionHelper =
+                        (Utility.Compression.ICompressionHelper)Activator.CreateInstance(compressionHelperType);
                     if (compressionHelper != null)
                     {
                         Utility.Compression.SetCompressionHelper(compressionHelper);
@@ -354,7 +347,8 @@ namespace ZeroFramework.Editor.ResourceTools
                 }
 
                 string defaultBackupDiffPath = Path.Combine(OutputPath, DefaultResourcePackName);
-                string defaultResourcePackName = Utility.Text.Format("{0}.{1}", defaultBackupDiffPath, DefaultExtension);
+                string defaultResourcePackName =
+                    Utility.Text.Format("{0}.{1}", defaultBackupDiffPath, DefaultExtension);
                 if (File.Exists(defaultResourcePackName))
                 {
                     File.Delete(defaultResourcePackName);
@@ -373,8 +367,10 @@ namespace ZeroFramework.Editor.ResourceTools
                 UpdatableVersionList sourceUpdatableVersionList = default(UpdatableVersionList);
                 if (sourceVersion != null)
                 {
-                    DirectoryInfo sourceDirectoryInfo = new DirectoryInfo(Path.Combine(Path.Combine(SourcePath, sourceVersion), Platform.ToString()));
-                    FileInfo[] sourceVersionListFiles = sourceDirectoryInfo.GetFiles("GameFrameworkVersion.*.dat", SearchOption.TopDirectoryOnly);
+                    DirectoryInfo sourceDirectoryInfo =
+                        new DirectoryInfo(Path.Combine(Path.Combine(SourcePath, sourceVersion), Platform.ToString()));
+                    FileInfo[] sourceVersionListFiles =
+                        sourceDirectoryInfo.GetFiles("GameFrameworkVersion.*.dat", SearchOption.TopDirectoryOnly);
                     byte[] sourceVersionListBytes = File.ReadAllBytes(sourceVersionListFiles[0].FullName);
                     sourceVersionListBytes = Utility.Compression.Decompress(sourceVersionListBytes);
                     using (Stream stream = new MemoryStream(sourceVersionListBytes))
@@ -384,8 +380,10 @@ namespace ZeroFramework.Editor.ResourceTools
                 }
 
                 UpdatableVersionList targetUpdatableVersionList = default(UpdatableVersionList);
-                DirectoryInfo targetDirectoryInfo = new DirectoryInfo(Path.Combine(Path.Combine(SourcePath, targetVersion), Platform.ToString()));
-                FileInfo[] targetVersionListFiles = targetDirectoryInfo.GetFiles("GameFrameworkVersion.*.dat", SearchOption.TopDirectoryOnly);
+                DirectoryInfo targetDirectoryInfo =
+                    new DirectoryInfo(Path.Combine(Path.Combine(SourcePath, targetVersion), Platform.ToString()));
+                FileInfo[] targetVersionListFiles =
+                    targetDirectoryInfo.GetFiles("GameFrameworkVersion.*.dat", SearchOption.TopDirectoryOnly);
                 byte[] targetVersionListBytes = File.ReadAllBytes(targetVersionListFiles[0].FullName);
                 targetVersionListBytes = Utility.Compression.Decompress(targetVersionListBytes);
                 using (Stream stream = new MemoryStream(targetVersionListBytes))
@@ -394,7 +392,9 @@ namespace ZeroFramework.Editor.ResourceTools
                 }
 
                 List<ResourcePackVersionList.Resource> resources = new List<ResourcePackVersionList.Resource>();
-                UpdatableVersionList.Resource[] sourceResources = sourceUpdatableVersionList.IsValid ? sourceUpdatableVersionList.GetResources() : EmptyResourceArray;
+                UpdatableVersionList.Resource[] sourceResources = sourceUpdatableVersionList.IsValid
+                    ? sourceUpdatableVersionList.GetResources()
+                    : EmptyResourceArray;
                 UpdatableVersionList.Resource[] targetResources = targetUpdatableVersionList.GetResources();
                 long offset = 0L;
                 foreach (UpdatableVersionList.Resource targetResource in targetResources)
@@ -402,12 +402,16 @@ namespace ZeroFramework.Editor.ResourceTools
                     bool ready = false;
                     foreach (UpdatableVersionList.Resource sourceResource in sourceResources)
                     {
-                        if (sourceResource.Name != targetResource.Name || sourceResource.Variant != targetResource.Variant || sourceResource.Extension != targetResource.Extension)
+                        if (sourceResource.Name != targetResource.Name ||
+                            sourceResource.Variant != targetResource.Variant ||
+                            sourceResource.Extension != targetResource.Extension)
                         {
                             continue;
                         }
 
-                        if (sourceResource.LoadType == targetResource.LoadType && sourceResource.Length == targetResource.Length && sourceResource.HashCode == targetResource.HashCode)
+                        if (sourceResource.LoadType == targetResource.LoadType &&
+                            sourceResource.Length == targetResource.Length &&
+                            sourceResource.HashCode == targetResource.HashCode)
                         {
                             ready = true;
                         }
@@ -417,15 +421,20 @@ namespace ZeroFramework.Editor.ResourceTools
 
                     if (!ready)
                     {
-                        resources.Add(new ResourcePackVersionList.Resource(targetResource.Name, targetResource.Variant, targetResource.Extension, targetResource.LoadType, offset, targetResource.Length, targetResource.HashCode, targetResource.CompressedLength, targetResource.CompressedHashCode));
+                        resources.Add(new ResourcePackVersionList.Resource(targetResource.Name, targetResource.Variant,
+                            targetResource.Extension, targetResource.LoadType, offset, targetResource.Length,
+                            targetResource.HashCode, targetResource.CompressedLength,
+                            targetResource.CompressedHashCode));
                         offset += targetResource.CompressedLength;
                     }
                 }
 
                 ResourcePackVersionList.Resource[] resourceArray = resources.ToArray();
-                using (FileStream fileStream = new FileStream(defaultResourcePackName, FileMode.Create, FileAccess.Write))
+                using (FileStream fileStream =
+                       new FileStream(defaultResourcePackName, FileMode.Create, FileAccess.Write))
                 {
-                    if (!m_ResourcePackVersionListSerializer.Serialize(fileStream, new ResourcePackVersionList(0, 0L, 0, resourceArray)))
+                    if (!m_ResourcePackVersionListSerializer.Serialize(fileStream,
+                            new ResourcePackVersionList(0, 0L, 0, resourceArray)))
                     {
                         return false;
                     }
@@ -434,13 +443,15 @@ namespace ZeroFramework.Editor.ResourceTools
                 int position = 0;
                 int hashCode = 0;
                 string targetDirectoryPath = targetDirectoryInfo.FullName;
-                using (FileStream fileStream = new FileStream(defaultResourcePackName, FileMode.Open, FileAccess.ReadWrite))
+                using (FileStream fileStream =
+                       new FileStream(defaultResourcePackName, FileMode.Open, FileAccess.ReadWrite))
                 {
                     position = (int)fileStream.Length;
                     fileStream.Position = position;
                     foreach (ResourcePackVersionList.Resource resource in resourceArray)
                     {
-                        string resourceName = Path.Combine(targetDirectoryPath, GetResourceFullName(resource.Name, resource.Variant, resource.HashCode));
+                        string resourceName = Path.Combine(targetDirectoryPath,
+                            GetResourceFullName(resource.Name, resource.Variant, resource.HashCode));
                         if (!File.Exists(resourceName))
                         {
                             return false;
@@ -450,7 +461,8 @@ namespace ZeroFramework.Editor.ResourceTools
                         fileStream.Write(resourceBytes, 0, resourceBytes.Length);
                         if (BackupDiff)
                         {
-                            string backupDiffName = Path.Combine(defaultBackupDiffPath, GetResourceFullName(resource.Name, resource.Variant, resource.HashCode));
+                            string backupDiffName = Path.Combine(defaultBackupDiffPath,
+                                GetResourceFullName(resource.Name, resource.Variant, resource.HashCode));
                             string directoryName = Path.GetDirectoryName(backupDiffName);
                             if (!Directory.Exists(directoryName))
                             {
@@ -470,14 +482,18 @@ namespace ZeroFramework.Editor.ResourceTools
                     hashCode = Utility.Verifier.GetCrc32(fileStream);
 
                     fileStream.Position = 0L;
-                    if (!m_ResourcePackVersionListSerializer.Serialize(fileStream, new ResourcePackVersionList(position, offset, hashCode, resourceArray)))
+                    if (!m_ResourcePackVersionListSerializer.Serialize(fileStream,
+                            new ResourcePackVersionList(position, offset, hashCode, resourceArray)))
                     {
                         return false;
                     }
                 }
 
-                string backupDiffPath = Path.Combine(OutputPath, Utility.Text.Format("{0}-{1}-{2}", DefaultResourcePackName, sourceVersion ?? GetNoneVersion(targetVersion), targetVersion));
-                string resourcePackName = Utility.Text.Format("{0}.{1:x8}.{2}", backupDiffPath, hashCode, DefaultExtension);
+                string backupDiffPath = Path.Combine(OutputPath,
+                    Utility.Text.Format("{0}-{1}-{2}", DefaultResourcePackName,
+                        sourceVersion ?? GetNoneVersion(targetVersion), targetVersion));
+                string resourcePackName =
+                    Utility.Text.Format("{0}.{1:x8}.{2}", backupDiffPath, hashCode, DefaultExtension);
                 if (File.Exists(resourcePackName))
                 {
                     File.Delete(resourcePackName);
@@ -489,7 +505,8 @@ namespace ZeroFramework.Editor.ResourceTools
                 {
                     if (BackupVersion)
                     {
-                        File.Copy(targetVersionListFiles[0].FullName, Path.Combine(defaultBackupDiffPath, Path.GetFileName(targetVersionListFiles[0].FullName)));
+                        File.Copy(targetVersionListFiles[0].FullName,
+                            Path.Combine(defaultBackupDiffPath, Path.GetFileName(targetVersionListFiles[0].FullName)));
                     }
 
                     if (Directory.Exists(backupDiffPath))
@@ -521,7 +538,9 @@ namespace ZeroFramework.Editor.ResourceTools
 
         private string GetResourceFullName(string name, string variant, int hashCode)
         {
-            return !string.IsNullOrEmpty(variant) ? Utility.Text.Format("{0}.{1}.{2:x8}.{3}", name, variant, hashCode, DefaultExtension) : Utility.Text.Format("{0}.{1:x8}.{2}", name, hashCode, DefaultExtension);
+            return !string.IsNullOrEmpty(variant)
+                ? Utility.Text.Format("{0}.{1}.{2:x8}.{3}", name, variant, hashCode, DefaultExtension)
+                : Utility.Text.Format("{0}.{1:x8}.{2}", name, hashCode, DefaultExtension);
         }
     }
 }

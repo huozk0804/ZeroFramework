@@ -39,7 +39,8 @@ namespace ZeroFramework.Resource
         /// <param name="sceneAssetName">场景资源名称。</param>
         /// <param name="unloadSceneCallbacks">卸载场景回调函数集。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public override void UnloadScene(string sceneAssetName, UnloadSceneCallbacks unloadSceneCallbacks, object userData)
+        public override void UnloadScene(string sceneAssetName, UnloadSceneCallbacks unloadSceneCallbacks,
+            object userData)
         {
 #if UNITY_5_5_OR_NEWER
             if (gameObject.activeInHierarchy)
@@ -48,7 +49,7 @@ namespace ZeroFramework.Resource
             }
             else
             {
-                //SceneManager.UnloadSceneAsync(SceneComponent.GetSceneName(sceneAssetName));
+                // Todo:SceneManager.UnloadSceneAsync(SceneComponent.GetSceneName(sceneAssetName));
             }
 #else
             if (SceneManager.UnloadScene(SceneComponent.GetSceneName(sceneAssetName)))
@@ -156,9 +157,10 @@ namespace ZeroFramework.Resource
         }
 
 #if UNITY_5_5_OR_NEWER
-        private IEnumerator UnloadSceneCo(string sceneAssetName, UnloadSceneCallbacks unloadSceneCallbacks, object userData)
+        private IEnumerator UnloadSceneCo(string sceneAssetName, UnloadSceneCallbacks unloadSceneCallbacks,
+            object userData)
         {
-            //AsyncOperation asyncOperation = SceneManager.UnloadSceneAsync(SceneComponent.GetSceneName(sceneAssetName));
+            // Todo:AsyncOperation asyncOperation = SceneManager.UnloadSceneAsync(SceneComponent.GetSceneName(sceneAssetName));
             AsyncOperation asyncOperation = null;
             if (asyncOperation == null)
             {

@@ -2000,8 +2000,7 @@ namespace ZeroFramework.Resource
                 return null;
             }
 
-            AssetInfo assetInfo = null;
-            if (m_AssetInfos.TryGetValue(assetName, out assetInfo))
+            if (m_AssetInfos.TryGetValue(assetName, out var assetInfo))
             {
                 return assetInfo;
             }
@@ -2016,8 +2015,7 @@ namespace ZeroFramework.Resource
                 return null;
             }
 
-            ResourceInfo resourceInfo = null;
-            if (m_ResourceInfos.TryGetValue(resourceName, out resourceInfo))
+            if (m_ResourceInfos.TryGetValue(resourceName, out var resourceInfo))
             {
                 return resourceInfo;
             }

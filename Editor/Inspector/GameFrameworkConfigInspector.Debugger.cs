@@ -14,7 +14,7 @@ namespace ZeroFramework.Editor
         void DebugConsoleInspectorInit()
         {
             _enableFunc.AddLast(OnDebuggerEnable);
-            _inspectorFunc.AddLast(OnDebuggerInspectorGUI);
+            m_InspectorFunc.AddLast(OnDebuggerInspectorGUI);
             _completeFunc.AddLast(OnDebuggerComplete);
         }
 

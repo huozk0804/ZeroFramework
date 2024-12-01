@@ -19,6 +19,7 @@ namespace ZeroFramework
     {
         //Base
         [SerializeField] public bool m_EditorResourceMode = true;
+        [SerializeField] public Language m_EditorLanguage = Language.Unspecified;
         [SerializeField] public string m_TextHelperTypeName = "ZeroFramework.DefaultTextHelper";
         [SerializeField] public string m_VersionHelperTypeName = "ZeroFramework.DefaultVersionHelper";
         [SerializeField] public string m_LogHelperTypeName = "ZeroFramework.DefaultLogHelper";
@@ -50,7 +51,9 @@ namespace ZeroFramework
         [SerializeField] public ConsoleWindow m_ConsoleWindow = new ConsoleWindow();
 
         //Download
-        [SerializeField] public string m_DownloadAgentHelperTypeName = "ZeroFramework.UnityWebRequestDownloadAgentHelper";
+        [SerializeField]
+        public string m_DownloadAgentHelperTypeName = "ZeroFramework.UnityWebRequestDownloadAgentHelper";
+
         [SerializeField] public DownloadAgentHelperBase m_CustomDownloadAgentHelper = null;
         [SerializeField] public int m_DownloadAgentHelperCount = 3;
         [SerializeField] public float m_DownloadTimeout = 30f;
@@ -64,7 +67,9 @@ namespace ZeroFramework
         [SerializeField] public string m_EntityGroupHelperTypeName = "ZeroFramework.DefaultEntityGroupHelper";
         [SerializeField] public EntityGroupHelperBase m_CustomEntityGroupHelper = null;
         [SerializeField] public EntityGroup[] m_EntityGroups = null;
-        [Serializable] public sealed class EntityGroup
+
+        [Serializable]
+        public sealed class EntityGroup
         {
             [SerializeField] private string m_Name = null;
             [SerializeField] private float m_InstanceAutoReleaseInterval = 60f;
@@ -84,10 +89,13 @@ namespace ZeroFramework
         [SerializeField] public FileSystemHelperBase m_CustomFileSystemHelper = null;
 
         //Localization
-        [SerializeField] public Language m_EditorLanguage = Language.Unspecified;
+        //Localization
         [SerializeField] public bool m_EnableLoadDictionaryUpdateEvent = false;
         [SerializeField] public bool m_EnableLoadDictionaryDependencyAssetEvent = false;
-        [SerializeField] public string m_LocalizationHelperTypeName = "ZeroFramework.Localization.DefaultLocalizationHelper";
+
+        [SerializeField]
+        public string m_LocalizationHelperTypeName = "ZeroFramework.Localization.DefaultLocalizationHelper";
+
         [SerializeField] public LocalizationHelperBase m_CustomLocalizationHelper = null;
         [SerializeField] public int m_LocalizationCachedBytesSize = 0;
 
@@ -113,7 +121,9 @@ namespace ZeroFramework
         [SerializeField] public string m_SoundAgentHelperTypeName = "ZeroFramework.Sound.DefaultSoundAgentHelper";
         [SerializeField] public SoundAgentHelperBase m_CustomSoundAgentHelper = null;
         [SerializeField] public SoundGroup[] m_SoundGroups = null;
-        [Serializable] public sealed class SoundGroup
+
+        [Serializable]
+        public sealed class SoundGroup
         {
             [SerializeField] private string m_Name = null;
             [SerializeField] private bool m_AvoidBeingReplacedBySamePriority = false;

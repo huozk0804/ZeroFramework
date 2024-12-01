@@ -14,7 +14,7 @@ namespace ZeroFramework.Editor
         void LocalizationInspectorInit()
         {
             _enableFunc.AddLast(OnLocalizationEnable);
-            _inspectorFunc.AddLast(OnLocalizationInspectorGUI);
+            m_InspectorFunc.AddLast(OnLocalizationInspectorGUI);
             _completeFunc.AddLast(OnLocalizationComplete);
         }
 

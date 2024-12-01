@@ -29,7 +29,8 @@ namespace ZeroFramework.Resource
         /// </summary>
         /// <param name="loadBinarySuccessCallback">加载二进制资源成功回调函数。</param>
         /// <param name="loadBinaryFailureCallback">加载二进制资源失败回调函数。</param>
-        public LoadBinaryCallbacks(LoadBinarySuccessCallback loadBinarySuccessCallback, LoadBinaryFailureCallback loadBinaryFailureCallback)
+        public LoadBinaryCallbacks(LoadBinarySuccessCallback loadBinarySuccessCallback,
+            LoadBinaryFailureCallback loadBinaryFailureCallback)
         {
             if (loadBinarySuccessCallback == null)
             {

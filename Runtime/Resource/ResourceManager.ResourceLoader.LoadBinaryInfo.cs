@@ -28,31 +28,14 @@ namespace ZeroFramework.Resource
 
                 public string BinaryAssetName => m_BinaryAssetName;
 
-                public ResourceInfo ResourceInfo
-                {
-                    get
-                    {
-                        return m_ResourceInfo;
-                    }
-                }
+                public ResourceInfo ResourceInfo => m_ResourceInfo;
 
-                public LoadBinaryCallbacks LoadBinaryCallbacks
-                {
-                    get
-                    {
-                        return m_LoadBinaryCallbacks;
-                    }
-                }
+                public LoadBinaryCallbacks LoadBinaryCallbacks => m_LoadBinaryCallbacks;
 
-                public object UserData
-                {
-                    get
-                    {
-                        return m_UserData;
-                    }
-                }
+                public object UserData => m_UserData;
 
-                public static LoadBinaryInfo Create(string binaryAssetName, ResourceInfo resourceInfo, LoadBinaryCallbacks loadBinaryCallbacks, object userData)
+                public static LoadBinaryInfo Create(string binaryAssetName, ResourceInfo resourceInfo,
+                    LoadBinaryCallbacks loadBinaryCallbacks, object userData)
                 {
                     LoadBinaryInfo loadBinaryInfo = ReferencePool.Acquire<LoadBinaryInfo>();
                     loadBinaryInfo.m_BinaryAssetName = binaryAssetName;

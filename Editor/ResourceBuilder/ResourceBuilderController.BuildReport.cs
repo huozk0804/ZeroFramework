@@ -42,8 +42,13 @@ namespace ZeroFramework.Editor.ResourceTools
             private StringBuilder m_LogBuilder = null;
             private SortedDictionary<string, ResourceData> m_ResourceDatas = null;
 
-            public void Initialize(string buildReportPath, string productName, string companyName, string gameIdentifier, string gameFrameworkVersion, string unityVersion, string applicableGameVersion, int internalResourceVersion,
-                Platform platforms, AssetBundleCompressionType assetBundleCompression, string compressionHelperTypeName, bool additionalCompressionSelected, bool forceRebuildAssetBundleSelected, string buildEventHandlerTypeName, string outputDirectory, BuildAssetBundleOptions buildAssetBundleOptions, SortedDictionary<string, ResourceData> resourceDatas)
+            public void Initialize(string buildReportPath, string productName, string companyName,
+                string gameIdentifier, string gameFrameworkVersion, string unityVersion, string applicableGameVersion,
+                int internalResourceVersion,
+                Platform platforms, AssetBundleCompressionType assetBundleCompression, string compressionHelperTypeName,
+                bool additionalCompressionSelected, bool forceRebuildAssetBundleSelected,
+                string buildEventHandlerTypeName, string outputDirectory,
+                BuildAssetBundleOptions buildAssetBundleOptions, SortedDictionary<string, ResourceData> resourceDatas)
             {
                 if (string.IsNullOrEmpty(buildReportPath))
                 {

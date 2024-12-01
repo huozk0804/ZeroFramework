@@ -13,7 +13,7 @@ namespace ZeroFramework.Editor
         void WebRequestInspectorInit()
         {
             _enableFunc.AddLast(OnWebRequestEnable);
-            _inspectorFunc.AddLast(OnWebRequestInspectorGUI);
+            m_InspectorFunc.AddLast(OnWebRequestInspectorGUI);
             _completeFunc.AddLast(OnWebRequestComplete);
         }
 

@@ -21,9 +21,14 @@ namespace ZeroFramework.Resource
             /// </summary>
             private sealed partial class LoadResourceAgent : ITaskAgent<LoadResourceTaskBase>
             {
-                private static readonly Dictionary<string, string> s_CachedResourceNames = new Dictionary<string, string>(StringComparer.Ordinal);
-                private static readonly HashSet<string> s_LoadingAssetNames = new HashSet<string>(StringComparer.Ordinal);
-                private static readonly HashSet<string> s_LoadingResourceNames = new HashSet<string>(StringComparer.Ordinal);
+                private static readonly Dictionary<string, string> s_CachedResourceNames =
+                    new Dictionary<string, string>(StringComparer.Ordinal);
+
+                private static readonly HashSet<string> s_LoadingAssetNames =
+                    new HashSet<string>(StringComparer.Ordinal);
+
+                private static readonly HashSet<string> s_LoadingResourceNames =
+                    new HashSet<string>(StringComparer.Ordinal);
 
                 private readonly ILoadResourceAgentHelper m_Helper;
                 private readonly IResourceHelper m_ResourceHelper;
@@ -42,7 +47,9 @@ namespace ZeroFramework.Resource
                 /// <param name="readOnlyPath">资源只读区路径。</param>
                 /// <param name="readWritePath">资源读写区路径。</param>
                 /// <param name="decryptResourceCallback">解密资源回调函数。</param>
-                public LoadResourceAgent(ILoadResourceAgentHelper loadResourceAgentHelper, IResourceHelper resourceHelper, ResourceLoader resourceLoader, string readOnlyPath, string readWritePath, DecryptResourceCallback decryptResourceCallback)
+                public LoadResourceAgent(ILoadResourceAgentHelper loadResourceAgentHelper,
+                    IResourceHelper resourceHelper, ResourceLoader resourceLoader, string readOnlyPath,
+                    string readWritePath, DecryptResourceCallback decryptResourceCallback)
                 {
                     if (loadResourceAgentHelper == null)
                     {
@@ -78,13 +85,7 @@ namespace ZeroFramework.Resource
                 /// <summary>
                 /// 获取加载资源任务。
                 /// </summary>
-                public LoadResourceTaskBase Task
-                {
-                    get
-                    {
-                        return m_Task;
-                    }
-                }
+                public LoadResourceTaskBase Task => m_Task;
 
                 /// <summary>
                 /// 初始化加载资源代理。
@@ -194,10 +195,13 @@ namespace ZeroFramework.Resource
 
                     s_LoadingResourceNames.Add(resourceName);
 
-                    string fullPath = null;
-                    if (!s_CachedResourceNames.TryGetValue(resourceName, out fullPath))
+                    if (!s_CachedResourceNames.TryGetValue(resourceName, out var fullPath))
                     {
-                        fullPath = Utility.Path.GetRegularPath(Path.Combine(resourceInfo.StorageInReadOnly ? m_ReadOnlyPath : m_ReadWritePath, resourceInfo.UseFileSystem ? resourceInfo.FileSystemName : resourceInfo.ResourceName.FullName));
+                        fullPath = Utility.Path.GetRegularPath(Path.Combine(
+                            resourceInfo.StorageInReadOnly ? m_ReadOnlyPath : m_ReadWritePath,
+                            resourceInfo.UseFileSystem
+                                ? resourceInfo.FileSystemName
+                                : resourceInfo.ResourceName.FullName));
                         s_CachedResourceNames.Add(resourceName, fullPath);
                     }
 
@@ -205,7 +209,9 @@ namespace ZeroFramework.Resource
                     {
                         if (resourceInfo.UseFileSystem)
                         {
-                            IFileSystem fileSystem = m_ResourceLoader.m_ResourceManager.GetFileSystem(resourceInfo.FileSystemName, resourceInfo.StorageInReadOnly);
+                            IFileSystem fileSystem =
+                                m_ResourceLoader.m_ResourceManager.GetFileSystem(resourceInfo.FileSystemName,
+                                    resourceInfo.StorageInReadOnly);
                             m_Helper.ReadFile(fileSystem, resourceInfo.ResourceName.FullName);
                         }
                         else
@@ -213,11 +219,15 @@ namespace ZeroFramework.Resource
                             m_Helper.ReadFile(fullPath);
                         }
                     }
-                    else if (resourceInfo.LoadType == LoadType.LoadFromMemory || resourceInfo.LoadType == LoadType.LoadFromMemoryAndQuickDecrypt || resourceInfo.LoadType == LoadType.LoadFromMemoryAndDecrypt)
+                    else if (resourceInfo.LoadType == LoadType.LoadFromMemory ||
+                             resourceInfo.LoadType == LoadType.LoadFromMemoryAndQuickDecrypt ||
+                             resourceInfo.LoadType == LoadType.LoadFromMemoryAndDecrypt)
                     {
                         if (resourceInfo.UseFileSystem)
                         {
-                            IFileSystem fileSystem = m_ResourceLoader.m_ResourceManager.GetFileSystem(resourceInfo.FileSystemName, resourceInfo.StorageInReadOnly);
+                            IFileSystem fileSystem =
+                                m_ResourceLoader.m_ResourceManager.GetFileSystem(resourceInfo.FileSystemName,
+                                    resourceInfo.StorageInReadOnly);
                             m_Helper.ReadBytes(fileSystem, resourceInfo.ResourceName.FullName);
                         }
                         else
@@ -227,7 +237,8 @@ namespace ZeroFramework.Resource
                     }
                     else
                     {
-                        throw new GameFrameworkException(Utility.Text.Format("Resource load type '{0}' is not supported.", resourceInfo.LoadType));
+                        throw new GameFrameworkException(
+                            Utility.Text.Format("Resource load type '{0}' is not supported.", resourceInfo.LoadType));
                     }
 
                     return StartTaskStatus.CanResume;
@@ -285,35 +296,45 @@ namespace ZeroFramework.Resource
                     m_Task.OnLoadAssetUpdate(this, e.Type, e.Progress);
                 }
 
-                private void OnLoadResourceAgentHelperReadFileComplete(object sender, LoadResourceAgentHelperReadFileCompleteEventArgs_0 e)
+                private void OnLoadResourceAgentHelperReadFileComplete(object sender,
+                    LoadResourceAgentHelperReadFileCompleteEventArgs_0 e)
                 {
-                    ResourceObject resourceObject = ResourceObject.Create(m_Task.ResourceInfo.ResourceName.Name, e.Resource, m_ResourceHelper, m_ResourceLoader);
+                    ResourceObject resourceObject = ResourceObject.Create(m_Task.ResourceInfo.ResourceName.Name,
+                        e.Resource, m_ResourceHelper, m_ResourceLoader);
                     m_ResourceLoader.m_ResourcePool.Register(resourceObject, true);
                     s_LoadingResourceNames.Remove(m_Task.ResourceInfo.ResourceName.Name);
                     OnResourceObjectReady(resourceObject);
                 }
 
-                private void OnLoadResourceAgentHelperReadBytesComplete(object sender, LoadResourceAgentHelperReadBytesCompleteEventArgs_0 e)
+                private void OnLoadResourceAgentHelperReadBytesComplete(object sender,
+                    LoadResourceAgentHelperReadBytesCompleteEventArgs_0 e)
                 {
                     byte[] bytes = e.GetBytes();
                     ResourceInfo resourceInfo = m_Task.ResourceInfo;
-                    if (resourceInfo.LoadType == LoadType.LoadFromMemoryAndQuickDecrypt || resourceInfo.LoadType == LoadType.LoadFromMemoryAndDecrypt)
+                    if (resourceInfo.LoadType == LoadType.LoadFromMemoryAndQuickDecrypt ||
+                        resourceInfo.LoadType == LoadType.LoadFromMemoryAndDecrypt)
                     {
-                        m_DecryptResourceCallback(bytes, 0, bytes.Length, resourceInfo.ResourceName.Name, resourceInfo.ResourceName.Variant, resourceInfo.ResourceName.Extension, resourceInfo.StorageInReadOnly, resourceInfo.FileSystemName, (byte)resourceInfo.LoadType, resourceInfo.Length, resourceInfo.HashCode);
+                        m_DecryptResourceCallback(bytes, 0, bytes.Length, resourceInfo.ResourceName.Name,
+                            resourceInfo.ResourceName.Variant, resourceInfo.ResourceName.Extension,
+                            resourceInfo.StorageInReadOnly, resourceInfo.FileSystemName, (byte)resourceInfo.LoadType,
+                            resourceInfo.Length, resourceInfo.HashCode);
                     }
 
                     m_Helper.ParseBytes(bytes);
                 }
 
-                private void OnLoadResourceAgentHelperParseBytesComplete(object sender, LoadResourceAgentHelperParseBytesCompleteEventArgs_0 e)
+                private void OnLoadResourceAgentHelperParseBytesComplete(object sender,
+                    LoadResourceAgentHelperParseBytesCompleteEventArgs_0 e)
                 {
-                    ResourceObject resourceObject = ResourceObject.Create(m_Task.ResourceInfo.ResourceName.Name, e.Resource, m_ResourceHelper, m_ResourceLoader);
+                    ResourceObject resourceObject = ResourceObject.Create(m_Task.ResourceInfo.ResourceName.Name,
+                        e.Resource, m_ResourceHelper, m_ResourceLoader);
                     m_ResourceLoader.m_ResourcePool.Register(resourceObject, true);
                     s_LoadingResourceNames.Remove(m_Task.ResourceInfo.ResourceName.Name);
                     OnResourceObjectReady(resourceObject);
                 }
 
-                private void OnLoadResourceAgentHelperLoadComplete(object sender, LoadResourceAgentHelperLoadCompleteEventArgs_0 e)
+                private void OnLoadResourceAgentHelperLoadComplete(object sender,
+                    LoadResourceAgentHelperLoadCompleteEventArgs_0 e)
                 {
                     AssetObject assetObject = null;
                     if (m_Task.IsScene)
@@ -324,13 +345,14 @@ namespace ZeroFramework.Resource
                     if (assetObject == null)
                     {
                         List<object> dependencyAssets = m_Task.GetDependencyAssets();
-                        assetObject = AssetObject.Create(m_Task.AssetName, e.Asset, dependencyAssets, m_Task.ResourceObject.Target, m_ResourceHelper, m_ResourceLoader);
+                        assetObject = AssetObject.Create(m_Task.AssetName, e.Asset, dependencyAssets,
+                            m_Task.ResourceObject.Target, m_ResourceHelper, m_ResourceLoader);
                         m_ResourceLoader.m_AssetPool.Register(assetObject, true);
                         m_ResourceLoader.m_AssetToResourceMap.Add(e.Asset, m_Task.ResourceObject.Target);
                         foreach (object dependencyAsset in dependencyAssets)
                         {
-                            object dependencyResource = null;
-                            if (m_ResourceLoader.m_AssetToResourceMap.TryGetValue(dependencyAsset, out dependencyResource))
+                            if (m_ResourceLoader.m_AssetToResourceMap.TryGetValue(dependencyAsset,
+                                    out var dependencyResource))
                             {
                                 m_Task.ResourceObject.AddDependencyResource(dependencyResource);
                             }

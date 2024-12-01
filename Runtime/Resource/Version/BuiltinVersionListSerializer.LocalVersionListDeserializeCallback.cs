@@ -26,7 +26,8 @@ namespace ZeroFramework.Resource
             {
                 byte[] encryptBytes = binaryReader.ReadBytes(CachedHashBytesLength);
                 int resourceCount = binaryReader.ReadInt32();
-                LocalVersionList.Resource[] resources = resourceCount > 0 ? new LocalVersionList.Resource[resourceCount] : null;
+                LocalVersionList.Resource[] resources =
+                    resourceCount > 0 ? new LocalVersionList.Resource[resourceCount] : null;
                 for (int i = 0; i < resourceCount; i++)
                 {
                     string name = binaryReader.ReadEncryptedString(encryptBytes);
@@ -52,7 +53,8 @@ namespace ZeroFramework.Resource
             {
                 byte[] encryptBytes = binaryReader.ReadBytes(CachedHashBytesLength);
                 int resourceCount = binaryReader.Read7BitEncodedInt32();
-                LocalVersionList.Resource[] resources = resourceCount > 0 ? new LocalVersionList.Resource[resourceCount] : null;
+                LocalVersionList.Resource[] resources =
+                    resourceCount > 0 ? new LocalVersionList.Resource[resourceCount] : null;
                 for (int i = 0; i < resourceCount; i++)
                 {
                     string name = binaryReader.ReadEncryptedString(encryptBytes);
@@ -79,7 +81,8 @@ namespace ZeroFramework.Resource
             {
                 byte[] encryptBytes = binaryReader.ReadBytes(CachedHashBytesLength);
                 int resourceCount = binaryReader.Read7BitEncodedInt32();
-                LocalVersionList.Resource[] resources = resourceCount > 0 ? new LocalVersionList.Resource[resourceCount] : null;
+                LocalVersionList.Resource[] resources =
+                    resourceCount > 0 ? new LocalVersionList.Resource[resourceCount] : null;
                 for (int i = 0; i < resourceCount; i++)
                 {
                     string name = binaryReader.ReadEncryptedString(encryptBytes);
@@ -92,7 +95,8 @@ namespace ZeroFramework.Resource
                 }
 
                 int fileSystemCount = binaryReader.Read7BitEncodedInt32();
-                LocalVersionList.FileSystem[] fileSystems = fileSystemCount > 0 ? new LocalVersionList.FileSystem[fileSystemCount] : null;
+                LocalVersionList.FileSystem[] fileSystems =
+                    fileSystemCount > 0 ? new LocalVersionList.FileSystem[fileSystemCount] : null;
                 for (int i = 0; i < fileSystemCount; i++)
                 {
                     string name = binaryReader.ReadEncryptedString(encryptBytes);

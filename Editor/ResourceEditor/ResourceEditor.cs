@@ -5,7 +5,6 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -108,7 +107,8 @@ namespace ZeroFramework.Editor.ResourceTools
                 EditorGUILayout.BeginVertical(GUILayout.Width(position.width * 0.25f));
                 {
                     GUILayout.Space(5f);
-                    EditorGUILayout.LabelField(Utility.Text.Format("Resource List ({0})", m_Controller.ResourceCount), EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField(Utility.Text.Format("Resource List ({0})", m_Controller.ResourceCount),
+                        EditorStyles.boldLabel);
                     EditorGUILayout.BeginHorizontal("box", GUILayout.Height(position.height - 52f));
                     {
                         DrawResourcesView();
@@ -125,7 +125,9 @@ namespace ZeroFramework.Editor.ResourceTools
                 EditorGUILayout.BeginVertical(GUILayout.Width(position.width * 0.25f));
                 {
                     GUILayout.Space(5f);
-                    EditorGUILayout.LabelField(Utility.Text.Format("Resource Content ({0})", m_CurrentResourceContentCount), EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField(
+                        Utility.Text.Format("Resource Content ({0})", m_CurrentResourceContentCount),
+                        EditorStyles.boldLabel);
                     EditorGUILayout.BeginHorizontal("box", GUILayout.Height(position.height - 52f));
                     {
                         DrawResourceView();
@@ -177,9 +179,13 @@ namespace ZeroFramework.Editor.ResourceTools
             EditorGUILayout.BeginHorizontal();
             {
 #if UNITY_2019_3_OR_NEWER
-                bool foldout = EditorGUI.Foldout(new Rect(18f + 14f * folder.Depth, 20f * m_CurrentResourceRowOnDraw + 4f, int.MaxValue, 14f), expand, string.Empty, true);
+                bool foldout =
+                    EditorGUI.Foldout(
+                        new Rect(18f + 14f * folder.Depth, 20f * m_CurrentResourceRowOnDraw + 4f, int.MaxValue, 14f),
+                        expand, string.Empty, true);
 #else
-                bool foldout = EditorGUI.Foldout(new Rect(18f + 14f * folder.Depth, 20f * m_CurrentResourceRowOnDraw + 2f, int.MaxValue, 14f), expand, string.Empty, true);
+                bool foldout =
+ EditorGUI.Foldout(new Rect(18f + 14f * folder.Depth, 20f * m_CurrentResourceRowOnDraw + 2f, int.MaxValue, 14f), expand, string.Empty, true);
 #endif
                 if (expand != foldout)
                 {
@@ -188,8 +194,10 @@ namespace ZeroFramework.Editor.ResourceTools
                 }
 
 #if UNITY_2019_3_OR_NEWER
-                GUI.DrawTexture(new Rect(32f + 14f * folder.Depth, 20f * m_CurrentResourceRowOnDraw + 3f, 16f, 16f), ResourceFolder.Icon);
-                EditorGUILayout.LabelField(string.Empty, GUILayout.Width(44f + 14f * folder.Depth), GUILayout.Height(18f));
+                GUI.DrawTexture(new Rect(32f + 14f * folder.Depth, 20f * m_CurrentResourceRowOnDraw + 3f, 16f, 16f),
+                    ResourceFolder.Icon);
+                EditorGUILayout.LabelField(string.Empty, GUILayout.Width(44f + 14f * folder.Depth),
+                    GUILayout.Height(18f));
 #else
                 GUI.DrawTexture(new Rect(32f + 14f * folder.Depth, 20f * m_CurrentResourceRowOnDraw + 1f, 16f, 16f), ResourceFolder.Icon);
                 EditorGUILayout.LabelField(string.Empty, GUILayout.Width(40f + 14f * folder.Depth), GUILayout.Height(18f));
@@ -225,7 +233,8 @@ namespace ZeroFramework.Editor.ResourceTools
                 }
 
                 float emptySpace = position.width;
-                if (EditorGUILayout.Toggle(m_SelectedResource == resourceItem.Resource, GUILayout.Width(emptySpace - 12f)))
+                if (EditorGUILayout.Toggle(m_SelectedResource == resourceItem.Resource,
+                        GUILayout.Width(emptySpace - 12f)))
                 {
                     ChangeSelectedResource(resourceItem.Resource);
                 }
@@ -236,8 +245,11 @@ namespace ZeroFramework.Editor.ResourceTools
 
                 GUILayout.Space(-emptySpace + 24f);
 #if UNITY_2019_3_OR_NEWER
-                GUI.DrawTexture(new Rect(32f + 14f * resourceItem.Depth, 20f * m_CurrentResourceRowOnDraw + 3f, 16f, 16f), resourceItem.Icon);
-                EditorGUILayout.LabelField(string.Empty, GUILayout.Width(30f + 14f * resourceItem.Depth), GUILayout.Height(18f));
+                GUI.DrawTexture(
+                    new Rect(32f + 14f * resourceItem.Depth, 20f * m_CurrentResourceRowOnDraw + 3f, 16f, 16f),
+                    resourceItem.Icon);
+                EditorGUILayout.LabelField(string.Empty, GUILayout.Width(30f + 14f * resourceItem.Depth),
+                    GUILayout.Height(18f));
 #else
                 GUI.DrawTexture(new Rect(32f + 14f * resourceItem.Depth, 20f * m_CurrentResourceRowOnDraw + 1f, 16f, 16f), resourceItem.Icon);
                 EditorGUILayout.LabelField(string.Empty, GUILayout.Width(26f + 14f * resourceItem.Depth), GUILayout.Height(18f));
@@ -279,6 +291,7 @@ namespace ZeroFramework.Editor.ResourceTools
                 m_InputResourceVariant = null;
                 GUI.FocusControl(null);
             }
+
             EditorGUI.BeginDisabledGroup(m_SelectedResource == null);
             {
                 if (GUILayout.Button("Rename", GUILayout.Width(65f)))
@@ -288,10 +301,12 @@ namespace ZeroFramework.Editor.ResourceTools
                     m_InputResourceVariant = m_SelectedResource != null ? m_SelectedResource.Variant : null;
                     GUI.FocusControl(null);
                 }
+
                 if (GUILayout.Button("Remove", GUILayout.Width(65f)))
                 {
                     m_MenuState = MenuState.Remove;
                 }
+
                 if (m_SelectedResource == null)
                 {
                     EditorGUILayout.EnumPopup(LoadType.LoadFromFile);
@@ -304,7 +319,9 @@ namespace ZeroFramework.Editor.ResourceTools
                         SetResourceLoadType(loadType);
                     }
                 }
-                bool packed = EditorGUILayout.ToggleLeft("Packed", m_SelectedResource != null && m_SelectedResource.Packed, GUILayout.Width(65f));
+
+                bool packed = EditorGUILayout.ToggleLeft("Packed",
+                    m_SelectedResource != null && m_SelectedResource.Packed, GUILayout.Width(65f));
                 if (m_SelectedResource != null && packed != m_SelectedResource.Packed)
                 {
                     SetResourcePacked(packed);
@@ -320,7 +337,8 @@ namespace ZeroFramework.Editor.ResourceTools
             GUI.SetNextControlName("NewResourceVariantTextField");
             m_InputResourceVariant = EditorGUILayout.TextField(m_InputResourceVariant, GUILayout.Width(60f));
 
-            if (GUI.GetNameOfFocusedControl() == "NewResourceNameTextField" || GUI.GetNameOfFocusedControl() == "NewResourceVariantTextField")
+            if (GUI.GetNameOfFocusedControl() == "NewResourceNameTextField" ||
+                GUI.GetNameOfFocusedControl() == "NewResourceVariantTextField")
             {
                 if (UnityEngine.Event.current.isKey && UnityEngine.Event.current.keyCode == KeyCode.Return)
                 {
@@ -357,7 +375,8 @@ namespace ZeroFramework.Editor.ResourceTools
             GUI.SetNextControlName("RenameResourceVariantTextField");
             m_InputResourceVariant = EditorGUILayout.TextField(m_InputResourceVariant, GUILayout.Width(60f));
 
-            if (GUI.GetNameOfFocusedControl() == "RenameResourceNameTextField" || GUI.GetNameOfFocusedControl() == "RenameResourceVariantTextField")
+            if (GUI.GetNameOfFocusedControl() == "RenameResourceNameTextField" ||
+                GUI.GetNameOfFocusedControl() == "RenameResourceVariantTextField")
             {
                 if (UnityEngine.Event.current.isKey && UnityEngine.Event.current.keyCode == KeyCode.Return)
                 {
@@ -417,7 +436,13 @@ namespace ZeroFramework.Editor.ResourceTools
                     foreach (Asset asset in assets)
                     {
                         SourceAsset sourceAsset = m_Controller.GetSourceAsset(asset.Guid);
-                        string assetName = sourceAsset != null ? (m_Controller.AssetSorter == AssetSorterType.Path ? sourceAsset.Path : (m_Controller.AssetSorter == AssetSorterType.Name ? sourceAsset.Name : sourceAsset.Guid)) : asset.Guid;
+                        string assetName = sourceAsset != null
+                            ? (m_Controller.AssetSorter == AssetSorterType.Path
+                                ? sourceAsset.Path
+                                : (m_Controller.AssetSorter == AssetSorterType.Name
+                                    ? sourceAsset.Name
+                                    : sourceAsset.Guid))
+                            : asset.Guid;
                         EditorGUILayout.BeginHorizontal();
                         {
                             float emptySpace = position.width;
@@ -430,7 +455,8 @@ namespace ZeroFramework.Editor.ResourceTools
 
                             GUILayout.Space(-emptySpace + 24f);
 #if UNITY_2019_3_OR_NEWER
-                            GUI.DrawTexture(new Rect(20f, 20f * index++ + 3f, 16f, 16f), sourceAsset != null ? sourceAsset.Icon : m_MissingSourceAssetIcon);
+                            GUI.DrawTexture(new Rect(20f, 20f * index++ + 3f, 16f, 16f),
+                                sourceAsset != null ? sourceAsset.Icon : m_MissingSourceAssetIcon);
                             EditorGUILayout.LabelField(string.Empty, GUILayout.Width(16f), GUILayout.Height(18f));
 #else
                             GUI.DrawTexture(new Rect(20f, 20f * index++ + 1f, 16f, 16f), sourceAsset != null ? sourceAsset.Icon : m_MissingSourceAssetIcon);
@@ -459,15 +485,19 @@ namespace ZeroFramework.Editor.ResourceTools
                     SetSelectedAssetInSelectedResource(asset, true);
                 }
             }
+
             if (GUILayout.Button("None", GUILayout.Width(50f)))
             {
                 m_SelectedAssetsInSelectedResource.Clear();
             }
-            m_Controller.AssetSorter = (AssetSorterType)EditorGUILayout.EnumPopup(m_Controller.AssetSorter, GUILayout.Width(60f));
+
+            m_Controller.AssetSorter =
+                (AssetSorterType)EditorGUILayout.EnumPopup(m_Controller.AssetSorter, GUILayout.Width(60f));
             GUILayout.Label(string.Empty);
             EditorGUI.BeginDisabledGroup(m_SelectedResource == null || m_SelectedAssetsInSelectedResource.Count <= 0);
             {
-                if (GUILayout.Button(Utility.Text.Format("{0} >>", m_SelectedAssetsInSelectedResource.Count), GUILayout.Width(80f)))
+                if (GUILayout.Button(Utility.Text.Format("{0} >>", m_SelectedAssetsInSelectedResource.Count),
+                        GUILayout.Width(80f)))
                 {
                     foreach (Asset asset in m_SelectedAssetsInSelectedResource)
                     {
@@ -515,9 +545,12 @@ namespace ZeroFramework.Editor.ResourceTools
                     int count = selectedSourceAssets.Count;
                     foreach (SourceAsset sourceAsset in selectedSourceAssets)
                     {
-                        EditorUtility.DisplayProgressBar("Add Resources", Utility.Text.Format("{0}/{1} processing...", ++index, count), (float)index / count);
+                        EditorUtility.DisplayProgressBar("Add Resources",
+                            Utility.Text.Format("{0}/{1} processing...", ++index, count), (float)index / count);
                         int dotIndex = sourceAsset.FromRootPath.IndexOf('.');
-                        string name = dotIndex > 0 ? sourceAsset.FromRootPath.Substring(0, dotIndex) : sourceAsset.FromRootPath;
+                        string name = dotIndex > 0
+                            ? sourceAsset.FromRootPath.Substring(0, dotIndex)
+                            : sourceAsset.FromRootPath;
                         AddResource(name, null, false);
                         Resource resource = m_Controller.GetResource(name, null);
                         if (resource == null)
@@ -536,7 +569,8 @@ namespace ZeroFramework.Editor.ResourceTools
                 }
             }
             EditorGUI.EndDisabledGroup();
-            bool hideAssignedSourceAssets = EditorGUILayout.ToggleLeft("Hide Assigned", m_HideAssignedSourceAssets, GUILayout.Width(100f));
+            bool hideAssignedSourceAssets =
+                EditorGUILayout.ToggleLeft("Hide Assigned", m_HideAssignedSourceAssets, GUILayout.Width(100f));
             if (hideAssignedSourceAssets != m_HideAssignedSourceAssets)
             {
                 m_HideAssignedSourceAssets = hideAssignedSourceAssets;
@@ -553,6 +587,7 @@ namespace ZeroFramework.Editor.ResourceTools
                 CleanResource();
                 EditorUtility.ClearProgressBar();
             }
+
             if (GUILayout.Button("Save", GUILayout.Width(80f)))
             {
                 EditorUtility.DisplayProgressBar("Save", "Processing...", 0f);
@@ -580,9 +615,13 @@ namespace ZeroFramework.Editor.ResourceTools
 
                 GUILayout.Space(-14f * sourceFolder.Depth);
 #if UNITY_2019_3_OR_NEWER
-                bool foldout = EditorGUI.Foldout(new Rect(18f + 14f * sourceFolder.Depth, 20f * m_CurrentSourceRowOnDraw + 4f, int.MaxValue, 14f), expand, string.Empty, true);
+                bool foldout =
+                    EditorGUI.Foldout(
+                        new Rect(18f + 14f * sourceFolder.Depth, 20f * m_CurrentSourceRowOnDraw + 4f, int.MaxValue,
+                            14f), expand, string.Empty, true);
 #else
-                bool foldout = EditorGUI.Foldout(new Rect(18f + 14f * sourceFolder.Depth, 20f * m_CurrentSourceRowOnDraw + 2f, int.MaxValue, 14f), expand, string.Empty, true);
+                bool foldout =
+ EditorGUI.Foldout(new Rect(18f + 14f * sourceFolder.Depth, 20f * m_CurrentSourceRowOnDraw + 2f, int.MaxValue, 14f), expand, string.Empty, true);
 #endif
                 if (expand != foldout)
                 {
@@ -591,8 +630,10 @@ namespace ZeroFramework.Editor.ResourceTools
                 }
 
 #if UNITY_2019_3_OR_NEWER
-                GUI.DrawTexture(new Rect(32f + 14f * sourceFolder.Depth, 20f * m_CurrentSourceRowOnDraw + 3f, 16f, 16f), SourceFolder.Icon);
-                EditorGUILayout.LabelField(string.Empty, GUILayout.Width(30f + 14f * sourceFolder.Depth), GUILayout.Height(18f));
+                GUI.DrawTexture(new Rect(32f + 14f * sourceFolder.Depth, 20f * m_CurrentSourceRowOnDraw + 3f, 16f, 16f),
+                    SourceFolder.Icon);
+                EditorGUILayout.LabelField(string.Empty, GUILayout.Width(30f + 14f * sourceFolder.Depth),
+                    GUILayout.Height(18f));
 #else
                 GUI.DrawTexture(new Rect(32f + 14f * sourceFolder.Depth, 20f * m_CurrentSourceRowOnDraw + 1f, 16f, 16f), SourceFolder.Icon);
                 EditorGUILayout.LabelField(string.Empty, GUILayout.Width(26f + 14f * sourceFolder.Depth), GUILayout.Height(18f));
@@ -636,15 +677,19 @@ namespace ZeroFramework.Editor.ResourceTools
 
                 GUILayout.Space(-emptySpace + 24f);
 #if UNITY_2019_3_OR_NEWER
-                GUI.DrawTexture(new Rect(32f + 14f * sourceAsset.Depth, 20f * m_CurrentSourceRowOnDraw + 3f, 16f, 16f), sourceAsset.Icon);
-                EditorGUILayout.LabelField(string.Empty, GUILayout.Width(30f + 14f * sourceAsset.Depth), GUILayout.Height(18f));
+                GUI.DrawTexture(new Rect(32f + 14f * sourceAsset.Depth, 20f * m_CurrentSourceRowOnDraw + 3f, 16f, 16f),
+                    sourceAsset.Icon);
+                EditorGUILayout.LabelField(string.Empty, GUILayout.Width(30f + 14f * sourceAsset.Depth),
+                    GUILayout.Height(18f));
 #else
                 GUI.DrawTexture(new Rect(32f + 14f * sourceAsset.Depth, 20f * m_CurrentSourceRowOnDraw + 1f, 16f, 16f), sourceAsset.Icon);
                 EditorGUILayout.LabelField(string.Empty, GUILayout.Width(26f + 14f * sourceAsset.Depth), GUILayout.Height(18f));
 #endif
                 EditorGUILayout.LabelField(sourceAsset.Name);
                 Asset asset = m_Controller.GetAsset(sourceAsset.Guid);
-                EditorGUILayout.LabelField(asset != null ? GetResourceFullName(asset.Resource.Name, asset.Resource.Variant) : string.Empty, GUILayout.Width(position.width * 0.15f));
+                EditorGUILayout.LabelField(
+                    asset != null ? GetResourceFullName(asset.Resource.Name, asset.Resource.Variant) : string.Empty,
+                    GUILayout.Width(position.width * 0.15f));
             }
             EditorGUILayout.EndHorizontal();
             m_CurrentSourceRowOnDraw++;
@@ -720,7 +765,8 @@ namespace ZeroFramework.Editor.ResourceTools
             }
             else
             {
-                Debug.LogWarning(Utility.Text.Format("Rename resource '{0}' to '{1}' failure.", oldFullName, newFullName));
+                Debug.LogWarning(Utility.Text.Format("Rename resource '{0}' to '{1}' failure.", oldFullName,
+                    newFullName));
             }
         }
 
@@ -748,7 +794,8 @@ namespace ZeroFramework.Editor.ResourceTools
             }
             else
             {
-                Debug.LogWarning(Utility.Text.Format("Set resource '{0}' load type to '{1}' failure.", fullName, loadType));
+                Debug.LogWarning(Utility.Text.Format("Set resource '{0}' load type to '{1}' failure.", fullName,
+                    loadType));
             }
         }
 
@@ -761,7 +808,8 @@ namespace ZeroFramework.Editor.ResourceTools
             }
             else
             {
-                Debug.LogWarning(Utility.Text.Format("{1} resource '{0}' failure.", fullName, packed ? "Pack" : "Unpack"));
+                Debug.LogWarning(Utility.Text.Format("{1} resource '{0}' failure.", fullName,
+                    packed ? "Pack" : "Unpack"));
             }
         }
 
@@ -769,7 +817,8 @@ namespace ZeroFramework.Editor.ResourceTools
         {
             if (!m_Controller.AssignAsset(sourceAsset.Guid, resource.Name, resource.Variant))
             {
-                Debug.LogWarning(Utility.Text.Format("Assign asset '{0}' to resource '{1}' failure.", sourceAsset.Name, resource.FullName));
+                Debug.LogWarning(Utility.Text.Format("Assign asset '{0}' to resource '{1}' failure.", sourceAsset.Name,
+                    resource.FullName));
             }
         }
 
@@ -777,7 +826,8 @@ namespace ZeroFramework.Editor.ResourceTools
         {
             if (!m_Controller.UnassignAsset(asset.Guid))
             {
-                Debug.LogWarning(Utility.Text.Format("Unassign asset '{0}' from resource '{1}' failure.", asset.Guid, m_SelectedResource.FullName));
+                Debug.LogWarning(Utility.Text.Format("Unassign asset '{0}' from resource '{1}' failure.", asset.Guid,
+                    m_SelectedResource.FullName));
             }
         }
 
@@ -787,7 +837,9 @@ namespace ZeroFramework.Editor.ResourceTools
             int unusedResourceCount = m_Controller.RemoveUnusedResources();
             RefreshResourceTree();
 
-            Debug.Log(Utility.Text.Format("Clean complete, {0} unknown assets and {1} unused resources has been removed.", unknownAssetCount, unusedResourceCount));
+            Debug.Log(Utility.Text.Format(
+                "Clean complete, {0} unknown assets and {1} unused resources has been removed.", unknownAssetCount,
+                unusedResourceCount));
         }
 
         private void RefreshResourceTree()
@@ -804,7 +856,9 @@ namespace ZeroFramework.Editor.ResourceTools
                     folder = subFolder == null ? folder.AddFolder(splitedPath[i]) : subFolder;
                 }
 
-                string fullName = resource.Variant != null ? Utility.Text.Format("{0}.{1}", splitedPath[splitedPath.Length - 1], resource.Variant) : splitedPath[splitedPath.Length - 1];
+                string fullName = resource.Variant != null
+                    ? Utility.Text.Format("{0}.{1}", splitedPath[splitedPath.Length - 1], resource.Variant)
+                    : splitedPath[splitedPath.Length - 1];
                 folder.AddItem(fullName, resource);
             }
         }
@@ -1058,12 +1112,14 @@ namespace ZeroFramework.Editor.ResourceTools
 
         private void OnLoadingResource(int index, int count)
         {
-            EditorUtility.DisplayProgressBar("Loading Resources", Utility.Text.Format("Loading resources, {0}/{1} loaded.", index, count), (float)index / count);
+            EditorUtility.DisplayProgressBar("Loading Resources",
+                Utility.Text.Format("Loading resources, {0}/{1} loaded.", index, count), (float)index / count);
         }
 
         private void OnLoadingAsset(int index, int count)
         {
-            EditorUtility.DisplayProgressBar("Loading Assets", Utility.Text.Format("Loading assets, {0}/{1} loaded.", index, count), (float)index / count);
+            EditorUtility.DisplayProgressBar("Loading Assets",
+                Utility.Text.Format("Loading assets, {0}/{1} loaded.", index, count), (float)index / count);
         }
 
         private void OnLoadCompleted()

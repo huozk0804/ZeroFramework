@@ -15,7 +15,7 @@ namespace ZeroFramework.Editor
         void ReferencePoolInspectorInit()
         {
             _enableFunc.AddLast(OnReferencePoolEnable);
-            _inspectorFunc.AddLast(OnReferencePoolInspectorGUI);
+            m_InspectorFunc.AddLast(OnReferencePoolInspectorGUI);
             _completeFunc.AddLast(OnReferencePoolComplete);
         }
 

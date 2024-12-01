@@ -11,7 +11,7 @@ namespace ZeroFramework.Editor
         void SettingInspectorInit()
         {
             _enableFunc.AddLast(OnSettingEnable);
-            _inspectorFunc.AddLast(OnSettingInspectorGUI);
+            m_InspectorFunc.AddLast(OnSettingInspectorGUI);
             _completeFunc.AddLast(OnSettingComplete);
         }
 

@@ -39,13 +39,7 @@ namespace ZeroFramework.Resource
             /// <summary>
             /// 获取所在资源名称。
             /// </summary>
-            public ResourceName ResourceName
-            {
-                get
-                {
-                    return m_ResourceName;
-                }
-            }
+            public ResourceName ResourceName => m_ResourceName;
 
             /// <summary>
             /// 获取依赖资源名称。

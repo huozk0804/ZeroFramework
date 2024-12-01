@@ -24,10 +24,13 @@ namespace ZeroFramework.Resource
 
                 public override bool IsScene => false;
 
-                public static LoadAssetTask Create(string assetName, Type assetType, int priority, ResourceInfo resourceInfo, string[] dependencyAssetNames, LoadAssetCallbacks loadAssetCallbacks, object userData)
+                public static LoadAssetTask Create(string assetName, Type assetType, int priority,
+                    ResourceInfo resourceInfo, string[] dependencyAssetNames, LoadAssetCallbacks loadAssetCallbacks,
+                    object userData)
                 {
                     LoadAssetTask loadAssetTask = ReferencePool.Acquire<LoadAssetTask>();
-                    loadAssetTask.Initialize(assetName, assetType, priority, resourceInfo, dependencyAssetNames, userData);
+                    loadAssetTask.Initialize(assetName, assetType, priority, resourceInfo, dependencyAssetNames,
+                        userData);
                     loadAssetTask.m_LoadAssetCallbacks = loadAssetCallbacks;
                     return loadAssetTask;
                 }
@@ -47,7 +50,8 @@ namespace ZeroFramework.Resource
                     }
                 }
 
-                public override void OnLoadAssetFailure(LoadResourceAgent agent, LoadResourceStatus status, string errorMessage)
+                public override void OnLoadAssetFailure(LoadResourceAgent agent, LoadResourceStatus status,
+                    string errorMessage)
                 {
                     base.OnLoadAssetFailure(agent, status, errorMessage);
                     if (m_LoadAssetCallbacks.LoadAssetFailureCallback != null)
@@ -56,7 +60,8 @@ namespace ZeroFramework.Resource
                     }
                 }
 
-                public override void OnLoadAssetUpdate(LoadResourceAgent agent, LoadResourceProgress type, float progress)
+                public override void OnLoadAssetUpdate(LoadResourceAgent agent, LoadResourceProgress type,
+                    float progress)
                 {
                     base.OnLoadAssetUpdate(agent, type, progress);
                     if (type == LoadResourceProgress.LoadAsset)
@@ -68,12 +73,14 @@ namespace ZeroFramework.Resource
                     }
                 }
 
-                public override void OnLoadDependencyAsset(LoadResourceAgent agent, string dependencyAssetName, object dependencyAsset)
+                public override void OnLoadDependencyAsset(LoadResourceAgent agent, string dependencyAssetName,
+                    object dependencyAsset)
                 {
                     base.OnLoadDependencyAsset(agent, dependencyAssetName, dependencyAsset);
                     if (m_LoadAssetCallbacks.LoadAssetDependencyAssetCallback != null)
                     {
-                        m_LoadAssetCallbacks.LoadAssetDependencyAssetCallback(AssetName, dependencyAssetName, LoadedDependencyAssetCount, TotalDependencyAssetCount, UserData);
+                        m_LoadAssetCallbacks.LoadAssetDependencyAssetCallback(AssetName, dependencyAssetName,
+                            LoadedDependencyAssetCount, TotalDependencyAssetCount, UserData);
                     }
                 }
             }

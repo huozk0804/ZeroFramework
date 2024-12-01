@@ -21,5 +21,6 @@ namespace ZeroFramework.Resource
     /// <param name="loadType">资源加载方式。</param>
     /// <param name="length">资源大小。</param>
     /// <param name="hashCode">资源哈希值。</param>
-    public delegate void DecryptResourceCallback(byte[] bytes, int startIndex, int count, string name, string variant, string extension, bool storageInReadOnly, string fileSystem, byte loadType, int length, int hashCode);
+    public delegate void DecryptResourceCallback(byte[] bytes, int startIndex, int count, string name, string variant,
+        string extension, bool storageInReadOnly, string fileSystem, byte loadType, int length, int hashCode);
 }

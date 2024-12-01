@@ -15,7 +15,7 @@ namespace ZeroFramework.Editor
         void DataTableInspectorInit()
         {
             _enableFunc.AddLast(OnDataTableEnable);
-            _inspectorFunc.AddLast(OnDataTableInspectorGUI);
+            m_InspectorFunc.AddLast(OnDataTableInspectorGUI);
             _completeFunc.AddLast(OnDataTableComplete);
         }
 

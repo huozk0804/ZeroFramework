@@ -39,7 +39,8 @@ namespace ZeroFramework.Resource
             /// <param name="hashCode">资源哈希值。</param>
             /// <param name="compressedLength">资源压缩后长度。</param>
             /// <param name="compressedHashCode">资源压缩后哈希值。</param>
-            public Resource(string name, string variant, string extension, byte loadType, long offset, int length, int hashCode, int compressedLength, int compressedHashCode)
+            public Resource(string name, string variant, string extension, byte loadType, long offset, int length,
+                int hashCode, int compressedLength, int compressedHashCode)
             {
                 if (string.IsNullOrEmpty(name))
                 {

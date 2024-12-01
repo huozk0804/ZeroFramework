@@ -15,7 +15,7 @@ namespace ZeroFramework.Editor
         void EntityInspectorInit()
         {
             _enableFunc.AddLast(OnEntityEnable);
-            _inspectorFunc.AddLast(OnEntityInspectorGUI);
+            m_InspectorFunc.AddLast(OnEntityInspectorGUI);
             _completeFunc.AddLast(OnEntityComplete);
         }
 

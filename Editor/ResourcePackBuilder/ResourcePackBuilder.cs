@@ -17,9 +17,13 @@ namespace ZeroFramework.Editor.ResourceTools
     /// </summary>
     internal sealed class ResourcePackBuilder : EditorWindow
     {
-        private static readonly string[] PlatformForDisplay = new string[] { "Windows", "Windows x64", "macOS", "Linux", "iOS", "Android", "Windows Store", "WebGL" };
+        private static readonly string[] PlatformForDisplay = new string[]
+            { "Windows", "Windows x64", "macOS", "Linux", "iOS", "Android", "Windows Store", "WebGL" };
+
         private static readonly int[] LengthLimit = new int[] { 0, 128, 256, 512, 1024, 2048, 4096 };
-        private static readonly string[] LengthLimitForDisplay = new string[] { "<Unlimited>", "128 MB", "256 MB", "512 MB", "1 GB", "2 GB", "4 GB", "<Custom>" };
+
+        private static readonly string[] LengthLimitForDisplay = new string[]
+            { "<Unlimited>", "128 MB", "256 MB", "512 MB", "1 GB", "2 GB", "4 GB", "<Custom>" };
 
         private ResourcePackBuilderController m_Controller = null;
         private string[] m_VersionNames = null;
@@ -127,6 +131,7 @@ namespace ZeroFramework.Editor.ResourceTools
                             m_Controller.WorkingDirectory = directory;
                             RefreshVersionNames();
                         }
+
                         if (GUILayout.Button("Browse...", GUILayout.Width(80f)))
                         {
                             BrowseWorkingDirectory();
@@ -154,7 +159,8 @@ namespace ZeroFramework.Editor.ResourceTools
                         if (selectedIndex != m_CompressionHelperTypeNameIndex)
                         {
                             m_CompressionHelperTypeNameIndex = selectedIndex;
-                            m_Controller.CompressionHelperTypeName = selectedIndex <= 0 ? string.Empty : names[selectedIndex];
+                            m_Controller.CompressionHelperTypeName =
+                                selectedIndex <= 0 ? string.Empty : names[selectedIndex];
                             if (m_Controller.RefreshCompressionHelper())
                             {
                                 Debug.Log("Set compression helper success.");
@@ -166,7 +172,9 @@ namespace ZeroFramework.Editor.ResourceTools
                         }
                     }
                     EditorGUILayout.EndHorizontal();
-                    if (m_Controller.Platform == Platform.Undefined || string.IsNullOrEmpty(m_Controller.CompressionHelperTypeName) || !m_Controller.IsValidWorkingDirectory)
+                    if (m_Controller.Platform == Platform.Undefined ||
+                        string.IsNullOrEmpty(m_Controller.CompressionHelperTypeName) ||
+                        !m_Controller.IsValidWorkingDirectory)
                     {
                         string message = string.Empty;
                         if (!m_Controller.IsValidWorkingDirectory)
@@ -203,7 +211,8 @@ namespace ZeroFramework.Editor.ResourceTools
                     }
                     else if (m_VersionNamesForTargetDisplay.Length <= 0)
                     {
-                        EditorGUILayout.HelpBox("No version was found in the specified working directory and platform.", MessageType.Warning);
+                        EditorGUILayout.HelpBox("No version was found in the specified working directory and platform.",
+                            MessageType.Warning);
                     }
                     else
                     {
@@ -234,6 +243,7 @@ namespace ZeroFramework.Editor.ResourceTools
                             }
                             EditorGUILayout.EndHorizontal();
                         }
+
                         EditorGUILayout.BeginHorizontal();
                         {
                             EditorGUILayout.LabelField("Length Limit", GUILayout.Width(160f));
@@ -285,7 +295,9 @@ namespace ZeroFramework.Editor.ResourceTools
                             {
                                 EditorGUILayout.BeginHorizontal();
                                 {
-                                    EditorGUILayout.LabelField(m_SourceVersionCount.ToString() + (m_SourceVersionCount > 1 ? " items" : " item") + " selected.");
+                                    EditorGUILayout.LabelField(m_SourceVersionCount.ToString() +
+                                                               (m_SourceVersionCount > 1 ? " items" : " item") +
+                                                               " selected.");
                                     if (GUILayout.Button("Select All Except <None>", GUILayout.Width(180f)))
                                     {
                                         m_SourceVersionIndexes[0] = false;
@@ -296,6 +308,7 @@ namespace ZeroFramework.Editor.ResourceTools
 
                                         RefreshSourceVersionCount();
                                     }
+
                                     if (GUILayout.Button("Select All", GUILayout.Width(100f)))
                                     {
                                         for (int i = 0; i < m_SourceVersionIndexes.Length; i++)
@@ -305,6 +318,7 @@ namespace ZeroFramework.Editor.ResourceTools
 
                                         RefreshSourceVersionCount();
                                     }
+
                                     if (GUILayout.Button("Select None", GUILayout.Width(100f)))
                                     {
                                         for (int i = 0; i < m_SourceVersionIndexes.Length; i++)
@@ -333,7 +347,10 @@ namespace ZeroFramework.Editor.ResourceTools
                                                     bool isTarget = index - 1 == m_TargetVersionIndex;
                                                     EditorGUI.BeginDisabledGroup(isTarget);
                                                     {
-                                                        bool selected = GUILayout.Toggle(m_SourceVersionIndexes[index], isTarget ? m_VersionNamesForSourceDisplay[index] + " [Target]" : m_VersionNamesForSourceDisplay[index], "button");
+                                                        bool selected = GUILayout.Toggle(m_SourceVersionIndexes[index],
+                                                            isTarget
+                                                                ? m_VersionNamesForSourceDisplay[index] + " [Target]"
+                                                                : m_VersionNamesForSourceDisplay[index], "button");
                                                         if (m_SourceVersionIndexes[index] != selected)
                                                         {
                                                             m_SourceVersionIndexes[index] = selected;
@@ -353,13 +370,16 @@ namespace ZeroFramework.Editor.ResourceTools
                         }
                         EditorGUILayout.EndHorizontal();
                     }
+
                     GUILayout.Space(2f);
                 }
                 EditorGUILayout.EndVertical();
                 GUILayout.Space(2f);
                 EditorGUILayout.BeginHorizontal();
                 {
-                    EditorGUI.BeginDisabledGroup(m_Controller.Platform == Platform.Undefined || string.IsNullOrEmpty(m_Controller.CompressionHelperTypeName) || !m_Controller.IsValidWorkingDirectory || m_SourceVersionCount <= 0);
+                    EditorGUI.BeginDisabledGroup(m_Controller.Platform == Platform.Undefined ||
+                                                 string.IsNullOrEmpty(m_Controller.CompressionHelperTypeName) ||
+                                                 !m_Controller.IsValidWorkingDirectory || m_SourceVersionCount <= 0);
                     {
                         if (GUILayout.Button("Start Build Resource Packs"))
                         {
@@ -385,7 +405,8 @@ namespace ZeroFramework.Editor.ResourceTools
 
         private void BrowseWorkingDirectory()
         {
-            string directory = EditorUtility.OpenFolderPanel("Select Working Directory", m_Controller.WorkingDirectory, string.Empty);
+            string directory = EditorUtility.OpenFolderPanel("Select Working Directory", m_Controller.WorkingDirectory,
+                string.Empty);
             if (!string.IsNullOrEmpty(directory))
             {
                 m_Controller.WorkingDirectory = directory;
@@ -453,13 +474,16 @@ namespace ZeroFramework.Editor.ResourceTools
         private void OnBuildResourcePacksStarted(int count)
         {
             Debug.Log(Utility.Text.Format("Build resource packs started, '{0}' items to be built.", count));
-            EditorUtility.DisplayProgressBar("Build Resource Packs", Utility.Text.Format("Build resource packs, {0} items to be built.", count), 0f);
+            EditorUtility.DisplayProgressBar("Build Resource Packs",
+                Utility.Text.Format("Build resource packs, {0} items to be built.", count), 0f);
         }
 
         private void OnBuildResourcePacksCompleted(int successCount, int count)
         {
             int failureCount = count - successCount;
-            string str = Utility.Text.Format("Build resource packs completed, '{0}' items, '{1}' success, '{2}' failure.", count, successCount, failureCount);
+            string str =
+                Utility.Text.Format("Build resource packs completed, '{0}' items, '{1}' success, '{2}' failure.", count,
+                    successCount, failureCount);
             if (failureCount > 0)
             {
                 Debug.LogWarning(str);
@@ -474,14 +498,21 @@ namespace ZeroFramework.Editor.ResourceTools
 
         private void OnBuildResourcePackSuccess(int index, int count, string sourceVersion, string targetVersion)
         {
-            Debug.Log(Utility.Text.Format("Build resource packs success, source version '{0}', target version '{1}'.", GetVersionNameForDisplay(sourceVersion), GetVersionNameForDisplay(targetVersion)));
-            EditorUtility.DisplayProgressBar("Build Resource Packs", Utility.Text.Format("Build resource packs, {0}/{1} completed.", index + 1, count), (float)index / count);
+            Debug.Log(Utility.Text.Format("Build resource packs success, source version '{0}', target version '{1}'.",
+                GetVersionNameForDisplay(sourceVersion), GetVersionNameForDisplay(targetVersion)));
+            EditorUtility.DisplayProgressBar("Build Resource Packs",
+                Utility.Text.Format("Build resource packs, {0}/{1} completed.", index + 1, count),
+                (float)index / count);
         }
 
         private void OnBuildResourcePackFailure(int index, int count, string sourceVersion, string targetVersion)
         {
-            Debug.LogWarning(Utility.Text.Format("Build resource packs failure, source version '{0}', target version '{1}'.", GetVersionNameForDisplay(sourceVersion), GetVersionNameForDisplay(targetVersion)));
-            EditorUtility.DisplayProgressBar("Build Resource Packs", Utility.Text.Format("Build resource packs, {0}/{1} completed.", index + 1, count), (float)index / count);
+            Debug.LogWarning(Utility.Text.Format(
+                "Build resource packs failure, source version '{0}', target version '{1}'.",
+                GetVersionNameForDisplay(sourceVersion), GetVersionNameForDisplay(targetVersion)));
+            EditorUtility.DisplayProgressBar("Build Resource Packs",
+                Utility.Text.Format("Build resource packs, {0}/{1} completed.", index + 1, count),
+                (float)index / count);
         }
     }
 }

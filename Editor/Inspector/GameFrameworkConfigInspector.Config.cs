@@ -14,7 +14,7 @@ namespace ZeroFramework.Editor
         void ConfigInspectorInit()
         {
             _enableFunc.AddLast(OnConfigEnable);
-            _inspectorFunc.AddLast(OnConfigInspectorGUI);
+            m_InspectorFunc.AddLast(OnConfigInspectorGUI);
             _completeFunc.AddLast(OnConfigComplete);
         }
 
