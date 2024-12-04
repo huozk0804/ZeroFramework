@@ -6,6 +6,7 @@
 //------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -21,8 +22,15 @@ namespace ZeroFramework.Editor.ResourceTools
         private bool m_OrderBuildResources = false;
         private int m_CompressionHelperTypeNameIndex = 0;
         private int m_BuildEventHandlerTypeNameIndex = 0;
+        private int m_BuildAssetBundleHandlerTypeNameIndex = 0;
 
-        [MenuItem("ZeroFramework/Resource Tools/Resource Builder", false, 40)]
+        [MenuItem("ZeroFramework/Resource Tools/Resource Builder (Fast)", false, 40)]
+        private static void FastOpen()
+        {
+            
+        }
+
+        [MenuItem("ZeroFramework/Resource Tools/Resource Builder Window", false, 40)]
         private static void Open()
         {
             ResourceBuilder window = GetWindow<ResourceBuilder>("Resource Builder", true);
@@ -77,6 +85,19 @@ namespace ZeroFramework.Editor.ResourceTools
                 }
 
                 m_Controller.RefreshBuildEventHandler();
+
+                m_BuildAssetBundleHandlerTypeNameIndex = 0;
+                string[] buildAssetBundleHandlerTypeNames = m_Controller.GetBuildAssetBundleHandlerTypeNames();
+                for (int i = 0; i < buildAssetBundleHandlerTypeNames.Length; i++)
+                {
+                    if (m_Controller.BuildAssetBundleHandlerTypeName == buildAssetBundleHandlerTypeNames[i])
+                    {
+                        m_BuildAssetBundleHandlerTypeNameIndex = i;
+                        break;
+                    }
+                }
+
+                m_Controller.RefreshBuildAssetBundleHandler();
             }
             else
             {
@@ -219,6 +240,27 @@ namespace ZeroFramework.Editor.ResourceTools
                 EditorGUILayout.LabelField("Build Rule", EditorStyles.boldLabel);
                 EditorGUILayout.BeginVertical("box");
                 {
+                    if (m_Controller.BuildAssetBundleRules == null)
+                    {
+                        m_Controller.BuildAssetBundleRules = new List<string>() { String.Empty };
+                    }
+
+                    for (int i = 0; i < m_Controller.BuildAssetBundleRules.Count; i++)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        {
+                            var groupName = string.IsNullOrEmpty(m_Controller.BuildAssetBundleRules[i])
+                                ? "unknown"
+                                : "group";
+                            EditorGUILayout.LabelField($"规则{groupName}：", GUILayout.Width(160f));
+                            EditorGUILayout.TextField("", m_Controller.BuildAssetBundleRules[i]);
+                            if (GUILayout.Button("-", GUILayout.Width(40f)))
+                            {
+                                //todo:
+                            }
+                        }
+                        EditorGUILayout.EndHorizontal();
+                    }
                 }
                 EditorGUILayout.EndVertical();
                 GUILayout.Space(5f);
@@ -249,6 +291,27 @@ namespace ZeroFramework.Editor.ResourceTools
                             else
                             {
                                 Debug.LogWarning("Set build event handler failure.");
+                            }
+                        }
+                    }
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.BeginHorizontal();
+                    {
+                        EditorGUILayout.LabelField("Build AssetBundle Handler", GUILayout.Width(160f));
+                        string[] names = m_Controller.GetBuildAssetBundleHandlerTypeNames();
+                        int selectedIndex = EditorGUILayout.Popup(m_BuildAssetBundleHandlerTypeNameIndex, names);
+                        if (selectedIndex != m_BuildAssetBundleHandlerTypeNameIndex)
+                        {
+                            m_BuildAssetBundleHandlerTypeNameIndex = selectedIndex;
+                            m_Controller.BuildAssetBundleHandlerTypeName =
+                                selectedIndex <= 0 ? string.Empty : names[selectedIndex];
+                            if (m_Controller.RefreshBuildAssetBundleHandler())
+                            {
+                                Debug.Log("Set build asset bundle handler success.");
+                            }
+                            else
+                            {
+                                Debug.LogWarning("Set build asset bundle handler failure.");
                             }
                         }
                     }

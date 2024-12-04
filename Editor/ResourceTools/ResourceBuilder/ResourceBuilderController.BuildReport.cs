@@ -37,6 +37,7 @@ namespace ZeroFramework.Editor.ResourceTools
             private bool m_AdditionalCompressionSelected = false;
             private bool m_ForceRebuildAssetBundleSelected = false;
             private string m_BuildEventHandlerTypeName;
+            private string m_BuildAssetBundleHandlerTypeName;
             private string m_OutputDirectory;
             private BuildAssetBundleOptions m_BuildAssetBundleOptions = BuildAssetBundleOptions.None;
             private StringBuilder m_LogBuilder = null;
@@ -47,7 +48,7 @@ namespace ZeroFramework.Editor.ResourceTools
                 int internalResourceVersion,
                 Platform platforms, AssetBundleCompressionType assetBundleCompression, string compressionHelperTypeName,
                 bool additionalCompressionSelected, bool forceRebuildAssetBundleSelected,
-                string buildEventHandlerTypeName, string outputDirectory,
+                string buildEventHandlerTypeName,string buildAssetBundleHandlerTypeName, string outputDirectory,
                 BuildAssetBundleOptions buildAssetBundleOptions, SortedDictionary<string, ResourceData> resourceDatas)
             {
                 if (string.IsNullOrEmpty(buildReportPath))
@@ -70,6 +71,7 @@ namespace ZeroFramework.Editor.ResourceTools
                 m_AdditionalCompressionSelected = additionalCompressionSelected;
                 m_ForceRebuildAssetBundleSelected = forceRebuildAssetBundleSelected;
                 m_BuildEventHandlerTypeName = buildEventHandlerTypeName;
+                m_BuildAssetBundleHandlerTypeName = buildAssetBundleHandlerTypeName;
                 m_OutputDirectory = outputDirectory;
                 m_BuildAssetBundleOptions = buildAssetBundleOptions;
                 m_LogBuilder = new StringBuilder();
@@ -151,6 +153,9 @@ namespace ZeroFramework.Editor.ResourceTools
                 xmlSummary.AppendChild(xmlElement);
                 xmlElement = xmlDocument.CreateElement("BuildEventHandlerTypeName");
                 xmlElement.InnerText = m_BuildEventHandlerTypeName;
+                xmlSummary.AppendChild(xmlElement);
+                xmlElement = xmlDocument.CreateElement("BuildAssetBundleHandlerTypeName");
+                xmlElement.InnerText = m_BuildAssetBundleHandlerTypeName;
                 xmlSummary.AppendChild(xmlElement);
                 xmlElement = xmlDocument.CreateElement("OutputDirectory");
                 xmlElement.InnerText = m_OutputDirectory;

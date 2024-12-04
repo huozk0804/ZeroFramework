@@ -8,8 +8,8 @@
       <CompressionHelperTypeName>ZeroFramework.DefaultCompressionHelper</CompressionHelperTypeName>
       <AdditionalCompressionSelected>False</AdditionalCompressionSelected>
       <ForceRebuildAssetBundleSelected>False</ForceRebuildAssetBundleSelected>
-      <BuildEventHandlerTypeName>
-      </BuildEventHandlerTypeName>
+      <BuildEventHandlerTypeName>ZeroFramework.Editor.ResourceTools.DefaultBuildEventHandler</BuildEventHandlerTypeName>
+      <BuildAssetBundleHandlerTypeName>ZeroFramework.Editor.ResourceTools.DefaultBuildAssetBundleHandler</BuildAssetBundleHandlerTypeName>
       <OutputDirectory>D:/Projects/ProjectOne/ProjectOneUnity/BuildData</OutputDirectory>
       <OutputPackageSelected>True</OutputPackageSelected>
       <OutputFullSelected>True</OutputFullSelected>

@@ -35,7 +35,9 @@ namespace ZeroFramework.Editor.ResourceTools
         private readonly BuildReport m_BuildReport;
         private readonly List<string> m_CompressionHelperTypeNames;
         private readonly List<string> m_BuildEventHandlerTypeNames;
+        private readonly List<string> m_BuildAssetBundleHandlerTypeNames;
         private IBuildEventHandler m_BuildEventHandler;
+        private IBuildAssetBundleHandler m_BuildAssetBundleHandler;
         private IFileSystemManager m_FileSystemManager;
 
         public ResourceBuilderController()
@@ -102,10 +104,18 @@ namespace ZeroFramework.Editor.ResourceTools
                 NoneOptionName
             };
 
+            m_BuildAssetBundleHandlerTypeNames = new List<string>()
+            {
+                NoneOptionName
+            };
+
             m_CompressionHelperTypeNames.AddRange(
                 Type.GetRuntimeOrEditorTypeNames(typeof(Utility.Compression.ICompressionHelper)));
             m_BuildEventHandlerTypeNames.AddRange(Type.GetRuntimeOrEditorTypeNames(typeof(IBuildEventHandler)));
+            m_BuildAssetBundleHandlerTypeNames.AddRange(
+                Type.GetRuntimeOrEditorTypeNames(typeof(IBuildAssetBundleHandler)));
             m_BuildEventHandler = null;
+            m_BuildAssetBundleHandler = null;
             m_FileSystemManager = null;
 
             Platforms = Platform.Undefined;
@@ -114,6 +124,7 @@ namespace ZeroFramework.Editor.ResourceTools
             AdditionalCompressionSelected = false;
             ForceRebuildAssetBundleSelected = false;
             BuildEventHandlerTypeName = string.Empty;
+            BuildAssetBundleHandlerTypeName = string.Empty;
             OutputDirectory = string.Empty;
             OutputPackageSelected = OutputFullSelected = OutputPackedSelected = true;
         }
@@ -150,9 +161,13 @@ namespace ZeroFramework.Editor.ResourceTools
 
         public bool AdditionalCompressionSelected { get; set; }
 
+        public List<string> BuildAssetBundleRules { get; set; }
+
         public bool ForceRebuildAssetBundleSelected { get; set; }
 
         public string BuildEventHandlerTypeName { get; set; }
+
+        public string BuildAssetBundleHandlerTypeName { get; set; }
 
         public string OutputDirectory { get; set; }
 
@@ -320,6 +335,10 @@ namespace ZeroFramework.Editor.ResourceTools
                             BuildEventHandlerTypeName = xmlNode.InnerText;
                             break;
 
+                        case "BuildAssetBundleHandlerTypeName":
+                            BuildAssetBundleHandlerTypeName = xmlNode.InnerText;
+                            break;
+
                         case "OutputDirectory":
                             OutputDirectory = xmlNode.InnerText;
                             break;
@@ -389,6 +408,9 @@ namespace ZeroFramework.Editor.ResourceTools
                 xmlElement = xmlDocument.CreateElement("BuildEventHandlerTypeName");
                 xmlElement.InnerText = BuildEventHandlerTypeName;
                 xmlSettings.AppendChild(xmlElement);
+                xmlElement = xmlDocument.CreateElement("BuildAssetBundleHandlerTypeName");
+                xmlElement.InnerText = BuildAssetBundleHandlerTypeName;
+                xmlSettings.AppendChild(xmlElement);
                 xmlElement = xmlDocument.CreateElement("OutputDirectory");
                 xmlElement.InnerText = OutputDirectory;
                 xmlSettings.AppendChild(xmlElement);
@@ -431,6 +453,11 @@ namespace ZeroFramework.Editor.ResourceTools
         public string[] GetBuildEventHandlerTypeNames()
         {
             return m_BuildEventHandlerTypeNames.ToArray();
+        }
+
+        public string[] GetBuildAssetBundleHandlerTypeNames()
+        {
+            return m_BuildAssetBundleHandlerTypeNames.ToArray();
         }
 
         public bool IsPlatformSelected(Platform platform)
@@ -506,6 +533,34 @@ namespace ZeroFramework.Editor.ResourceTools
             return retVal;
         }
 
+        public bool RefreshBuildAssetBundleHandler()
+        {
+            bool retVal = false;
+            if (!string.IsNullOrEmpty(BuildAssetBundleHandlerTypeName) &&
+                m_BuildAssetBundleHandlerTypeNames.Contains(BuildAssetBundleHandlerTypeName))
+            {
+                System.Type buildEventHandlerType = Utility.Assembly.GetType(BuildAssetBundleHandlerTypeName);
+                if (buildEventHandlerType != null)
+                {
+                    IBuildAssetBundleHandler buildAssetBundleHandler =
+                        (IBuildAssetBundleHandler)Activator.CreateInstance(buildEventHandlerType);
+                    if (buildAssetBundleHandler != null)
+                    {
+                        m_BuildAssetBundleHandler = buildAssetBundleHandler;
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                retVal = true;
+            }
+
+            BuildAssetBundleHandlerTypeName = string.Empty;
+            m_BuildAssetBundleHandler = null;
+            return retVal;
+        }
+
         public bool BuildResources()
         {
             if (!IsValidOutputDirectory)
@@ -545,7 +600,8 @@ namespace ZeroFramework.Editor.ResourceTools
             m_BuildReport.Initialize(BuildReportPath, ProductName, CompanyName, GameIdentifier, GameFrameworkVersion,
                 UnityVersion, ApplicableGameVersion, InternalResourceVersion,
                 Platforms, AssetBundleCompression, CompressionHelperTypeName, AdditionalCompressionSelected,
-                ForceRebuildAssetBundleSelected, BuildEventHandlerTypeName, OutputDirectory, buildAssetBundleOptions,
+                ForceRebuildAssetBundleSelected, BuildEventHandlerTypeName, BuildAssetBundleHandlerTypeName,
+                OutputDirectory, buildAssetBundleOptions,
                 m_ResourceDatas);
 
             try
