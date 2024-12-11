@@ -760,9 +760,35 @@ namespace ZeroFramework.UI
             GUIUtility.systemCopyBuffer = sb.ToString();
         }
 
-        [ContextMenu("复制代码变量获取到剪贴板")]
+        [ContextMenu("复制代码变量赋值到剪贴板")]
         public void CopyCodeFindToClipBoard()
         {
+            StringBuilder sb = new StringBuilder(1024);
+            sb.AppendLine("#region 控件绑定变量赋值，自动生成请勿手改");
+            sb.AppendLine("\t\t#pragma warning disable 0649"); // 变量未赋值
+            sb.AppendFormat($"\t\tUIControlData uiData = GetComponent<UIControlData>();\r\n");
+
+            foreach (var ctrl in ctrlItemDatas)
+            {
+                if (ctrl.targets.Length == 0)
+                    continue;
+
+                if (ctrl.targets.Length == 1)
+                    sb.AppendFormat($"\t\t{ctrl.name} = uiData.GetComponent<{ctrl.type}>();\r\n");
+                else
+                    sb.AppendFormat($"\t\t{ctrl.type}[] {ctrl.name};\r\n");
+            }
+
+            sb.AppendLine();
+            foreach (var subUI in subUIItemDatas)
+            {
+                sb.AppendFormat($"\t\t[SubUIBinding]\r\n\t\tprivate UIControlData {subUI.name};\r\n");
+            }
+
+            sb.AppendLine("\t\t#pragma warning restore 0649");
+            sb.Append("#endregion\r\n\r\n");
+
+            GUIUtility.systemCopyBuffer = sb.ToString();
         }
 
         // [ContextMenu("复制代码到剪贴板(Lua)")]
