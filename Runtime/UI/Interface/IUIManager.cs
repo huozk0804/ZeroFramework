@@ -18,46 +18,27 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 获取界面组数量。
         /// </summary>
-        int UIGroupCount
-        {
-            get;
-        }
+        int UIGroupCount { get; }
 
         /// <summary>
         /// 获取或设置界面实例对象池自动释放可释放对象的间隔秒数。
         /// </summary>
-        float InstanceAutoReleaseInterval
-        {
-            get;
-            set;
-        }
+        float InstanceAutoReleaseInterval { get; set; }
 
         /// <summary>
         /// 获取或设置界面实例对象池的容量。
         /// </summary>
-        int InstanceCapacity
-        {
-            get;
-            set;
-        }
+        int InstanceCapacity { get; set; }
 
         /// <summary>
         /// 获取或设置界面实例对象池对象过期秒数。
         /// </summary>
-        float InstanceExpireTime
-        {
-            get;
-            set;
-        }
+        float InstanceExpireTime { get; set; }
 
         /// <summary>
         /// 获取或设置界面实例对象池的优先级。
         /// </summary>
-        int InstancePriority
-        {
-            get;
-            set;
-        }
+        int InstancePriority { get; set; }
 
         /// <summary>
         /// 打开界面成功事件。
@@ -294,7 +275,8 @@ namespace ZeroFramework.UI
         /// <param name="pauseCoveredUIForm">是否暂停被覆盖的界面。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>界面的序列编号。</returns>
-        int OpenUIForm(string uiFormAssetName, string uiGroupName, int priority, bool pauseCoveredUIForm, object userData);
+        int OpenUIForm(string uiFormAssetName, string uiGroupName, int priority, bool pauseCoveredUIForm,
+            object userData);
 
         /// <summary>
         /// 关闭界面。

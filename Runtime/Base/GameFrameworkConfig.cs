@@ -29,6 +29,8 @@ namespace ZeroFramework
         [SerializeField] public float m_GameSpeed = 1f;
         [SerializeField] public bool m_RunInBackground = true;
         [SerializeField] public bool m_NeverSleep = true;
+        [SerializeField] public string[] m_RuntimeAssemblyNames;
+        [SerializeField] public string[] m_RuntimeOrEditorAssemblyNames;
 
         //Config
         [SerializeField] public bool m_EnableLoadConfigUpdateEvent = false;

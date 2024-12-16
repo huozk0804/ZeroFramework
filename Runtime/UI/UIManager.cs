@@ -53,13 +53,15 @@ namespace ZeroFramework.UI
 
             m_InstancePool =
                 Zero.Instance.ObjectPool.CreateSingleSpawnObjectPool<UIFormInstanceObject>("UI Instance Pool");
+
             UIFormHelperBase uiFormHelper = Helper.CreateHelper(GameFrameworkConfig.Instance.m_UIFormHelperTypeName,
                 GameFrameworkConfig.Instance.m_CustomUIFormHelper);
             if (uiFormHelper == null)
             {
-                Log.Error("Can not create config helper.");
+                Log.Error("Can not create ui form config helper.");
                 return;
             }
+
             SetUIFormHelper(uiFormHelper);
         }
 

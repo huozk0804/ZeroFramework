@@ -79,7 +79,24 @@ namespace ZeroFramework.Editor
         /// <returns>指定基类的所有子类的名称。</returns>
         internal static string[] GetRuntimeTypeNames(System.Type typeBase)
         {
-            return GetTypeNames(typeBase, RuntimeAssemblyNames);
+            string[] list1 = GetTypeNames(typeBase, RuntimeAssemblyNames);
+            var custom = GameFrameworkConfig.Instance.m_RuntimeAssemblyNames;
+            if (custom != null && custom.Length > 0)
+            {
+                string[] list2 = GetTypeNames(typeBase, custom);
+                var count = list1.Length + list2.Length;
+                var listPopup = new string[count];
+                for (int i = 0; i < count; i++)
+                {
+                    listPopup[i] = i >= list1.Length ? list1[i] : list2[i - list1.Length];
+                }
+
+                return listPopup;
+            }
+            else
+            {
+                return list1;
+            }
         }
 
         /// <summary>
@@ -89,7 +106,24 @@ namespace ZeroFramework.Editor
         /// <returns>指定基类的所有子类的名称。</returns>
         internal static string[] GetRuntimeOrEditorTypeNames(System.Type typeBase)
         {
-            return GetTypeNames(typeBase, RuntimeOrEditorAssemblyNames);
+            string[] list1 = GetTypeNames(typeBase, RuntimeOrEditorAssemblyNames);
+            var custom = GameFrameworkConfig.Instance.m_RuntimeOrEditorAssemblyNames;
+            if (custom != null)
+            {
+                string[] list2 = GetTypeNames(typeBase, custom);
+                var count = list1.Length + list2.Length;
+                var listPopup = new string[count];
+                for (int i = 0; i < count; i++)
+                {
+                    listPopup[i] = i >= list1.Length ? list1[i] : list2[i - list1.Length];
+                }
+
+                return listPopup;
+            }
+            else
+            {
+                return list1;
+            }
         }
 
         private static string[] GetTypeNames(System.Type typeBase, string[] assemblyNames)

@@ -23,6 +23,8 @@ namespace ZeroFramework.Editor
         private SerializedProperty m_GameSpeed = null;
         private SerializedProperty m_RunInBackground = null;
         private SerializedProperty m_NeverSleep = null;
+        private SerializedProperty m_RuntimeAssemblyNames = null;
+        private SerializedProperty m_RuntimeOrEditorAssemblyNames = null;
 
         private string[] m_TextHelperTypeNames = null;
         private int m_TextHelperTypeNameIndex = 0;
@@ -56,6 +58,8 @@ namespace ZeroFramework.Editor
             m_GameSpeed = serializedObject.FindProperty("m_GameSpeed");
             m_RunInBackground = serializedObject.FindProperty("m_RunInBackground");
             m_NeverSleep = serializedObject.FindProperty("m_NeverSleep");
+            m_RuntimeAssemblyNames = serializedObject.FindProperty("m_RuntimeAssemblyNames");
+            m_RuntimeOrEditorAssemblyNames = serializedObject.FindProperty("m_RuntimeOrEditorAssemblyNames");
 
             RefreshBaseTypeName();
         }
@@ -200,6 +204,9 @@ namespace ZeroFramework.Editor
                     m_NeverSleep.boolValue = neverSleep;
                 }
             }
+            
+            EditorGUILayout.PropertyField(m_RuntimeAssemblyNames);
+            EditorGUILayout.PropertyField(m_RuntimeOrEditorAssemblyNames);
         }
 
         void OnBaseComplete()
