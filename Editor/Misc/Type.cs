@@ -79,23 +79,23 @@ namespace ZeroFramework.Editor
         /// <returns>指定基类的所有子类的名称。</returns>
         internal static string[] GetRuntimeTypeNames(System.Type typeBase)
         {
-            string[] list1 = GetTypeNames(typeBase, RuntimeAssemblyNames);
+            string[] l1 = GetTypeNames(typeBase, RuntimeAssemblyNames);
             var custom = GameFrameworkConfig.Instance.m_RuntimeAssemblyNames;
             if (custom != null && custom.Length > 0)
             {
-                string[] list2 = GetTypeNames(typeBase, custom);
-                var count = list1.Length + list2.Length;
+                string[] l2 = GetTypeNames(typeBase, custom);
+                var count = l1.Length + l2.Length;
                 var listPopup = new string[count];
                 for (int i = 0; i < count; i++)
                 {
-                    listPopup[i] = i >= list1.Length ? list1[i] : list2[i - list1.Length];
+                    listPopup[i] = i >= l1.Length ? l2[i - l1.Length] : l1[i];
                 }
 
                 return listPopup;
             }
             else
             {
-                return list1;
+                return l1;
             }
         }
 
@@ -106,23 +106,23 @@ namespace ZeroFramework.Editor
         /// <returns>指定基类的所有子类的名称。</returns>
         internal static string[] GetRuntimeOrEditorTypeNames(System.Type typeBase)
         {
-            string[] list1 = GetTypeNames(typeBase, RuntimeOrEditorAssemblyNames);
+            string[] l1 = GetTypeNames(typeBase, RuntimeOrEditorAssemblyNames);
             var custom = GameFrameworkConfig.Instance.m_RuntimeOrEditorAssemblyNames;
             if (custom != null)
             {
-                string[] list2 = GetTypeNames(typeBase, custom);
-                var count = list1.Length + list2.Length;
+                string[] l2 = GetTypeNames(typeBase, custom);
+                var count = l1.Length + l2.Length;
                 var listPopup = new string[count];
                 for (int i = 0; i < count; i++)
                 {
-                    listPopup[i] = i >= list1.Length ? list1[i] : list2[i - list1.Length];
+                    listPopup[i] = i >= l1.Length ? l2[i - l1.Length] : l1[i];
                 }
 
                 return listPopup;
             }
             else
             {
-                return list1;
+                return l1;
             }
         }
 

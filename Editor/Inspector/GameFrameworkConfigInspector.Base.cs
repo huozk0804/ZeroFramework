@@ -205,8 +205,8 @@ namespace ZeroFramework.Editor
                 }
             }
             
-            EditorGUILayout.PropertyField(m_RuntimeAssemblyNames);
-            EditorGUILayout.PropertyField(m_RuntimeOrEditorAssemblyNames);
+            EditorGUILayout.PropertyField(m_RuntimeAssemblyNames, includeChildren:true);
+            EditorGUILayout.PropertyField(m_RuntimeOrEditorAssemblyNames, includeChildren: true);
         }
 
         void OnBaseComplete()
