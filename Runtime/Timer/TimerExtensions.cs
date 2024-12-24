@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
 
-/// <summary>
-/// Contains extension methods related to <see cref="Timer"/>s.
-/// </summary>
 namespace ZeroFramework.Timer
 {
+    /// <summary>
+    /// Contains extension methods related to <see cref="Timer"/>s.
+    /// </summary>
     public static class TimerExtensions
     {
         /// <summary>

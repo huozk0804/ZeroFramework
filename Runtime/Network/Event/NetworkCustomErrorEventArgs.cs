@@ -24,20 +24,12 @@ namespace ZeroFramework.Network
         /// <summary>
         /// 获取网络频道。
         /// </summary>
-        public INetworkChannel NetworkChannel
-        {
-            get;
-            private set;
-        }
+        public INetworkChannel NetworkChannel { get; private set; }
 
         /// <summary>
         /// 获取用户自定义错误数据。
         /// </summary>
-        public object CustomErrorData
-        {
-            get;
-            private set;
-        }
+        public object CustomErrorData { get; private set; }
 
         /// <summary>
         /// 创建用户自定义网络错误事件。
@@ -47,7 +39,8 @@ namespace ZeroFramework.Network
         /// <returns>创建的用户自定义网络错误事件。</returns>
         public static NetworkCustomErrorEventArgs Create(INetworkChannel networkChannel, object customErrorData)
         {
-            NetworkCustomErrorEventArgs networkCustomErrorEventArgs = ReferencePool.Acquire<NetworkCustomErrorEventArgs>();
+            NetworkCustomErrorEventArgs networkCustomErrorEventArgs =
+                ReferencePool.Acquire<NetworkCustomErrorEventArgs>();
             networkCustomErrorEventArgs.NetworkChannel = networkChannel;
             networkCustomErrorEventArgs.CustomErrorData = customErrorData;
             return networkCustomErrorEventArgs;

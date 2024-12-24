@@ -25,29 +25,17 @@ namespace ZeroFramework.Entity
         /// <summary>
         /// 获取显示成功的实体。
         /// </summary>
-        public IEntity Entity
-        {
-            get;
-            private set;
-        }
+        public IEntity Entity { get; private set; }
 
         /// <summary>
         /// 获取加载持续时间。
         /// </summary>
-        public float Duration
-        {
-            get;
-            private set;
-        }
+        public float Duration { get; private set; }
 
         /// <summary>
         /// 获取用户自定义数据。
         /// </summary>
-        public object UserData
-        {
-            get;
-            private set;
-        }
+        public object UserData { get; private set; }
 
         /// <summary>
         /// 创建显示实体成功事件。
@@ -58,7 +46,8 @@ namespace ZeroFramework.Entity
         /// <returns>创建的显示实体成功事件。</returns>
         public static ShowEntitySuccessEventArgs Create(IEntity entity, float duration, object userData)
         {
-            ShowEntitySuccessEventArgs showEntitySuccessEventArgs0 = ReferencePool.Acquire<ShowEntitySuccessEventArgs>();
+            ShowEntitySuccessEventArgs showEntitySuccessEventArgs0 =
+                ReferencePool.Acquire<ShowEntitySuccessEventArgs>();
             showEntitySuccessEventArgs0.Entity = entity;
             showEntitySuccessEventArgs0.Duration = duration;
             showEntitySuccessEventArgs0.UserData = userData;

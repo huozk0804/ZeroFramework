@@ -27,47 +27,27 @@ namespace ZeroFramework.Entity
         /// <summary>
         /// 获取实体编号。
         /// </summary>
-        public int EntityId
-        {
-            get;
-            private set;
-        }
+        public int EntityId { get; private set; }
 
         /// <summary>
         /// 获取实体资源名称。
         /// </summary>
-        public string EntityAssetName
-        {
-            get;
-            private set;
-        }
+        public string EntityAssetName { get; private set; }
 
         /// <summary>
         /// 获取实体组名称。
         /// </summary>
-        public string EntityGroupName
-        {
-            get;
-            private set;
-        }
+        public string EntityGroupName { get; private set; }
 
         /// <summary>
         /// 获取显示实体进度。
         /// </summary>
-        public float Progress
-        {
-            get;
-            private set;
-        }
+        public float Progress { get; private set; }
 
         /// <summary>
         /// 获取用户自定义数据。
         /// </summary>
-        public object UserData
-        {
-            get;
-            private set;
-        }
+        public object UserData { get; private set; }
 
         /// <summary>
         /// 创建显示实体更新事件。
@@ -78,7 +58,8 @@ namespace ZeroFramework.Entity
         /// <param name="progress">显示实体进度。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的显示实体更新事件。</returns>
-        public static ShowEntityUpdateEventArgs Create(int entityId, string entityAssetName, string entityGroupName, float progress, object userData)
+        public static ShowEntityUpdateEventArgs Create(int entityId, string entityAssetName, string entityGroupName,
+            float progress, object userData)
         {
             ShowEntityUpdateEventArgs showEntityUpdateEventArgs0 = ReferencePool.Acquire<ShowEntityUpdateEventArgs>();
             showEntityUpdateEventArgs0.EntityId = entityId;

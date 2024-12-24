@@ -25,29 +25,17 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 获取资源包路径。
         /// </summary>
-        public string ResourcePackPath
-        {
-            get;
-            private set;
-        }
+        public string ResourcePackPath { get; private set; }
 
         /// <summary>
         /// 获取要应用资源的数量。
         /// </summary>
-        public int Count
-        {
-            get;
-            private set;
-        }
+        public int Count { get; private set; }
 
         /// <summary>
         /// 获取要应用资源的总大小。
         /// </summary>
-        public long TotalLength
-        {
-            get;
-            private set;
-        }
+        public long TotalLength { get; private set; }
 
         /// <summary>
         /// 创建资源应用开始事件。
@@ -58,7 +46,8 @@ namespace ZeroFramework.Resource
         /// <returns>创建的资源应用开始事件。</returns>
         public static ResourceApplyStartEventArgs_0 Create(string resourcePackPath, int count, long totalLength)
         {
-            ResourceApplyStartEventArgs_0 resourceApplyStartEventArgs = ReferencePool.Acquire<ResourceApplyStartEventArgs_0>();
+            ResourceApplyStartEventArgs_0 resourceApplyStartEventArgs =
+                ReferencePool.Acquire<ResourceApplyStartEventArgs_0>();
             resourceApplyStartEventArgs.ResourcePackPath = resourcePackPath;
             resourceApplyStartEventArgs.Count = count;
             resourceApplyStartEventArgs.TotalLength = totalLength;

@@ -27,20 +27,12 @@ namespace ZeroFramework.Download
         /// <summary>
         /// 获取数据流的偏移。
         /// </summary>
-        public int Offset
-        {
-            get;
-            private set;
-        }
+        public int Offset { get; private set; }
 
         /// <summary>
         /// 获取数据流的长度。
         /// </summary>
-        public int Length
-        {
-            get;
-            private set;
-        }
+        public int Length { get; private set; }
 
         /// <summary>
         /// 创建下载代理辅助器更新数据流事件。
@@ -66,7 +58,8 @@ namespace ZeroFramework.Download
                 throw new GameFrameworkException("Length is invalid.");
             }
 
-            DownloadAgentHelperUpdateBytesEventArgs downloadAgentHelperUpdateBytesEventArgs = ReferencePool.Acquire<DownloadAgentHelperUpdateBytesEventArgs>();
+            DownloadAgentHelperUpdateBytesEventArgs downloadAgentHelperUpdateBytesEventArgs =
+                ReferencePool.Acquire<DownloadAgentHelperUpdateBytesEventArgs>();
             downloadAgentHelperUpdateBytesEventArgs.m_Bytes = bytes;
             downloadAgentHelperUpdateBytesEventArgs.Offset = offset;
             downloadAgentHelperUpdateBytesEventArgs.Length = length;

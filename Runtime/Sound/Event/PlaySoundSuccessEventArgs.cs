@@ -27,47 +27,27 @@ namespace ZeroFramework.Sound
         /// <summary>
         /// 获取声音的序列编号。
         /// </summary>
-        public int SerialId
-        {
-            get;
-            private set;
-        }
+        public int SerialId { get; private set; }
 
         /// <summary>
         /// 获取声音资源名称。
         /// </summary>
-        public string SoundAssetName
-        {
-            get;
-            private set;
-        }
+        public string SoundAssetName { get; private set; }
 
         /// <summary>
         /// 获取用于播放的声音代理。
         /// </summary>
-        public ISoundAgent SoundAgent
-        {
-            get;
-            private set;
-        }
+        public ISoundAgent SoundAgent { get; private set; }
 
         /// <summary>
         /// 获取加载持续时间。
         /// </summary>
-        public float Duration
-        {
-            get;
-            private set;
-        }
+        public float Duration { get; private set; }
 
         /// <summary>
         /// 获取用户自定义数据。
         /// </summary>
-        public object UserData
-        {
-            get;
-            private set;
-        }
+        public object UserData { get; private set; }
 
         /// <summary>
         /// 创建播放声音成功事件。
@@ -78,7 +58,8 @@ namespace ZeroFramework.Sound
         /// <param name="duration">加载持续时间。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的播放声音成功事件。</returns>
-        public static PlaySoundSuccessEventArgs Create(int serialId, string soundAssetName, ISoundAgent soundAgent, float duration, object userData)
+        public static PlaySoundSuccessEventArgs Create(int serialId, string soundAssetName, ISoundAgent soundAgent,
+            float duration, object userData)
         {
             PlaySoundSuccessEventArgs playSoundSuccessEventArgs = ReferencePool.Acquire<PlaySoundSuccessEventArgs>();
             playSoundSuccessEventArgs.SerialId = serialId;

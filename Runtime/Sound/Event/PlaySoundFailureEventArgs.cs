@@ -29,65 +29,37 @@ namespace ZeroFramework.Sound
         /// <summary>
         /// 获取声音的序列编号。
         /// </summary>
-        public int SerialId
-        {
-            get;
-            private set;
-        }
+        public int SerialId { get; private set; }
 
         /// <summary>
         /// 获取声音资源名称。
         /// </summary>
-        public string SoundAssetName
-        {
-            get;
-            private set;
-        }
+        public string SoundAssetName { get; private set; }
 
         /// <summary>
         /// 获取声音组名称。
         /// </summary>
-        public string SoundGroupName
-        {
-            get;
-            private set;
-        }
+        public string SoundGroupName { get; private set; }
 
         /// <summary>
         /// 获取播放声音参数。
         /// </summary>
-        public PlaySoundParams PlaySoundParams
-        {
-            get;
-            private set;
-        }
+        public PlaySoundParams PlaySoundParams { get; private set; }
 
         /// <summary>
         /// 获取错误码。
         /// </summary>
-        public PlaySoundErrorCode ErrorCode
-        {
-            get;
-            private set;
-        }
+        public PlaySoundErrorCode ErrorCode { get; private set; }
 
         /// <summary>
         /// 获取错误信息。
         /// </summary>
-        public string ErrorMessage
-        {
-            get;
-            private set;
-        }
+        public string ErrorMessage { get; private set; }
 
         /// <summary>
         /// 获取用户自定义数据。
         /// </summary>
-        public object UserData
-        {
-            get;
-            private set;
-        }
+        public object UserData { get; private set; }
 
         /// <summary>
         /// 创建播放声音失败事件。
@@ -100,7 +72,8 @@ namespace ZeroFramework.Sound
         /// <param name="errorMessage">错误信息。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的播放声音失败事件。</returns>
-        public static PlaySoundFailureEventArgs Create(int serialId, string soundAssetName, string soundGroupName, PlaySoundParams playSoundParams, PlaySoundErrorCode errorCode, string errorMessage, object userData)
+        public static PlaySoundFailureEventArgs Create(int serialId, string soundAssetName, string soundGroupName,
+            PlaySoundParams playSoundParams, PlaySoundErrorCode errorCode, string errorMessage, object userData)
         {
             PlaySoundFailureEventArgs playSoundFailureEventArgs = ReferencePool.Acquire<PlaySoundFailureEventArgs>();
             playSoundFailureEventArgs.SerialId = serialId;

@@ -24,20 +24,12 @@ namespace ZeroFramework.Network
         /// <summary>
         /// 获取网络频道。
         /// </summary>
-        public INetworkChannel NetworkChannel
-        {
-            get;
-            private set;
-        }
+        public INetworkChannel NetworkChannel { get; private set; }
 
         /// <summary>
         /// 获取心跳包已丢失次数。
         /// </summary>
-        public int MissCount
-        {
-            get;
-            private set;
-        }
+        public int MissCount { get; private set; }
 
         /// <summary>
         /// 创建网络心跳包丢失事件。
@@ -47,7 +39,8 @@ namespace ZeroFramework.Network
         /// <returns>创建的网络心跳包丢失事件。</returns>
         public static NetworkMissHeartBeatEventArgs Create(INetworkChannel networkChannel, int missCount)
         {
-            NetworkMissHeartBeatEventArgs networkMissHeartBeatEventArgs = ReferencePool.Acquire<NetworkMissHeartBeatEventArgs>();
+            NetworkMissHeartBeatEventArgs networkMissHeartBeatEventArgs =
+                ReferencePool.Acquire<NetworkMissHeartBeatEventArgs>();
             networkMissHeartBeatEventArgs.NetworkChannel = networkChannel;
             networkMissHeartBeatEventArgs.MissCount = missCount;
             return networkMissHeartBeatEventArgs;

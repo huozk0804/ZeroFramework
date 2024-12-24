@@ -29,7 +29,8 @@ namespace ZeroFramework.Resource
         /// <returns>创建的加载资源代理辅助器异步读取资源二进制流完成事件。</returns>
         public static LoadResourceAgentHelperReadBytesCompleteEventArgs_0 Create(byte[] bytes)
         {
-            LoadResourceAgentHelperReadBytesCompleteEventArgs_0 loadResourceAgentHelperReadBytesCompleteEventArgs = ReferencePool.Acquire<LoadResourceAgentHelperReadBytesCompleteEventArgs_0>();
+            LoadResourceAgentHelperReadBytesCompleteEventArgs_0 loadResourceAgentHelperReadBytesCompleteEventArgs =
+                ReferencePool.Acquire<LoadResourceAgentHelperReadBytesCompleteEventArgs_0>();
             loadResourceAgentHelperReadBytesCompleteEventArgs.m_Bytes = bytes;
             return loadResourceAgentHelperReadBytesCompleteEventArgs;
         }

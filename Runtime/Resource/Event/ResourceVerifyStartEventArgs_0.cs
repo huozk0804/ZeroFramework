@@ -24,20 +24,12 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 获取要校验资源的数量。
         /// </summary>
-        public int Count
-        {
-            get;
-            private set;
-        }
+        public int Count { get; private set; }
 
         /// <summary>
         /// 获取要校验资源的总大小。
         /// </summary>
-        public long TotalLength
-        {
-            get;
-            private set;
-        }
+        public long TotalLength { get; private set; }
 
         /// <summary>
         /// 创建资源校验开始事件。
@@ -47,7 +39,8 @@ namespace ZeroFramework.Resource
         /// <returns>创建的资源校验开始事件。</returns>
         public static ResourceVerifyStartEventArgs_0 Create(int count, long totalLength)
         {
-            ResourceVerifyStartEventArgs_0 resourceVerifyStartEventArgs = ReferencePool.Acquire<ResourceVerifyStartEventArgs_0>();
+            ResourceVerifyStartEventArgs_0 resourceVerifyStartEventArgs =
+                ReferencePool.Acquire<ResourceVerifyStartEventArgs_0>();
             resourceVerifyStartEventArgs.Count = count;
             resourceVerifyStartEventArgs.TotalLength = totalLength;
             return resourceVerifyStartEventArgs;

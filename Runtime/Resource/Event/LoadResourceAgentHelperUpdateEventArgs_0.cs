@@ -24,20 +24,12 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 获取进度类型。
         /// </summary>
-        public LoadResourceProgress Type
-        {
-            get;
-            private set;
-        }
+        public LoadResourceProgress Type { get; private set; }
 
         /// <summary>
         /// 获取进度。
         /// </summary>
-        public float Progress
-        {
-            get;
-            private set;
-        }
+        public float Progress { get; private set; }
 
         /// <summary>
         /// 创建加载资源代理辅助器更新事件。
@@ -47,7 +39,8 @@ namespace ZeroFramework.Resource
         /// <returns>创建的加载资源代理辅助器更新事件。</returns>
         public static LoadResourceAgentHelperUpdateEventArgs_0 Create(LoadResourceProgress type, float progress)
         {
-            LoadResourceAgentHelperUpdateEventArgs_0 loadResourceAgentHelperUpdateEventArgs = ReferencePool.Acquire<LoadResourceAgentHelperUpdateEventArgs_0>();
+            LoadResourceAgentHelperUpdateEventArgs_0 loadResourceAgentHelperUpdateEventArgs =
+                ReferencePool.Acquire<LoadResourceAgentHelperUpdateEventArgs_0>();
             loadResourceAgentHelperUpdateEventArgs.Type = type;
             loadResourceAgentHelperUpdateEventArgs.Progress = progress;
             return loadResourceAgentHelperUpdateEventArgs;

@@ -23,11 +23,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 获取加载的资源。
         /// </summary>
-        public object Asset
-        {
-            get;
-            private set;
-        }
+        public object Asset { get; private set; }
 
         /// <summary>
         /// 创建加载资源代理辅助器异步加载资源完成事件。
@@ -36,7 +32,8 @@ namespace ZeroFramework.Resource
         /// <returns>创建的加载资源代理辅助器异步加载资源完成事件。</returns>
         public static LoadResourceAgentHelperLoadCompleteEventArgs_0 Create(object asset)
         {
-            LoadResourceAgentHelperLoadCompleteEventArgs_0 loadResourceAgentHelperLoadCompleteEventArgs = ReferencePool.Acquire<LoadResourceAgentHelperLoadCompleteEventArgs_0>();
+            LoadResourceAgentHelperLoadCompleteEventArgs_0 loadResourceAgentHelperLoadCompleteEventArgs =
+                ReferencePool.Acquire<LoadResourceAgentHelperLoadCompleteEventArgs_0>();
             loadResourceAgentHelperLoadCompleteEventArgs.Asset = asset;
             return loadResourceAgentHelperLoadCompleteEventArgs;
         }

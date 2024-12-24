@@ -23,11 +23,7 @@ namespace ZeroFramework.WebRequest
         /// <summary>
         /// 获取错误信息。
         /// </summary>
-        public string ErrorMessage
-        {
-            get;
-            private set;
-        }
+        public string ErrorMessage { get; private set; }
 
         /// <summary>
         /// 创建 Web 请求代理辅助器错误事件。
@@ -36,7 +32,8 @@ namespace ZeroFramework.WebRequest
         /// <returns>创建的 Web 请求代理辅助器错误事件。</returns>
         public static WebRequestAgentHelperErrorEventArgs Create(string errorMessage)
         {
-            WebRequestAgentHelperErrorEventArgs webRequestAgentHelperErrorEventArgs = ReferencePool.Acquire<WebRequestAgentHelperErrorEventArgs>();
+            WebRequestAgentHelperErrorEventArgs webRequestAgentHelperErrorEventArgs =
+                ReferencePool.Acquire<WebRequestAgentHelperErrorEventArgs>();
             webRequestAgentHelperErrorEventArgs.ErrorMessage = errorMessage;
             return webRequestAgentHelperErrorEventArgs;
         }

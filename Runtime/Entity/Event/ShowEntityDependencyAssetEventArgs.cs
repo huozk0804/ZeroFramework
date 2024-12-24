@@ -29,65 +29,37 @@ namespace ZeroFramework.Entity
         /// <summary>
         /// 获取实体编号。
         /// </summary>
-        public int EntityId
-        {
-            get;
-            private set;
-        }
+        public int EntityId { get; private set; }
 
         /// <summary>
         /// 获取实体资源名称。
         /// </summary>
-        public string EntityAssetName
-        {
-            get;
-            private set;
-        }
+        public string EntityAssetName { get; private set; }
 
         /// <summary>
         /// 获取实体组名称。
         /// </summary>
-        public string EntityGroupName
-        {
-            get;
-            private set;
-        }
+        public string EntityGroupName { get; private set; }
 
         /// <summary>
         /// 获取被加载的依赖资源名称。
         /// </summary>
-        public string DependencyAssetName
-        {
-            get;
-            private set;
-        }
+        public string DependencyAssetName { get; private set; }
 
         /// <summary>
         /// 获取当前已加载依赖资源数量。
         /// </summary>
-        public int LoadedCount
-        {
-            get;
-            private set;
-        }
+        public int LoadedCount { get; private set; }
 
         /// <summary>
         /// 获取总共加载依赖资源数量。
         /// </summary>
-        public int TotalCount
-        {
-            get;
-            private set;
-        }
+        public int TotalCount { get; private set; }
 
         /// <summary>
         /// 获取用户自定义数据。
         /// </summary>
-        public object UserData
-        {
-            get;
-            private set;
-        }
+        public object UserData { get; private set; }
 
         /// <summary>
         /// 创建显示实体时加载依赖资源事件。
@@ -100,9 +72,11 @@ namespace ZeroFramework.Entity
         /// <param name="totalCount">总共加载依赖资源数量。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的显示实体时加载依赖资源事件。</returns>
-        public static ShowEntityDependencyAssetEventArgs Create(int entityId, string entityAssetName, string entityGroupName, string dependencyAssetName, int loadedCount, int totalCount, object userData)
+        public static ShowEntityDependencyAssetEventArgs Create(int entityId, string entityAssetName,
+            string entityGroupName, string dependencyAssetName, int loadedCount, int totalCount, object userData)
         {
-            ShowEntityDependencyAssetEventArgs showEntityDependencyAssetEventArgs0 = ReferencePool.Acquire<ShowEntityDependencyAssetEventArgs>();
+            ShowEntityDependencyAssetEventArgs showEntityDependencyAssetEventArgs0 =
+                ReferencePool.Acquire<ShowEntityDependencyAssetEventArgs>();
             showEntityDependencyAssetEventArgs0.EntityId = entityId;
             showEntityDependencyAssetEventArgs0.EntityAssetName = entityAssetName;
             showEntityDependencyAssetEventArgs0.EntityGroupName = entityGroupName;

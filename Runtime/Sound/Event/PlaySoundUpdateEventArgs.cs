@@ -28,56 +28,32 @@ namespace ZeroFramework.Sound
         /// <summary>
         /// 获取声音的序列编号。
         /// </summary>
-        public int SerialId
-        {
-            get;
-            private set;
-        }
+        public int SerialId { get; private set; }
 
         /// <summary>
         /// 获取声音资源名称。
         /// </summary>
-        public string SoundAssetName
-        {
-            get;
-            private set;
-        }
+        public string SoundAssetName { get; private set; }
 
         /// <summary>
         /// 获取声音组名称。
         /// </summary>
-        public string SoundGroupName
-        {
-            get;
-            private set;
-        }
+        public string SoundGroupName { get; private set; }
 
         /// <summary>
         /// 获取播放声音参数。
         /// </summary>
-        public PlaySoundParams PlaySoundParams
-        {
-            get;
-            private set;
-        }
+        public PlaySoundParams PlaySoundParams { get; private set; }
 
         /// <summary>
         /// 获取加载声音进度。
         /// </summary>
-        public float Progress
-        {
-            get;
-            private set;
-        }
+        public float Progress { get; private set; }
 
         /// <summary>
         /// 获取用户自定义数据。
         /// </summary>
-        public object UserData
-        {
-            get;
-            private set;
-        }
+        public object UserData { get; private set; }
 
         /// <summary>
         /// 创建播放声音更新事件。
@@ -89,7 +65,8 @@ namespace ZeroFramework.Sound
         /// <param name="progress">加载声音进度。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的播放声音更新事件。</returns>
-        public static PlaySoundUpdateEventArgs Create(int serialId, string soundAssetName, string soundGroupName, PlaySoundParams playSoundParams, float progress, object userData)
+        public static PlaySoundUpdateEventArgs Create(int serialId, string soundAssetName, string soundGroupName,
+            PlaySoundParams playSoundParams, float progress, object userData)
         {
             PlaySoundUpdateEventArgs playSoundUpdateEventArgs = ReferencePool.Acquire<PlaySoundUpdateEventArgs>();
             playSoundUpdateEventArgs.SerialId = serialId;

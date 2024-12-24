@@ -27,47 +27,27 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 获取资源名称。
         /// </summary>
-        public string Name
-        {
-            get;
-            private set;
-        }
+        public string Name { get; private set; }
 
         /// <summary>
         /// 获取资源应用后存放路径。
         /// </summary>
-        public string ApplyPath
-        {
-            get;
-            private set;
-        }
+        public string ApplyPath { get; private set; }
 
         /// <summary>
         /// 获取资源包路径。
         /// </summary>
-        public string ResourcePackPath
-        {
-            get;
-            private set;
-        }
+        public string ResourcePackPath { get; private set; }
 
         /// <summary>
         /// 获取资源大小。
         /// </summary>
-        public int Length
-        {
-            get;
-            private set;
-        }
+        public int Length { get; private set; }
 
         /// <summary>
         /// 获取压缩后大小。
         /// </summary>
-        public int CompressedLength
-        {
-            get;
-            private set;
-        }
+        public int CompressedLength { get; private set; }
 
         /// <summary>
         /// 创建资源应用成功事件。
@@ -78,9 +58,11 @@ namespace ZeroFramework.Resource
         /// <param name="length">资源大小。</param>
         /// <param name="compressedLength">压缩后大小。</param>
         /// <returns>创建的资源应用成功事件。</returns>
-        public static ResourceApplySuccessEventArgs_0 Create(string name, string applyPath, string resourcePackPath, int length, int compressedLength)
+        public static ResourceApplySuccessEventArgs_0 Create(string name, string applyPath, string resourcePackPath,
+            int length, int compressedLength)
         {
-            ResourceApplySuccessEventArgs_0 resourceApplySuccessEventArgs = ReferencePool.Acquire<ResourceApplySuccessEventArgs_0>();
+            ResourceApplySuccessEventArgs_0 resourceApplySuccessEventArgs =
+                ReferencePool.Acquire<ResourceApplySuccessEventArgs_0>();
             resourceApplySuccessEventArgs.Name = name;
             resourceApplySuccessEventArgs.ApplyPath = applyPath;
             resourceApplySuccessEventArgs.ResourcePackPath = resourcePackPath;

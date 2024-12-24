@@ -1158,20 +1158,19 @@ namespace ZeroFramework.Entity
 
                 if (m_ShowEntitySuccessEventHandler != null)
                 {
-                    ShowEntitySuccessEventArgs showEntitySuccessEventArgs0 =
-                        ShowEntitySuccessEventArgs.Create(entity, duration, userData);
-                    m_ShowEntitySuccessEventHandler(this, showEntitySuccessEventArgs0);
-                    ReferencePool.Release(showEntitySuccessEventArgs0);
+                    var eventArgs = ShowEntitySuccessEventArgs.Create(entity, duration, userData);
+                    m_ShowEntitySuccessEventHandler(this, eventArgs);
+                    ReferencePool.Release(eventArgs);
                 }
             }
             catch (Exception exception)
             {
                 if (m_ShowEntityFailureEventHandler != null)
                 {
-                    ShowEntityFailureEventArgs showEntityFailureEventArgs0 = ShowEntityFailureEventArgs.Create(entityId,
+                    var eventArgs = ShowEntityFailureEventArgs.Create(entityId,
                         entityAssetName, entityGroup.Name, exception.ToString(), userData);
-                    m_ShowEntityFailureEventHandler(this, showEntityFailureEventArgs0);
-                    ReferencePool.Release(showEntityFailureEventArgs0);
+                    m_ShowEntityFailureEventHandler(this, eventArgs);
+                    ReferencePool.Release(eventArgs);
                     return;
                 }
 
@@ -1212,10 +1211,10 @@ namespace ZeroFramework.Entity
 
             if (m_HideEntityCompleteEventHandler != null)
             {
-                HideEntityCompleteEventArgs hideEntityCompleteEventArgs0 =
+                HideEntityCompleteEventArgs hideEntityCompleteEventArgs =
                     HideEntityCompleteEventArgs.Create(entity.Id, entity.EntityAssetName, entityGroup, userData);
-                m_HideEntityCompleteEventHandler(this, hideEntityCompleteEventArgs0);
-                ReferencePool.Release(hideEntityCompleteEventArgs0);
+                m_HideEntityCompleteEventHandler(this, hideEntityCompleteEventArgs);
+                ReferencePool.Release(hideEntityCompleteEventArgs);
             }
 
             m_RecycleQueue.Enqueue(entityInfo);
@@ -1269,11 +1268,11 @@ namespace ZeroFramework.Entity
                     entityAssetName, status, errorMessage);
             if (m_ShowEntityFailureEventHandler != null)
             {
-                ShowEntityFailureEventArgs showEntityFailureEventArgs0 =
+                ShowEntityFailureEventArgs showEntityFailureEventArgs =
                     ShowEntityFailureEventArgs.Create(showEntityInfo.EntityId, entityAssetName,
                         showEntityInfo.EntityGroup.Name, appendErrorMessage, showEntityInfo.UserData);
-                m_ShowEntityFailureEventHandler(this, showEntityFailureEventArgs0);
-                ReferencePool.Release(showEntityFailureEventArgs0);
+                m_ShowEntityFailureEventHandler(this, showEntityFailureEventArgs);
+                ReferencePool.Release(showEntityFailureEventArgs);
                 return;
             }
 
@@ -1290,11 +1289,11 @@ namespace ZeroFramework.Entity
 
             if (m_ShowEntityUpdateEventHandler != null)
             {
-                ShowEntityUpdateEventArgs showEntityUpdateEventArgs0 =
+                ShowEntityUpdateEventArgs showEntityUpdateEventArgs =
                     ShowEntityUpdateEventArgs.Create(showEntityInfo.EntityId, entityAssetName,
                         showEntityInfo.EntityGroup.Name, progress, showEntityInfo.UserData);
-                m_ShowEntityUpdateEventHandler(this, showEntityUpdateEventArgs0);
-                ReferencePool.Release(showEntityUpdateEventArgs0);
+                m_ShowEntityUpdateEventHandler(this, showEntityUpdateEventArgs);
+                ReferencePool.Release(showEntityUpdateEventArgs);
             }
         }
 
@@ -1309,12 +1308,12 @@ namespace ZeroFramework.Entity
 
             if (m_ShowEntityDependencyAssetEventHandler != null)
             {
-                ShowEntityDependencyAssetEventArgs showEntityDependencyAssetEventArgs0 =
+                ShowEntityDependencyAssetEventArgs showEntityDependencyAssetEventArgs =
                     ShowEntityDependencyAssetEventArgs.Create(showEntityInfo.EntityId, entityAssetName,
                         showEntityInfo.EntityGroup.Name, dependencyAssetName, loadedCount, totalCount,
                         showEntityInfo.UserData);
-                m_ShowEntityDependencyAssetEventHandler(this, showEntityDependencyAssetEventArgs0);
-                ReferencePool.Release(showEntityDependencyAssetEventArgs0);
+                m_ShowEntityDependencyAssetEventHandler(this, showEntityDependencyAssetEventArgs);
+                ReferencePool.Release(showEntityDependencyAssetEventArgs);
             }
         }
     }

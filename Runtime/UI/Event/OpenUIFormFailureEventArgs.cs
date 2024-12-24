@@ -28,56 +28,32 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 获取界面序列编号。
         /// </summary>
-        public int SerialId
-        {
-            get;
-            private set;
-        }
+        public int SerialId { get; private set; }
 
         /// <summary>
         /// 获取界面资源名称。
         /// </summary>
-        public string UIFormAssetName
-        {
-            get;
-            private set;
-        }
+        public string UIFormAssetName { get; private set; }
 
         /// <summary>
         /// 获取界面组名称。
         /// </summary>
-        public string UIGroupName
-        {
-            get;
-            private set;
-        }
+        public string UIGroupName { get; private set; }
 
         /// <summary>
         /// 获取是否暂停被覆盖的界面。
         /// </summary>
-        public bool PauseCoveredUIForm
-        {
-            get;
-            private set;
-        }
+        public bool PauseCoveredUIForm { get; private set; }
 
         /// <summary>
         /// 获取错误信息。
         /// </summary>
-        public string ErrorMessage
-        {
-            get;
-            private set;
-        }
+        public string ErrorMessage { get; private set; }
 
         /// <summary>
         /// 获取用户自定义数据。
         /// </summary>
-        public object UserData
-        {
-            get;
-            private set;
-        }
+        public object UserData { get; private set; }
 
         /// <summary>
         /// 创建打开界面失败事件。
@@ -89,7 +65,8 @@ namespace ZeroFramework.UI
         /// <param name="errorMessage">错误信息。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的打开界面失败事件。</returns>
-        public static OpenUIFormFailureEventArgs Create(int serialId, string uiFormAssetName, string uiGroupName, bool pauseCoveredUIForm, string errorMessage, object userData)
+        public static OpenUIFormFailureEventArgs Create(int serialId, string uiFormAssetName, string uiGroupName,
+            bool pauseCoveredUIForm, string errorMessage, object userData)
         {
             OpenUIFormFailureEventArgs openUIFormFailureEventArgs = ReferencePool.Acquire<OpenUIFormFailureEventArgs>();
             openUIFormFailureEventArgs.SerialId = serialId;

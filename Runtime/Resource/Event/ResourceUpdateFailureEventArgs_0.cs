@@ -27,47 +27,27 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 获取资源名称。
         /// </summary>
-        public string Name
-        {
-            get;
-            private set;
-        }
+        public string Name { get; private set; }
 
         /// <summary>
         /// 获取下载地址。
         /// </summary>
-        public string DownloadUri
-        {
-            get;
-            private set;
-        }
+        public string DownloadUri { get; private set; }
 
         /// <summary>
         /// 获取已重试次数。
         /// </summary>
-        public int RetryCount
-        {
-            get;
-            private set;
-        }
+        public int RetryCount { get; private set; }
 
         /// <summary>
         /// 获取设定的重试次数。
         /// </summary>
-        public int TotalRetryCount
-        {
-            get;
-            private set;
-        }
+        public int TotalRetryCount { get; private set; }
 
         /// <summary>
         /// 获取错误信息。
         /// </summary>
-        public string ErrorMessage
-        {
-            get;
-            private set;
-        }
+        public string ErrorMessage { get; private set; }
 
         /// <summary>
         /// 创建资源更新失败事件。
@@ -79,9 +59,11 @@ namespace ZeroFramework.Resource
         /// <param name="errorMessage">错误信息。</param>
         /// <returns>创建的资源更新失败事件。</returns>
         /// <remarks>当已重试次数达到设定的重试次数时，将不再重试。</remarks>
-        public static ResourceUpdateFailureEventArgs_0 Create(string name, string downloadUri, int retryCount, int totalRetryCount, string errorMessage)
+        public static ResourceUpdateFailureEventArgs_0 Create(string name, string downloadUri, int retryCount,
+            int totalRetryCount, string errorMessage)
         {
-            ResourceUpdateFailureEventArgs_0 resourceUpdateFailureEventArgs = ReferencePool.Acquire<ResourceUpdateFailureEventArgs_0>();
+            ResourceUpdateFailureEventArgs_0 resourceUpdateFailureEventArgs =
+                ReferencePool.Acquire<ResourceUpdateFailureEventArgs_0>();
             resourceUpdateFailureEventArgs.Name = name;
             resourceUpdateFailureEventArgs.DownloadUri = downloadUri;
             resourceUpdateFailureEventArgs.RetryCount = retryCount;

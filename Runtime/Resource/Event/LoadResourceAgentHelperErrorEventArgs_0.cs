@@ -24,20 +24,12 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 获取加载资源状态。
         /// </summary>
-        public LoadResourceStatus Status
-        {
-            get;
-            private set;
-        }
+        public LoadResourceStatus Status { get; private set; }
 
         /// <summary>
         /// 获取错误信息。
         /// </summary>
-        public string ErrorMessage
-        {
-            get;
-            private set;
-        }
+        public string ErrorMessage { get; private set; }
 
         /// <summary>
         /// 创建加载资源代理辅助器错误事件。
@@ -47,7 +39,8 @@ namespace ZeroFramework.Resource
         /// <returns>创建的加载资源代理辅助器错误事件。</returns>
         public static LoadResourceAgentHelperErrorEventArgs_0 Create(LoadResourceStatus status, string errorMessage)
         {
-            LoadResourceAgentHelperErrorEventArgs_0 loadResourceAgentHelperErrorEventArgs = ReferencePool.Acquire<LoadResourceAgentHelperErrorEventArgs_0>();
+            LoadResourceAgentHelperErrorEventArgs_0 loadResourceAgentHelperErrorEventArgs =
+                ReferencePool.Acquire<LoadResourceAgentHelperErrorEventArgs_0>();
             loadResourceAgentHelperErrorEventArgs.Status = status;
             loadResourceAgentHelperErrorEventArgs.ErrorMessage = errorMessage;
             return loadResourceAgentHelperErrorEventArgs;

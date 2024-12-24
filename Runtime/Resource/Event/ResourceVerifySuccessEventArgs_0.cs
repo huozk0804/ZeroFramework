@@ -24,20 +24,12 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 获取资源名称。
         /// </summary>
-        public string Name
-        {
-            get;
-            private set;
-        }
+        public string Name { get; private set; }
 
         /// <summary>
         /// 获取资源大小。
         /// </summary>
-        public int Length
-        {
-            get;
-            private set;
-        }
+        public int Length { get; private set; }
 
         /// <summary>
         /// 创建资源校验成功事件。
@@ -47,7 +39,8 @@ namespace ZeroFramework.Resource
         /// <returns>创建的资源校验成功事件。</returns>
         public static ResourceVerifySuccessEventArgs_0 Create(string name, int length)
         {
-            ResourceVerifySuccessEventArgs_0 resourceVerifySuccessEventArgs = ReferencePool.Acquire<ResourceVerifySuccessEventArgs_0>();
+            ResourceVerifySuccessEventArgs_0 resourceVerifySuccessEventArgs =
+                ReferencePool.Acquire<ResourceVerifySuccessEventArgs_0>();
             resourceVerifySuccessEventArgs.Name = name;
             resourceVerifySuccessEventArgs.Length = length;
             return resourceVerifySuccessEventArgs;

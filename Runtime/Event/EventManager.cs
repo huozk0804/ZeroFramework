@@ -14,14 +14,14 @@ namespace ZeroFramework
     /// </summary>
     public sealed class EventManager : GameFrameworkModule, IEventManager
     {
-        private readonly EventPool<GameEventArgs> m_EventPool;
+        private readonly EventPool<BaseEventArgs> m_EventPool;
 
         /// <summary>
         /// 初始化事件管理器的新实例。
         /// </summary>
         public EventManager()
         {
-            m_EventPool = new EventPool<GameEventArgs>(EventPoolMode.AllowNoHandler | EventPoolMode.AllowMultiHandler);
+            m_EventPool = new EventPool<BaseEventArgs>(EventPoolMode.AllowNoHandler | EventPoolMode.AllowMultiHandler);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace ZeroFramework
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要检查的事件处理函数。</param>
         /// <returns>是否存在事件处理函数。</returns>
-        public bool Check(int id, EventHandler<GameEventArgs> handler)
+        public bool Check(int id, EventHandler<BaseEventArgs> handler)
         {
             return m_EventPool.Check(id, handler);
         }
@@ -84,7 +84,7 @@ namespace ZeroFramework
         /// </summary>
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要订阅的事件处理函数。</param>
-        public void Subscribe(int id, EventHandler<GameEventArgs> handler)
+        public void Subscribe(int id, EventHandler<BaseEventArgs> handler)
         {
             m_EventPool.Subscribe(id, handler);
         }
@@ -94,7 +94,7 @@ namespace ZeroFramework
         /// </summary>
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要取消订阅的事件处理函数。</param>
-        public void Unsubscribe(int id, EventHandler<GameEventArgs> handler)
+        public void Unsubscribe(int id, EventHandler<BaseEventArgs> handler)
         {
             m_EventPool.Unsubscribe(id, handler);
         }
@@ -103,7 +103,7 @@ namespace ZeroFramework
         /// 设置默认事件处理函数。
         /// </summary>
         /// <param name="handler">要设置的默认事件处理函数。</param>
-        public void SetDefaultHandler(EventHandler<GameEventArgs> handler)
+        public void SetDefaultHandler(EventHandler<BaseEventArgs> handler)
         {
             m_EventPool.SetDefaultHandler(handler);
         }
@@ -113,7 +113,7 @@ namespace ZeroFramework
         /// </summary>
         /// <param name="sender">事件源。</param>
         /// <param name="e">事件参数。</param>
-        public void Fire(object sender, GameEventArgs e)
+        public void Fire(object sender, BaseEventArgs e)
         {
             m_EventPool.Fire(sender, e);
         }
@@ -123,7 +123,7 @@ namespace ZeroFramework
         /// </summary>
         /// <param name="sender">事件源。</param>
         /// <param name="e">事件参数。</param>
-        public void FireNow(object sender, GameEventArgs e)
+        public void FireNow(object sender, BaseEventArgs e)
         {
             m_EventPool.FireNow(sender, e);
         }

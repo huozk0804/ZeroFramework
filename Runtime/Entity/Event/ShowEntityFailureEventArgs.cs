@@ -27,47 +27,27 @@ namespace ZeroFramework.Entity
         /// <summary>
         /// 获取实体编号。
         /// </summary>
-        public int EntityId
-        {
-            get;
-            private set;
-        }
+        public int EntityId { get; private set; }
 
         /// <summary>
         /// 获取实体资源名称。
         /// </summary>
-        public string EntityAssetName
-        {
-            get;
-            private set;
-        }
+        public string EntityAssetName { get; private set; }
 
         /// <summary>
         /// 获取实体组名称。
         /// </summary>
-        public string EntityGroupName
-        {
-            get;
-            private set;
-        }
+        public string EntityGroupName { get; private set; }
 
         /// <summary>
         /// 获取错误信息。
         /// </summary>
-        public string ErrorMessage
-        {
-            get;
-            private set;
-        }
+        public string ErrorMessage { get; private set; }
 
         /// <summary>
         /// 获取用户自定义数据。
         /// </summary>
-        public object UserData
-        {
-            get;
-            private set;
-        }
+        public object UserData { get; private set; }
 
         /// <summary>
         /// 创建显示实体失败事件。
@@ -78,9 +58,11 @@ namespace ZeroFramework.Entity
         /// <param name="errorMessage">错误信息。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的显示实体失败事件。</returns>
-        public static ShowEntityFailureEventArgs Create(int entityId, string entityAssetName, string entityGroupName, string errorMessage, object userData)
+        public static ShowEntityFailureEventArgs Create(int entityId, string entityAssetName, string entityGroupName,
+            string errorMessage, object userData)
         {
-            ShowEntityFailureEventArgs showEntityFailureEventArgs0 = ReferencePool.Acquire<ShowEntityFailureEventArgs>();
+            ShowEntityFailureEventArgs showEntityFailureEventArgs0 =
+                ReferencePool.Acquire<ShowEntityFailureEventArgs>();
             showEntityFailureEventArgs0.EntityId = entityId;
             showEntityFailureEventArgs0.EntityAssetName = entityAssetName;
             showEntityFailureEventArgs0.EntityGroupName = entityGroupName;

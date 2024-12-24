@@ -23,11 +23,7 @@ namespace ZeroFramework.Download
         /// <summary>
         /// 获取下载的增量数据大小。
         /// </summary>
-        public int DeltaLength
-        {
-            get;
-            private set;
-        }
+        public int DeltaLength { get; private set; }
 
         /// <summary>
         /// 创建下载代理辅助器更新数据大小事件。
@@ -41,7 +37,8 @@ namespace ZeroFramework.Download
                 throw new GameFrameworkException("Delta length is invalid.");
             }
 
-            DownloadAgentHelperUpdateLengthEventArgs downloadAgentHelperUpdateLengthEventArgs = ReferencePool.Acquire<DownloadAgentHelperUpdateLengthEventArgs>();
+            DownloadAgentHelperUpdateLengthEventArgs downloadAgentHelperUpdateLengthEventArgs =
+                ReferencePool.Acquire<DownloadAgentHelperUpdateLengthEventArgs>();
             downloadAgentHelperUpdateLengthEventArgs.DeltaLength = deltaLength;
             return downloadAgentHelperUpdateLengthEventArgs;
         }

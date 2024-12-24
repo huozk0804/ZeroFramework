@@ -25,29 +25,17 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 获取资源名称。
         /// </summary>
-        public string Name
-        {
-            get;
-            private set;
-        }
+        public string Name { get; private set; }
 
         /// <summary>
         /// 获取资源包路径。
         /// </summary>
-        public string ResourcePackPath
-        {
-            get;
-            private set;
-        }
+        public string ResourcePackPath { get; private set; }
 
         /// <summary>
         /// 获取错误信息。
         /// </summary>
-        public string ErrorMessage
-        {
-            get;
-            private set;
-        }
+        public string ErrorMessage { get; private set; }
 
         /// <summary>
         /// 创建资源应用失败事件。
@@ -58,7 +46,8 @@ namespace ZeroFramework.Resource
         /// <returns>创建的资源应用失败事件。</returns>
         public static ResourceApplyFailureEventArgs_0 Create(string name, string resourcePackPath, string errorMessage)
         {
-            ResourceApplyFailureEventArgs_0 resourceApplyFailureEventArgs = ReferencePool.Acquire<ResourceApplyFailureEventArgs_0>();
+            ResourceApplyFailureEventArgs_0 resourceApplyFailureEventArgs =
+                ReferencePool.Acquire<ResourceApplyFailureEventArgs_0>();
             resourceApplyFailureEventArgs.Name = name;
             resourceApplyFailureEventArgs.ResourcePackPath = resourcePackPath;
             resourceApplyFailureEventArgs.ErrorMessage = errorMessage;

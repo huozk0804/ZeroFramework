@@ -23,11 +23,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 获取加载对象。
         /// </summary>
-        public object Resource
-        {
-            get;
-            private set;
-        }
+        public object Resource { get; private set; }
 
         /// <summary>
         /// 创建加载资源代理辅助器异步将资源文件转换为加载对象完成事件。
@@ -36,7 +32,8 @@ namespace ZeroFramework.Resource
         /// <returns>创建的加载资源代理辅助器异步将资源文件转换为加载对象完成事件。</returns>
         public static LoadResourceAgentHelperReadFileCompleteEventArgs_0 Create(object resource)
         {
-            LoadResourceAgentHelperReadFileCompleteEventArgs_0 loadResourceAgentHelperReadFileCompleteEventArgs = ReferencePool.Acquire<LoadResourceAgentHelperReadFileCompleteEventArgs_0>();
+            LoadResourceAgentHelperReadFileCompleteEventArgs_0 loadResourceAgentHelperReadFileCompleteEventArgs =
+                ReferencePool.Acquire<LoadResourceAgentHelperReadFileCompleteEventArgs_0>();
             loadResourceAgentHelperReadFileCompleteEventArgs.Resource = resource;
             return loadResourceAgentHelperReadFileCompleteEventArgs;
         }

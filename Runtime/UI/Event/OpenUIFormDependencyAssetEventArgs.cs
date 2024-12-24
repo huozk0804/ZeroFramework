@@ -30,74 +30,42 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 获取界面序列编号。
         /// </summary>
-        public int SerialId
-        {
-            get;
-            private set;
-        }
+        public int SerialId { get; private set; }
 
         /// <summary>
         /// 获取界面资源名称。
         /// </summary>
-        public string UIFormAssetName
-        {
-            get;
-            private set;
-        }
+        public string UIFormAssetName { get; private set; }
 
         /// <summary>
         /// 获取界面组名称。
         /// </summary>
-        public string UIGroupName
-        {
-            get;
-            private set;
-        }
+        public string UIGroupName { get; private set; }
 
         /// <summary>
         /// 获取是否暂停被覆盖的界面。
         /// </summary>
-        public bool PauseCoveredUIForm
-        {
-            get;
-            private set;
-        }
+        public bool PauseCoveredUIForm { get; private set; }
 
         /// <summary>
         /// 获取被加载的依赖资源名称。
         /// </summary>
-        public string DependencyAssetName
-        {
-            get;
-            private set;
-        }
+        public string DependencyAssetName { get; private set; }
 
         /// <summary>
         /// 获取当前已加载依赖资源数量。
         /// </summary>
-        public int LoadedCount
-        {
-            get;
-            private set;
-        }
+        public int LoadedCount { get; private set; }
 
         /// <summary>
         /// 获取总共加载依赖资源数量。
         /// </summary>
-        public int TotalCount
-        {
-            get;
-            private set;
-        }
+        public int TotalCount { get; private set; }
 
         /// <summary>
         /// 获取用户自定义数据。
         /// </summary>
-        public object UserData
-        {
-            get;
-            private set;
-        }
+        public object UserData { get; private set; }
 
         /// <summary>
         /// 创建打开界面时加载依赖资源事件。
@@ -111,9 +79,12 @@ namespace ZeroFramework.UI
         /// <param name="totalCount">总共加载依赖资源数量。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的打开界面时加载依赖资源事件。</returns>
-        public static OpenUIFormDependencyAssetEventArgs Create(int serialId, string uiFormAssetName, string uiGroupName, bool pauseCoveredUIForm, string dependencyAssetName, int loadedCount, int totalCount, object userData)
+        public static OpenUIFormDependencyAssetEventArgs Create(int serialId, string uiFormAssetName,
+            string uiGroupName, bool pauseCoveredUIForm, string dependencyAssetName, int loadedCount, int totalCount,
+            object userData)
         {
-            OpenUIFormDependencyAssetEventArgs openUIFormDependencyAssetEventArgs = ReferencePool.Acquire<OpenUIFormDependencyAssetEventArgs>();
+            OpenUIFormDependencyAssetEventArgs openUIFormDependencyAssetEventArgs =
+                ReferencePool.Acquire<OpenUIFormDependencyAssetEventArgs>();
             openUIFormDependencyAssetEventArgs.SerialId = serialId;
             openUIFormDependencyAssetEventArgs.UIFormAssetName = uiFormAssetName;
             openUIFormDependencyAssetEventArgs.UIGroupName = uiGroupName;

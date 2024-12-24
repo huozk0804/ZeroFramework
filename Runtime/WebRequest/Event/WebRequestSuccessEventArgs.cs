@@ -28,29 +28,17 @@ namespace ZeroFramework.WebRequest
         /// <summary>
         /// 获取 Web 请求任务的序列编号。
         /// </summary>
-        public int SerialId
-        {
-            get;
-            private set;
-        }
+        public int SerialId { get; private set; }
 
         /// <summary>
         /// 获取 Web 请求地址。
         /// </summary>
-        public string WebRequestUri
-        {
-            get;
-            private set;
-        }
+        public string WebRequestUri { get; private set; }
 
         /// <summary>
         /// 获取用户自定义数据。
         /// </summary>
-        public object UserData
-        {
-            get;
-            private set;
-        }
+        public object UserData { get; private set; }
 
         /// <summary>
         /// 创建 Web 请求成功事件。
@@ -60,7 +48,8 @@ namespace ZeroFramework.WebRequest
         /// <param name="webResponseBytes">Web 响应的数据流。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的 Web 请求成功事件。</returns>
-        public static WebRequestSuccessEventArgs Create(int serialId, string webRequestUri, byte[] webResponseBytes, object userData)
+        public static WebRequestSuccessEventArgs Create(int serialId, string webRequestUri, byte[] webResponseBytes,
+            object userData)
         {
             WebRequestSuccessEventArgs webRequestSuccessEventArgs = ReferencePool.Acquire<WebRequestSuccessEventArgs>();
             webRequestSuccessEventArgs.SerialId = serialId;

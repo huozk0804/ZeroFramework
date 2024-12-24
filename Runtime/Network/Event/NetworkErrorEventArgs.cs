@@ -28,38 +28,22 @@ namespace ZeroFramework.Network
         /// <summary>
         /// 获取网络频道。
         /// </summary>
-        public INetworkChannel NetworkChannel
-        {
-            get;
-            private set;
-        }
+        public INetworkChannel NetworkChannel { get; private set; }
 
         /// <summary>
         /// 获取错误码。
         /// </summary>
-        public NetworkErrorCode ErrorCode
-        {
-            get;
-            private set;
-        }
+        public NetworkErrorCode ErrorCode { get; private set; }
 
         /// <summary>
         /// 获取 Socket 错误码。
         /// </summary>
-        public SocketError SocketErrorCode
-        {
-            get;
-            private set;
-        }
+        public SocketError SocketErrorCode { get; private set; }
 
         /// <summary>
         /// 获取错误信息。
         /// </summary>
-        public string ErrorMessage
-        {
-            get;
-            private set;
-        }
+        public string ErrorMessage { get; private set; }
 
         /// <summary>
         /// 创建网络错误事件。
@@ -69,7 +53,8 @@ namespace ZeroFramework.Network
         /// <param name="socketErrorCode">Socket 错误码。</param>
         /// <param name="errorMessage">错误信息。</param>
         /// <returns>创建的网络错误事件。</returns>
-        public static NetworkErrorEventArgs Create(INetworkChannel networkChannel, NetworkErrorCode errorCode, SocketError socketErrorCode, string errorMessage)
+        public static NetworkErrorEventArgs Create(INetworkChannel networkChannel, NetworkErrorCode errorCode,
+            SocketError socketErrorCode, string errorMessage)
         {
             NetworkErrorEventArgs networkErrorEventArgs = ReferencePool.Acquire<NetworkErrorEventArgs>();
             networkErrorEventArgs.NetworkChannel = networkChannel;

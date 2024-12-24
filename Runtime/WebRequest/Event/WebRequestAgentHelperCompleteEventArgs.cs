@@ -29,7 +29,8 @@ namespace ZeroFramework.WebRequest
         /// <returns>创建的 Web 请求代理辅助器完成事件。</returns>
         public static WebRequestAgentHelperCompleteEventArgs Create(byte[] webResponseBytes)
         {
-            WebRequestAgentHelperCompleteEventArgs webRequestAgentHelperCompleteEventArgs = ReferencePool.Acquire<WebRequestAgentHelperCompleteEventArgs>();
+            WebRequestAgentHelperCompleteEventArgs webRequestAgentHelperCompleteEventArgs =
+                ReferencePool.Acquire<WebRequestAgentHelperCompleteEventArgs>();
             webRequestAgentHelperCompleteEventArgs.m_WebResponseBytes = webResponseBytes;
             return webRequestAgentHelperCompleteEventArgs;
         }

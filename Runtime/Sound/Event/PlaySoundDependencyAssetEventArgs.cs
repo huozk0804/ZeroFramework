@@ -30,74 +30,42 @@ namespace ZeroFramework.Sound
         /// <summary>
         /// 获取声音的序列编号。
         /// </summary>
-        public int SerialId
-        {
-            get;
-            private set;
-        }
+        public int SerialId { get; private set; }
 
         /// <summary>
         /// 获取声音资源名称。
         /// </summary>
-        public string SoundAssetName
-        {
-            get;
-            private set;
-        }
+        public string SoundAssetName { get; private set; }
 
         /// <summary>
         /// 获取声音组名称。
         /// </summary>
-        public string SoundGroupName
-        {
-            get;
-            private set;
-        }
+        public string SoundGroupName { get; private set; }
 
         /// <summary>
         /// 获取播放声音参数。
         /// </summary>
-        public PlaySoundParams PlaySoundParams
-        {
-            get;
-            private set;
-        }
+        public PlaySoundParams PlaySoundParams { get; private set; }
 
         /// <summary>
         /// 获取被加载的依赖资源名称。
         /// </summary>
-        public string DependencyAssetName
-        {
-            get;
-            private set;
-        }
+        public string DependencyAssetName { get; private set; }
 
         /// <summary>
         /// 获取当前已加载依赖资源数量。
         /// </summary>
-        public int LoadedCount
-        {
-            get;
-            private set;
-        }
+        public int LoadedCount { get; private set; }
 
         /// <summary>
         /// 获取总共加载依赖资源数量。
         /// </summary>
-        public int TotalCount
-        {
-            get;
-            private set;
-        }
+        public int TotalCount { get; private set; }
 
         /// <summary>
         /// 获取用户自定义数据。
         /// </summary>
-        public object UserData
-        {
-            get;
-            private set;
-        }
+        public object UserData { get; private set; }
 
         /// <summary>
         /// 创建播放声音时加载依赖资源事件。
@@ -111,9 +79,12 @@ namespace ZeroFramework.Sound
         /// <param name="totalCount">总共加载依赖资源数量。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的播放声音时加载依赖资源事件。</returns>
-        public static PlaySoundDependencyAssetEventArgs Create(int serialId, string soundAssetName, string soundGroupName, PlaySoundParams playSoundParams, string dependencyAssetName, int loadedCount, int totalCount, object userData)
+        public static PlaySoundDependencyAssetEventArgs Create(int serialId, string soundAssetName,
+            string soundGroupName, PlaySoundParams playSoundParams, string dependencyAssetName, int loadedCount,
+            int totalCount, object userData)
         {
-            PlaySoundDependencyAssetEventArgs playSoundDependencyAssetEventArgs = ReferencePool.Acquire<PlaySoundDependencyAssetEventArgs>();
+            PlaySoundDependencyAssetEventArgs playSoundDependencyAssetEventArgs =
+                ReferencePool.Acquire<PlaySoundDependencyAssetEventArgs>();
             playSoundDependencyAssetEventArgs.SerialId = serialId;
             playSoundDependencyAssetEventArgs.SoundAssetName = soundAssetName;
             playSoundDependencyAssetEventArgs.SoundGroupName = soundGroupName;
