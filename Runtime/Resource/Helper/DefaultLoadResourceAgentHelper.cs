@@ -11,9 +11,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 #endif
 using UnityEngine.SceneManagement;
-using ZeroFramework;
 using ZeroFramework.FileSystem;
-using Utility = ZeroFramework.Utility;
 
 namespace ZeroFramework.Resource
 {
@@ -38,27 +36,27 @@ namespace ZeroFramework.Resource
         private AssetBundleRequest m_AssetBundleRequest = null;
         private AsyncOperation m_AsyncOperation = null;
 
-        private EventHandler<LoadResourceAgentHelperUpdateEventArgs_0> m_LoadResourceAgentHelperUpdateEventHandler =
+        private EventHandler<LoadResourceAgentHelperUpdateEventArgs> m_LoadResourceAgentHelperUpdateEventHandler =
             null;
 
-        private EventHandler<LoadResourceAgentHelperReadFileCompleteEventArgs_0>
+        private EventHandler<LoadResourceAgentHelperReadFileCompleteEventArgs>
             m_LoadResourceAgentHelperReadFileCompleteEventHandler = null;
 
-        private EventHandler<LoadResourceAgentHelperReadBytesCompleteEventArgs_0>
+        private EventHandler<LoadResourceAgentHelperReadBytesCompleteEventArgs>
             m_LoadResourceAgentHelperReadBytesCompleteEventHandler = null;
 
-        private EventHandler<LoadResourceAgentHelperParseBytesCompleteEventArgs_0>
+        private EventHandler<LoadResourceAgentHelperParseBytesCompleteEventArgs>
             m_LoadResourceAgentHelperParseBytesCompleteEventHandler = null;
 
-        private EventHandler<LoadResourceAgentHelperLoadCompleteEventArgs_0>
+        private EventHandler<LoadResourceAgentHelperLoadCompleteEventArgs>
             m_LoadResourceAgentHelperLoadCompleteEventHandler = null;
 
-        private EventHandler<LoadResourceAgentHelperErrorEventArgs_0> m_LoadResourceAgentHelperErrorEventHandler = null;
+        private EventHandler<LoadResourceAgentHelperErrorEventArgs> m_LoadResourceAgentHelperErrorEventHandler = null;
 
         /// <summary>
         /// 加载资源代理辅助器异步加载资源更新事件。
         /// </summary>
-        public override event EventHandler<LoadResourceAgentHelperUpdateEventArgs_0> LoadResourceAgentHelperUpdate
+        public override event EventHandler<LoadResourceAgentHelperUpdateEventArgs> LoadResourceAgentHelperUpdate
         {
             add => m_LoadResourceAgentHelperUpdateEventHandler += value;
             remove => m_LoadResourceAgentHelperUpdateEventHandler -= value;
@@ -67,7 +65,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 加载资源代理辅助器异步读取资源文件完成事件。
         /// </summary>
-        public override event EventHandler<LoadResourceAgentHelperReadFileCompleteEventArgs_0>
+        public override event EventHandler<LoadResourceAgentHelperReadFileCompleteEventArgs>
             LoadResourceAgentHelperReadFileComplete
             {
                 add => m_LoadResourceAgentHelperReadFileCompleteEventHandler += value;
@@ -77,7 +75,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 加载资源代理辅助器异步读取资源二进制流完成事件。
         /// </summary>
-        public override event EventHandler<LoadResourceAgentHelperReadBytesCompleteEventArgs_0>
+        public override event EventHandler<LoadResourceAgentHelperReadBytesCompleteEventArgs>
             LoadResourceAgentHelperReadBytesComplete
             {
                 add => m_LoadResourceAgentHelperReadBytesCompleteEventHandler += value;
@@ -87,7 +85,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 加载资源代理辅助器异步将资源二进制流转换为加载对象完成事件。
         /// </summary>
-        public override event EventHandler<LoadResourceAgentHelperParseBytesCompleteEventArgs_0>
+        public override event EventHandler<LoadResourceAgentHelperParseBytesCompleteEventArgs>
             LoadResourceAgentHelperParseBytesComplete
             {
                 add => m_LoadResourceAgentHelperParseBytesCompleteEventHandler += value;
@@ -97,7 +95,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 加载资源代理辅助器异步加载资源完成事件。
         /// </summary>
-        public override event EventHandler<LoadResourceAgentHelperLoadCompleteEventArgs_0>
+        public override event EventHandler<LoadResourceAgentHelperLoadCompleteEventArgs>
             LoadResourceAgentHelperLoadComplete
             {
                 add => m_LoadResourceAgentHelperLoadCompleteEventHandler += value;
@@ -107,7 +105,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 加载资源代理辅助器错误事件。
         /// </summary>
-        public override event EventHandler<LoadResourceAgentHelperErrorEventArgs_0> LoadResourceAgentHelperError
+        public override event EventHandler<LoadResourceAgentHelperErrorEventArgs> LoadResourceAgentHelperError
         {
             add => m_LoadResourceAgentHelperErrorEventHandler += value;
             remove => m_LoadResourceAgentHelperErrorEventHandler -= value;
@@ -200,8 +198,8 @@ namespace ZeroFramework.Resource
             }
 
             byte[] bytes = fileSystem.ReadFile(name);
-            LoadResourceAgentHelperReadBytesCompleteEventArgs_0 loadResourceAgentHelperReadBytesCompleteEventArgs =
-                LoadResourceAgentHelperReadBytesCompleteEventArgs_0.Create(bytes);
+            LoadResourceAgentHelperReadBytesCompleteEventArgs loadResourceAgentHelperReadBytesCompleteEventArgs =
+                LoadResourceAgentHelperReadBytesCompleteEventArgs.Create(bytes);
             m_LoadResourceAgentHelperReadBytesCompleteEventHandler(this,
                 loadResourceAgentHelperReadBytesCompleteEventArgs);
             ReferencePool.Release(loadResourceAgentHelperReadBytesCompleteEventArgs);
@@ -244,8 +242,8 @@ namespace ZeroFramework.Resource
             AssetBundle assetBundle = resource as AssetBundle;
             if (assetBundle == null)
             {
-                LoadResourceAgentHelperErrorEventArgs_0 loadResourceAgentHelperErrorEventArgs =
-                    LoadResourceAgentHelperErrorEventArgs_0.Create(LoadResourceStatus.TypeError,
+                LoadResourceAgentHelperErrorEventArgs loadResourceAgentHelperErrorEventArgs =
+                    LoadResourceAgentHelperErrorEventArgs.Create(LoadResourceStatus.TypeError,
                         "Can not load asset bundle from loaded resource which is not an asset bundle.");
                 m_LoadResourceAgentHelperErrorEventHandler(this, loadResourceAgentHelperErrorEventArgs);
                 ReferencePool.Release(loadResourceAgentHelperErrorEventArgs);
@@ -254,8 +252,8 @@ namespace ZeroFramework.Resource
 
             if (string.IsNullOrEmpty(assetName))
             {
-                LoadResourceAgentHelperErrorEventArgs_0 loadResourceAgentHelperErrorEventArgs =
-                    LoadResourceAgentHelperErrorEventArgs_0.Create(LoadResourceStatus.AssetError,
+                LoadResourceAgentHelperErrorEventArgs loadResourceAgentHelperErrorEventArgs =
+                    LoadResourceAgentHelperErrorEventArgs.Create(LoadResourceStatus.AssetError,
                         "Can not load asset from asset bundle which child name is invalid.");
                 m_LoadResourceAgentHelperErrorEventHandler(this, loadResourceAgentHelperErrorEventArgs);
                 ReferencePool.Release(loadResourceAgentHelperErrorEventArgs);
@@ -270,8 +268,8 @@ namespace ZeroFramework.Resource
                 if (sceneNamePositionStart <= 0 || sceneNamePositionEnd <= 0 ||
                     sceneNamePositionStart > sceneNamePositionEnd)
                 {
-                    LoadResourceAgentHelperErrorEventArgs_0 loadResourceAgentHelperErrorEventArgs =
-                        LoadResourceAgentHelperErrorEventArgs_0.Create(LoadResourceStatus.AssetError,
+                    LoadResourceAgentHelperErrorEventArgs loadResourceAgentHelperErrorEventArgs =
+                        LoadResourceAgentHelperErrorEventArgs.Create(LoadResourceStatus.AssetError,
                             Utility.Text.Format("Scene name '{0}' is invalid.", assetName));
                     m_LoadResourceAgentHelperErrorEventHandler(this, loadResourceAgentHelperErrorEventArgs);
                     ReferencePool.Release(loadResourceAgentHelperErrorEventArgs);
@@ -388,9 +386,9 @@ namespace ZeroFramework.Resource
                 {
                     if (string.IsNullOrEmpty(m_UnityWebRequest.error))
                     {
-                        LoadResourceAgentHelperReadBytesCompleteEventArgs_0
+                        LoadResourceAgentHelperReadBytesCompleteEventArgs
                             loadResourceAgentHelperReadBytesCompleteEventArgs =
-                                LoadResourceAgentHelperReadBytesCompleteEventArgs_0.Create(m_UnityWebRequest
+                                LoadResourceAgentHelperReadBytesCompleteEventArgs.Create(m_UnityWebRequest
                                     .downloadHandler.data);
                         m_LoadResourceAgentHelperReadBytesCompleteEventHandler(this,
                             loadResourceAgentHelperReadBytesCompleteEventArgs);
@@ -410,8 +408,8 @@ namespace ZeroFramework.Resource
 #else
                         isError = m_UnityWebRequest.isError;
 #endif
-                        LoadResourceAgentHelperErrorEventArgs_0 loadResourceAgentHelperErrorEventArgs =
-                            LoadResourceAgentHelperErrorEventArgs_0.Create(LoadResourceStatus.NotExist,
+                        LoadResourceAgentHelperErrorEventArgs loadResourceAgentHelperErrorEventArgs =
+                            LoadResourceAgentHelperErrorEventArgs.Create(LoadResourceStatus.NotExist,
                                 Utility.Text.Format("Can not load asset bundle '{0}' with error message '{1}'.",
                                     m_BytesFullPath, isError ? m_UnityWebRequest.error : null));
                         m_LoadResourceAgentHelperErrorEventHandler(this, loadResourceAgentHelperErrorEventArgs);
@@ -421,8 +419,8 @@ namespace ZeroFramework.Resource
                 else if (m_UnityWebRequest.downloadProgress != m_LastProgress)
                 {
                     m_LastProgress = m_UnityWebRequest.downloadProgress;
-                    LoadResourceAgentHelperUpdateEventArgs_0 loadResourceAgentHelperUpdateEventArgs =
-                        LoadResourceAgentHelperUpdateEventArgs_0.Create(LoadResourceProgress.ReadResource,
+                    LoadResourceAgentHelperUpdateEventArgs loadResourceAgentHelperUpdateEventArgs =
+                        LoadResourceAgentHelperUpdateEventArgs.Create(LoadResourceProgress.ReadResource,
                             m_UnityWebRequest.downloadProgress);
                     m_LoadResourceAgentHelperUpdateEventHandler(this, loadResourceAgentHelperUpdateEventArgs);
                     ReferencePool.Release(loadResourceAgentHelperUpdateEventArgs);
@@ -477,9 +475,9 @@ namespace ZeroFramework.Resource
                     if (assetBundle != null)
                     {
                         AssetBundleCreateRequest oldFileAssetBundleCreateRequest = m_FileAssetBundleCreateRequest;
-                        LoadResourceAgentHelperReadFileCompleteEventArgs_0
+                        LoadResourceAgentHelperReadFileCompleteEventArgs
                             loadResourceAgentHelperReadFileCompleteEventArgs =
-                                LoadResourceAgentHelperReadFileCompleteEventArgs_0.Create(assetBundle);
+                                LoadResourceAgentHelperReadFileCompleteEventArgs.Create(assetBundle);
                         m_LoadResourceAgentHelperReadFileCompleteEventHandler(this,
                             loadResourceAgentHelperReadFileCompleteEventArgs);
                         ReferencePool.Release(loadResourceAgentHelperReadFileCompleteEventArgs);
@@ -491,8 +489,8 @@ namespace ZeroFramework.Resource
                     }
                     else
                     {
-                        LoadResourceAgentHelperErrorEventArgs_0 loadResourceAgentHelperErrorEventArgs =
-                            LoadResourceAgentHelperErrorEventArgs_0.Create(LoadResourceStatus.NotExist,
+                        LoadResourceAgentHelperErrorEventArgs loadResourceAgentHelperErrorEventArgs =
+                            LoadResourceAgentHelperErrorEventArgs.Create(LoadResourceStatus.NotExist,
                                 Utility.Text.Format(
                                     "Can not load asset bundle from file '{0}' which is not a valid asset bundle.",
                                     m_FileName == null
@@ -505,8 +503,8 @@ namespace ZeroFramework.Resource
                 else if (m_FileAssetBundleCreateRequest.progress != m_LastProgress)
                 {
                     m_LastProgress = m_FileAssetBundleCreateRequest.progress;
-                    LoadResourceAgentHelperUpdateEventArgs_0 loadResourceAgentHelperUpdateEventArgs =
-                        LoadResourceAgentHelperUpdateEventArgs_0.Create(LoadResourceProgress.LoadResource,
+                    LoadResourceAgentHelperUpdateEventArgs loadResourceAgentHelperUpdateEventArgs =
+                        LoadResourceAgentHelperUpdateEventArgs.Create(LoadResourceProgress.LoadResource,
                             m_FileAssetBundleCreateRequest.progress);
                     m_LoadResourceAgentHelperUpdateEventHandler(this, loadResourceAgentHelperUpdateEventArgs);
                     ReferencePool.Release(loadResourceAgentHelperUpdateEventArgs);
@@ -524,9 +522,9 @@ namespace ZeroFramework.Resource
                     if (assetBundle != null)
                     {
                         AssetBundleCreateRequest oldBytesAssetBundleCreateRequest = m_BytesAssetBundleCreateRequest;
-                        LoadResourceAgentHelperParseBytesCompleteEventArgs_0
+                        LoadResourceAgentHelperParseBytesCompleteEventArgs
                             loadResourceAgentHelperParseBytesCompleteEventArgs =
-                                LoadResourceAgentHelperParseBytesCompleteEventArgs_0.Create(assetBundle);
+                                LoadResourceAgentHelperParseBytesCompleteEventArgs.Create(assetBundle);
                         m_LoadResourceAgentHelperParseBytesCompleteEventHandler(this,
                             loadResourceAgentHelperParseBytesCompleteEventArgs);
                         ReferencePool.Release(loadResourceAgentHelperParseBytesCompleteEventArgs);
@@ -538,8 +536,8 @@ namespace ZeroFramework.Resource
                     }
                     else
                     {
-                        LoadResourceAgentHelperErrorEventArgs_0 loadResourceAgentHelperErrorEventArgs =
-                            LoadResourceAgentHelperErrorEventArgs_0.Create(LoadResourceStatus.NotExist,
+                        LoadResourceAgentHelperErrorEventArgs loadResourceAgentHelperErrorEventArgs =
+                            LoadResourceAgentHelperErrorEventArgs.Create(LoadResourceStatus.NotExist,
                                 "Can not load asset bundle from memory which is not a valid asset bundle.");
                         m_LoadResourceAgentHelperErrorEventHandler(this, loadResourceAgentHelperErrorEventArgs);
                         ReferencePool.Release(loadResourceAgentHelperErrorEventArgs);
@@ -548,8 +546,8 @@ namespace ZeroFramework.Resource
                 else if (m_BytesAssetBundleCreateRequest.progress != m_LastProgress)
                 {
                     m_LastProgress = m_BytesAssetBundleCreateRequest.progress;
-                    LoadResourceAgentHelperUpdateEventArgs_0 loadResourceAgentHelperUpdateEventArgs =
-                        LoadResourceAgentHelperUpdateEventArgs_0.Create(LoadResourceProgress.LoadResource,
+                    LoadResourceAgentHelperUpdateEventArgs loadResourceAgentHelperUpdateEventArgs =
+                        LoadResourceAgentHelperUpdateEventArgs.Create(LoadResourceProgress.LoadResource,
                             m_BytesAssetBundleCreateRequest.progress);
                     m_LoadResourceAgentHelperUpdateEventHandler(this, loadResourceAgentHelperUpdateEventArgs);
                     ReferencePool.Release(loadResourceAgentHelperUpdateEventArgs);
@@ -565,8 +563,8 @@ namespace ZeroFramework.Resource
                 {
                     if (m_AssetBundleRequest.asset != null)
                     {
-                        LoadResourceAgentHelperLoadCompleteEventArgs_0 loadResourceAgentHelperLoadCompleteEventArgs =
-                            LoadResourceAgentHelperLoadCompleteEventArgs_0.Create(m_AssetBundleRequest.asset);
+                        LoadResourceAgentHelperLoadCompleteEventArgs loadResourceAgentHelperLoadCompleteEventArgs =
+                            LoadResourceAgentHelperLoadCompleteEventArgs.Create(m_AssetBundleRequest.asset);
                         m_LoadResourceAgentHelperLoadCompleteEventHandler(this,
                             loadResourceAgentHelperLoadCompleteEventArgs);
                         ReferencePool.Release(loadResourceAgentHelperLoadCompleteEventArgs);
@@ -576,8 +574,8 @@ namespace ZeroFramework.Resource
                     }
                     else
                     {
-                        LoadResourceAgentHelperErrorEventArgs_0 loadResourceAgentHelperErrorEventArgs =
-                            LoadResourceAgentHelperErrorEventArgs_0.Create(LoadResourceStatus.AssetError,
+                        LoadResourceAgentHelperErrorEventArgs loadResourceAgentHelperErrorEventArgs =
+                            LoadResourceAgentHelperErrorEventArgs.Create(LoadResourceStatus.AssetError,
                                 Utility.Text.Format("Can not load asset '{0}' from asset bundle which is not exist.",
                                     m_AssetName));
                         m_LoadResourceAgentHelperErrorEventHandler(this, loadResourceAgentHelperErrorEventArgs);
@@ -587,8 +585,8 @@ namespace ZeroFramework.Resource
                 else if (m_AssetBundleRequest.progress != m_LastProgress)
                 {
                     m_LastProgress = m_AssetBundleRequest.progress;
-                    LoadResourceAgentHelperUpdateEventArgs_0 loadResourceAgentHelperUpdateEventArgs =
-                        LoadResourceAgentHelperUpdateEventArgs_0.Create(LoadResourceProgress.LoadAsset,
+                    LoadResourceAgentHelperUpdateEventArgs loadResourceAgentHelperUpdateEventArgs =
+                        LoadResourceAgentHelperUpdateEventArgs.Create(LoadResourceProgress.LoadAsset,
                             m_AssetBundleRequest.progress);
                     m_LoadResourceAgentHelperUpdateEventHandler(this, loadResourceAgentHelperUpdateEventArgs);
                     ReferencePool.Release(loadResourceAgentHelperUpdateEventArgs);
@@ -605,8 +603,8 @@ namespace ZeroFramework.Resource
                     if (m_AsyncOperation.allowSceneActivation)
                     {
                         SceneAsset sceneAsset = new SceneAsset();
-                        LoadResourceAgentHelperLoadCompleteEventArgs_0 loadResourceAgentHelperLoadCompleteEventArgs =
-                            LoadResourceAgentHelperLoadCompleteEventArgs_0.Create(sceneAsset);
+                        LoadResourceAgentHelperLoadCompleteEventArgs loadResourceAgentHelperLoadCompleteEventArgs =
+                            LoadResourceAgentHelperLoadCompleteEventArgs.Create(sceneAsset);
                         m_LoadResourceAgentHelperLoadCompleteEventHandler(this,
                             loadResourceAgentHelperLoadCompleteEventArgs);
                         ReferencePool.Release(loadResourceAgentHelperLoadCompleteEventArgs);
@@ -616,8 +614,8 @@ namespace ZeroFramework.Resource
                     }
                     else
                     {
-                        LoadResourceAgentHelperErrorEventArgs_0 loadResourceAgentHelperErrorEventArgs =
-                            LoadResourceAgentHelperErrorEventArgs_0.Create(LoadResourceStatus.AssetError,
+                        LoadResourceAgentHelperErrorEventArgs loadResourceAgentHelperErrorEventArgs =
+                            LoadResourceAgentHelperErrorEventArgs.Create(LoadResourceStatus.AssetError,
                                 Utility.Text.Format("Can not load scene asset '{0}' from asset bundle.", m_AssetName));
                         m_LoadResourceAgentHelperErrorEventHandler(this, loadResourceAgentHelperErrorEventArgs);
                         ReferencePool.Release(loadResourceAgentHelperErrorEventArgs);
@@ -626,8 +624,8 @@ namespace ZeroFramework.Resource
                 else if (m_AsyncOperation.progress != m_LastProgress)
                 {
                     m_LastProgress = m_AsyncOperation.progress;
-                    LoadResourceAgentHelperUpdateEventArgs_0 loadResourceAgentHelperUpdateEventArgs =
-                        LoadResourceAgentHelperUpdateEventArgs_0.Create(LoadResourceProgress.LoadScene,
+                    LoadResourceAgentHelperUpdateEventArgs loadResourceAgentHelperUpdateEventArgs =
+                        LoadResourceAgentHelperUpdateEventArgs.Create(LoadResourceProgress.LoadScene,
                             m_AsyncOperation.progress);
                     m_LoadResourceAgentHelperUpdateEventHandler(this, loadResourceAgentHelperUpdateEventArgs);
                     ReferencePool.Release(loadResourceAgentHelperUpdateEventArgs);

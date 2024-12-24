@@ -10,12 +10,12 @@ namespace ZeroFramework.Resource
     /// <summary>
     /// 加载资源代理辅助器更新事件。
     /// </summary>
-    public sealed class LoadResourceAgentHelperUpdateEventArgs_0 : GameFrameworkEventArgs
+    public sealed class LoadResourceAgentHelperUpdateEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化加载资源代理辅助器更新事件的新实例。
         /// </summary>
-        public LoadResourceAgentHelperUpdateEventArgs_0()
+        public LoadResourceAgentHelperUpdateEventArgs()
         {
             Type = LoadResourceProgress.Unknown;
             Progress = 0f;
@@ -37,10 +37,10 @@ namespace ZeroFramework.Resource
         /// <param name="type">进度类型。</param>
         /// <param name="progress">进度。</param>
         /// <returns>创建的加载资源代理辅助器更新事件。</returns>
-        public static LoadResourceAgentHelperUpdateEventArgs_0 Create(LoadResourceProgress type, float progress)
+        public static LoadResourceAgentHelperUpdateEventArgs Create(LoadResourceProgress type, float progress)
         {
-            LoadResourceAgentHelperUpdateEventArgs_0 loadResourceAgentHelperUpdateEventArgs =
-                ReferencePool.Acquire<LoadResourceAgentHelperUpdateEventArgs_0>();
+            LoadResourceAgentHelperUpdateEventArgs loadResourceAgentHelperUpdateEventArgs =
+                ReferencePool.Acquire<LoadResourceAgentHelperUpdateEventArgs>();
             loadResourceAgentHelperUpdateEventArgs.Type = type;
             loadResourceAgentHelperUpdateEventArgs.Progress = progress;
             return loadResourceAgentHelperUpdateEventArgs;

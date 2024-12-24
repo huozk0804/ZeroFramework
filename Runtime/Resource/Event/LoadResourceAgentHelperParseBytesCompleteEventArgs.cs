@@ -10,12 +10,12 @@ namespace ZeroFramework.Resource
     /// <summary>
     /// 加载资源代理辅助器异步将资源二进制流转换为加载对象完成事件。
     /// </summary>
-    public sealed class LoadResourceAgentHelperParseBytesCompleteEventArgs_0 : GameFrameworkEventArgs
+    public sealed class LoadResourceAgentHelperParseBytesCompleteEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化加载资源代理辅助器异步将资源二进制流转换为加载对象完成事件的新实例。
         /// </summary>
-        public LoadResourceAgentHelperParseBytesCompleteEventArgs_0()
+        public LoadResourceAgentHelperParseBytesCompleteEventArgs()
         {
             Resource = null;
         }
@@ -30,10 +30,10 @@ namespace ZeroFramework.Resource
         /// </summary>
         /// <param name="resource">资源对象。</param>
         /// <returns>创建的加载资源代理辅助器异步将资源二进制流转换为加载对象完成事件。</returns>
-        public static LoadResourceAgentHelperParseBytesCompleteEventArgs_0 Create(object resource)
+        public static LoadResourceAgentHelperParseBytesCompleteEventArgs Create(object resource)
         {
-            LoadResourceAgentHelperParseBytesCompleteEventArgs_0 loadResourceAgentHelperParseBytesCompleteEventArgs =
-                ReferencePool.Acquire<LoadResourceAgentHelperParseBytesCompleteEventArgs_0>();
+            LoadResourceAgentHelperParseBytesCompleteEventArgs loadResourceAgentHelperParseBytesCompleteEventArgs =
+                ReferencePool.Acquire<LoadResourceAgentHelperParseBytesCompleteEventArgs>();
             loadResourceAgentHelperParseBytesCompleteEventArgs.Resource = resource;
             return loadResourceAgentHelperParseBytesCompleteEventArgs;
         }

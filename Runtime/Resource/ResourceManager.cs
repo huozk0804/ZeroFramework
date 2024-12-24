@@ -63,17 +63,17 @@ namespace ZeroFramework.Resource
         private CheckResourcesCompleteCallback m_CheckResourcesCompleteCallback;
         private ApplyResourcesCompleteCallback m_ApplyResourcesCompleteCallback;
         private UpdateResourcesCompleteCallback m_UpdateResourcesCompleteCallback;
-        private EventHandler<ResourceVerifyStartEventArgs_0> m_ResourceVerifyStartEventHandler;
-        private EventHandler<ResourceVerifySuccessEventArgs_0> m_ResourceVerifySuccessEventHandler;
-        private EventHandler<ResourceVerifyFailureEventArgs_0> m_ResourceVerifyFailureEventHandler;
-        private EventHandler<ResourceApplyStartEventArgs_0> m_ResourceApplyStartEventHandler;
-        private EventHandler<ResourceApplySuccessEventArgs_0> m_ResourceApplySuccessEventHandler;
-        private EventHandler<ResourceApplyFailureEventArgs_0> m_ResourceApplyFailureEventHandler;
-        private EventHandler<ResourceUpdateStartEventArgs_0> m_ResourceUpdateStartEventHandler;
-        private EventHandler<ResourceUpdateChangedEventArgs_0> m_ResourceUpdateChangedEventHandler;
-        private EventHandler<ResourceUpdateSuccessEventArgs_0> m_ResourceUpdateSuccessEventHandler;
-        private EventHandler<ResourceUpdateFailureEventArgs_0> m_ResourceUpdateFailureEventHandler;
-        private EventHandler<ResourceUpdateAllCompleteEventArgs_0> m_ResourceUpdateAllCompleteEventHandler;
+        private EventHandler<ResourceVerifyStartEventArgs> m_ResourceVerifyStartEventHandler;
+        private EventHandler<ResourceVerifySuccessEventArgs> m_ResourceVerifySuccessEventHandler;
+        private EventHandler<ResourceVerifyFailureEventArgs> m_ResourceVerifyFailureEventHandler;
+        private EventHandler<ResourceApplyStartEventArgs> m_ResourceApplyStartEventHandler;
+        private EventHandler<ResourceApplySuccessEventArgs> m_ResourceApplySuccessEventHandler;
+        private EventHandler<ResourceApplyFailureEventArgs> m_ResourceApplyFailureEventHandler;
+        private EventHandler<ResourceUpdateStartEventArgs> m_ResourceUpdateStartEventHandler;
+        private EventHandler<ResourceUpdateChangedEventArgs> m_ResourceUpdateChangedEventHandler;
+        private EventHandler<ResourceUpdateSuccessEventArgs> m_ResourceUpdateSuccessEventHandler;
+        private EventHandler<ResourceUpdateFailureEventArgs> m_ResourceUpdateFailureEventHandler;
+        private EventHandler<ResourceUpdateAllCompleteEventArgs> m_ResourceUpdateAllCompleteEventHandler;
 
         /// <summary>
         /// 初始化资源管理器的新实例。
@@ -377,7 +377,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源校验开始事件。
         /// </summary>
-        public event EventHandler<ResourceVerifyStartEventArgs_0> ResourceVerifyStart
+        public event EventHandler<ResourceVerifyStartEventArgs> ResourceVerifyStart
         {
             add => m_ResourceVerifyStartEventHandler += value;
             remove => m_ResourceVerifyStartEventHandler -= value;
@@ -386,7 +386,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源校验成功事件。
         /// </summary>
-        public event EventHandler<ResourceVerifySuccessEventArgs_0> ResourceVerifySuccess
+        public event EventHandler<ResourceVerifySuccessEventArgs> ResourceVerifySuccess
         {
             add => m_ResourceVerifySuccessEventHandler += value;
             remove => m_ResourceVerifySuccessEventHandler -= value;
@@ -395,7 +395,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源校验失败事件。
         /// </summary>
-        public event EventHandler<ResourceVerifyFailureEventArgs_0> ResourceVerifyFailure
+        public event EventHandler<ResourceVerifyFailureEventArgs> ResourceVerifyFailure
         {
             add => m_ResourceVerifyFailureEventHandler += value;
             remove => m_ResourceVerifyFailureEventHandler -= value;
@@ -404,7 +404,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源应用开始事件。
         /// </summary>
-        public event EventHandler<ResourceApplyStartEventArgs_0> ResourceApplyStart
+        public event EventHandler<ResourceApplyStartEventArgs> ResourceApplyStart
         {
             add => m_ResourceApplyStartEventHandler += value;
             remove => m_ResourceApplyStartEventHandler -= value;
@@ -413,7 +413,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源应用成功事件。
         /// </summary>
-        public event EventHandler<ResourceApplySuccessEventArgs_0> ResourceApplySuccess
+        public event EventHandler<ResourceApplySuccessEventArgs> ResourceApplySuccess
         {
             add => m_ResourceApplySuccessEventHandler += value;
             remove => m_ResourceApplySuccessEventHandler -= value;
@@ -422,7 +422,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源应用失败事件。
         /// </summary>
-        public event EventHandler<ResourceApplyFailureEventArgs_0> ResourceApplyFailure
+        public event EventHandler<ResourceApplyFailureEventArgs> ResourceApplyFailure
         {
             add => m_ResourceApplyFailureEventHandler += value;
             remove => m_ResourceApplyFailureEventHandler -= value;
@@ -431,7 +431,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源更新开始事件。
         /// </summary>
-        public event EventHandler<ResourceUpdateStartEventArgs_0> ResourceUpdateStart
+        public event EventHandler<ResourceUpdateStartEventArgs> ResourceUpdateStart
         {
             add => m_ResourceUpdateStartEventHandler += value;
             remove => m_ResourceUpdateStartEventHandler -= value;
@@ -440,7 +440,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源更新改变事件。
         /// </summary>
-        public event EventHandler<ResourceUpdateChangedEventArgs_0> ResourceUpdateChanged
+        public event EventHandler<ResourceUpdateChangedEventArgs> ResourceUpdateChanged
         {
             add => m_ResourceUpdateChangedEventHandler += value;
             remove => m_ResourceUpdateChangedEventHandler -= value;
@@ -449,7 +449,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源更新成功事件。
         /// </summary>
-        public event EventHandler<ResourceUpdateSuccessEventArgs_0> ResourceUpdateSuccess
+        public event EventHandler<ResourceUpdateSuccessEventArgs> ResourceUpdateSuccess
         {
             add => m_ResourceUpdateSuccessEventHandler += value;
             remove => m_ResourceUpdateSuccessEventHandler -= value;
@@ -458,7 +458,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源更新失败事件。
         /// </summary>
-        public event EventHandler<ResourceUpdateFailureEventArgs_0> ResourceUpdateFailure
+        public event EventHandler<ResourceUpdateFailureEventArgs> ResourceUpdateFailure
         {
             add => m_ResourceUpdateFailureEventHandler += value;
             remove => m_ResourceUpdateFailureEventHandler -= value;
@@ -467,7 +467,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源更新全部完成事件。
         /// </summary>
-        public event EventHandler<ResourceUpdateAllCompleteEventArgs_0> ResourceUpdateAllComplete
+        public event EventHandler<ResourceUpdateAllCompleteEventArgs> ResourceUpdateAllComplete
         {
             add => m_ResourceUpdateAllCompleteEventHandler += value;
             remove => m_ResourceUpdateAllCompleteEventHandler -= value;
@@ -2125,8 +2125,8 @@ namespace ZeroFramework.Resource
         {
             if (m_ResourceVerifyStartEventHandler != null)
             {
-                ResourceVerifyStartEventArgs_0 resourceVerifyStartEventArgs =
-                    ResourceVerifyStartEventArgs_0.Create(count, totalLength);
+                ResourceVerifyStartEventArgs resourceVerifyStartEventArgs =
+                    ResourceVerifyStartEventArgs.Create(count, totalLength);
                 m_ResourceVerifyStartEventHandler(this, resourceVerifyStartEventArgs);
                 ReferencePool.Release(resourceVerifyStartEventArgs);
             }
@@ -2136,8 +2136,8 @@ namespace ZeroFramework.Resource
         {
             if (m_ResourceVerifySuccessEventHandler != null)
             {
-                ResourceVerifySuccessEventArgs_0 resourceVerifySuccessEventArgs =
-                    ResourceVerifySuccessEventArgs_0.Create(resourceName.FullName, length);
+                ResourceVerifySuccessEventArgs resourceVerifySuccessEventArgs =
+                    ResourceVerifySuccessEventArgs.Create(resourceName.FullName, length);
                 m_ResourceVerifySuccessEventHandler(this, resourceVerifySuccessEventArgs);
                 ReferencePool.Release(resourceVerifySuccessEventArgs);
             }
@@ -2147,8 +2147,8 @@ namespace ZeroFramework.Resource
         {
             if (m_ResourceVerifyFailureEventHandler != null)
             {
-                ResourceVerifyFailureEventArgs_0 resourceVerifyFailureEventArgs =
-                    ResourceVerifyFailureEventArgs_0.Create(resourceName.FullName);
+                ResourceVerifyFailureEventArgs resourceVerifyFailureEventArgs =
+                    ResourceVerifyFailureEventArgs.Create(resourceName.FullName);
                 m_ResourceVerifyFailureEventHandler(this, resourceVerifyFailureEventArgs);
                 ReferencePool.Release(resourceVerifyFailureEventArgs);
             }
@@ -2219,8 +2219,8 @@ namespace ZeroFramework.Resource
         {
             if (m_ResourceApplyStartEventHandler != null)
             {
-                ResourceApplyStartEventArgs_0 resourceApplyStartEventArgs =
-                    ResourceApplyStartEventArgs_0.Create(resourcePackPath, count, totalLength);
+                ResourceApplyStartEventArgs resourceApplyStartEventArgs =
+                    ResourceApplyStartEventArgs.Create(resourcePackPath, count, totalLength);
                 m_ResourceApplyStartEventHandler(this, resourceApplyStartEventArgs);
                 ReferencePool.Release(resourceApplyStartEventArgs);
             }
@@ -2231,8 +2231,8 @@ namespace ZeroFramework.Resource
         {
             if (m_ResourceApplySuccessEventHandler != null)
             {
-                ResourceApplySuccessEventArgs_0 resourceApplySuccessEventArgs =
-                    ResourceApplySuccessEventArgs_0.Create(resourceName.FullName, applyPath, resourcePackPath, length,
+                ResourceApplySuccessEventArgs resourceApplySuccessEventArgs =
+                    ResourceApplySuccessEventArgs.Create(resourceName.FullName, applyPath, resourcePackPath, length,
                         compressedLength);
                 m_ResourceApplySuccessEventHandler(this, resourceApplySuccessEventArgs);
                 ReferencePool.Release(resourceApplySuccessEventArgs);
@@ -2244,8 +2244,8 @@ namespace ZeroFramework.Resource
         {
             if (m_ResourceApplyFailureEventHandler != null)
             {
-                ResourceApplyFailureEventArgs_0 resourceApplyFailureEventArgs =
-                    ResourceApplyFailureEventArgs_0.Create(resourceName.FullName, resourcePackPath, errorMessage);
+                ResourceApplyFailureEventArgs resourceApplyFailureEventArgs =
+                    ResourceApplyFailureEventArgs.Create(resourceName.FullName, resourcePackPath, errorMessage);
                 m_ResourceApplyFailureEventHandler(this, resourceApplyFailureEventArgs);
                 ReferencePool.Release(resourceApplyFailureEventArgs);
             }
@@ -2263,8 +2263,8 @@ namespace ZeroFramework.Resource
         {
             if (m_ResourceUpdateStartEventHandler != null)
             {
-                ResourceUpdateStartEventArgs_0 resourceUpdateStartEventArgs =
-                    ResourceUpdateStartEventArgs_0.Create(resourceName.FullName, downloadPath, downloadUri,
+                ResourceUpdateStartEventArgs resourceUpdateStartEventArgs =
+                    ResourceUpdateStartEventArgs.Create(resourceName.FullName, downloadPath, downloadUri,
                         currentLength, compressedLength, retryCount);
                 m_ResourceUpdateStartEventHandler(this, resourceUpdateStartEventArgs);
                 ReferencePool.Release(resourceUpdateStartEventArgs);
@@ -2276,8 +2276,8 @@ namespace ZeroFramework.Resource
         {
             if (m_ResourceUpdateChangedEventHandler != null)
             {
-                ResourceUpdateChangedEventArgs_0 resourceUpdateChangedEventArgs =
-                    ResourceUpdateChangedEventArgs_0.Create(resourceName.FullName, downloadPath, downloadUri,
+                ResourceUpdateChangedEventArgs resourceUpdateChangedEventArgs =
+                    ResourceUpdateChangedEventArgs.Create(resourceName.FullName, downloadPath, downloadUri,
                         currentLength, compressedLength);
                 m_ResourceUpdateChangedEventHandler(this, resourceUpdateChangedEventArgs);
                 ReferencePool.Release(resourceUpdateChangedEventArgs);
@@ -2289,8 +2289,8 @@ namespace ZeroFramework.Resource
         {
             if (m_ResourceUpdateSuccessEventHandler != null)
             {
-                ResourceUpdateSuccessEventArgs_0 resourceUpdateSuccessEventArgs =
-                    ResourceUpdateSuccessEventArgs_0.Create(resourceName.FullName, downloadPath, downloadUri, length,
+                ResourceUpdateSuccessEventArgs resourceUpdateSuccessEventArgs =
+                    ResourceUpdateSuccessEventArgs.Create(resourceName.FullName, downloadPath, downloadUri, length,
                         compressedLength);
                 m_ResourceUpdateSuccessEventHandler(this, resourceUpdateSuccessEventArgs);
                 ReferencePool.Release(resourceUpdateSuccessEventArgs);
@@ -2302,8 +2302,8 @@ namespace ZeroFramework.Resource
         {
             if (m_ResourceUpdateFailureEventHandler != null)
             {
-                ResourceUpdateFailureEventArgs_0 resourceUpdateFailureEventArgs =
-                    ResourceUpdateFailureEventArgs_0.Create(resourceName.FullName, downloadUri, retryCount,
+                ResourceUpdateFailureEventArgs resourceUpdateFailureEventArgs =
+                    ResourceUpdateFailureEventArgs.Create(resourceName.FullName, downloadUri, retryCount,
                         totalRetryCount, errorMessage);
                 m_ResourceUpdateFailureEventHandler(this, resourceUpdateFailureEventArgs);
                 ReferencePool.Release(resourceUpdateFailureEventArgs);
@@ -2341,8 +2341,8 @@ namespace ZeroFramework.Resource
 
             if (m_ResourceUpdateAllCompleteEventHandler != null)
             {
-                ResourceUpdateAllCompleteEventArgs_0 resourceUpdateAllCompleteEventArgs =
-                    ResourceUpdateAllCompleteEventArgs_0.Create();
+                ResourceUpdateAllCompleteEventArgs resourceUpdateAllCompleteEventArgs =
+                    ResourceUpdateAllCompleteEventArgs.Create();
                 m_ResourceUpdateAllCompleteEventHandler(this, resourceUpdateAllCompleteEventArgs);
                 ReferencePool.Release(resourceUpdateAllCompleteEventArgs);
             }

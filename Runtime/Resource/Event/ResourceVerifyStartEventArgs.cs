@@ -10,12 +10,12 @@ namespace ZeroFramework.Resource
     /// <summary>
     /// 资源校验开始事件。
     /// </summary>
-    public sealed class ResourceVerifyStartEventArgs_0 : GameFrameworkEventArgs
+    public sealed class ResourceVerifyStartEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化资源校验开始事件的新实例。
         /// </summary>
-        public ResourceVerifyStartEventArgs_0()
+        public ResourceVerifyStartEventArgs()
         {
             Count = 0;
             TotalLength = 0L;
@@ -37,10 +37,10 @@ namespace ZeroFramework.Resource
         /// <param name="count">要校验资源的数量。</param>
         /// <param name="totalLength">要校验资源的总大小。</param>
         /// <returns>创建的资源校验开始事件。</returns>
-        public static ResourceVerifyStartEventArgs_0 Create(int count, long totalLength)
+        public static ResourceVerifyStartEventArgs Create(int count, long totalLength)
         {
-            ResourceVerifyStartEventArgs_0 resourceVerifyStartEventArgs =
-                ReferencePool.Acquire<ResourceVerifyStartEventArgs_0>();
+            ResourceVerifyStartEventArgs resourceVerifyStartEventArgs =
+                ReferencePool.Acquire<ResourceVerifyStartEventArgs>();
             resourceVerifyStartEventArgs.Count = count;
             resourceVerifyStartEventArgs.TotalLength = totalLength;
             return resourceVerifyStartEventArgs;

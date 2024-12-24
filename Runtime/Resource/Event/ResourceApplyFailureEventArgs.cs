@@ -10,12 +10,12 @@ namespace ZeroFramework.Resource
     /// <summary>
     /// 资源应用失败事件。
     /// </summary>
-    public sealed class ResourceApplyFailureEventArgs_0 : GameFrameworkEventArgs
+    public sealed class ResourceApplyFailureEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化资源应用失败事件的新实例。
         /// </summary>
-        public ResourceApplyFailureEventArgs_0()
+        public ResourceApplyFailureEventArgs()
         {
             Name = null;
             ResourcePackPath = null;
@@ -44,10 +44,10 @@ namespace ZeroFramework.Resource
         /// <param name="resourcePackPath">资源包路径。</param>
         /// <param name="errorMessage">错误信息。</param>
         /// <returns>创建的资源应用失败事件。</returns>
-        public static ResourceApplyFailureEventArgs_0 Create(string name, string resourcePackPath, string errorMessage)
+        public static ResourceApplyFailureEventArgs Create(string name, string resourcePackPath, string errorMessage)
         {
-            ResourceApplyFailureEventArgs_0 resourceApplyFailureEventArgs =
-                ReferencePool.Acquire<ResourceApplyFailureEventArgs_0>();
+            ResourceApplyFailureEventArgs resourceApplyFailureEventArgs =
+                ReferencePool.Acquire<ResourceApplyFailureEventArgs>();
             resourceApplyFailureEventArgs.Name = name;
             resourceApplyFailureEventArgs.ResourcePackPath = resourcePackPath;
             resourceApplyFailureEventArgs.ErrorMessage = errorMessage;

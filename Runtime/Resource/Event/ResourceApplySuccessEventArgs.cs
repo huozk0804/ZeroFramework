@@ -10,12 +10,12 @@ namespace ZeroFramework.Resource
     /// <summary>
     /// 资源应用成功事件。
     /// </summary>
-    public sealed class ResourceApplySuccessEventArgs_0 : GameFrameworkEventArgs
+    public sealed class ResourceApplySuccessEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化资源应用成功事件的新实例。
         /// </summary>
-        public ResourceApplySuccessEventArgs_0()
+        public ResourceApplySuccessEventArgs()
         {
             Name = null;
             ApplyPath = null;
@@ -58,11 +58,11 @@ namespace ZeroFramework.Resource
         /// <param name="length">资源大小。</param>
         /// <param name="compressedLength">压缩后大小。</param>
         /// <returns>创建的资源应用成功事件。</returns>
-        public static ResourceApplySuccessEventArgs_0 Create(string name, string applyPath, string resourcePackPath,
+        public static ResourceApplySuccessEventArgs Create(string name, string applyPath, string resourcePackPath,
             int length, int compressedLength)
         {
-            ResourceApplySuccessEventArgs_0 resourceApplySuccessEventArgs =
-                ReferencePool.Acquire<ResourceApplySuccessEventArgs_0>();
+            ResourceApplySuccessEventArgs resourceApplySuccessEventArgs =
+                ReferencePool.Acquire<ResourceApplySuccessEventArgs>();
             resourceApplySuccessEventArgs.Name = name;
             resourceApplySuccessEventArgs.ApplyPath = applyPath;
             resourceApplySuccessEventArgs.ResourcePackPath = resourcePackPath;

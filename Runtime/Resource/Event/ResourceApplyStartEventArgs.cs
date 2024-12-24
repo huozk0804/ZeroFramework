@@ -10,12 +10,12 @@ namespace ZeroFramework.Resource
     /// <summary>
     /// 资源应用开始事件。
     /// </summary>
-    public sealed class ResourceApplyStartEventArgs_0 : GameFrameworkEventArgs
+    public sealed class ResourceApplyStartEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化资源应用开始事件的新实例。
         /// </summary>
-        public ResourceApplyStartEventArgs_0()
+        public ResourceApplyStartEventArgs()
         {
             ResourcePackPath = null;
             Count = 0;
@@ -44,10 +44,10 @@ namespace ZeroFramework.Resource
         /// <param name="count">要应用资源的数量。</param>
         /// <param name="totalLength">要应用资源的总大小。</param>
         /// <returns>创建的资源应用开始事件。</returns>
-        public static ResourceApplyStartEventArgs_0 Create(string resourcePackPath, int count, long totalLength)
+        public static ResourceApplyStartEventArgs Create(string resourcePackPath, int count, long totalLength)
         {
-            ResourceApplyStartEventArgs_0 resourceApplyStartEventArgs =
-                ReferencePool.Acquire<ResourceApplyStartEventArgs_0>();
+            ResourceApplyStartEventArgs resourceApplyStartEventArgs =
+                ReferencePool.Acquire<ResourceApplyStartEventArgs>();
             resourceApplyStartEventArgs.ResourcePackPath = resourcePackPath;
             resourceApplyStartEventArgs.Count = count;
             resourceApplyStartEventArgs.TotalLength = totalLength;

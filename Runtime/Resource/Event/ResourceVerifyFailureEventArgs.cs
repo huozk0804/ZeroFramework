@@ -10,12 +10,12 @@ namespace ZeroFramework.Resource
     /// <summary>
     /// 资源校验失败事件。
     /// </summary>
-    public sealed class ResourceVerifyFailureEventArgs_0 : GameFrameworkEventArgs
+    public sealed class ResourceVerifyFailureEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化资源校验失败事件的新实例。
         /// </summary>
-        public ResourceVerifyFailureEventArgs_0()
+        public ResourceVerifyFailureEventArgs()
         {
             Name = null;
         }
@@ -30,10 +30,10 @@ namespace ZeroFramework.Resource
         /// </summary>
         /// <param name="name">资源名称。</param>
         /// <returns>创建的资源校验失败事件。</returns>
-        public static ResourceVerifyFailureEventArgs_0 Create(string name)
+        public static ResourceVerifyFailureEventArgs Create(string name)
         {
-            ResourceVerifyFailureEventArgs_0 resourceVerifyFailureEventArgs =
-                ReferencePool.Acquire<ResourceVerifyFailureEventArgs_0>();
+            ResourceVerifyFailureEventArgs resourceVerifyFailureEventArgs =
+                ReferencePool.Acquire<ResourceVerifyFailureEventArgs>();
             resourceVerifyFailureEventArgs.Name = name;
             return resourceVerifyFailureEventArgs;
         }

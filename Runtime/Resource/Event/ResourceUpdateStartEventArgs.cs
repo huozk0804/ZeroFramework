@@ -8,20 +8,21 @@
 namespace ZeroFramework.Resource
 {
     /// <summary>
-    /// 资源更新改变事件。
+    /// 资源更新开始事件。
     /// </summary>
-    public sealed class ResourceUpdateChangedEventArgs_0 : GameFrameworkEventArgs
+    public sealed class ResourceUpdateStartEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
-        /// 初始化资源更新改变事件的新实例。
+        /// 初始化资源更新开始事件的新实例。
         /// </summary>
-        public ResourceUpdateChangedEventArgs_0()
+        public ResourceUpdateStartEventArgs()
         {
             Name = null;
             DownloadPath = null;
             DownloadUri = null;
             CurrentLength = 0;
             CompressedLength = 0;
+            RetryCount = 0;
         }
 
         /// <summary>
@@ -50,29 +51,36 @@ namespace ZeroFramework.Resource
         public int CompressedLength { get; private set; }
 
         /// <summary>
-        /// 创建资源更新改变事件。
+        /// 获取已重试下载次数。
+        /// </summary>
+        public int RetryCount { get; private set; }
+
+        /// <summary>
+        /// 创建资源更新开始事件。
         /// </summary>
         /// <param name="name">资源名称。</param>
         /// <param name="downloadPath">资源下载后存放路径。</param>
         /// <param name="downloadUri">资源下载地址。</param>
         /// <param name="currentLength">当前下载大小。</param>
         /// <param name="compressedLength">压缩后大小。</param>
-        /// <returns>创建的资源更新改变事件。</returns>
-        public static ResourceUpdateChangedEventArgs_0 Create(string name, string downloadPath, string downloadUri,
-            int currentLength, int compressedLength)
+        /// <param name="retryCount">已重试下载次数。</param>
+        /// <returns>创建的资源更新开始事件。</returns>
+        public static ResourceUpdateStartEventArgs Create(string name, string downloadPath, string downloadUri,
+            int currentLength, int compressedLength, int retryCount)
         {
-            ResourceUpdateChangedEventArgs_0 resourceUpdateChangedEventArgs =
-                ReferencePool.Acquire<ResourceUpdateChangedEventArgs_0>();
-            resourceUpdateChangedEventArgs.Name = name;
-            resourceUpdateChangedEventArgs.DownloadPath = downloadPath;
-            resourceUpdateChangedEventArgs.DownloadUri = downloadUri;
-            resourceUpdateChangedEventArgs.CurrentLength = currentLength;
-            resourceUpdateChangedEventArgs.CompressedLength = compressedLength;
-            return resourceUpdateChangedEventArgs;
+            ResourceUpdateStartEventArgs resourceUpdateStartEventArgs =
+                ReferencePool.Acquire<ResourceUpdateStartEventArgs>();
+            resourceUpdateStartEventArgs.Name = name;
+            resourceUpdateStartEventArgs.DownloadPath = downloadPath;
+            resourceUpdateStartEventArgs.DownloadUri = downloadUri;
+            resourceUpdateStartEventArgs.CurrentLength = currentLength;
+            resourceUpdateStartEventArgs.CompressedLength = compressedLength;
+            resourceUpdateStartEventArgs.RetryCount = retryCount;
+            return resourceUpdateStartEventArgs;
         }
 
         /// <summary>
-        /// 清理资源更新改变事件。
+        /// 清理资源更新开始事件。
         /// </summary>
         public override void Clear()
         {
@@ -81,6 +89,7 @@ namespace ZeroFramework.Resource
             DownloadUri = null;
             CurrentLength = 0;
             CompressedLength = 0;
+            RetryCount = 0;
         }
     }
 }

@@ -10,12 +10,12 @@ namespace ZeroFramework.Resource
     /// <summary>
     /// 加载资源代理辅助器错误事件。
     /// </summary>
-    public sealed class LoadResourceAgentHelperErrorEventArgs_0 : GameFrameworkEventArgs
+    public sealed class LoadResourceAgentHelperErrorEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化加载资源代理辅助器错误事件的新实例。
         /// </summary>
-        public LoadResourceAgentHelperErrorEventArgs_0()
+        public LoadResourceAgentHelperErrorEventArgs()
         {
             Status = LoadResourceStatus.Success;
             ErrorMessage = null;
@@ -37,10 +37,10 @@ namespace ZeroFramework.Resource
         /// <param name="status">加载资源状态。</param>
         /// <param name="errorMessage">错误信息。</param>
         /// <returns>创建的加载资源代理辅助器错误事件。</returns>
-        public static LoadResourceAgentHelperErrorEventArgs_0 Create(LoadResourceStatus status, string errorMessage)
+        public static LoadResourceAgentHelperErrorEventArgs Create(LoadResourceStatus status, string errorMessage)
         {
-            LoadResourceAgentHelperErrorEventArgs_0 loadResourceAgentHelperErrorEventArgs =
-                ReferencePool.Acquire<LoadResourceAgentHelperErrorEventArgs_0>();
+            LoadResourceAgentHelperErrorEventArgs loadResourceAgentHelperErrorEventArgs =
+                ReferencePool.Acquire<LoadResourceAgentHelperErrorEventArgs>();
             loadResourceAgentHelperErrorEventArgs.Status = status;
             loadResourceAgentHelperErrorEventArgs.ErrorMessage = errorMessage;
             return loadResourceAgentHelperErrorEventArgs;

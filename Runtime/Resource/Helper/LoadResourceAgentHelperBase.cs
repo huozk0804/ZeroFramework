@@ -19,36 +19,36 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 加载资源代理辅助器异步加载资源更新事件。
         /// </summary>
-        public abstract event EventHandler<LoadResourceAgentHelperUpdateEventArgs_0> LoadResourceAgentHelperUpdate;
+        public abstract event EventHandler<LoadResourceAgentHelperUpdateEventArgs> LoadResourceAgentHelperUpdate;
 
         /// <summary>
         /// 加载资源代理辅助器异步读取资源文件完成事件。
         /// </summary>
-        public abstract event EventHandler<LoadResourceAgentHelperReadFileCompleteEventArgs_0>
+        public abstract event EventHandler<LoadResourceAgentHelperReadFileCompleteEventArgs>
             LoadResourceAgentHelperReadFileComplete;
 
         /// <summary>
         /// 加载资源代理辅助器异步读取资源二进制流完成事件。
         /// </summary>
-        public abstract event EventHandler<LoadResourceAgentHelperReadBytesCompleteEventArgs_0>
+        public abstract event EventHandler<LoadResourceAgentHelperReadBytesCompleteEventArgs>
             LoadResourceAgentHelperReadBytesComplete;
 
         /// <summary>
         /// 加载资源代理辅助器异步将资源二进制流转换为加载对象完成事件。
         /// </summary>
-        public abstract event EventHandler<LoadResourceAgentHelperParseBytesCompleteEventArgs_0>
+        public abstract event EventHandler<LoadResourceAgentHelperParseBytesCompleteEventArgs>
             LoadResourceAgentHelperParseBytesComplete;
 
         /// <summary>
         /// 加载资源代理辅助器异步加载资源完成事件。
         /// </summary>
-        public abstract event EventHandler<LoadResourceAgentHelperLoadCompleteEventArgs_0>
+        public abstract event EventHandler<LoadResourceAgentHelperLoadCompleteEventArgs>
             LoadResourceAgentHelperLoadComplete;
 
         /// <summary>
         /// 加载资源代理辅助器错误事件。
         /// </summary>
-        public abstract event EventHandler<LoadResourceAgentHelperErrorEventArgs_0> LoadResourceAgentHelperError;
+        public abstract event EventHandler<LoadResourceAgentHelperErrorEventArgs> LoadResourceAgentHelperError;
 
         /// <summary>
         /// 通过加载资源代理辅助器开始异步读取资源文件。

@@ -8,12 +8,11 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using ZeroFramework.Scenes;
 
 #if UNITY_5_4_OR_NEWER
 using UnityEngine.Networking;
+using ZeroFramework.Scenes;
 #endif
-using UnityEngine.SceneManagement;
 
 namespace ZeroFramework.Resource
 {
@@ -49,7 +48,7 @@ namespace ZeroFramework.Resource
             }
             else
             {
-                // Todo:SceneManager.UnloadSceneAsync(SceneComponent.GetSceneName(sceneAssetName));
+                 //SceneManager.UnloadSceneAsync(SceneComponent.GetSceneName(sceneAssetName));
             }
 #else
             if (SceneManager.UnloadScene(SceneComponent.GetSceneName(sceneAssetName)))

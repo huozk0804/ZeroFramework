@@ -10,12 +10,12 @@ namespace ZeroFramework.Resource
     /// <summary>
     /// 资源更新失败事件。
     /// </summary>
-    public sealed class ResourceUpdateFailureEventArgs_0 : GameFrameworkEventArgs
+    public sealed class ResourceUpdateFailureEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化资源更新失败事件的新实例。
         /// </summary>
-        public ResourceUpdateFailureEventArgs_0()
+        public ResourceUpdateFailureEventArgs()
         {
             Name = null;
             DownloadUri = null;
@@ -59,11 +59,11 @@ namespace ZeroFramework.Resource
         /// <param name="errorMessage">错误信息。</param>
         /// <returns>创建的资源更新失败事件。</returns>
         /// <remarks>当已重试次数达到设定的重试次数时，将不再重试。</remarks>
-        public static ResourceUpdateFailureEventArgs_0 Create(string name, string downloadUri, int retryCount,
+        public static ResourceUpdateFailureEventArgs Create(string name, string downloadUri, int retryCount,
             int totalRetryCount, string errorMessage)
         {
-            ResourceUpdateFailureEventArgs_0 resourceUpdateFailureEventArgs =
-                ReferencePool.Acquire<ResourceUpdateFailureEventArgs_0>();
+            ResourceUpdateFailureEventArgs resourceUpdateFailureEventArgs =
+                ReferencePool.Acquire<ResourceUpdateFailureEventArgs>();
             resourceUpdateFailureEventArgs.Name = name;
             resourceUpdateFailureEventArgs.DownloadUri = downloadUri;
             resourceUpdateFailureEventArgs.RetryCount = retryCount;

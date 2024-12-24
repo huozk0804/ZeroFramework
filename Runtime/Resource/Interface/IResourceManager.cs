@@ -195,57 +195,57 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源校验开始事件。
         /// </summary>
-        event EventHandler<ResourceVerifyStartEventArgs_0> ResourceVerifyStart;
+        event EventHandler<ResourceVerifyStartEventArgs> ResourceVerifyStart;
 
         /// <summary>
         /// 资源校验成功事件。
         /// </summary>
-        event EventHandler<ResourceVerifySuccessEventArgs_0> ResourceVerifySuccess;
+        event EventHandler<ResourceVerifySuccessEventArgs> ResourceVerifySuccess;
 
         /// <summary>
         /// 资源校验失败事件。
         /// </summary>
-        event EventHandler<ResourceVerifyFailureEventArgs_0> ResourceVerifyFailure;
+        event EventHandler<ResourceVerifyFailureEventArgs> ResourceVerifyFailure;
 
         /// <summary>
         /// 资源应用开始事件。
         /// </summary>
-        event EventHandler<ResourceApplyStartEventArgs_0> ResourceApplyStart;
+        event EventHandler<ResourceApplyStartEventArgs> ResourceApplyStart;
 
         /// <summary>
         /// 资源应用成功事件。
         /// </summary>
-        event EventHandler<ResourceApplySuccessEventArgs_0> ResourceApplySuccess;
+        event EventHandler<ResourceApplySuccessEventArgs> ResourceApplySuccess;
 
         /// <summary>
         /// 资源应用失败事件。
         /// </summary>
-        event EventHandler<ResourceApplyFailureEventArgs_0> ResourceApplyFailure;
+        event EventHandler<ResourceApplyFailureEventArgs> ResourceApplyFailure;
 
         /// <summary>
         /// 资源更新开始事件。
         /// </summary>
-        event EventHandler<ResourceUpdateStartEventArgs_0> ResourceUpdateStart;
+        event EventHandler<ResourceUpdateStartEventArgs> ResourceUpdateStart;
 
         /// <summary>
         /// 资源更新改变事件。
         /// </summary>
-        event EventHandler<ResourceUpdateChangedEventArgs_0> ResourceUpdateChanged;
+        event EventHandler<ResourceUpdateChangedEventArgs> ResourceUpdateChanged;
 
         /// <summary>
         /// 资源更新成功事件。
         /// </summary>
-        event EventHandler<ResourceUpdateSuccessEventArgs_0> ResourceUpdateSuccess;
+        event EventHandler<ResourceUpdateSuccessEventArgs> ResourceUpdateSuccess;
 
         /// <summary>
         /// 资源更新失败事件。
         /// </summary>
-        event EventHandler<ResourceUpdateFailureEventArgs_0> ResourceUpdateFailure;
+        event EventHandler<ResourceUpdateFailureEventArgs> ResourceUpdateFailure;
 
         /// <summary>
         /// 资源更新全部完成事件。
         /// </summary>
-        event EventHandler<ResourceUpdateAllCompleteEventArgs_0> ResourceUpdateAllComplete;
+        event EventHandler<ResourceUpdateAllCompleteEventArgs> ResourceUpdateAllComplete;
 
         /// <summary>
         /// 设置资源只读区路径。

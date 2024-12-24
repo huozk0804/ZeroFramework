@@ -10,12 +10,12 @@ namespace ZeroFramework.Resource
     /// <summary>
     /// 加载资源代理辅助器异步加载资源完成事件。
     /// </summary>
-    public sealed class LoadResourceAgentHelperLoadCompleteEventArgs_0 : GameFrameworkEventArgs
+    public sealed class LoadResourceAgentHelperLoadCompleteEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化加载资源代理辅助器异步加载资源完成事件的新实例。
         /// </summary>
-        public LoadResourceAgentHelperLoadCompleteEventArgs_0()
+        public LoadResourceAgentHelperLoadCompleteEventArgs()
         {
             Asset = null;
         }
@@ -30,10 +30,10 @@ namespace ZeroFramework.Resource
         /// </summary>
         /// <param name="asset">加载的资源。</param>
         /// <returns>创建的加载资源代理辅助器异步加载资源完成事件。</returns>
-        public static LoadResourceAgentHelperLoadCompleteEventArgs_0 Create(object asset)
+        public static LoadResourceAgentHelperLoadCompleteEventArgs Create(object asset)
         {
-            LoadResourceAgentHelperLoadCompleteEventArgs_0 loadResourceAgentHelperLoadCompleteEventArgs =
-                ReferencePool.Acquire<LoadResourceAgentHelperLoadCompleteEventArgs_0>();
+            LoadResourceAgentHelperLoadCompleteEventArgs loadResourceAgentHelperLoadCompleteEventArgs =
+                ReferencePool.Acquire<LoadResourceAgentHelperLoadCompleteEventArgs>();
             loadResourceAgentHelperLoadCompleteEventArgs.Asset = asset;
             return loadResourceAgentHelperLoadCompleteEventArgs;
         }

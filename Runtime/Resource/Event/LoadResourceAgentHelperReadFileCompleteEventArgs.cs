@@ -10,12 +10,12 @@ namespace ZeroFramework.Resource
     /// <summary>
     /// 加载资源代理辅助器异步将资源文件转换为加载对象完成事件。
     /// </summary>
-    public sealed class LoadResourceAgentHelperReadFileCompleteEventArgs_0 : GameFrameworkEventArgs
+    public sealed class LoadResourceAgentHelperReadFileCompleteEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化加载资源代理辅助器异步将资源文件转换为加载对象完成事件的新实例。
         /// </summary>
-        public LoadResourceAgentHelperReadFileCompleteEventArgs_0()
+        public LoadResourceAgentHelperReadFileCompleteEventArgs()
         {
             Resource = null;
         }
@@ -30,10 +30,10 @@ namespace ZeroFramework.Resource
         /// </summary>
         /// <param name="resource">资源对象。</param>
         /// <returns>创建的加载资源代理辅助器异步将资源文件转换为加载对象完成事件。</returns>
-        public static LoadResourceAgentHelperReadFileCompleteEventArgs_0 Create(object resource)
+        public static LoadResourceAgentHelperReadFileCompleteEventArgs Create(object resource)
         {
-            LoadResourceAgentHelperReadFileCompleteEventArgs_0 loadResourceAgentHelperReadFileCompleteEventArgs =
-                ReferencePool.Acquire<LoadResourceAgentHelperReadFileCompleteEventArgs_0>();
+            LoadResourceAgentHelperReadFileCompleteEventArgs loadResourceAgentHelperReadFileCompleteEventArgs =
+                ReferencePool.Acquire<LoadResourceAgentHelperReadFileCompleteEventArgs>();
             loadResourceAgentHelperReadFileCompleteEventArgs.Resource = resource;
             return loadResourceAgentHelperReadFileCompleteEventArgs;
         }

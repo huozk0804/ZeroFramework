@@ -10,12 +10,12 @@ namespace ZeroFramework.Resource
     /// <summary>
     /// 资源更新全部完成事件。
     /// </summary>
-    public sealed class ResourceUpdateAllCompleteEventArgs_0 : GameFrameworkEventArgs
+    public sealed class ResourceUpdateAllCompleteEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化资源更新全部完成事件的新实例。
         /// </summary>
-        public ResourceUpdateAllCompleteEventArgs_0()
+        public ResourceUpdateAllCompleteEventArgs()
         {
         }
 
@@ -23,9 +23,9 @@ namespace ZeroFramework.Resource
         /// 创建资源更新全部完成事件。
         /// </summary>
         /// <returns>创建的资源更新全部完成事件。</returns>
-        public static ResourceUpdateAllCompleteEventArgs_0 Create()
+        public static ResourceUpdateAllCompleteEventArgs Create()
         {
-            return ReferencePool.Acquire<ResourceUpdateAllCompleteEventArgs_0>();
+            return ReferencePool.Acquire<ResourceUpdateAllCompleteEventArgs>();
         }
 
         /// <summary>

@@ -8,21 +8,20 @@
 namespace ZeroFramework.Resource
 {
     /// <summary>
-    /// 资源更新开始事件。
+    /// 资源更新成功事件。
     /// </summary>
-    public sealed class ResourceUpdateStartEventArgs_0 : GameFrameworkEventArgs
+    public sealed class ResourceUpdateSuccessEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
-        /// 初始化资源更新开始事件的新实例。
+        /// 初始化资源更新成功事件的新实例。
         /// </summary>
-        public ResourceUpdateStartEventArgs_0()
+        public ResourceUpdateSuccessEventArgs()
         {
             Name = null;
             DownloadPath = null;
             DownloadUri = null;
-            CurrentLength = 0;
+            Length = 0;
             CompressedLength = 0;
-            RetryCount = 0;
         }
 
         /// <summary>
@@ -41,9 +40,9 @@ namespace ZeroFramework.Resource
         public string DownloadUri { get; private set; }
 
         /// <summary>
-        /// 获取当前下载大小。
+        /// 获取资源大小。
         /// </summary>
-        public int CurrentLength { get; private set; }
+        public int Length { get; private set; }
 
         /// <summary>
         /// 获取压缩后大小。
@@ -51,45 +50,37 @@ namespace ZeroFramework.Resource
         public int CompressedLength { get; private set; }
 
         /// <summary>
-        /// 获取已重试下载次数。
-        /// </summary>
-        public int RetryCount { get; private set; }
-
-        /// <summary>
-        /// 创建资源更新开始事件。
+        /// 创建资源更新成功事件。
         /// </summary>
         /// <param name="name">资源名称。</param>
         /// <param name="downloadPath">资源下载后存放路径。</param>
         /// <param name="downloadUri">资源下载地址。</param>
-        /// <param name="currentLength">当前下载大小。</param>
+        /// <param name="length">资源大小。</param>
         /// <param name="compressedLength">压缩后大小。</param>
-        /// <param name="retryCount">已重试下载次数。</param>
-        /// <returns>创建的资源更新开始事件。</returns>
-        public static ResourceUpdateStartEventArgs_0 Create(string name, string downloadPath, string downloadUri,
-            int currentLength, int compressedLength, int retryCount)
+        /// <returns>创建的资源更新成功事件。</returns>
+        public static ResourceUpdateSuccessEventArgs Create(string name, string downloadPath, string downloadUri,
+            int length, int compressedLength)
         {
-            ResourceUpdateStartEventArgs_0 resourceUpdateStartEventArgs =
-                ReferencePool.Acquire<ResourceUpdateStartEventArgs_0>();
-            resourceUpdateStartEventArgs.Name = name;
-            resourceUpdateStartEventArgs.DownloadPath = downloadPath;
-            resourceUpdateStartEventArgs.DownloadUri = downloadUri;
-            resourceUpdateStartEventArgs.CurrentLength = currentLength;
-            resourceUpdateStartEventArgs.CompressedLength = compressedLength;
-            resourceUpdateStartEventArgs.RetryCount = retryCount;
-            return resourceUpdateStartEventArgs;
+            ResourceUpdateSuccessEventArgs resourceUpdateSuccessEventArgs =
+                ReferencePool.Acquire<ResourceUpdateSuccessEventArgs>();
+            resourceUpdateSuccessEventArgs.Name = name;
+            resourceUpdateSuccessEventArgs.DownloadPath = downloadPath;
+            resourceUpdateSuccessEventArgs.DownloadUri = downloadUri;
+            resourceUpdateSuccessEventArgs.Length = length;
+            resourceUpdateSuccessEventArgs.CompressedLength = compressedLength;
+            return resourceUpdateSuccessEventArgs;
         }
 
         /// <summary>
-        /// 清理资源更新开始事件。
+        /// 清理资源更新成功事件。
         /// </summary>
         public override void Clear()
         {
             Name = null;
             DownloadPath = null;
             DownloadUri = null;
-            CurrentLength = 0;
+            Length = 0;
             CompressedLength = 0;
-            RetryCount = 0;
         }
     }
 }

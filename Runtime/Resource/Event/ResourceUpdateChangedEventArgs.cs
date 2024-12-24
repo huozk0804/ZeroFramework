@@ -8,19 +8,19 @@
 namespace ZeroFramework.Resource
 {
     /// <summary>
-    /// 资源更新成功事件。
+    /// 资源更新改变事件。
     /// </summary>
-    public sealed class ResourceUpdateSuccessEventArgs_0 : GameFrameworkEventArgs
+    public sealed class ResourceUpdateChangedEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
-        /// 初始化资源更新成功事件的新实例。
+        /// 初始化资源更新改变事件的新实例。
         /// </summary>
-        public ResourceUpdateSuccessEventArgs_0()
+        public ResourceUpdateChangedEventArgs()
         {
             Name = null;
             DownloadPath = null;
             DownloadUri = null;
-            Length = 0;
+            CurrentLength = 0;
             CompressedLength = 0;
         }
 
@@ -40,9 +40,9 @@ namespace ZeroFramework.Resource
         public string DownloadUri { get; private set; }
 
         /// <summary>
-        /// 获取资源大小。
+        /// 获取当前下载大小。
         /// </summary>
-        public int Length { get; private set; }
+        public int CurrentLength { get; private set; }
 
         /// <summary>
         /// 获取压缩后大小。
@@ -50,36 +50,36 @@ namespace ZeroFramework.Resource
         public int CompressedLength { get; private set; }
 
         /// <summary>
-        /// 创建资源更新成功事件。
+        /// 创建资源更新改变事件。
         /// </summary>
         /// <param name="name">资源名称。</param>
         /// <param name="downloadPath">资源下载后存放路径。</param>
         /// <param name="downloadUri">资源下载地址。</param>
-        /// <param name="length">资源大小。</param>
+        /// <param name="currentLength">当前下载大小。</param>
         /// <param name="compressedLength">压缩后大小。</param>
-        /// <returns>创建的资源更新成功事件。</returns>
-        public static ResourceUpdateSuccessEventArgs_0 Create(string name, string downloadPath, string downloadUri,
-            int length, int compressedLength)
+        /// <returns>创建的资源更新改变事件。</returns>
+        public static ResourceUpdateChangedEventArgs Create(string name, string downloadPath, string downloadUri,
+            int currentLength, int compressedLength)
         {
-            ResourceUpdateSuccessEventArgs_0 resourceUpdateSuccessEventArgs =
-                ReferencePool.Acquire<ResourceUpdateSuccessEventArgs_0>();
-            resourceUpdateSuccessEventArgs.Name = name;
-            resourceUpdateSuccessEventArgs.DownloadPath = downloadPath;
-            resourceUpdateSuccessEventArgs.DownloadUri = downloadUri;
-            resourceUpdateSuccessEventArgs.Length = length;
-            resourceUpdateSuccessEventArgs.CompressedLength = compressedLength;
-            return resourceUpdateSuccessEventArgs;
+            ResourceUpdateChangedEventArgs resourceUpdateChangedEventArgs =
+                ReferencePool.Acquire<ResourceUpdateChangedEventArgs>();
+            resourceUpdateChangedEventArgs.Name = name;
+            resourceUpdateChangedEventArgs.DownloadPath = downloadPath;
+            resourceUpdateChangedEventArgs.DownloadUri = downloadUri;
+            resourceUpdateChangedEventArgs.CurrentLength = currentLength;
+            resourceUpdateChangedEventArgs.CompressedLength = compressedLength;
+            return resourceUpdateChangedEventArgs;
         }
 
         /// <summary>
-        /// 清理资源更新成功事件。
+        /// 清理资源更新改变事件。
         /// </summary>
         public override void Clear()
         {
             Name = null;
             DownloadPath = null;
             DownloadUri = null;
-            Length = 0;
+            CurrentLength = 0;
             CompressedLength = 0;
         }
     }

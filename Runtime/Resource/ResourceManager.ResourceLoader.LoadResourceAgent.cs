@@ -291,13 +291,13 @@ namespace ZeroFramework.Resource
                     m_Task.Done = true;
                 }
 
-                private void OnLoadResourceAgentHelperUpdate(object sender, LoadResourceAgentHelperUpdateEventArgs_0 e)
+                private void OnLoadResourceAgentHelperUpdate(object sender, LoadResourceAgentHelperUpdateEventArgs e)
                 {
                     m_Task.OnLoadAssetUpdate(this, e.Type, e.Progress);
                 }
 
                 private void OnLoadResourceAgentHelperReadFileComplete(object sender,
-                    LoadResourceAgentHelperReadFileCompleteEventArgs_0 e)
+                    LoadResourceAgentHelperReadFileCompleteEventArgs e)
                 {
                     ResourceObject resourceObject = ResourceObject.Create(m_Task.ResourceInfo.ResourceName.Name,
                         e.Resource, m_ResourceHelper, m_ResourceLoader);
@@ -307,7 +307,7 @@ namespace ZeroFramework.Resource
                 }
 
                 private void OnLoadResourceAgentHelperReadBytesComplete(object sender,
-                    LoadResourceAgentHelperReadBytesCompleteEventArgs_0 e)
+                    LoadResourceAgentHelperReadBytesCompleteEventArgs e)
                 {
                     byte[] bytes = e.GetBytes();
                     ResourceInfo resourceInfo = m_Task.ResourceInfo;
@@ -324,7 +324,7 @@ namespace ZeroFramework.Resource
                 }
 
                 private void OnLoadResourceAgentHelperParseBytesComplete(object sender,
-                    LoadResourceAgentHelperParseBytesCompleteEventArgs_0 e)
+                    LoadResourceAgentHelperParseBytesCompleteEventArgs e)
                 {
                     ResourceObject resourceObject = ResourceObject.Create(m_Task.ResourceInfo.ResourceName.Name,
                         e.Resource, m_ResourceHelper, m_ResourceLoader);
@@ -334,7 +334,7 @@ namespace ZeroFramework.Resource
                 }
 
                 private void OnLoadResourceAgentHelperLoadComplete(object sender,
-                    LoadResourceAgentHelperLoadCompleteEventArgs_0 e)
+                    LoadResourceAgentHelperLoadCompleteEventArgs e)
                 {
                     AssetObject assetObject = null;
                     if (m_Task.IsScene)
@@ -367,7 +367,7 @@ namespace ZeroFramework.Resource
                     OnAssetObjectReady(assetObject);
                 }
 
-                private void OnLoadResourceAgentHelperError(object sender, LoadResourceAgentHelperErrorEventArgs_0 e)
+                private void OnLoadResourceAgentHelperError(object sender, LoadResourceAgentHelperErrorEventArgs e)
                 {
                     OnError(e.Status, e.ErrorMessage);
                 }
