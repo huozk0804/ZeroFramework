@@ -18,14 +18,13 @@ namespace ZeroFramework
         /// </summary>
         public static class Assembly
         {
-            private static readonly System.Reflection.Assembly[] s_Assemblies = null;
-
-            private static readonly Dictionary<string, Type> s_CachedTypes =
+            private static System.Reflection.Assembly[] _assemblies = null;
+            private static readonly Dictionary<string, Type> CachedTypes =
                 new Dictionary<string, Type>(StringComparer.Ordinal);
 
             static Assembly()
             {
-                s_Assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                _assemblies = AppDomain.CurrentDomain.GetAssemblies();
             }
 
             /// <summary>
@@ -34,7 +33,16 @@ namespace ZeroFramework
             /// <returns>已加载的程序集。</returns>
             public static System.Reflection.Assembly[] GetAssemblies()
             {
-                return s_Assemblies;
+                return _assemblies;
+            }
+
+            /// <summary>
+            /// 使用(華佗等dll熱更新框架時),需要加載完dll后重新緩存Assemblies
+            /// </summary>
+            public static System.Reflection.Assembly[] UpdateAssemblies()
+            {
+                _assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                return _assemblies;
             }
 
             /// <summary>
@@ -44,7 +52,7 @@ namespace ZeroFramework
             public static Type[] GetTypes()
             {
                 List<Type> results = new List<Type>();
-                foreach (System.Reflection.Assembly assembly in s_Assemblies)
+                foreach (System.Reflection.Assembly assembly in _assemblies)
                 {
                     results.AddRange(assembly.GetTypes());
                 }
@@ -64,7 +72,7 @@ namespace ZeroFramework
                 }
 
                 results.Clear();
-                foreach (System.Reflection.Assembly assembly in s_Assemblies)
+                foreach (System.Reflection.Assembly assembly in _assemblies)
                 {
                     results.AddRange(assembly.GetTypes());
                 }
@@ -82,7 +90,7 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Type name is invalid.");
                 }
 
-                if (s_CachedTypes.TryGetValue(typeName, out var type))
+                if (CachedTypes.TryGetValue(typeName, out var type))
                 {
                     return type;
                 }
@@ -90,16 +98,16 @@ namespace ZeroFramework
                 type = Type.GetType(typeName);
                 if (type != null)
                 {
-                    s_CachedTypes.Add(typeName, type);
+                    CachedTypes.Add(typeName, type);
                     return type;
                 }
 
-                foreach (System.Reflection.Assembly assembly in s_Assemblies)
+                foreach (System.Reflection.Assembly assembly in _assemblies)
                 {
                     type = Type.GetType(Text.Format("{0}, {1}", typeName, assembly.FullName));
                     if (type != null)
                     {
-                        s_CachedTypes.Add(typeName, type);
+                        CachedTypes.Add(typeName, type);
                         return type;
                     }
                 }
