@@ -22,7 +22,8 @@ namespace ZeroFramework.Sound
         /// <param name="soundAsset">要释放的声音资源。</param>
         public override void ReleaseSoundAsset(object soundAsset)
         {
-            m_ResourceComponent.UnloadAsset(soundAsset);
+            //TODO:资源框架引用待修改
+            // m_ResourceComponent.UnloadAsset(soundAsset);
         }
 
         private void Start()

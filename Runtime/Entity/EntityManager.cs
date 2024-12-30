@@ -21,7 +21,8 @@ namespace ZeroFramework.Entity
         private readonly Dictionary<int, int> m_EntitiesBeingLoaded;
         private readonly HashSet<int> m_EntitiesToReleaseOnLoad;
         private readonly Queue<EntityInfo> m_RecycleQueue;
-        private readonly LoadAssetCallbacks m_LoadAssetCallbacks;
+        //TODO:资源框架引用待修改
+        // private readonly LoadAssetCallbacks m_LoadAssetCallbacks;
         private IEntityHelper m_EntityHelper;
         private int m_Serial;
         private bool m_IsShutdown;
@@ -41,8 +42,9 @@ namespace ZeroFramework.Entity
             m_EntitiesBeingLoaded = new Dictionary<int, int>();
             m_EntitiesToReleaseOnLoad = new HashSet<int>();
             m_RecycleQueue = new Queue<EntityInfo>();
-            m_LoadAssetCallbacks = new LoadAssetCallbacks(LoadAssetSuccessCallback, LoadAssetFailureCallback,
-                LoadAssetUpdateCallback, LoadAssetDependencyAssetCallback);
+            //TODO:资源框架引用待修改
+            // m_LoadAssetCallbacks = new LoadAssetCallbacks(LoadAssetSuccessCallback, LoadAssetFailureCallback,
+                // LoadAssetUpdateCallback, LoadAssetDependencyAssetCallback);
             m_EntityHelper = null;
             m_Serial = 0;
             m_IsShutdown = false;
@@ -532,7 +534,8 @@ namespace ZeroFramework.Entity
         /// <param name="entityGroupName">实体组名称。</param>
         public void ShowEntity(int entityId, string entityAssetName, string entityGroupName)
         {
-            ShowEntity(entityId, entityAssetName, entityGroupName, Constant.DefaultPriority, null);
+            //TODO:资源框架引用待修改
+            // ShowEntity(entityId, entityAssetName, entityGroupName, Constant.DefaultPriority, null);
         }
 
         /// <summary>
@@ -556,7 +559,8 @@ namespace ZeroFramework.Entity
         /// <param name="userData">用户自定义数据。</param>
         public void ShowEntity(int entityId, string entityAssetName, string entityGroupName, object userData)
         {
-            ShowEntity(entityId, entityAssetName, entityGroupName, Constant.DefaultPriority, userData);
+            //TODO:资源框架引用待修改
+            // ShowEntity(entityId, entityAssetName, entityGroupName, Constant.DefaultPriority, userData);
         }
 
         /// <summary>
@@ -608,8 +612,9 @@ namespace ZeroFramework.Entity
             {
                 int serialId = ++m_Serial;
                 m_EntitiesBeingLoaded.Add(entityId, serialId);
-                Zero.Instance.Resource.LoadAsset(entityAssetName, priority, m_LoadAssetCallbacks,
-                    ShowEntityInfo.Create(serialId, entityId, entityGroup, userData));
+                //TODO:资源框架引用待修改
+                // Zero.Instance.Resource.LoadAsset(entityAssetName, priority, m_LoadAssetCallbacks,
+                //     ShowEntityInfo.Create(serialId, entityId, entityGroup, userData));
                 return;
             }
 

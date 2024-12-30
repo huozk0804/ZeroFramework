@@ -19,8 +19,8 @@ namespace ZeroFramework.Scenes
         private readonly List<string> m_LoadedSceneAssetNames;
         private readonly List<string> m_LoadingSceneAssetNames;
         private readonly List<string> m_UnloadingSceneAssetNames;
-        private readonly LoadSceneCallbacks m_LoadSceneCallbacks;
-        private readonly UnloadSceneCallbacks m_UnloadSceneCallbacks;
+        // private readonly LoadSceneCallbacks m_LoadSceneCallbacks;
+        // private readonly UnloadSceneCallbacks m_UnloadSceneCallbacks;
         private EventHandler<LoadSceneSuccessEventArgs> m_LoadSceneSuccessEventHandler;
         private EventHandler<LoadSceneFailureEventArgs> m_LoadSceneFailureEventHandler;
         private EventHandler<LoadSceneUpdateEventArgs> m_LoadSceneUpdateEventHandler;
@@ -36,9 +36,10 @@ namespace ZeroFramework.Scenes
             m_LoadedSceneAssetNames = new List<string>();
             m_LoadingSceneAssetNames = new List<string>();
             m_UnloadingSceneAssetNames = new List<string>();
-            m_LoadSceneCallbacks = new LoadSceneCallbacks(LoadSceneSuccessCallback, LoadSceneFailureCallback,
-                LoadSceneUpdateCallback, LoadSceneDependencyAssetCallback);
-            m_UnloadSceneCallbacks = new UnloadSceneCallbacks(UnloadSceneSuccessCallback, UnloadSceneFailureCallback);
+            //TODO:资源框架引用待修改
+            // m_LoadSceneCallbacks = new LoadSceneCallbacks(LoadSceneSuccessCallback, LoadSceneFailureCallback,
+                // LoadSceneUpdateCallback, LoadSceneDependencyAssetCallback);
+            // m_UnloadSceneCallbacks = new UnloadSceneCallbacks(UnloadSceneSuccessCallback, UnloadSceneFailureCallback);
             m_LoadSceneSuccessEventHandler = null;
             m_LoadSceneFailureEventHandler = null;
             m_LoadSceneUpdateEventHandler = null;
@@ -270,7 +271,8 @@ namespace ZeroFramework.Scenes
         /// <param name="sceneAssetName">场景资源名称。</param>
         public void LoadScene(string sceneAssetName)
         {
-            LoadScene(sceneAssetName, Constant.DefaultPriority, null);
+            //TODO:资源框架引用待修改
+            // LoadScene(sceneAssetName, Constant.DefaultPriority, null);
         }
 
         /// <summary>
@@ -290,7 +292,8 @@ namespace ZeroFramework.Scenes
         /// <param name="userData">用户自定义数据。</param>
         public void LoadScene(string sceneAssetName, object userData)
         {
-            LoadScene(sceneAssetName, Constant.DefaultPriority, userData);
+            //TODO:资源框架引用待修改
+            // LoadScene(sceneAssetName, Constant.DefaultPriority, userData);
         }
 
         /// <summary>
@@ -325,7 +328,8 @@ namespace ZeroFramework.Scenes
             }
 
             m_LoadingSceneAssetNames.Add(sceneAssetName);
-            Zero.Instance.Resource.LoadScene(sceneAssetName, priority, m_LoadSceneCallbacks, userData);
+            //TODO:资源框架引用待修改
+            // Zero.Instance.Resource.LoadScene(sceneAssetName, priority, m_LoadSceneCallbacks, userData);
         }
 
         /// <summary>
@@ -368,7 +372,8 @@ namespace ZeroFramework.Scenes
             }
 
             m_UnloadingSceneAssetNames.Add(sceneAssetName);
-            Zero.Instance.Resource.UnloadScene(sceneAssetName, m_UnloadSceneCallbacks, userData);
+            //TODO:资源框架引用待修改
+            // Zero.Instance.Resource.UnloadScene(sceneAssetName, m_UnloadSceneCallbacks, userData);
         }
 
         private void LoadSceneSuccessCallback(string sceneAssetName, float duration, object userData)

@@ -36,17 +36,17 @@ namespace ZeroFramework.Entity
         /// <returns>实体。</returns>
         public override IEntity CreateEntity(object entityInstance, IEntityGroup entityGroup, object userData)
         {
-            GameObject gameObject = entityInstance as GameObject;
-            if (gameObject == null)
+            GameObject obj = entityInstance as GameObject;
+            if (obj == null)
             {
                 Log.Error("Entity instance is invalid.");
                 return null;
             }
 
-            Transform transform = gameObject.transform;
-            transform.SetParent(((MonoBehaviour)entityGroup.Helper).transform);
+            Transform trans = obj.transform;
+            trans.SetParent(((MonoBehaviour)entityGroup.Helper).transform);
 
-            return gameObject.GetOrAddComponent<Entity>();
+            return obj.GetOrAddComponent<Entity>();
         }
 
         /// <summary>
@@ -56,7 +56,8 @@ namespace ZeroFramework.Entity
         /// <param name="entityInstance">要释放的实体实例。</param>
         public override void ReleaseEntity(object entityAsset, object entityInstance)
         {
-            m_ResourceComponent.UnloadAsset(entityAsset);
+            //TODO:资源框架引用待修改
+            // m_ResourceComponent.UnloadAsset(entityAsset);
             Destroy((Object)entityInstance);
         }
 

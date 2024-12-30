@@ -228,7 +228,8 @@ namespace ZeroFramework.Localization
         /// <param name="dictionaryAsset">要释放的字典资源。</param>
         public override void ReleaseDataAsset(ILocalizationManager localizationManager, object dictionaryAsset)
         {
-            Zero.Instance.Resource.UnloadAsset(dictionaryAsset);
+            //TODO:资源框架引用待修改
+            // Zero.Instance.Resource.UnloadAsset(dictionaryAsset);
         }
     }
 }

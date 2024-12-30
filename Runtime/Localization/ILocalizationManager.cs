@@ -5,8 +5,6 @@
 // Feedback: mailto:
 //------------------------------------------------------------
 
-using ZeroFramework.Resource;
-
 namespace ZeroFramework.Localization
 {
     /// <summary>

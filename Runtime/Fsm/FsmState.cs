@@ -101,7 +101,8 @@ namespace ZeroFramework
 
             if (!typeof(FsmState<T>).IsAssignableFrom(stateType))
             {
-                throw new GameFrameworkException(Utility.Text.Format("State type '{0}' is invalid.", stateType.FullName));
+                throw new GameFrameworkException(
+                    Utility.Text.Format("State type '{0}' is invalid.", stateType.FullName));
             }
 
             fsmImplement.ChangeState(stateType);

@@ -19,7 +19,8 @@ namespace ZeroFramework.Sound
         private readonly Dictionary<string, SoundGroup> m_SoundGroups;
         private readonly List<int> m_SoundsBeingLoaded;
         private readonly HashSet<int> m_SoundsToReleaseOnLoad;
-        private readonly LoadAssetCallbacks m_LoadAssetCallbacks;
+        //TODO:资源框架引用待修改
+        // private readonly LoadAssetCallbacks m_LoadAssetCallbacks;
         private ISoundHelper m_SoundHelper;
         private int m_Serial;
         private EventHandler<PlaySoundSuccessEventArgs> m_PlaySoundSuccessEventHandler;
@@ -35,8 +36,9 @@ namespace ZeroFramework.Sound
             m_SoundGroups = new Dictionary<string, SoundGroup>(StringComparer.Ordinal);
             m_SoundsBeingLoaded = new List<int>();
             m_SoundsToReleaseOnLoad = new HashSet<int>();
-            m_LoadAssetCallbacks = new LoadAssetCallbacks(LoadAssetSuccessCallback, LoadAssetFailureCallback,
-                LoadAssetUpdateCallback, LoadAssetDependencyAssetCallback);
+            //TODO:资源框架引用待修改
+            // m_LoadAssetCallbacks = new LoadAssetCallbacks(LoadAssetSuccessCallback, LoadAssetFailureCallback,
+            //     LoadAssetUpdateCallback, LoadAssetDependencyAssetCallback);
             m_SoundHelper = null;
             m_Serial = 0;
             m_PlaySoundSuccessEventHandler = null;
@@ -303,7 +305,9 @@ namespace ZeroFramework.Sound
         /// <returns>声音的序列编号。</returns>
         public int PlaySound(string soundAssetName, string soundGroupName)
         {
-            return PlaySound(soundAssetName, soundGroupName, Resource.Constant.DefaultPriority, null, null);
+            return 1;
+            //TODO:资源框架引用待修改
+            // return PlaySound(soundAssetName, soundGroupName, Resource.Constant.DefaultPriority, null, null);
         }
 
         /// <summary>
@@ -327,7 +331,9 @@ namespace ZeroFramework.Sound
         /// <returns>声音的序列编号。</returns>
         public int PlaySound(string soundAssetName, string soundGroupName, PlaySoundParams playSoundParams)
         {
-            return PlaySound(soundAssetName, soundGroupName, Resource.Constant.DefaultPriority, playSoundParams, null);
+            return 1;
+            //TODO:资源框架引用待修改
+            // return PlaySound(soundAssetName, soundGroupName, Resource.Constant.DefaultPriority, playSoundParams, null);
         }
 
         /// <summary>
@@ -339,7 +345,9 @@ namespace ZeroFramework.Sound
         /// <returns>声音的序列编号。</returns>
         public int PlaySound(string soundAssetName, string soundGroupName, object userData)
         {
-            return PlaySound(soundAssetName, soundGroupName, Resource.Constant.DefaultPriority, null, userData);
+            return 1;
+            //TODO:资源框架引用待修改
+            // return PlaySound(soundAssetName, soundGroupName, Resource.Constant.DefaultPriority, null, userData);
         }
 
         /// <summary>
@@ -380,8 +388,10 @@ namespace ZeroFramework.Sound
         public int PlaySound(string soundAssetName, string soundGroupName, PlaySoundParams playSoundParams,
             object userData)
         {
-            return PlaySound(soundAssetName, soundGroupName, Resource.Constant.DefaultPriority, playSoundParams,
-                userData);
+            return 1;
+            //TODO:资源框架引用待修改
+            // return PlaySound(soundAssetName, soundGroupName, Resource.Constant.DefaultPriority, playSoundParams,
+            //     userData);
         }
 
         /// <summary>
@@ -442,8 +452,9 @@ namespace ZeroFramework.Sound
             }
 
             m_SoundsBeingLoaded.Add(serialId);
-            Zero.Instance.Resource.LoadAsset(soundAssetName, priority, m_LoadAssetCallbacks,
-                PlaySoundInfo.Create(serialId, soundGroup, playSoundParams, userData));
+            //TODO:资源框架引用待修改
+            // Zero.Instance.Resource.LoadAsset(soundAssetName, priority, m_LoadAssetCallbacks,
+            //     PlaySoundInfo.Create(serialId, soundGroup, playSoundParams, userData));
             return serialId;
         }
 

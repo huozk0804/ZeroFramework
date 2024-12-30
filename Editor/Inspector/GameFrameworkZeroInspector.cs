@@ -60,26 +60,6 @@ namespace ZeroFramework.Editor
                     DrawDataNode(manager.Root);
                 }
 
-                //DataTable
-                if (Zero.Instance.HasModule<IDataTableManager>())
-                {
-                    EditorGUILayout.Space(10);
-                    EditorGUILayout.LabelField("DataTable", EditorStyles.boldLabel);
-                    var config = Zero.Instance.DataTable;
-                    EditorGUILayout.BeginVertical("box");
-                    {
-                        EditorGUILayout.LabelField("Data Table Count", config.Count.ToString());
-                        EditorGUILayout.LabelField("Cached Bytes Size", config.CachedBytesSize.ToString());
-
-                        DataTableBase[] dataTables = config.GetAllDataTables();
-                        foreach (DataTableBase dataTable in dataTables)
-                        {
-                            DrawDataTable(dataTable);
-                        }
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-
                 //Download
                 if (Zero.Instance.HasModule<IDownloadManager>())
                 {
@@ -419,11 +399,6 @@ namespace ZeroFramework.Editor
             {
                 DrawDataNode(c);
             }
-        }
-
-        private void DrawDataTable(DataTableBase dataTable)
-        {
-            EditorGUILayout.LabelField(dataTable.FullName, Utility.Text.Format("{0} Rows", dataTable.Count));
         }
 
         private void DrawDownloadInfo(TaskInfo downloadInfo)

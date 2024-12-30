@@ -20,8 +20,9 @@ namespace ZeroFramework
         private static byte[] s_CachedBytes = null;
 
         private readonly T m_Owner;
-        private readonly LoadAssetCallbacks m_LoadAssetCallbacks;
-        private readonly LoadBinaryCallbacks m_LoadBinaryCallbacks;
+        //TODO:资源框架引用待修改
+        // private readonly LoadAssetCallbacks m_LoadAssetCallbacks;
+        // private readonly LoadBinaryCallbacks m_LoadBinaryCallbacks;
         private IDataProviderHelper<T> m_DataProviderHelper;
         private EventHandler<ReadDataSuccessEventArgs> m_ReadDataSuccessEventHandler;
         private EventHandler<ReadDataFailureEventArgs> m_ReadDataFailureEventHandler;
@@ -35,8 +36,9 @@ namespace ZeroFramework
         public DataProvider(T owner)
         {
             m_Owner = owner;
-            m_LoadAssetCallbacks = new LoadAssetCallbacks(LoadAssetSuccessCallback, LoadAssetOrBinaryFailureCallback, LoadAssetUpdateCallback, LoadAssetDependencyAssetCallback);
-            m_LoadBinaryCallbacks = new LoadBinaryCallbacks(LoadBinarySuccessCallback, LoadAssetOrBinaryFailureCallback);
+            //TODO:资源框架引用待修改
+            // m_LoadAssetCallbacks = new LoadAssetCallbacks(LoadAssetSuccessCallback, LoadAssetOrBinaryFailureCallback, LoadAssetUpdateCallback, LoadAssetDependencyAssetCallback);
+            // m_LoadBinaryCallbacks = new LoadBinaryCallbacks(LoadBinarySuccessCallback, LoadAssetOrBinaryFailureCallback);
             m_DataProviderHelper = null;
             m_ReadDataSuccessEventHandler = null;
             m_ReadDataFailureEventHandler = null;
@@ -118,7 +120,8 @@ namespace ZeroFramework
         /// <param name="dataAssetName">内容资源名称。</param>
         public void ReadData(string dataAssetName)
         {
-            ReadData(dataAssetName, Constant.DefaultPriority, null);
+            //TODO:资源框架引用待修改
+            // ReadData(dataAssetName, Constant.DefaultPriority, null);
         }
 
         /// <summary>
@@ -138,7 +141,8 @@ namespace ZeroFramework
         /// <param name="userData">用户自定义数据。</param>
         public void ReadData(string dataAssetName, object userData)
         {
-            ReadData(dataAssetName, Constant.DefaultPriority, userData);
+            //TODO:资源框架引用待修改
+            // ReadData(dataAssetName, Constant.DefaultPriority, userData);
         }
 
         /// <summary>
@@ -158,51 +162,52 @@ namespace ZeroFramework
             HasAssetResult result = resource.HasAsset(dataAssetName);
             switch (result)
             {
-                case HasAssetResult.AssetOnDisk:
-                case HasAssetResult.AssetOnFileSystem:
-                    resource.LoadAsset(dataAssetName, priority, m_LoadAssetCallbacks, userData);
-                    break;
-
-                case HasAssetResult.BinaryOnDisk:
-                    resource.LoadBinary(dataAssetName, m_LoadBinaryCallbacks, userData);
-                    break;
-
-                case HasAssetResult.BinaryOnFileSystem:
-                    int dataLength = resource.GetBinaryLength(dataAssetName);
-                    EnsureCachedBytesSize(dataLength);
-                    if (dataLength != resource.LoadBinaryFromFileSystem(dataAssetName, s_CachedBytes))
-                    {
-                        throw new GameFrameworkException(Utility.Text.Format("Load binary '{0}' from file system with internal error.", dataAssetName));
-                    }
-
-                    try
-                    {
-                        if (!m_DataProviderHelper.ReadData(m_Owner, dataAssetName, s_CachedBytes, 0, dataLength, userData))
-                        {
-                            throw new GameFrameworkException(Utility.Text.Format("Load data failure in data provider helper, data asset name '{0}'.", dataAssetName));
-                        }
-
-                        if (m_ReadDataSuccessEventHandler != null)
-                        {
-                            ReadDataSuccessEventArgs loadDataSuccessEventArgs = ReadDataSuccessEventArgs.Create(dataAssetName, 0f, userData);
-                            m_ReadDataSuccessEventHandler(this, loadDataSuccessEventArgs);
-                            ReferencePool.Release(loadDataSuccessEventArgs);
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        if (m_ReadDataFailureEventHandler != null)
-                        {
-                            ReadDataFailureEventArgs loadDataFailureEventArgs = ReadDataFailureEventArgs.Create(dataAssetName, exception.ToString(), userData);
-                            m_ReadDataFailureEventHandler(this, loadDataFailureEventArgs);
-                            ReferencePool.Release(loadDataFailureEventArgs);
-                            return;
-                        }
-
-                        throw;
-                    }
-
-                    break;
+                //TODO:资源框架引用待修改
+                // case HasAssetResult.AssetOnDisk:
+                // case HasAssetResult.AssetOnFileSystem:
+                //     resource.LoadAsset(dataAssetName, priority, m_LoadAssetCallbacks, userData);
+                //     break;
+                //
+                // case HasAssetResult.BinaryOnDisk:
+                //     resource.LoadBinary(dataAssetName, m_LoadBinaryCallbacks, userData);
+                //     break;
+                //
+                // case HasAssetResult.BinaryOnFileSystem:
+                //     int dataLength = resource.GetBinaryLength(dataAssetName);
+                //     EnsureCachedBytesSize(dataLength);
+                //     if (dataLength != resource.LoadBinaryFromFileSystem(dataAssetName, s_CachedBytes))
+                //     {
+                //         throw new GameFrameworkException(Utility.Text.Format("Load binary '{0}' from file system with internal error.", dataAssetName));
+                //     }
+                //
+                //     try
+                //     {
+                //         if (!m_DataProviderHelper.ReadData(m_Owner, dataAssetName, s_CachedBytes, 0, dataLength, userData))
+                //         {
+                //             throw new GameFrameworkException(Utility.Text.Format("Load data failure in data provider helper, data asset name '{0}'.", dataAssetName));
+                //         }
+                //
+                //         if (m_ReadDataSuccessEventHandler != null)
+                //         {
+                //             ReadDataSuccessEventArgs loadDataSuccessEventArgs = ReadDataSuccessEventArgs.Create(dataAssetName, 0f, userData);
+                //             m_ReadDataSuccessEventHandler(this, loadDataSuccessEventArgs);
+                //             ReferencePool.Release(loadDataSuccessEventArgs);
+                //         }
+                //     }
+                //     catch (Exception exception)
+                //     {
+                //         if (m_ReadDataFailureEventHandler != null)
+                //         {
+                //             ReadDataFailureEventArgs loadDataFailureEventArgs = ReadDataFailureEventArgs.Create(dataAssetName, exception.ToString(), userData);
+                //             m_ReadDataFailureEventHandler(this, loadDataFailureEventArgs);
+                //             ReferencePool.Release(loadDataFailureEventArgs);
+                //             return;
+                //         }
+                //
+                //         throw;
+                //     }
+                //
+                //     break;
 
                 default:
                     throw new GameFrameworkException(Utility.Text.Format("Data asset '{0}' is '{1}'.", dataAssetName, result));

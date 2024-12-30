@@ -19,8 +19,11 @@ namespace ZeroFramework.UI
         private readonly Dictionary<string, UIGroup> m_UIGroups;
         private readonly Dictionary<int, string> m_UIFormsBeingLoaded;
         private readonly HashSet<int> m_UIFormsToReleaseOnLoad;
+
         private readonly Queue<IUIForm> m_RecycleQueue;
-        private readonly LoadAssetCallbacks m_LoadAssetCallbacks;
+
+        //TODO:资源框架引用待修改
+        // private readonly LoadAssetCallbacks m_LoadAssetCallbacks;
         private IObjectPool<UIFormInstanceObject> m_InstancePool;
         private IUIFormHelper m_UIFormHelper;
         private int m_Serial;
@@ -40,8 +43,8 @@ namespace ZeroFramework.UI
             m_UIFormsBeingLoaded = new Dictionary<int, string>();
             m_UIFormsToReleaseOnLoad = new HashSet<int>();
             m_RecycleQueue = new Queue<IUIForm>();
-            m_LoadAssetCallbacks = new LoadAssetCallbacks(LoadAssetSuccessCallback, LoadAssetFailureCallback,
-                LoadAssetUpdateCallback, LoadAssetDependencyAssetCallback);
+            // m_LoadAssetCallbacks = new LoadAssetCallbacks(LoadAssetSuccessCallback, LoadAssetFailureCallback,
+            //     LoadAssetUpdateCallback, LoadAssetDependencyAssetCallback);
 
             m_Serial = 0;
             m_IsShutdown = false;
@@ -662,8 +665,9 @@ namespace ZeroFramework.UI
             if (uiFormInstanceObject == null)
             {
                 m_UIFormsBeingLoaded.Add(serialId, uiFormAssetName);
-                Zero.Instance.Resource.LoadAsset(uiFormAssetName, priority, m_LoadAssetCallbacks,
-                    OpenUIFormInfo.Create(serialId, uiGroup, pauseCoveredUIForm, userData));
+                //TODO:资源框架引用待修改
+                // Zero.Instance.Resource.LoadAsset(uiFormAssetName, priority, m_LoadAssetCallbacks,
+                //     OpenUIFormInfo.Create(serialId, uiGroup, pauseCoveredUIForm, userData));
             }
             else
             {

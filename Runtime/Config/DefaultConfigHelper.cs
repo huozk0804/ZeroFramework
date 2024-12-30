@@ -160,7 +160,8 @@ namespace ZeroFramework.Config
         /// <param name="configAsset">要释放的全局配置资源。</param>
         public override void ReleaseDataAsset(IConfigManager configManager, object configAsset)
         {
-            Zero.Instance.Resource.UnloadAsset(configAsset);
+            //TODO:资源框架引用待修改
+            // Zero.Instance.Resource.UnloadAsset(configAsset);
         }
     }
 }

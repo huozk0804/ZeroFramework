@@ -229,7 +229,6 @@ namespace ZeroFramework
         public IEventManager Event => GetModule<IEventManager>();
         public IFsmManager Fsm => GetModule<IFsmManager>();
         public IDataNodeManager DataNode => GetModule<IDataNodeManager>();
-        public IDataTableManager DataTable => GetModule<IDataTableManager>();
         public IDownloadManager Download => GetModule<IDownloadManager>();
         public IFileSystemManager FileSystem => GetModule<IFileSystemManager>();
         public INetworkManager Network => GetModule<INetworkManager>();

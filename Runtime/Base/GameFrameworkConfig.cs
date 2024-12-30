@@ -39,13 +39,6 @@ namespace ZeroFramework
         [SerializeField] public ConfigHelperBase m_CustomConfigHelper = null;
         [SerializeField] public int m_ConfigCachedBytesSize = 0;
 
-        //DataTable
-        [SerializeField] public bool m_EnableLoadDataTableUpdateEvent = false;
-        [SerializeField] public bool m_EnableLoadDataTableDependencyAssetEvent = false;
-        [SerializeField] public string m_DataTableHelperTypeName = "ZeroFramework.DefaultDataTableHelper";
-        [SerializeField] public DataTableHelperBase m_CustomDataTableHelper = null;
-        [SerializeField] public int m_DataTableCachedBytesSize = 0;
-
         //Debugger
         [SerializeField] public GUISkin m_Skin = null;
         [SerializeField] public DebuggerActiveWindowType m_ActiveWindow = DebuggerActiveWindowType.AlwaysOpen;
