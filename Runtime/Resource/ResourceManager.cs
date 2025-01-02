@@ -40,7 +40,11 @@ namespace ZeroFramework.Resource
             return _resourceHelper.LoadAsset<T>(location, packageName);
         }
 
-        public Object LoadAsset(string location, Type type, string packageName = "")
+		public T LoadSubAsset<T> (string location, string subName, string packageName = "") where T : Object {
+			throw new NotImplementedException();
+		}
+
+		public Object LoadAsset(string location, Type type, string packageName = "")
         {
             throw new NotImplementedException();
         }
@@ -64,7 +68,11 @@ namespace ZeroFramework.Resource
             throw new NotImplementedException();
         }
 
-        public UniTask LoadSubAssetsAsync(string location, string packageName = "")
+		public UniTask<T> LoadSubAssetAsync<T> (string location, string subName, string packageName = "") where T : Object {
+			throw new NotImplementedException();
+		}
+
+		public UniTask LoadSubAssetsAsync(string location, string packageName = "")
         {
             throw new NotImplementedException();
         }
@@ -79,6 +87,6 @@ namespace ZeroFramework.Resource
             throw new NotImplementedException();
         }
 
-        #endregion
-    }
+		#endregion
+	}
 }
