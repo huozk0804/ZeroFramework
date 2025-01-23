@@ -3,7 +3,6 @@ using System;
 using UnityEngine;
 using ZeroFramework.Debugger;
 using ZeroFramework.Download;
-using ZeroFramework.FileSystem;
 using ZeroFramework.Network;
 using ZeroFramework.Resource;
 using ZeroFramework.WebRequest;
@@ -16,22 +15,22 @@ namespace ZeroFramework
     {
         private const int DefaultDpi = 96; // default windows dpi
 
-        private float m_GameSpeedBeforePause = 1f;
-        [SerializeField] private bool isInitialize;
-        private int m_FrameRate;
-        private float m_GameSpeed;
-        private bool m_RunInBackground;
-        private bool m_NeverSleep;
+        private float _gameSpeedBeforePause = 1f;
+        private bool _isInitialize;
+        private int _frameRate;
+        private float _gameSpeed;
+        private bool _runInBackground;
+        private bool _neverSleep;
 
-        public bool IsInitialize => isInitialize;
+        public bool IsInitialize => _isInitialize;
 
         /// <summary>
         /// 获取或设置游戏帧率。
         /// </summary>
         public int FrameRate
         {
-            get => m_FrameRate;
-            set => Application.targetFrameRate = m_FrameRate = value;
+            get => _frameRate;
+            set => Application.targetFrameRate = _frameRate = value;
         }
 
         /// <summary>
@@ -39,8 +38,8 @@ namespace ZeroFramework
         /// </summary>
         public float GameSpeed
         {
-            get => m_GameSpeed;
-            set => Time.timeScale = m_GameSpeed = value >= 0f ? value : 0f;
+            get => _gameSpeed;
+            set => Time.timeScale = _gameSpeed = value >= 0f ? value : 0f;
         }
 
         /// <summary>
@@ -48,8 +47,8 @@ namespace ZeroFramework
         /// </summary>
         public bool RunInBackground
         {
-            get => m_RunInBackground;
-            set => Application.runInBackground = m_RunInBackground = value;
+            get => _runInBackground;
+            set => Application.runInBackground = _runInBackground = value;
         }
 
         /// <summary>
@@ -57,10 +56,10 @@ namespace ZeroFramework
         /// </summary>
         public bool NeverSleep
         {
-            get => m_NeverSleep;
+            get => _neverSleep;
             set
             {
-                m_NeverSleep = value;
+                _neverSleep = value;
                 Screen.sleepTimeout = value ? SleepTimeout.NeverSleep : SleepTimeout.SystemSetting;
             }
         }
@@ -71,18 +70,16 @@ namespace ZeroFramework
         public void PauseGame()
         {
             if (IsGamePaused)
-            {
                 return;
-            }
 
-            m_GameSpeedBeforePause = GameSpeed;
+            _gameSpeedBeforePause = GameSpeed;
             GameSpeed = 0f;
         }
 
         /// <summary>
         /// 获取游戏是否暂停。
         /// </summary>
-        public bool IsGamePaused => m_GameSpeed <= 0f;
+        public bool IsGamePaused => _gameSpeed <= 0f;
 
         /// <summary>
         /// 恢复游戏。
@@ -90,11 +87,9 @@ namespace ZeroFramework
         public void ResumeGame()
         {
             if (!IsGamePaused)
-            {
                 return;
-            }
 
-            GameSpeed = m_GameSpeedBeforePause;
+            GameSpeed = _gameSpeedBeforePause;
         }
 
         /// <summary>
@@ -103,9 +98,7 @@ namespace ZeroFramework
         public void ResetNormalGameSpeed()
         {
             if (IsNormalGameSpeed)
-            {
                 return;
-            }
 
             GameSpeed = 1f;
         }
@@ -113,13 +106,13 @@ namespace ZeroFramework
         /// <summary>
         /// 获取是否正常游戏速度。
         /// </summary>
-        public bool IsNormalGameSpeed => m_GameSpeed == 1f;
+        public bool IsNormalGameSpeed => _gameSpeed == 1f;
 
         #region Unity Message
 
         private void Awake()
         {
-			isInitialize = true;
+			_isInitialize = true;
 
 			FrameRate = GameFrameworkConfig.Instance.m_FrameRate;
 			GameSpeed = GameFrameworkConfig.Instance.m_GameSpeed;
@@ -214,7 +207,7 @@ namespace ZeroFramework
             ReferencePool.ClearAll();
             Utility.Marshal.FreeCachedHGlobal();
             GameFrameworkLog.SetLogHelper(null);
-            isInitialize = false;
+            _isInitialize = false;
         }
 
         #endregion
@@ -230,7 +223,6 @@ namespace ZeroFramework
         public IFsmManager Fsm => GetModule<IFsmManager>();
         public IDataNodeManager DataNode => GetModule<IDataNodeManager>();
         public IDownloadManager Download => GetModule<IDownloadManager>();
-        public IFileSystemManager FileSystem => GetModule<IFileSystemManager>();
         public INetworkManager Network => GetModule<INetworkManager>();
         public IResourceManager Resource => GetModule<IResourceManager>();
         public IWebRequestManager WebRequest => GetModule<IWebRequestManager>();
@@ -240,7 +232,7 @@ namespace ZeroFramework
         /// </summary>
         public T GetModule<T>() where T : class
         {
-            if (!isInitialize)
+            if (!_isInitialize)
             {
                 throw new GameFrameworkException("Get module before must be initialized.");
             }

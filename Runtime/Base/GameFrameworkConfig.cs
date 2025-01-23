@@ -5,7 +5,6 @@ using ZeroFramework.Config;
 using ZeroFramework.Debugger;
 using ZeroFramework.Download;
 using ZeroFramework.Entity;
-using ZeroFramework.FileSystem;
 using ZeroFramework.Localization;
 using ZeroFramework.Setting;
 using ZeroFramework.Sound;
@@ -78,12 +77,7 @@ namespace ZeroFramework
             public float InstanceExpireTime => m_InstanceExpireTime;
             public int InstancePriority => m_InstancePriority;
         }
-
-        //FileSystem
-        [SerializeField] public string m_FileSystemHelperTypeName = "ZeroFramework.DefaultFileSystemHelper";
-        [SerializeField] public FileSystemHelperBase m_CustomFileSystemHelper = null;
-
-        //Localization
+        
         //Localization
         [SerializeField] public bool m_EnableLoadDictionaryUpdateEvent = false;
         [SerializeField] public bool m_EnableLoadDictionaryDependencyAssetEvent = false;

@@ -7,7 +7,6 @@ using UnityEngine;
 using ZeroFramework.Config;
 using ZeroFramework.Download;
 using ZeroFramework.Entity;
-using ZeroFramework.FileSystem;
 using ZeroFramework.Localization;
 using ZeroFramework.Scenes;
 using ZeroFramework.Setting;
@@ -135,20 +134,6 @@ namespace ZeroFramework.Editor
                     {
                         EditorGUILayout.LabelField(Utility.Text.Format("Entity Count ({0})", entityGroup.Name),
                             entityGroup.EntityCount.ToString());
-                    }
-                }
-
-                //Filesystem
-                if (Zero.Instance.HasModule<IFileSystemManager>())
-                {
-                    EditorGUILayout.Space(10);
-                    EditorGUILayout.LabelField("File System", EditorStyles.boldLabel);
-                    var manager = Zero.Instance.FileSystem;
-                    EditorGUILayout.LabelField("File System Count", manager.Count.ToString());
-                    IFileSystem[] fileSystems = manager.GetAllFileSystems();
-                    foreach (IFileSystem fileSystem in fileSystems)
-                    {
-                        DrawFileSystem(fileSystem);
                     }
                 }
 
@@ -406,13 +391,6 @@ namespace ZeroFramework.Editor
             EditorGUILayout.LabelField(downloadInfo.Description,
                 Utility.Text.Format("[SerialId]{0} [Tag]{1} [Priority]{2} [Status]{3}", downloadInfo.SerialId,
                     downloadInfo.Tag ?? "<None>", downloadInfo.Priority, downloadInfo.Status));
-        }
-
-        private void DrawFileSystem(IFileSystem fileSystem)
-        {
-            EditorGUILayout.LabelField(fileSystem.FullPath,
-                Utility.Text.Format("{0}, {1} / {2} Files", fileSystem.Access, fileSystem.FileCount,
-                    fileSystem.MaxFileCount));
         }
 
         private void DrawReferencePoolInfo(ReferencePoolInfo referencePoolInfo)
