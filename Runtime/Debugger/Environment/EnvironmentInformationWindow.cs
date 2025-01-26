@@ -17,7 +17,6 @@ namespace ZeroFramework.Debugger
     internal sealed class EnvironmentInformationWindow : ScrollableDebuggerWindowBase
     {
         private IResourceManager m_ResourceManager = null;
-        private bool m_EditorResourceMode = false;
 
         public override void Initialize(params object[] args)
         {
