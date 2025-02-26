@@ -5,15 +5,17 @@ namespace ZeroFramework.Editor
 {
     public sealed partial class GameFrameworkConfigInspector : GameFrameworkInspector
     {
-        private SerializedProperty m_WebRequestAgentHelperCount = null;
-        private SerializedProperty m_WebRequestTimeout = null;
-        private HelperInfo<WebRequestAgentHelperBase> m_WebRequestAgentHelperInfo = new HelperInfo<WebRequestAgentHelperBase>("WebRequestAgent");
+        private SerializedProperty _webRequestAgentHelperCount = null;
+        private SerializedProperty _webRequestTimeout = null;
+
+        private readonly HelperInfo<WebRequestAgentHelperBase> _webRequestAgentHelperInfo =
+            new HelperInfo<WebRequestAgentHelperBase>("webRequestAgent");
 
         [InspectorConfigInit]
         void WebRequestInspectorInit()
         {
             _enableFunc.AddLast(OnWebRequestEnable);
-            m_InspectorFunc.AddLast(OnWebRequestInspectorGUI);
+            _inspectorFunc.AddLast(OnWebRequestInspectorGUI);
             _completeFunc.AddLast(OnWebRequestComplete);
         }
 
@@ -22,36 +24,26 @@ namespace ZeroFramework.Editor
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
             {
                 EditorGUILayout.LabelField("WebRequest", EditorStyles.boldLabel);
-                m_WebRequestAgentHelperInfo.Draw();
-                m_WebRequestAgentHelperCount.intValue = EditorGUILayout.IntSlider("Web Request Agent Helper Count", m_WebRequestAgentHelperCount.intValue, 1, 16);
+                _webRequestAgentHelperInfo.Draw();
+                _webRequestAgentHelperCount.intValue = EditorGUILayout.IntSlider("Web Request Agent Helper Count",
+                    _webRequestAgentHelperCount.intValue, 1, 16);
             }
             EditorGUI.EndDisabledGroup();
 
-            float timeout = EditorGUILayout.Slider("Timeout", m_DownloadTimeout.floatValue, 0f, 120f);
-            if (timeout != m_DownloadTimeout.floatValue)
-            {
-                if (EditorApplication.isPlaying)
-                {
-                    //t.Timeout = timeout;
-                }
-                else
-                {
-                    m_WebRequestTimeout.floatValue = timeout;
-                }
-            }
+            _webRequestTimeout.floatValue = EditorGUILayout.Slider("Timeout", _downloadTimeout.floatValue, 0f, 120f);
         }
 
         void OnWebRequestEnable()
         {
-            m_WebRequestAgentHelperCount = serializedObject.FindProperty("m_WebRequestAgentHelperCount");
-            m_WebRequestTimeout = serializedObject.FindProperty("m_WebRequestTimeout");
-            m_WebRequestAgentHelperInfo.Init(serializedObject);
-            m_WebRequestAgentHelperInfo.Refresh();
+            _webRequestAgentHelperCount = serializedObject.FindProperty("webRequestAgentHelperCount");
+            _webRequestTimeout = serializedObject.FindProperty("webRequestTimeout");
+            _webRequestAgentHelperInfo.Init(serializedObject);
+            _webRequestAgentHelperInfo.Refresh();
         }
 
         void OnWebRequestComplete()
         {
-            m_WebRequestAgentHelperInfo.Refresh();
+            _webRequestAgentHelperInfo.Refresh();
         }
     }
 }

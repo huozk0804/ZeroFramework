@@ -31,10 +31,10 @@ namespace ZeroFramework.WebRequest
             _successEventHandler = null;
             _failureEventHandler = null;
 
-            _timeout = GameFrameworkConfig.Instance.m_WebRequestTimeout;
-            var count = GameFrameworkConfig.Instance.m_WebRequestAgentHelperCount;
-            var name = GameFrameworkConfig.Instance.m_WebRequestAgentHelperTypeName;
-            var baseHelper = GameFrameworkConfig.Instance.m_CustomWebRequestAgentHelper;
+            _timeout = GameFrameworkConfig.Instance.webRequestTimeout;
+            var count = GameFrameworkConfig.Instance.webRequestAgentHelperCount;
+            var name = GameFrameworkConfig.Instance.webRequestAgentHelperTypeName;
+            var baseHelper = GameFrameworkConfig.Instance.webRequestAgentCustomHelper;
             for (int i = 0; i < count; i++)
             {
                 WebRequestAgentHelperBase webRequestAgentHelper = Helper.CreateHelper(name, baseHelper, i);
@@ -384,7 +384,8 @@ namespace ZeroFramework.WebRequest
                 throw new GameFrameworkException("You must add web request agent first.");
             }
 
-            WebRequestTask webRequestTask = WebRequestTask.Create(webRequestUri, postData, tag, priority, _timeout, userData);
+            WebRequestTask webRequestTask =
+                WebRequestTask.Create(webRequestUri, postData, tag, priority, _timeout, userData);
             _taskPool.AddTask(webRequestTask);
             return webRequestTask.SerialId;
         }
@@ -422,7 +423,9 @@ namespace ZeroFramework.WebRequest
         {
             if (_startEventHandler != null)
             {
-                WebRequestStartEventArgs webRequestStartEventArgs = WebRequestStartEventArgs.Create(sender.Task.SerialId, sender.Task.WebRequestUri, sender.Task.UserData);
+                WebRequestStartEventArgs webRequestStartEventArgs =
+                    WebRequestStartEventArgs.Create(sender.Task.SerialId, sender.Task.WebRequestUri,
+                        sender.Task.UserData);
                 _startEventHandler(this, webRequestStartEventArgs);
                 ReferencePool.Release(webRequestStartEventArgs);
             }
@@ -432,7 +435,9 @@ namespace ZeroFramework.WebRequest
         {
             if (_successEventHandler != null)
             {
-                WebRequestSuccessEventArgs webRequestSuccessEventArgs = WebRequestSuccessEventArgs.Create(sender.Task.SerialId, sender.Task.WebRequestUri, webResponseBytes, sender.Task.UserData);
+                WebRequestSuccessEventArgs webRequestSuccessEventArgs =
+                    WebRequestSuccessEventArgs.Create(sender.Task.SerialId, sender.Task.WebRequestUri, webResponseBytes,
+                        sender.Task.UserData);
                 _successEventHandler(this, webRequestSuccessEventArgs);
                 ReferencePool.Release(webRequestSuccessEventArgs);
             }
@@ -442,7 +447,9 @@ namespace ZeroFramework.WebRequest
         {
             if (_failureEventHandler != null)
             {
-                WebRequestFailureEventArgs webRequestFailureEventArgs = WebRequestFailureEventArgs.Create(sender.Task.SerialId, sender.Task.WebRequestUri, errorMessage, sender.Task.UserData);
+                WebRequestFailureEventArgs webRequestFailureEventArgs =
+                    WebRequestFailureEventArgs.Create(sender.Task.SerialId, sender.Task.WebRequestUri, errorMessage,
+                        sender.Task.UserData);
                 _failureEventHandler(this, webRequestFailureEventArgs);
                 ReferencePool.Release(webRequestFailureEventArgs);
             }

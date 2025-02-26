@@ -5,46 +5,48 @@ namespace ZeroFramework.Editor
 {
     public sealed partial class GameFrameworkConfigInspector : GameFrameworkInspector
     {
-        private SerializedProperty m_EnableLoadDictionaryUpdateEvent = null;
-        private SerializedProperty m_EnableLoadDictionaryDependencyAssetEvent = null;
-        private SerializedProperty m_LocalizationCachedBytesSize = null;
-        private HelperInfo<LocalizationHelperBase> m_LocalizationHelperInfo = new HelperInfo<LocalizationHelperBase>("Localization");
+        private SerializedProperty _enableLoadDictionaryUpdateEvent = null;
+        private SerializedProperty _enableLoadDictionaryDependencyAssetEvent = null;
+        private SerializedProperty _localizationCachedBytesSize = null;
+
+        private readonly HelperInfo<LocalizationHelperBase> _localizationHelperInfo =
+            new HelperInfo<LocalizationHelperBase>("localization");
 
         [InspectorConfigInit]
         void LocalizationInspectorInit()
         {
             _enableFunc.AddLast(OnLocalizationEnable);
-            m_InspectorFunc.AddLast(OnLocalizationInspectorGUI);
+            _inspectorFunc.AddLast(OnLocalizationInspectorGUI);
             _completeFunc.AddLast(OnLocalizationComplete);
         }
 
         void OnLocalizationEnable()
         {
-            m_EnableLoadDictionaryUpdateEvent = serializedObject.FindProperty("m_EnableLoadDictionaryUpdateEvent");
-            m_EnableLoadDictionaryDependencyAssetEvent = serializedObject.FindProperty("m_EnableLoadDictionaryDependencyAssetEvent");
-            m_LocalizationCachedBytesSize = serializedObject.FindProperty("m_LocalizationCachedBytesSize");
+            _enableLoadDictionaryUpdateEvent = serializedObject.FindProperty("enableLoadDictionaryUpdateEvent");
+            _enableLoadDictionaryDependencyAssetEvent =
+                serializedObject.FindProperty("enableLoadDictionaryDependencyAssetEvent");
+            _localizationCachedBytesSize = serializedObject.FindProperty("localizationCachedBytesSize");
 
-            m_LocalizationHelperInfo.Init(serializedObject);
-            m_LocalizationHelperInfo.Refresh();
+            _localizationHelperInfo.Init(serializedObject);
+            _localizationHelperInfo.Refresh();
         }
 
         void OnLocalizationInspectorGUI()
         {
-            //LocalizationComponent t = (LocalizationComponent)target;
             EditorGUILayout.LabelField("Localization", EditorStyles.boldLabel);
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
             {
-                EditorGUILayout.PropertyField(m_EnableLoadDictionaryUpdateEvent);
-                EditorGUILayout.PropertyField(m_EnableLoadDictionaryDependencyAssetEvent);
-                m_LocalizationHelperInfo.Draw();
-                EditorGUILayout.PropertyField(m_LocalizationCachedBytesSize);
+                EditorGUILayout.PropertyField(_enableLoadDictionaryUpdateEvent);
+                EditorGUILayout.PropertyField(_enableLoadDictionaryDependencyAssetEvent);
+                _localizationHelperInfo.Draw();
+                EditorGUILayout.PropertyField(_localizationCachedBytesSize);
             }
             EditorGUI.EndDisabledGroup();
         }
 
         void OnLocalizationComplete()
         {
-            m_LocalizationHelperInfo.Refresh();
+            _localizationHelperInfo.Refresh();
         }
     }
 }

@@ -33,17 +33,17 @@ namespace ZeroFramework.Download
         {
             m_TaskPool = new TaskPool<DownloadTask>();
             m_DownloadCounter = new DownloadCounter(1f, 10f);
-            m_FlushSize = GameFrameworkConfig.Instance.m_FlushSize;
-            m_Timeout = GameFrameworkConfig.Instance.m_DownloadTimeout;
+            m_FlushSize = GameFrameworkConfig.Instance.flushSize;
+            m_Timeout = GameFrameworkConfig.Instance.downloadTimeout;
 
             m_DownloadStartEventHandler = null;
             m_DownloadUpdateEventHandler = null;
             m_DownloadSuccessEventHandler = null;
             m_DownloadFailureEventHandler = null;
 
-            var count = GameFrameworkConfig.Instance.m_DownloadAgentHelperCount;
-            var name = GameFrameworkConfig.Instance.m_DownloadAgentHelperTypeName;
-            var baseDefault = GameFrameworkConfig.Instance.m_CustomDownloadAgentHelper;
+            var count = GameFrameworkConfig.Instance.downloadAgentHelperCount;
+            var name = GameFrameworkConfig.Instance.downloadAgentHelperTypeName;
+            var baseDefault = GameFrameworkConfig.Instance.downloadAgentCustomHelper;
             for (int i = 0; i < count; i++)
             {
                 var downloadHelper = Helper.CreateHelper(name, baseDefault, i);

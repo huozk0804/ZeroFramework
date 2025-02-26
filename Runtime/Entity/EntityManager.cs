@@ -54,8 +54,8 @@ namespace ZeroFramework.Entity
             m_ShowEntityDependencyAssetEventHandler = null;
             m_HideEntityCompleteEventHandler = null;
 
-            var entityName = GameFrameworkConfig.Instance.m_EntityHelperTypeName;
-            var baseEntityHelper = GameFrameworkConfig.Instance.m_CustomEntityHelper;
+            var entityName = GameFrameworkConfig.Instance.entityHelperTypeName;
+            var baseEntityHelper = GameFrameworkConfig.Instance.entityCustomHelper;
             EntityHelperBase entityHelper = Helper.CreateHelper(entityName, baseEntityHelper);
             if (entityHelper == null)
             {
@@ -65,14 +65,14 @@ namespace ZeroFramework.Entity
 
             SetEntityHelper(entityHelper);
 
-            var preEntityGroups = GameFrameworkConfig.Instance.m_EntityGroups;
+            var preEntityGroups = GameFrameworkConfig.Instance.entityGroups;
             if (preEntityGroups != null)
             {
-                var entityGroupName = GameFrameworkConfig.Instance.m_EntityGroupHelperTypeName;
-                var baseEntityGroupHelper = GameFrameworkConfig.Instance.m_CustomEntityGroupHelper;
+                var entityGroupName = GameFrameworkConfig.Instance.entityGroupHelperTypeName;
+                var baseEntityGroupHelper = GameFrameworkConfig.Instance.entityGroupCustomHelper;
                 for (int i = 0; i < preEntityGroups.Length; i++)
                 {
-                    var name = preEntityGroups[i].Name;
+                    var name = preEntityGroups[i].name;
                     if (HasEntityGroup(name))
                     {
                         continue;
@@ -87,9 +87,9 @@ namespace ZeroFramework.Entity
                     }
 
                     entityGroupHelper.name = Utility.Text.Format("Entity Group - {0}", name);
-                    AddEntityGroup(name, preEntityGroups[i].InstanceAutoReleaseInterval,
-                        preEntityGroups[i].InstanceCapacity, preEntityGroups[i].InstanceExpireTime,
-                        preEntityGroups[i].InstancePriority, entityGroupHelper);
+                    AddEntityGroup(name, preEntityGroups[i].instanceAutoReleaseInterval,
+                        preEntityGroups[i].instanceCapacity, preEntityGroups[i].instanceExpireTime,
+                        preEntityGroups[i].instancePriority, entityGroupHelper);
                 }
             }
         }

@@ -15,19 +15,19 @@ namespace ZeroFramework.Editor
     /// </summary>
     public static class Help
     {
-        [MenuItem(EditorConst.BaseMainPath + "Documentation", false, priority = EditorConst.MenuPriority_Intro)]
+        [MenuItem(EditorConst.BaseMainPath + "Documentation", false, priority = EditorConst.MenuPriorityIntro)]
         public static void ShowDocumentation()
         {
             ShowHelp("https://gameframework.cn/document/");
         }
 
-        [MenuItem(EditorConst.BaseMainPath + "API Reference", false, priority = EditorConst.MenuPriority_Intro)]
+        [MenuItem(EditorConst.BaseMainPath + "API Reference", false, priority = EditorConst.MenuPriorityIntro)]
         public static void ShowApiReference()
         {
             ShowHelp("https://gameframework.cn/api/");
         }
 
-        [MenuItem(EditorConst.BaseMainPath + "Git Repository", false, priority = EditorConst.MenuPriority_Intro)]
+        [MenuItem(EditorConst.BaseMainPath + "Git Repository", false, priority = EditorConst.MenuPriorityIntro)]
         public static void ShowGitRepository()
         {
             ShowHelp("https://github.com/huozk0804/ZeroFramework");

@@ -15,45 +15,44 @@ namespace ZeroFramework.Editor
     internal sealed class HelperInfo<T> where T : MonoBehaviour
     {
         private const string CustomOptionName = "<Custom>";
+        private readonly string _name;
 
-        private readonly string m_Name;
-
-        private SerializedProperty m_HelperTypeName;
-        private SerializedProperty m_CustomHelper;
-        private string[] m_HelperTypeNames;
-        private int m_HelperTypeNameIndex;
+        private SerializedProperty _helperTypeName;
+        private SerializedProperty _customHelper;
+        private string[] _helperTypeNames;
+        private int _helperTypeNameIndex;
 
         public HelperInfo(string name)
         {
-            m_Name = name;
+            this._name = name;
 
-            m_HelperTypeName = null;
-            m_CustomHelper = null;
-            m_HelperTypeNames = null;
-            m_HelperTypeNameIndex = 0;
+            _helperTypeName = null;
+            _customHelper = null;
+            _helperTypeNames = null;
+            _helperTypeNameIndex = 0;
         }
 
         public void Init(SerializedObject serializedObject)
         {
-            m_HelperTypeName = serializedObject.FindProperty(Utility.Text.Format("m_{0}HelperTypeName", m_Name));
-            m_CustomHelper = serializedObject.FindProperty(Utility.Text.Format("m_Custom{0}Helper", m_Name));
+            _helperTypeName = serializedObject.FindProperty(Utility.Text.Format("{0}HelperTypeName", _name));
+            _customHelper = serializedObject.FindProperty(Utility.Text.Format("{0}CustomHelper", _name));
         }
 
         public void Draw()
         {
-            string displayName = FieldNameForDisplay(m_Name);
+            string displayName = FieldNameForDisplay(_name);
             int selectedIndex = EditorGUILayout.Popup(Utility.Text.Format("{0} Helper", displayName),
-                m_HelperTypeNameIndex, m_HelperTypeNames);
-            if (selectedIndex != m_HelperTypeNameIndex)
+                _helperTypeNameIndex, _helperTypeNames);
+            if (selectedIndex != _helperTypeNameIndex)
             {
-                m_HelperTypeNameIndex = selectedIndex;
-                m_HelperTypeName.stringValue = selectedIndex <= 0 ? null : m_HelperTypeNames[selectedIndex];
+                _helperTypeNameIndex = selectedIndex;
+                _helperTypeName.stringValue = selectedIndex <= 0 ? null : _helperTypeNames[selectedIndex];
             }
 
-            if (m_HelperTypeNameIndex <= 0)
+            if (_helperTypeNameIndex <= 0)
             {
-                EditorGUILayout.PropertyField(m_CustomHelper);
-                if (m_CustomHelper.objectReferenceValue == null)
+                EditorGUILayout.PropertyField(_customHelper);
+                if (_customHelper.objectReferenceValue == null)
                 {
                     EditorGUILayout.HelpBox(Utility.Text.Format("You must set Custom {0} Helper.", displayName),
                         MessageType.Error);
@@ -69,16 +68,16 @@ namespace ZeroFramework.Editor
             };
 
             helperTypeNameList.AddRange(Type.GetRuntimeTypeNames(typeof(T)));
-            m_HelperTypeNames = helperTypeNameList.ToArray();
+            _helperTypeNames = helperTypeNameList.ToArray();
 
-            m_HelperTypeNameIndex = 0;
-            if (!string.IsNullOrEmpty(m_HelperTypeName.stringValue))
+            _helperTypeNameIndex = 0;
+            if (!string.IsNullOrEmpty(_helperTypeName.stringValue))
             {
-                m_HelperTypeNameIndex = helperTypeNameList.IndexOf(m_HelperTypeName.stringValue);
-                if (m_HelperTypeNameIndex <= 0)
+                _helperTypeNameIndex = helperTypeNameList.IndexOf(_helperTypeName.stringValue);
+                if (_helperTypeNameIndex <= 0)
                 {
-                    m_HelperTypeNameIndex = 0;
-                    m_HelperTypeName.stringValue = null;
+                    _helperTypeNameIndex = 0;
+                    _helperTypeName.stringValue = null;
                 }
             }
         }

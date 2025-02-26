@@ -7,7 +7,7 @@ namespace ZeroFramework.Editor
     [CustomEditor(typeof(GameFrameworkConfig))]
     public sealed partial class GameFrameworkConfigInspector : GameFrameworkInspector
     {
-        private readonly GameFrameworkLinkedList<Action> m_InspectorFunc =
+        private readonly GameFrameworkLinkedList<Action> _inspectorFunc =
             new GameFrameworkLinkedList<Action>();
 
         private readonly GameFrameworkLinkedList<Action> _enableFunc =
@@ -20,7 +20,7 @@ namespace ZeroFramework.Editor
         {
             base.OnInspectorGUI();
             serializedObject.Update();
-            foreach (var item in m_InspectorFunc)
+            foreach (var item in _inspectorFunc)
             {
                 item.Invoke();
                 EditorGUILayout.Space(20);

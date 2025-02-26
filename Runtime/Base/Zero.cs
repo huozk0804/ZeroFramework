@@ -120,7 +120,7 @@ namespace ZeroFramework
             NeverSleep = GameFrameworkConfig.Instance.m_NeverSleep;
 
             //引用池设置处理
-            var enableStrictCheck = GameFrameworkConfig.Instance.m_EnableStrictCheck;
+            var enableStrictCheck = GameFrameworkConfig.Instance.enableStrictCheck;
             switch (enableStrictCheck)
             {
                 case ReferenceStrictCheckType.AlwaysEnable:
@@ -143,7 +143,7 @@ namespace ZeroFramework
             InitJsonHelper();
             InitCompressionHelper();
 
-            var debuggerType = GameFrameworkConfig.Instance.m_ActiveWindow;
+            var debuggerType = GameFrameworkConfig.Instance.activeWindow;
             if (debuggerType != DebuggerActiveWindowType.AlwaysClose)
             {
                 gameObject.AddComponent<DebuggerComponent>();

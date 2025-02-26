@@ -1,38 +1,37 @@
 using UnityEditor;
-using UnityEngine;
 
 namespace ZeroFramework.Editor
 {
     public sealed partial class GameFrameworkConfigInspector : GameFrameworkInspector
     {
-        private SerializedProperty m_Skin = null;
-        private SerializedProperty m_ActiveWindow = null;
-        private SerializedProperty m_ShowFullWindow = null;
-        private SerializedProperty m_ConsoleWindow = null;
+        private SerializedProperty _skin = null;
+        private SerializedProperty _activeWindow = null;
+        private SerializedProperty _showFullWindow = null;
+        private SerializedProperty _consoleWindow = null;
 
         [InspectorConfigInit]
         void DebugConsoleInspectorInit()
         {
             _enableFunc.AddLast(OnDebuggerEnable);
-            m_InspectorFunc.AddLast(OnDebuggerInspectorGUI);
+            _inspectorFunc.AddLast(OnDebuggerInspectorGUI);
             _completeFunc.AddLast(OnDebuggerComplete);
         }
 
         void OnDebuggerEnable()
         {
-            m_Skin = serializedObject.FindProperty("m_Skin");
-            m_ActiveWindow = serializedObject.FindProperty("m_ActiveWindow");
-            m_ShowFullWindow = serializedObject.FindProperty("m_ShowFullWindow");
-            m_ConsoleWindow = serializedObject.FindProperty("m_ConsoleWindow");
+            _skin = serializedObject.FindProperty("skin");
+            _activeWindow = serializedObject.FindProperty("activeWindow");
+            _showFullWindow = serializedObject.FindProperty("showFullWindow");
+            _consoleWindow = serializedObject.FindProperty("consoleWindow");
         }
 
         void OnDebuggerInspectorGUI()
         {
             EditorGUILayout.LabelField("Debugger", EditorStyles.boldLabel);
-            EditorGUILayout.PropertyField(m_Skin);
-            EditorGUILayout.PropertyField(m_ActiveWindow);
-            EditorGUILayout.PropertyField(m_ShowFullWindow);
-            EditorGUILayout.PropertyField(m_ConsoleWindow, true);
+            EditorGUILayout.PropertyField(_skin);
+            EditorGUILayout.PropertyField(_activeWindow);
+            EditorGUILayout.PropertyField(_showFullWindow);
+            EditorGUILayout.PropertyField(_consoleWindow, true);
         }
 
         void OnDebuggerComplete()

@@ -30,8 +30,8 @@ namespace ZeroFramework.Config
             m_DataProvider = new DataProvider<IConfigManager>(this);
             m_ConfigHelper = null;
 
-            ConfigHelperBase configHelper = Helper.CreateHelper(GameFrameworkConfig.Instance.m_ConfigHelperTypeName,
-                GameFrameworkConfig.Instance.m_CustomConfigHelper);
+            ConfigHelperBase configHelper = Helper.CreateHelper(GameFrameworkConfig.Instance.configHelperTypeName,
+                GameFrameworkConfig.Instance.configCustomHelper);
             if (configHelper == null)
             {
                 Log.Error("Can not create config helper.");
@@ -41,7 +41,7 @@ namespace ZeroFramework.Config
             SetConfigHelper(configHelper);
             SetDataProviderHelper(configHelper);
 
-            var size = GameFrameworkConfig.Instance.m_ConfigCachedBytesSize;
+            var size = GameFrameworkConfig.Instance.configCachedBytesSize;
             if (size > 0)
             {
                 EnsureCachedBytesSize(size);
@@ -49,8 +49,8 @@ namespace ZeroFramework.Config
             }
 
             //TODO:根据配置选项把两个事件的回掉禁止开启
-            m_EnableLoadConfigUpdateEvent = GameFrameworkConfig.Instance.m_EnableLoadConfigUpdateEvent;
-            m_EnableLoadConfigDependencyAssetEvent = GameFrameworkConfig.Instance.m_EnableLoadConfigDependencyAssetEvent;
+            m_EnableLoadConfigUpdateEvent = GameFrameworkConfig.Instance.enableLoadConfigUpdateEvent;
+            m_EnableLoadConfigDependencyAssetEvent = GameFrameworkConfig.Instance.enableLoadConfigDependencyAssetEvent;
         }
 
         /// <summary>

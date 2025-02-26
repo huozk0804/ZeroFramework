@@ -5,51 +5,52 @@ namespace ZeroFramework.Editor
 {
     public sealed partial class GameFrameworkConfigInspector : GameFrameworkInspector
     {
-        private SerializedProperty m_EnableShowEntityUpdateEvent = null;
-        private SerializedProperty m_EnableShowEntityDependencyAssetEvent = null;
-        private SerializedProperty m_EntityGroups = null;
-        private HelperInfo<EntityHelperBase> m_EntityHelperInfo = new HelperInfo<EntityHelperBase>("Entity");
-        private HelperInfo<EntityGroupHelperBase> m_EntityGroupHelperInfo = new HelperInfo<EntityGroupHelperBase>("EntityGroup");
+        private SerializedProperty _enableShowEntityUpdateEvent = null;
+        private SerializedProperty _enableShowEntityDependencyAssetEvent = null;
+        private SerializedProperty _entityGroups = null;
+        private readonly HelperInfo<EntityHelperBase> _entityHelperInfo = new HelperInfo<EntityHelperBase>("entity");
+
+        private readonly HelperInfo<EntityGroupHelperBase> _entityGroupHelperInfo =
+            new HelperInfo<EntityGroupHelperBase>("entityGroup");
 
         [InspectorConfigInit]
         void EntityInspectorInit()
         {
             _enableFunc.AddLast(OnEntityEnable);
-            m_InspectorFunc.AddLast(OnEntityInspectorGUI);
+            _inspectorFunc.AddLast(OnEntityInspectorGUI);
             _completeFunc.AddLast(OnEntityComplete);
         }
 
         void OnEntityInspectorGUI()
         {
-            //EntityComponent t = (EntityComponent)target;
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
             {
                 EditorGUILayout.LabelField("Entity", EditorStyles.boldLabel);
-                EditorGUILayout.PropertyField(m_EnableShowEntityUpdateEvent);
-                EditorGUILayout.PropertyField(m_EnableShowEntityDependencyAssetEvent);
-                m_EntityHelperInfo.Draw();
-                m_EntityGroupHelperInfo.Draw();
-                EditorGUILayout.PropertyField(m_EntityGroups, true);
+                EditorGUILayout.PropertyField(_enableShowEntityUpdateEvent);
+                EditorGUILayout.PropertyField(_enableShowEntityDependencyAssetEvent);
+                _entityHelperInfo.Draw();
+                _entityGroupHelperInfo.Draw();
+                EditorGUILayout.PropertyField(_entityGroups, true);
             }
             EditorGUI.EndDisabledGroup();
         }
 
         void OnEntityEnable()
         {
-            m_EnableShowEntityUpdateEvent = serializedObject.FindProperty("m_EnableShowEntityUpdateEvent");
-            m_EnableShowEntityDependencyAssetEvent =
-                serializedObject.FindProperty("m_EnableShowEntityDependencyAssetEvent");
-            m_EntityGroups = serializedObject.FindProperty("m_EntityGroups");
-            m_EntityHelperInfo.Init(serializedObject);
-            m_EntityGroupHelperInfo.Init(serializedObject);
-            m_EntityHelperInfo.Refresh();
-            m_EntityGroupHelperInfo.Refresh();
+            _enableShowEntityUpdateEvent = serializedObject.FindProperty("enableShowEntityUpdateEvent");
+            _enableShowEntityDependencyAssetEvent =
+                serializedObject.FindProperty("enableShowEntityDependencyAssetEvent");
+            _entityGroups = serializedObject.FindProperty("entityGroups");
+            _entityHelperInfo.Init(serializedObject);
+            _entityGroupHelperInfo.Init(serializedObject);
+            _entityHelperInfo.Refresh();
+            _entityGroupHelperInfo.Refresh();
         }
 
         void OnEntityComplete()
         {
-            m_EntityGroupHelperInfo.Refresh();
-            m_EntityHelperInfo.Refresh();
+            _entityGroupHelperInfo.Refresh();
+            _entityHelperInfo.Refresh();
         }
     }
 }

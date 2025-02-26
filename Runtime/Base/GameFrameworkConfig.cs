@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 using ZeroFramework.Config;
 using ZeroFramework.Debugger;
 using ZeroFramework.Download;
@@ -31,131 +32,136 @@ namespace ZeroFramework
         [SerializeField] public string[] m_RuntimeAssemblyNames;
         [SerializeField] public string[] m_RuntimeOrEditorAssemblyNames;
 
-        //Config
-        [SerializeField] public bool m_EnableLoadConfigUpdateEvent = false;
-        [SerializeField] public bool m_EnableLoadConfigDependencyAssetEvent = false;
-        [SerializeField] public string m_ConfigHelperTypeName = "ZeroFramework.DefaultConfigHelper";
-        [SerializeField] public ConfigHelperBase m_CustomConfigHelper = null;
-        [SerializeField] public int m_ConfigCachedBytesSize = 0;
-
-        //Debugger
-        [SerializeField] public GUISkin m_Skin = null;
-        [SerializeField] public DebuggerActiveWindowType m_ActiveWindow = DebuggerActiveWindowType.AlwaysOpen;
-        [SerializeField] public bool m_ShowFullWindow = false;
-        [SerializeField] public ConsoleWindow m_ConsoleWindow = new ConsoleWindow();
-
         //Download
-        [SerializeField]
-        public string m_DownloadAgentHelperTypeName = "ZeroFramework.UnityWebRequestDownloadAgentHelper";
+        public string downloadAgentHelperTypeName = "ZeroFramework.UnityWebRequestDownloadAgentHelper";
+        public DownloadAgentHelperBase downloadAgentCustomHelper = null;
+        public int downloadAgentHelperCount = 3;
+        public float downloadTimeout = 30f;
+        public int flushSize = 1024 * 1024;
 
-        [SerializeField] public DownloadAgentHelperBase m_CustomDownloadAgentHelper = null;
-        [SerializeField] public int m_DownloadAgentHelperCount = 3;
-        [SerializeField] public float m_DownloadTimeout = 30f;
-        [SerializeField] public int m_FlushSize = 1024 * 1024;
+        //ReferencePool
+        public ReferenceStrictCheckType enableStrictCheck = ReferenceStrictCheckType.AlwaysEnable;
 
-        //Entity
-        [SerializeField] public bool m_EnableShowEntityUpdateEvent = false;
-        [SerializeField] public bool m_EnableShowEntityDependencyAssetEvent = false;
-        [SerializeField] public string m_EntityHelperTypeName = "ZeroFramework.DefaultEntityHelper";
-        [SerializeField] public EntityHelperBase m_CustomEntityHelper = null;
-        [SerializeField] public string m_EntityGroupHelperTypeName = "ZeroFramework.DefaultEntityGroupHelper";
-        [SerializeField] public EntityGroupHelperBase m_CustomEntityGroupHelper = null;
-        [SerializeField] public EntityGroup[] m_EntityGroups = null;
+        //WebRequest
+        public string webRequestAgentHelperTypeName = "ZeroFramework.WebRequest.UnityWebRequestAgentHelper";
+        public WebRequestAgentHelperBase webRequestAgentCustomHelper = null;
+        public int webRequestAgentHelperCount = 1;
+        public float webRequestTimeout = 30f;
+
+        #region com.Config
+
+        public bool enableLoadConfigUpdateEvent = false;
+        public bool enableLoadConfigDependencyAssetEvent = false;
+        public string configHelperTypeName = "ZeroFramework.DefaultConfigHelper";
+        public ConfigHelperBase configCustomHelper = null;
+        public int configCachedBytesSize = 0;
+
+        #endregion
+
+        #region com.Debugger
+
+        public GUISkin skin = null;
+        public DebuggerActiveWindowType activeWindow = DebuggerActiveWindowType.AlwaysOpen;
+        public bool showFullWindow = false;
+        public ConsoleWindow consoleWindow = new ConsoleWindow();
+
+        #endregion
+
+        #region com.Entity
+
+        public bool enableShowEntityUpdateEvent = false;
+        public bool enableShowEntityDependencyAssetEvent = false;
+        public string entityHelperTypeName = "ZeroFramework.DefaultEntityHelper";
+        public EntityHelperBase entityCustomHelper = null;
+        public string entityGroupHelperTypeName = "ZeroFramework.DefaultEntityGroupHelper";
+        public EntityGroupHelperBase entityGroupCustomHelper = null;
+        public EntityGroup[] entityGroups = null;
 
         [Serializable]
         public sealed class EntityGroup
         {
-            [SerializeField] private string m_Name = null;
-            [SerializeField] private float m_InstanceAutoReleaseInterval = 60f;
-            [SerializeField] private int m_InstanceCapacity = 16;
-            [SerializeField] private float m_InstanceExpireTime = 60f;
-            [SerializeField] private int m_InstancePriority = 0;
-
-            public string Name => m_Name;
-            public float InstanceAutoReleaseInterval => m_InstanceAutoReleaseInterval;
-            public int InstanceCapacity => m_InstanceCapacity;
-            public float InstanceExpireTime => m_InstanceExpireTime;
-            public int InstancePriority => m_InstancePriority;
+            public string name = null;
+            public float instanceAutoReleaseInterval = 60f;
+            public int instanceCapacity = 16;
+            public float instanceExpireTime = 60f;
+            public int instancePriority = 0;
         }
-        
-        //Localization
-        [SerializeField] public bool m_EnableLoadDictionaryUpdateEvent = false;
-        [SerializeField] public bool m_EnableLoadDictionaryDependencyAssetEvent = false;
 
-        [SerializeField]
-        public string m_LocalizationHelperTypeName = "ZeroFramework.Localization.DefaultLocalizationHelper";
+        #endregion
 
-        [SerializeField] public LocalizationHelperBase m_CustomLocalizationHelper = null;
-        [SerializeField] public int m_LocalizationCachedBytesSize = 0;
+        #region com.Localization
 
-        //ReferencePool
-        [SerializeField] public ReferenceStrictCheckType m_EnableStrictCheck = ReferenceStrictCheckType.AlwaysEnable;
+        public bool enableLoadDictionaryUpdateEvent = false;
+        public bool enableLoadDictionaryDependencyAssetEvent = false;
+        public string localizationHelperTypeName = "ZeroFramework.Localization.DefaultLocalizationHelper";
+        public LocalizationHelperBase localizationCustomHelper = null;
+        public int localizationCachedBytesSize = 0;
 
-        //Scenes
-        [SerializeField] public bool m_EnableLoadSceneUpdateEvent = true;
-        [SerializeField] public bool m_EnableLoadSceneDependencyAssetEvent = true;
+        #endregion
 
-        //Setting
-        [SerializeField] public string m_SettingHelperTypeName = "ZeroFramework.Setting.DefaultSettingHelper";
-        [SerializeField] public SettingHelperBase m_CustomSettingHelper = null;
+        #region com.Scenes
 
-        //Sound
-        [SerializeField] public bool m_EnablePlaySoundUpdateEvent = false;
-        [SerializeField] public bool m_EnablePlaySoundDependencyAssetEvent = false;
-        [SerializeField] public AudioMixer m_AudioMixer = null;
-        [SerializeField] public string m_SoundHelperTypeName = "ZeroFramework.Sound.DefaultSoundHelper";
-        [SerializeField] public SoundHelperBase m_CustomSoundHelper = null;
-        [SerializeField] public string m_SoundGroupHelperTypeName = "ZeroFramework.Sound.DefaultSoundGroupHelper";
-        [SerializeField] public SoundGroupHelperBase m_CustomSoundGroupHelper = null;
-        [SerializeField] public string m_SoundAgentHelperTypeName = "ZeroFramework.Sound.DefaultSoundAgentHelper";
-        [SerializeField] public SoundAgentHelperBase m_CustomSoundAgentHelper = null;
-        [SerializeField] public SoundGroup[] m_SoundGroups = null;
+        public bool enableLoadSceneUpdateEvent = true;
+        public bool enableLoadSceneDependencyAssetEvent = true;
+
+        #endregion
+
+        #region com.Setting
+
+        public string settingHelperTypeName = "ZeroFramework.Setting.DefaultSettingHelper";
+        public SettingHelperBase settingCustomHelper = null;
+
+        #endregion
+
+        #region com.Sound
+
+        public bool enablePlaySoundUpdateEvent = false;
+        public bool enablePlaySoundDependencyAssetEvent = false;
+        public AudioMixer audioMixer = null;
+        public string soundHelperTypeName = "ZeroFramework.Sound.DefaultSoundHelper";
+        public SoundHelperBase soundCustomHelper = null;
+        public string soundGroupHelperTypeName = "ZeroFramework.Sound.DefaultSoundGroupHelper";
+        public SoundGroupHelperBase soundGroupCustomHelper = null;
+        public string soundAgentHelperTypeName = "ZeroFramework.Sound.DefaultSoundAgentHelper";
+        public SoundAgentHelperBase soundAgentCustomHelper = null;
+        public SoundGroup[] soundGroups = null;
 
         [Serializable]
         public sealed class SoundGroup
         {
-            [SerializeField] private string m_Name = null;
-            [SerializeField] private bool m_AvoidBeingReplacedBySamePriority = false;
-            [SerializeField] private bool m_Mute = false;
-            [SerializeField, Range(0f, 1f)] private float m_Volume = 1f;
-            [SerializeField] private int m_AgentHelperCount = 1;
-
-            public string Name => m_Name;
-            public bool AvoidBeingReplacedBySamePriority => m_AvoidBeingReplacedBySamePriority;
-            public bool Mute => m_Mute;
-            public float Volume => m_Volume;
-            public int AgentHelperCount => m_AgentHelperCount;
+            public string name = null;
+            public bool avoidBeingReplacedBySamePriority = false;
+            public bool mute = false;
+            [Range(0f, 1f)] public float volume = 1f;
+            public int agentHelperCount = 1;
         }
 
-        //UI
-        [SerializeField] public bool m_EnableOpenUIFormSuccessEvent = true;
-        [SerializeField] public bool m_EnableOpenUIFormFailureEvent = true;
-        [SerializeField] public bool m_EnableOpenUIFormUpdateEvent = false;
-        [SerializeField] public bool m_EnableOpenUIFormDependencyAssetEvent = false;
-        [SerializeField] public bool m_EnableCloseUIFormCompleteEvent = true;
-        [SerializeField] public float m_InstanceAutoReleaseInterval = 60f;
-        [SerializeField] public int m_InstanceCapacity = 16;
-        [SerializeField] public float m_InstanceExpireTime = 60f;
-        [SerializeField] public int m_InstancePriority = 0;
-        [SerializeField] public string m_UIFormHelperTypeName = "ZeroFramework.UI.DefaultUIFormHelper";
-        [SerializeField] public UIFormHelperBase m_CustomUIFormHelper = null;
-        [SerializeField] public string m_UIGroupHelperTypeName = "ZeroFramework.UI.DefaultUIGroupHelper";
-        [SerializeField] public UIGroupHelperBase m_CustomUIGroupHelper = null;
-        [SerializeField] public UIGroup[] m_UIGroups = null;
+        #endregion
+
+        #region com.UI
+
+        public bool enableOpenUIFormSuccessEvent = true;
+        public bool enableOpenUIFormFailureEvent = true;
+        public bool enableOpenUIFormUpdateEvent = false;
+        public bool enableOpenUIFormDependencyAssetEvent = false;
+        public bool enableCloseUIFormCompleteEvent = true;
+        public float instanceAutoReleaseInterval = 60f;
+        public int instanceCapacity = 16;
+        public float instanceExpireTime = 60f;
+        public int instancePriority = 0;
+        public string uiFormHelperTypeName = "ZeroFramework.UI.DefaultUIFormHelper";
+        public UIFormHelperBase uiFormCustomHelper = null;
+        public string uiGroupHelperTypeName = "ZeroFramework.UI.DefaultUIGroupHelper";
+        public UIGroupHelperBase uiGroupCustomHelper = null;
+        public UIGroup[] uiGroups = null;
 
         [Serializable]
         public sealed class UIGroup
         {
-            [SerializeField] private string m_Name = null;
-            [SerializeField] private int m_Depth = 0;
-            public string Name => m_Name;
-            public int Depth => m_Depth;
+            public string name = null;
+            public int depth = 0;
         }
 
-        //WebRequest
-        [SerializeField] public string m_WebRequestAgentHelperTypeName = "ZeroFramework.WebRequest.UnityWebRequestAgentHelper";
-        [SerializeField] public WebRequestAgentHelperBase m_CustomWebRequestAgentHelper = null;
-        [SerializeField] public int m_WebRequestAgentHelperCount = 1;
-        [SerializeField] public float m_WebRequestTimeout = 30f;
+        #endregion
     }
 }

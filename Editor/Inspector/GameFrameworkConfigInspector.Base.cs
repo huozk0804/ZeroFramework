@@ -41,7 +41,7 @@ namespace ZeroFramework.Editor
         void BaseInspectorInit()
         {
             _enableFunc.AddFirst(OnBaseEnable);
-            m_InspectorFunc.AddFirst(OnBaseInspectorGUI);
+            _inspectorFunc.AddFirst(OnBaseInspectorGUI);
             _completeFunc.AddFirst(OnBaseComplete);
         }
 

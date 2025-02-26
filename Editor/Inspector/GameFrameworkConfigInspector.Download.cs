@@ -5,18 +5,18 @@ namespace ZeroFramework.Editor
 {
     public sealed partial class GameFrameworkConfigInspector : GameFrameworkInspector
     {
-        private SerializedProperty m_DownloadAgentHelperCount = null;
-        private SerializedProperty m_DownloadTimeout = null;
-        private SerializedProperty m_FlushSize = null;
+        private SerializedProperty _downloadAgentHelperCount = null;
+        private SerializedProperty _downloadTimeout = null;
+        private SerializedProperty _flushSize = null;
 
-        private HelperInfo<DownloadAgentHelperBase> m_DownloadAgentHelperInfo =
-            new HelperInfo<DownloadAgentHelperBase>("DownloadAgent");
+        private readonly HelperInfo<DownloadAgentHelperBase> _downloadAgentHelperInfo =
+            new HelperInfo<DownloadAgentHelperBase>("downloadAgent");
 
         [InspectorConfigInit]
         void DownloadInspectorInit()
         {
             _enableFunc.AddLast(OnDownloadEnable);
-            m_InspectorFunc.AddLast(OnDownloadInspectorGUI);
+            _inspectorFunc.AddLast(OnDownloadInspectorGUI);
             _completeFunc.AddLast(OnDownloadComplete);
         }
 
@@ -25,51 +25,28 @@ namespace ZeroFramework.Editor
             EditorGUILayout.LabelField("Download", EditorStyles.boldLabel);
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
             {
-                m_DownloadAgentHelperInfo.Draw();
-                m_DownloadAgentHelperCount.intValue = EditorGUILayout.IntSlider("Download Agent Helper Count",
-                    m_DownloadAgentHelperCount.intValue, 1, 16);
+                _downloadAgentHelperInfo.Draw();
+                _downloadAgentHelperCount.intValue = EditorGUILayout.IntSlider("Download Agent Helper Count",
+                    _downloadAgentHelperCount.intValue, 1, 16);
             }
             EditorGUI.EndDisabledGroup();
 
-            float timeout = EditorGUILayout.Slider("Timeout", m_DownloadTimeout.floatValue, 0f, 120f);
-            if (timeout != m_DownloadTimeout.floatValue)
-            {
-                if (EditorApplication.isPlaying)
-                {
-                    //t.Timeout = timeout;
-                }
-                else
-                {
-                    m_DownloadTimeout.floatValue = timeout;
-                }
-            }
-
-            int flushSize = EditorGUILayout.DelayedIntField("Flush Size", m_FlushSize.intValue);
-            if (flushSize != m_FlushSize.intValue)
-            {
-                if (EditorApplication.isPlaying)
-                {
-                    //t.FlushSize = flushSize;
-                }
-                else
-                {
-                    m_FlushSize.intValue = flushSize;
-                }
-            }
+            _downloadTimeout.floatValue = EditorGUILayout.Slider("Timeout", _downloadTimeout.floatValue, 0f, 120f);
+            _flushSize.intValue = EditorGUILayout.DelayedIntField("Flush Size", _flushSize.intValue);
         }
 
         void OnDownloadEnable()
         {
-            m_DownloadAgentHelperCount = serializedObject.FindProperty("m_DownloadAgentHelperCount");
-            m_DownloadTimeout = serializedObject.FindProperty("m_DownloadTimeout");
-            m_FlushSize = serializedObject.FindProperty("m_FlushSize");
-            m_DownloadAgentHelperInfo.Init(serializedObject);
-            m_DownloadAgentHelperInfo.Refresh();
+            _downloadAgentHelperCount = serializedObject.FindProperty("downloadAgentHelperCount");
+            _downloadTimeout = serializedObject.FindProperty("downloadTimeout");
+            _flushSize = serializedObject.FindProperty("flushSize");
+            _downloadAgentHelperInfo.Init(serializedObject);
+            _downloadAgentHelperInfo.Refresh();
         }
 
         void OnDownloadComplete()
         {
-            m_DownloadAgentHelperInfo.Refresh();
+            _downloadAgentHelperInfo.Refresh();
         }
     }
 }

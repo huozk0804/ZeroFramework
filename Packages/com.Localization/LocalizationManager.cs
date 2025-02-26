@@ -30,8 +30,8 @@ namespace ZeroFramework.Localization
             m_LocalizationHelper = null;
             m_Language = Language.Unspecified;
 
-            var typeName = GameFrameworkConfig.Instance.m_LocalizationHelperTypeName;
-            var helperBase = GameFrameworkConfig.Instance.m_CustomLocalizationHelper;
+            var typeName = GameFrameworkConfig.Instance.localizationHelperTypeName;
+            var helperBase = GameFrameworkConfig.Instance.localizationCustomHelper;
             LocalizationHelperBase localizationHelper = Helper.CreateHelper(typeName, helperBase);
             if (localizationHelper == null)
             {
@@ -43,7 +43,7 @@ namespace ZeroFramework.Localization
             SetLocalizationHelper(localizationHelper);
             var m_EditorLanguage = GameFrameworkConfig.Instance.m_EditorLanguage;
             Language = m_EditorLanguage != Language.Unspecified ? m_EditorLanguage : SystemLanguage;
-            var m_CachedBytesSize = GameFrameworkConfig.Instance.m_LocalizationCachedBytesSize;
+            var m_CachedBytesSize = GameFrameworkConfig.Instance.localizationCachedBytesSize;
             if (m_CachedBytesSize > 0)
             {
                 EnsureCachedBytesSize(m_CachedBytesSize);

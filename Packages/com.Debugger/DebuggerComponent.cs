@@ -142,10 +142,10 @@ namespace ZeroFramework.Debugger
                 return;
             }
 
-			m_Skin = GameFrameworkConfig.Instance.m_Skin;
-			m_ActiveWindow = GameFrameworkConfig.Instance.m_ActiveWindow;
-			m_ShowFullWindow = GameFrameworkConfig.Instance.m_ShowFullWindow;
-			m_ConsoleWindow = GameFrameworkConfig.Instance.m_ConsoleWindow;
+			m_Skin = GameFrameworkConfig.Instance.skin;
+			m_ActiveWindow = GameFrameworkConfig.Instance.activeWindow;
+			m_ShowFullWindow = GameFrameworkConfig.Instance.showFullWindow;
+			m_ConsoleWindow = GameFrameworkConfig.Instance.consoleWindow;
 
 			switch (m_ActiveWindow) {
 				case DebuggerActiveWindowType.AlwaysOpen:

@@ -5,16 +5,16 @@ namespace ZeroFramework.Editor
 {
     public sealed partial class GameFrameworkConfigInspector : GameFrameworkInspector
     {
-        private SerializedProperty m_EnableLoadConfigUpdateEvent = null;
-        private SerializedProperty m_EnableLoadConfigDependencyAssetEvent = null;
-        private SerializedProperty m_ConfigCachedBytesSize = null;
-        private HelperInfo<ConfigHelperBase> m_ConfigHelperInfo = new HelperInfo<ConfigHelperBase>("Config");
+        private SerializedProperty _enableLoadConfigUpdateEvent = null;
+        private SerializedProperty _enableLoadConfigDependencyAssetEvent = null;
+        private SerializedProperty _configCachedBytesSize = null;
+        private readonly HelperInfo<ConfigHelperBase> _configHelperInfo = new HelperInfo<ConfigHelperBase>("config");
 
         [InspectorConfigInit]
         void ConfigInspectorInit()
         {
             _enableFunc.AddLast(OnConfigEnable);
-            m_InspectorFunc.AddLast(OnConfigInspectorGUI);
+            _inspectorFunc.AddLast(OnConfigInspectorGUI);
             _completeFunc.AddLast(OnConfigComplete);
         }
 
@@ -26,20 +26,14 @@ namespace ZeroFramework.Editor
                 EditorGUILayout.LabelField("Config Module", EditorStyles.boldLabel);
                 EditorGUILayout.BeginVertical("box");
                 {
-                    EditorGUILayout.PropertyField(m_EnableLoadConfigUpdateEvent);
-                    EditorGUILayout.PropertyField(m_EnableLoadConfigDependencyAssetEvent);
-                    m_ConfigHelperInfo.Draw();
-                    EditorGUILayout.PropertyField(m_ConfigCachedBytesSize);
+                    EditorGUILayout.PropertyField(_enableLoadConfigUpdateEvent);
+                    EditorGUILayout.PropertyField(_enableLoadConfigDependencyAssetEvent);
+                    _configHelperInfo.Draw();
+                    EditorGUILayout.PropertyField(_configCachedBytesSize);
                 }
                 EditorGUILayout.EndVertical();
             }
             EditorGUI.EndDisabledGroup();
-
-            // if (EditorApplication.isPlaying && IsPrefabInHierarchy(t.gameObject))
-            // {
-            //     EditorGUILayout.LabelField("Config Count", t.Count.ToString());
-            //     EditorGUILayout.LabelField("Cached Bytes Size", t.CachedBytesSize.ToString());
-            // }
 
             serializedObject.ApplyModifiedProperties();
             Repaint();
@@ -47,17 +41,17 @@ namespace ZeroFramework.Editor
 
         void OnConfigEnable()
         {
-            m_EnableLoadConfigUpdateEvent = serializedObject.FindProperty("m_EnableLoadConfigUpdateEvent");
-            m_EnableLoadConfigDependencyAssetEvent =
-                serializedObject.FindProperty("m_EnableLoadConfigDependencyAssetEvent");
-            m_ConfigCachedBytesSize = serializedObject.FindProperty("m_ConfigCachedBytesSize");
-            m_ConfigHelperInfo.Init(serializedObject);
-            m_ConfigHelperInfo.Refresh();
+            _enableLoadConfigUpdateEvent = serializedObject.FindProperty("enableLoadConfigUpdateEvent");
+            _enableLoadConfigDependencyAssetEvent =
+                serializedObject.FindProperty("enableLoadConfigDependencyAssetEvent");
+            _configCachedBytesSize = serializedObject.FindProperty("configCachedBytesSize");
+            _configHelperInfo.Init(serializedObject);
+            _configHelperInfo.Refresh();
         }
 
         void OnConfigComplete()
         {
-            m_ConfigHelperInfo.Refresh();
+            _configHelperInfo.Refresh();
         }
     }
 }

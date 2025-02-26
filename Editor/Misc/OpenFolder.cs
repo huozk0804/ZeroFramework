@@ -19,7 +19,7 @@ namespace ZeroFramework.Editor
         /// <summary>
         /// 打开 Data Path 文件夹。
         /// </summary>
-        [MenuItem(EditorConst.BaseMainPath + "Open Folder/Data Path", false, priority = EditorConst.MenuPriority_Base)]
+        [MenuItem(EditorConst.BaseMainPath + "Open Folder/Data Path", false, priority = EditorConst.MenuPriorityBase)]
         public static void OpenFolderDataPath()
         {
             Execute(Application.dataPath);
@@ -28,7 +28,7 @@ namespace ZeroFramework.Editor
         /// <summary>
         /// 打开 Persistent Data Path 文件夹。
         /// </summary>
-        [MenuItem(EditorConst.BaseMainPath + "Open Folder/Persistent Data Path", false, priority = EditorConst.MenuPriority_Base)]
+        [MenuItem(EditorConst.BaseMainPath + "Open Folder/Persistent Data Path", false, priority = EditorConst.MenuPriorityBase)]
         public static void OpenFolderPersistentDataPath()
         {
             Execute(Application.persistentDataPath);
@@ -37,7 +37,7 @@ namespace ZeroFramework.Editor
         /// <summary>
         /// 打开 Streaming Assets Path 文件夹。
         /// </summary>
-        [MenuItem(EditorConst.BaseMainPath + "Open Folder/Streaming Assets Path", false, priority = EditorConst.MenuPriority_Base)]
+        [MenuItem(EditorConst.BaseMainPath + "Open Folder/Streaming Assets Path", false, priority = EditorConst.MenuPriorityBase)]
         public static void OpenFolderStreamingAssetsPath()
         {
             Execute(Application.streamingAssetsPath);
@@ -46,7 +46,7 @@ namespace ZeroFramework.Editor
         /// <summary>
         /// 打开 Temporary Cache Path 文件夹。
         /// </summary>
-        [MenuItem(EditorConst.BaseMainPath + "Open Folder/Temporary Cache Path", false, priority = EditorConst.MenuPriority_Base)]
+        [MenuItem(EditorConst.BaseMainPath + "Open Folder/Temporary Cache Path", false, priority = EditorConst.MenuPriorityBase)]
         public static void OpenFolderTemporaryCachePath()
         {
             Execute(Application.temporaryCachePath);
@@ -57,7 +57,7 @@ namespace ZeroFramework.Editor
         /// <summary>
         /// 打开 Console Log Path 文件夹。
         /// </summary>
-        [MenuItem(EditorConst.BaseMainPath + "Open Folder/Console Log Path", false, priority = EditorConst.MenuPriority_Base)]
+        [MenuItem(EditorConst.BaseMainPath + "Open Folder/Console Log Path", false, priority = EditorConst.MenuPriorityBase)]
         public static void OpenFolderConsoleLogPath()
         {
             Execute(System.IO.Path.GetDirectoryName(Application.consoleLogPath));

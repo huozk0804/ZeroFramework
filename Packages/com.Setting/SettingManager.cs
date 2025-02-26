@@ -24,8 +24,8 @@ namespace ZeroFramework.Setting
         {
             m_SettingHelper = null;
 
-            var typeName = GameFrameworkConfig.Instance.m_SettingHelperTypeName;
-            var helperBase = GameFrameworkConfig.Instance.m_CustomSettingHelper;
+            var typeName = GameFrameworkConfig.Instance.settingHelperTypeName;
+            var helperBase = GameFrameworkConfig.Instance.settingCustomHelper;
             SettingHelperBase settingHelper = Helper.CreateHelper(typeName, helperBase);
             if (settingHelper == null)
             {
