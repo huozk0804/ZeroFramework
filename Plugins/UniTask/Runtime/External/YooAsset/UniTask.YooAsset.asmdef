@@ -1,0 +1,17 @@
+{
+    "name": "UniTask.YooAsset",
+    "rootNamespace": "",
+    "references": [
+        "GUID:8210a3d1b5d22904fbff539d5ac88908",
+        "GUID:e34a5702dd353724aa315fb8011f08c3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
