@@ -1,8 +1,7 @@
 ﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2024 All rights reserved.
-// Homepage:
-// Feedback: mailto:
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
 namespace ZeroFramework
@@ -16,10 +15,7 @@ namespace ZeroFramework
         /// <summary>
         /// 获取任务。
         /// </summary>
-        T Task
-        {
-            get;
-        }
+        T Task { get; }
 
         /// <summary>
         /// 初始化任务代理。

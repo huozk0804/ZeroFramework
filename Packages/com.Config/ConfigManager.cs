@@ -1,8 +1,7 @@
 ﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2024 All rights reserved.
-// Homepage:
-// Feedback: mailto:
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
 using System;
@@ -47,8 +46,7 @@ namespace ZeroFramework.Config
                 EnsureCachedBytesSize(size);
                 EnsureCachedBytesSize(size);
             }
-
-            //TODO:根据配置选项把两个事件的回掉禁止开启
+            
             m_EnableLoadConfigUpdateEvent = GameFrameworkConfig.Instance.enableLoadConfigUpdateEvent;
             m_EnableLoadConfigDependencyAssetEvent = GameFrameworkConfig.Instance.enableLoadConfigDependencyAssetEvent;
         }
@@ -182,17 +180,6 @@ namespace ZeroFramework.Config
         public void ReadData(string configAssetName, object userData)
         {
             m_DataProvider.ReadData(configAssetName, userData);
-        }
-
-        /// <summary>
-        /// 读取全局配置。
-        /// </summary>
-        /// <param name="configAssetName">全局配置资源名称。</param>
-        /// <param name="priority">加载全局配置资源的优先级。</param>
-        /// <param name="userData">用户自定义数据。</param>
-        public void ReadData(string configAssetName, int priority, object userData)
-        {
-            m_DataProvider.ReadData(configAssetName, priority, userData);
         }
 
         /// <summary>

@@ -1,8 +1,7 @@
 ﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2024 All rights reserved.
-// Homepage:
-// Feedback: mailto:
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
 using System;
@@ -41,7 +40,7 @@ namespace ZeroFramework.Localization
 
             SetDataProviderHelper(localizationHelper);
             SetLocalizationHelper(localizationHelper);
-            var m_EditorLanguage = GameFrameworkConfig.Instance.m_EditorLanguage;
+            var m_EditorLanguage = GameFrameworkConfig.Instance.editorLanguage;
             Language = m_EditorLanguage != Language.Unspecified ? m_EditorLanguage : SystemLanguage;
             var m_CachedBytesSize = GameFrameworkConfig.Instance.localizationCachedBytesSize;
             if (m_CachedBytesSize > 0)
@@ -212,17 +211,6 @@ namespace ZeroFramework.Localization
         public void ReadData(string dictionaryAssetName, object userData)
         {
             m_DataProvider.ReadData(dictionaryAssetName, userData);
-        }
-
-        /// <summary>
-        /// 读取字典。
-        /// </summary>
-        /// <param name="dictionaryAssetName">字典资源名称。</param>
-        /// <param name="priority">加载字典资源的优先级。</param>
-        /// <param name="userData">用户自定义数据。</param>
-        public void ReadData(string dictionaryAssetName, int priority, object userData)
-        {
-            m_DataProvider.ReadData(dictionaryAssetName, priority, userData);
         }
 
         /// <summary>

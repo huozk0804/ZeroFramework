@@ -1,8 +1,7 @@
 ﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2024 All rights reserved.
-// Homepage:
-// Feedback: mailto:
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
 using System;
@@ -18,52 +17,52 @@ namespace ZeroFramework
     /// <typeparam name="T">指定链表的元素类型。</typeparam>
     public sealed class GameFrameworkLinkedList<T> : ICollection<T>, ICollection
     {
-        private readonly LinkedList<T> m_LinkedList;
-        private readonly Queue<LinkedListNode<T>> m_CachedNodes;
+        private readonly LinkedList<T> _linkedList;
+        private readonly Queue<LinkedListNode<T>> _cachedNodes;
 
         /// <summary>
         /// 初始化游戏框架链表类的新实例。
         /// </summary>
         public GameFrameworkLinkedList()
         {
-            m_LinkedList = new LinkedList<T>();
-            m_CachedNodes = new Queue<LinkedListNode<T>>();
+            _linkedList = new LinkedList<T>();
+            _cachedNodes = new Queue<LinkedListNode<T>>();
         }
 
         /// <summary>
         /// 获取链表中实际包含的结点数量。
         /// </summary>
-        public int Count => m_LinkedList.Count;
+        public int Count => _linkedList.Count;
 
         /// <summary>
         /// 获取链表结点缓存数量。
         /// </summary>
-        public int CachedNodeCount => m_CachedNodes.Count;
+        public int CachedNodeCount => _cachedNodes.Count;
 
         /// <summary>
         /// 获取链表的第一个结点。
         /// </summary>
-        public LinkedListNode<T> First => m_LinkedList.First;
+        public LinkedListNode<T> First => _linkedList.First;
 
         /// <summary>
         /// 获取链表的最后一个结点。
         /// </summary>
-        public LinkedListNode<T> Last => m_LinkedList.Last;
+        public LinkedListNode<T> Last => _linkedList.Last;
 
         /// <summary>
         /// 获取一个值，该值指示 ICollection`1 是否为只读。
         /// </summary>
-        public bool IsReadOnly => ((ICollection<T>)m_LinkedList).IsReadOnly;
+        public bool IsReadOnly => ((ICollection<T>)_linkedList).IsReadOnly;
 
         /// <summary>
         /// 获取可用于同步对 ICollection 的访问的对象。
         /// </summary>
-        public object SyncRoot => ((ICollection)m_LinkedList).SyncRoot;
+        public object SyncRoot => ((ICollection)_linkedList).SyncRoot;
 
         /// <summary>
         /// 获取一个值，该值指示是否同步对 ICollection 的访问（线程安全）。
         /// </summary>
-        public bool IsSynchronized => ((ICollection)m_LinkedList).IsSynchronized;
+        public bool IsSynchronized => ((ICollection)_linkedList).IsSynchronized;
 
         /// <summary>
         /// 在链表中指定的现有结点后添加包含指定值的新结点。
@@ -74,7 +73,7 @@ namespace ZeroFramework
         public LinkedListNode<T> AddAfter(LinkedListNode<T> node, T value)
         {
             LinkedListNode<T> newNode = AcquireNode(value);
-            m_LinkedList.AddAfter(node, newNode);
+            _linkedList.AddAfter(node, newNode);
             return newNode;
         }
 
@@ -85,7 +84,7 @@ namespace ZeroFramework
         /// <param name="newNode">指定的新结点。</param>
         public void AddAfter(LinkedListNode<T> node, LinkedListNode<T> newNode)
         {
-            m_LinkedList.AddAfter(node, newNode);
+            _linkedList.AddAfter(node, newNode);
         }
 
         /// <summary>
@@ -97,7 +96,7 @@ namespace ZeroFramework
         public LinkedListNode<T> AddBefore(LinkedListNode<T> node, T value)
         {
             LinkedListNode<T> newNode = AcquireNode(value);
-            m_LinkedList.AddBefore(node, newNode);
+            _linkedList.AddBefore(node, newNode);
             return newNode;
         }
 
@@ -108,7 +107,7 @@ namespace ZeroFramework
         /// <param name="newNode">指定的新结点。</param>
         public void AddBefore(LinkedListNode<T> node, LinkedListNode<T> newNode)
         {
-            m_LinkedList.AddBefore(node, newNode);
+            _linkedList.AddBefore(node, newNode);
         }
 
         /// <summary>
@@ -119,7 +118,7 @@ namespace ZeroFramework
         public LinkedListNode<T> AddFirst(T value)
         {
             LinkedListNode<T> node = AcquireNode(value);
-            m_LinkedList.AddFirst(node);
+            _linkedList.AddFirst(node);
             return node;
         }
 
@@ -129,7 +128,7 @@ namespace ZeroFramework
         /// <param name="node">指定的新结点。</param>
         public void AddFirst(LinkedListNode<T> node)
         {
-            m_LinkedList.AddFirst(node);
+            _linkedList.AddFirst(node);
         }
 
         /// <summary>
@@ -140,7 +139,7 @@ namespace ZeroFramework
         public LinkedListNode<T> AddLast(T value)
         {
             LinkedListNode<T> node = AcquireNode(value);
-            m_LinkedList.AddLast(node);
+            _linkedList.AddLast(node);
             return node;
         }
 
@@ -150,7 +149,7 @@ namespace ZeroFramework
         /// <param name="node">指定的新结点。</param>
         public void AddLast(LinkedListNode<T> node)
         {
-            m_LinkedList.AddLast(node);
+            _linkedList.AddLast(node);
         }
 
         /// <summary>
@@ -158,14 +157,14 @@ namespace ZeroFramework
         /// </summary>
         public void Clear()
         {
-            LinkedListNode<T> current = m_LinkedList.First;
+            LinkedListNode<T> current = _linkedList.First;
             while (current != null)
             {
                 ReleaseNode(current);
                 current = current.Next;
             }
 
-            m_LinkedList.Clear();
+            _linkedList.Clear();
         }
 
         /// <summary>
@@ -173,7 +172,7 @@ namespace ZeroFramework
         /// </summary>
         public void ClearCachedNodes()
         {
-            m_CachedNodes.Clear();
+            _cachedNodes.Clear();
         }
 
         /// <summary>
@@ -183,7 +182,7 @@ namespace ZeroFramework
         /// <returns>某值是否在链表中。</returns>
         public bool Contains(T value)
         {
-            return m_LinkedList.Contains(value);
+            return _linkedList.Contains(value);
         }
 
         /// <summary>
@@ -193,7 +192,7 @@ namespace ZeroFramework
         /// <param name="index">array 中从零开始的索引，从此处开始复制。</param>
         public void CopyTo(T[] array, int index)
         {
-            m_LinkedList.CopyTo(array, index);
+            _linkedList.CopyTo(array, index);
         }
 
         /// <summary>
@@ -203,7 +202,7 @@ namespace ZeroFramework
         /// <param name="index">array 中从零开始的索引，从此处开始复制。</param>
         public void CopyTo(Array array, int index)
         {
-            ((ICollection)m_LinkedList).CopyTo(array, index);
+            ((ICollection)_linkedList).CopyTo(array, index);
         }
 
         /// <summary>
@@ -213,7 +212,7 @@ namespace ZeroFramework
         /// <returns>包含指定值的第一个结点。</returns>
         public LinkedListNode<T> Find(T value)
         {
-            return m_LinkedList.Find(value);
+            return _linkedList.Find(value);
         }
 
         /// <summary>
@@ -223,7 +222,7 @@ namespace ZeroFramework
         /// <returns>包含指定值的最后一个结点。</returns>
         public LinkedListNode<T> FindLast(T value)
         {
-            return m_LinkedList.FindLast(value);
+            return _linkedList.FindLast(value);
         }
 
         /// <summary>
@@ -233,10 +232,10 @@ namespace ZeroFramework
         /// <returns>是否移除成功。</returns>
         public bool Remove(T value)
         {
-            LinkedListNode<T> node = m_LinkedList.Find(value);
+            LinkedListNode<T> node = _linkedList.Find(value);
             if (node != null)
             {
-                m_LinkedList.Remove(node);
+                _linkedList.Remove(node);
                 ReleaseNode(node);
                 return true;
             }
@@ -250,7 +249,7 @@ namespace ZeroFramework
         /// <param name="node">指定的结点。</param>
         public void Remove(LinkedListNode<T> node)
         {
-            m_LinkedList.Remove(node);
+            _linkedList.Remove(node);
             ReleaseNode(node);
         }
 
@@ -259,13 +258,13 @@ namespace ZeroFramework
         /// </summary>
         public void RemoveFirst()
         {
-            LinkedListNode<T> first = m_LinkedList.First;
+            LinkedListNode<T> first = _linkedList.First;
             if (first == null)
             {
                 throw new GameFrameworkException("First is invalid.");
             }
 
-            m_LinkedList.RemoveFirst();
+            _linkedList.RemoveFirst();
             ReleaseNode(first);
         }
 
@@ -274,13 +273,13 @@ namespace ZeroFramework
         /// </summary>
         public void RemoveLast()
         {
-            LinkedListNode<T> last = m_LinkedList.Last;
+            LinkedListNode<T> last = _linkedList.Last;
             if (last == null)
             {
                 throw new GameFrameworkException("Last is invalid.");
             }
 
-            m_LinkedList.RemoveLast();
+            _linkedList.RemoveLast();
             ReleaseNode(last);
         }
 
@@ -290,15 +289,15 @@ namespace ZeroFramework
         /// <returns>循环访问集合的枚举数。</returns>
         public Enumerator GetEnumerator()
         {
-            return new Enumerator(m_LinkedList);
+            return new Enumerator(_linkedList);
         }
 
         private LinkedListNode<T> AcquireNode(T value)
         {
             LinkedListNode<T> node = null;
-            if (m_CachedNodes.Count > 0)
+            if (_cachedNodes.Count > 0)
             {
-                node = m_CachedNodes.Dequeue();
+                node = _cachedNodes.Dequeue();
                 node.Value = value;
             }
             else
@@ -312,7 +311,7 @@ namespace ZeroFramework
         private void ReleaseNode(LinkedListNode<T> node)
         {
             node.Value = default(T);
-            m_CachedNodes.Enqueue(node);
+            _cachedNodes.Enqueue(node);
         }
 
         /// <summary>

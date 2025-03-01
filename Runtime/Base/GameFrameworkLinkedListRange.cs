@@ -1,8 +1,7 @@
 ﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2024 All rights reserved.
-// Homepage:
-// Feedback: mailto:
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
 using System.Collections;
@@ -18,8 +17,8 @@ namespace ZeroFramework
     [StructLayout(LayoutKind.Auto)]
     public struct GameFrameworkLinkedListRange<T> : IEnumerable<T>, IEnumerable
     {
-        private readonly LinkedListNode<T> m_First;
-        private readonly LinkedListNode<T> m_Terminal;
+        private readonly LinkedListNode<T> _first;
+        private readonly LinkedListNode<T> _terminal;
 
         /// <summary>
         /// 初始化游戏框架链表范围的新实例。
@@ -33,24 +32,24 @@ namespace ZeroFramework
                 throw new GameFrameworkException("Range is invalid.");
             }
 
-            m_First = first;
-            m_Terminal = terminal;
+            _first = first;
+            _terminal = terminal;
         }
 
         /// <summary>
         /// 获取链表范围是否有效。
         /// </summary>
-        public bool IsValid => m_First != null && m_Terminal != null && m_First != m_Terminal;
+        public bool IsValid => _first != null && _terminal != null && _first != _terminal;
 
         /// <summary>
         /// 获取链表范围的开始结点。
         /// </summary>
-        public LinkedListNode<T> First => m_First;
+        public LinkedListNode<T> First => _first;
 
         /// <summary>
         /// 获取链表范围的终结标记结点。
         /// </summary>
-        public LinkedListNode<T> Terminal => m_Terminal;
+        public LinkedListNode<T> Terminal => _terminal;
 
         /// <summary>
         /// 获取链表范围的结点数量。
@@ -65,7 +64,7 @@ namespace ZeroFramework
                 }
 
                 int count = 0;
-                for (LinkedListNode<T> current = m_First; current != null && current != m_Terminal; current = current.Next)
+                for (LinkedListNode<T> current = _first; current != null && current != _terminal; current = current.Next)
                 {
                     count++;
                 }
@@ -81,7 +80,7 @@ namespace ZeroFramework
         /// <returns>是否包含指定值。</returns>
         public bool Contains(T value)
         {
-            for (LinkedListNode<T> current = m_First; current != null && current != m_Terminal; current = current.Next)
+            for (LinkedListNode<T> current = _first; current != null && current != _terminal; current = current.Next)
             {
                 if (current.Value.Equals(value))
                 {
@@ -137,7 +136,7 @@ namespace ZeroFramework
                 }
 
                 m_GameFrameworkLinkedListRange = range;
-                m_Current = m_GameFrameworkLinkedListRange.m_First;
+                m_Current = m_GameFrameworkLinkedListRange._first;
                 m_CurrentValue = default(T);
             }
 
@@ -164,7 +163,7 @@ namespace ZeroFramework
             /// <returns>返回下一个结点。</returns>
             public bool MoveNext()
             {
-                if (m_Current == null || m_Current == m_GameFrameworkLinkedListRange.m_Terminal)
+                if (m_Current == null || m_Current == m_GameFrameworkLinkedListRange._terminal)
                 {
                     return false;
                 }
@@ -179,7 +178,7 @@ namespace ZeroFramework
             /// </summary>
             void IEnumerator.Reset()
             {
-                m_Current = m_GameFrameworkLinkedListRange.m_First;
+                m_Current = m_GameFrameworkLinkedListRange._first;
                 m_CurrentValue = default(T);
             }
         }

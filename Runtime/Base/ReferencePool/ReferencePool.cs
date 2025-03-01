@@ -1,8 +1,7 @@
 ﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2024 All rights reserved.
-// Homepage:
-// Feedback: mailto:
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
 using System;
@@ -15,21 +14,24 @@ namespace ZeroFramework
     /// </summary>
     public static partial class ReferencePool
     {
-        private static readonly Dictionary<Type, ReferenceCollection> s_ReferenceCollections = new Dictionary<Type, ReferenceCollection>();
-        private static bool m_EnableStrictCheck = false;
+        private static readonly Dictionary<Type, ReferenceCollection> ReferenceCollections =
+            new Dictionary<Type, ReferenceCollection>();
+
+        private static bool _enableStrictCheck = false;
 
         /// <summary>
         /// 获取或设置是否开启强制检查。
         /// </summary>
         public static bool EnableStrictCheck
         {
-            get => m_EnableStrictCheck;
+            get => _enableStrictCheck;
             set
             {
-                m_EnableStrictCheck = value;
+                _enableStrictCheck = value;
                 if (value)
                 {
-                    Log.Info("Strict checking is enabled for the Reference Pool. It will drastically affect the performance.");
+                    Log.Info(
+                        "Strict checking is enabled for the Reference Pool. It will drastically affect the performance.");
                 }
             }
         }
@@ -37,7 +39,7 @@ namespace ZeroFramework
         /// <summary>
         /// 获取引用池的数量。
         /// </summary>
-        public static int Count => s_ReferenceCollections.Count;
+        public static int Count => ReferenceCollections.Count;
 
         /// <summary>
         /// 获取所有引用池的信息。
@@ -48,12 +50,16 @@ namespace ZeroFramework
             int index = 0;
             ReferencePoolInfo[] results = null;
 
-            lock (s_ReferenceCollections)
+            lock (ReferenceCollections)
             {
-                results = new ReferencePoolInfo[s_ReferenceCollections.Count];
-                foreach (KeyValuePair<Type, ReferenceCollection> referenceCollection in s_ReferenceCollections)
+                results = new ReferencePoolInfo[ReferenceCollections.Count];
+                foreach (KeyValuePair<Type, ReferenceCollection> referenceCollection in ReferenceCollections)
                 {
-                    results[index++] = new ReferencePoolInfo(referenceCollection.Key, referenceCollection.Value.UnusedReferenceCount, referenceCollection.Value.UsingReferenceCount, referenceCollection.Value.AcquireReferenceCount, referenceCollection.Value.ReleaseReferenceCount, referenceCollection.Value.AddReferenceCount, referenceCollection.Value.RemoveReferenceCount);
+                    results[index++] = new ReferencePoolInfo(referenceCollection.Key,
+                        referenceCollection.Value.UnusedReferenceCount, referenceCollection.Value.UsingReferenceCount,
+                        referenceCollection.Value.AcquireReferenceCount,
+                        referenceCollection.Value.ReleaseReferenceCount, referenceCollection.Value.AddReferenceCount,
+                        referenceCollection.Value.RemoveReferenceCount);
                 }
             }
 
@@ -65,14 +71,14 @@ namespace ZeroFramework
         /// </summary>
         public static void ClearAll()
         {
-            lock (s_ReferenceCollections)
+            lock (ReferenceCollections)
             {
-                foreach (KeyValuePair<Type, ReferenceCollection> referenceCollection in s_ReferenceCollections)
+                foreach (KeyValuePair<Type, ReferenceCollection> referenceCollection in ReferenceCollections)
                 {
                     referenceCollection.Value.RemoveAll();
                 }
 
-                s_ReferenceCollections.Clear();
+                ReferenceCollections.Clear();
             }
         }
 
@@ -176,7 +182,7 @@ namespace ZeroFramework
 
         private static void InternalCheckReferenceType(Type referenceType)
         {
-            if (!m_EnableStrictCheck)
+            if (!_enableStrictCheck)
             {
                 return;
             }
@@ -193,7 +199,8 @@ namespace ZeroFramework
 
             if (!typeof(IReference).IsAssignableFrom(referenceType))
             {
-                throw new GameFrameworkException(Utility.Text.Format("Reference type '{0}' is invalid.", referenceType.FullName));
+                throw new GameFrameworkException(Utility.Text.Format("Reference type '{0}' is invalid.",
+                    referenceType.FullName));
             }
         }
 
@@ -205,12 +212,12 @@ namespace ZeroFramework
             }
 
             ReferenceCollection referenceCollection = null;
-            lock (s_ReferenceCollections)
+            lock (ReferenceCollections)
             {
-                if (!s_ReferenceCollections.TryGetValue(referenceType, out referenceCollection))
+                if (!ReferenceCollections.TryGetValue(referenceType, out referenceCollection))
                 {
                     referenceCollection = new ReferenceCollection(referenceType);
-                    s_ReferenceCollections.Add(referenceType, referenceCollection);
+                    ReferenceCollections.Add(referenceType, referenceCollection);
                 }
             }
 

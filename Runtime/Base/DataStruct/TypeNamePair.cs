@@ -1,8 +1,7 @@
 ﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2024 All rights reserved.
-// Homepage:
-// Feedback: mailto:
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
 using System;
@@ -16,8 +15,8 @@ namespace ZeroFramework
     [StructLayout(LayoutKind.Auto)]
     internal struct TypeNamePair : IEquatable<TypeNamePair>
     {
-        private readonly Type m_Type;
-        private readonly string m_Name;
+        private readonly Type _type;
+        private readonly string _name;
 
         /// <summary>
         /// 初始化类型和名称的组合值的新实例。
@@ -39,19 +38,19 @@ namespace ZeroFramework
                 throw new GameFrameworkException("Type is invalid.");
             }
 
-            m_Type = type;
-            m_Name = name ?? string.Empty;
+            _type = type;
+            _name = name ?? string.Empty;
         }
 
         /// <summary>
         /// 获取类型。
         /// </summary>
-        public Type Type => m_Type;
+        public Type Type => _type;
 
         /// <summary>
         /// 获取名称。
         /// </summary>
-        public string Name => m_Name;
+        public string Name => _name;
 
         /// <summary>
         /// 获取类型和名称的组合值字符串。
@@ -59,13 +58,13 @@ namespace ZeroFramework
         /// <returns>类型和名称的组合值字符串。</returns>
         public override string ToString()
         {
-            if (m_Type == null)
+            if (_type == null)
             {
                 throw new GameFrameworkException("Type is invalid.");
             }
 
-            string typeName = m_Type.FullName;
-            return string.IsNullOrEmpty(m_Name) ? typeName : Utility.Text.Format("{0}.{1}", typeName, m_Name);
+            string typeName = _type.FullName;
+            return string.IsNullOrEmpty(_name) ? typeName : Utility.Text.Format("{0}.{1}", typeName, _name);
         }
 
         /// <summary>
@@ -74,7 +73,7 @@ namespace ZeroFramework
         /// <returns>对象的哈希值。</returns>
         public override int GetHashCode()
         {
-            return m_Type.GetHashCode() ^ m_Name.GetHashCode();
+            return _type.GetHashCode() ^ _name.GetHashCode();
         }
 
         /// <summary>
@@ -94,7 +93,7 @@ namespace ZeroFramework
         /// <returns>被比较的对象是否与自身相等。</returns>
         public bool Equals(TypeNamePair value)
         {
-            return m_Type == value.m_Type && m_Name == value.m_Name;
+            return _type == value._type && _name == value._name;
         }
 
         /// <summary>

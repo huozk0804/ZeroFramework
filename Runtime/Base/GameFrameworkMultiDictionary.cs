@@ -1,8 +1,7 @@
 ﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2024 All rights reserved.
-// Homepage:
-// Feedback: mailto:
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
 using System.Collections;
@@ -18,22 +17,22 @@ namespace ZeroFramework
     /// <typeparam name="TValue">指定多值字典的值类型。</typeparam>
     public sealed class GameFrameworkMultiDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, GameFrameworkLinkedListRange<TValue>>>, IEnumerable
     {
-        private readonly GameFrameworkLinkedList<TValue> m_LinkedList;
-        private readonly Dictionary<TKey, GameFrameworkLinkedListRange<TValue>> m_Dictionary;
+        private readonly GameFrameworkLinkedList<TValue> _linkedList;
+        private readonly Dictionary<TKey, GameFrameworkLinkedListRange<TValue>> _dictionary;
 
         /// <summary>
         /// 初始化游戏框架多值字典类的新实例。
         /// </summary>
         public GameFrameworkMultiDictionary()
         {
-            m_LinkedList = new GameFrameworkLinkedList<TValue>();
-            m_Dictionary = new Dictionary<TKey, GameFrameworkLinkedListRange<TValue>>();
+            _linkedList = new GameFrameworkLinkedList<TValue>();
+            _dictionary = new Dictionary<TKey, GameFrameworkLinkedListRange<TValue>>();
         }
 
         /// <summary>
         /// 获取多值字典中实际包含的主键数量。
         /// </summary>
-        public int Count => m_Dictionary.Count;
+        public int Count => _dictionary.Count;
 
         /// <summary>
         /// 获取多值字典中指定主键的范围。
@@ -45,7 +44,7 @@ namespace ZeroFramework
             get
             {
                 GameFrameworkLinkedListRange<TValue> range = default(GameFrameworkLinkedListRange<TValue>);
-                m_Dictionary.TryGetValue(key, out range);
+                _dictionary.TryGetValue(key, out range);
                 return range;
             }
         }
@@ -55,8 +54,8 @@ namespace ZeroFramework
         /// </summary>
         public void Clear()
         {
-            m_Dictionary.Clear();
-            m_LinkedList.Clear();
+            _dictionary.Clear();
+            _linkedList.Clear();
         }
 
         /// <summary>
@@ -66,7 +65,7 @@ namespace ZeroFramework
         /// <returns>多值字典中是否包含指定主键。</returns>
         public bool Contains(TKey key)
         {
-            return m_Dictionary.ContainsKey(key);
+            return _dictionary.ContainsKey(key);
         }
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace ZeroFramework
         public bool Contains(TKey key, TValue value)
         {
             GameFrameworkLinkedListRange<TValue> range = default(GameFrameworkLinkedListRange<TValue>);
-            if (m_Dictionary.TryGetValue(key, out range))
+            if (_dictionary.TryGetValue(key, out range))
             {
                 return range.Contains(value);
             }
@@ -94,7 +93,7 @@ namespace ZeroFramework
         /// <returns>是否获取成功。</returns>
         public bool TryGetValue(TKey key, out GameFrameworkLinkedListRange<TValue> range)
         {
-            return m_Dictionary.TryGetValue(key, out range);
+            return _dictionary.TryGetValue(key, out range);
         }
 
         /// <summary>
@@ -105,15 +104,15 @@ namespace ZeroFramework
         public void Add(TKey key, TValue value)
         {
             GameFrameworkLinkedListRange<TValue> range = default(GameFrameworkLinkedListRange<TValue>);
-            if (m_Dictionary.TryGetValue(key, out range))
+            if (_dictionary.TryGetValue(key, out range))
             {
-                m_LinkedList.AddBefore(range.Terminal, value);
+                _linkedList.AddBefore(range.Terminal, value);
             }
             else
             {
-                LinkedListNode<TValue> first = m_LinkedList.AddLast(value);
-                LinkedListNode<TValue> terminal = m_LinkedList.AddLast(default(TValue));
-                m_Dictionary.Add(key, new GameFrameworkLinkedListRange<TValue>(first, terminal));
+                LinkedListNode<TValue> first = _linkedList.AddLast(value);
+                LinkedListNode<TValue> terminal = _linkedList.AddLast(default(TValue));
+                _dictionary.Add(key, new GameFrameworkLinkedListRange<TValue>(first, terminal));
             }
         }
 
@@ -126,7 +125,7 @@ namespace ZeroFramework
         public bool Remove(TKey key, TValue value)
         {
             GameFrameworkLinkedListRange<TValue> range = default(GameFrameworkLinkedListRange<TValue>);
-            if (m_Dictionary.TryGetValue(key, out range))
+            if (_dictionary.TryGetValue(key, out range))
             {
                 for (LinkedListNode<TValue> current = range.First; current != null && current != range.Terminal; current = current.Next)
                 {
@@ -137,16 +136,16 @@ namespace ZeroFramework
                             LinkedListNode<TValue> next = current.Next;
                             if (next == range.Terminal)
                             {
-                                m_LinkedList.Remove(next);
-                                m_Dictionary.Remove(key);
+                                _linkedList.Remove(next);
+                                _dictionary.Remove(key);
                             }
                             else
                             {
-                                m_Dictionary[key] = new GameFrameworkLinkedListRange<TValue>(next, range.Terminal);
+                                _dictionary[key] = new GameFrameworkLinkedListRange<TValue>(next, range.Terminal);
                             }
                         }
 
-                        m_LinkedList.Remove(current);
+                        _linkedList.Remove(current);
                         return true;
                     }
                 }
@@ -163,15 +162,15 @@ namespace ZeroFramework
         public bool RemoveAll(TKey key)
         {
             GameFrameworkLinkedListRange<TValue> range = default(GameFrameworkLinkedListRange<TValue>);
-            if (m_Dictionary.TryGetValue(key, out range))
+            if (_dictionary.TryGetValue(key, out range))
             {
-                m_Dictionary.Remove(key);
+                _dictionary.Remove(key);
 
                 LinkedListNode<TValue> current = range.First;
                 while (current != null)
                 {
                     LinkedListNode<TValue> next = current != range.Terminal ? current.Next : null;
-                    m_LinkedList.Remove(current);
+                    _linkedList.Remove(current);
                     current = next;
                 }
 
@@ -187,7 +186,7 @@ namespace ZeroFramework
         /// <returns>循环访问集合的枚举数。</returns>
         public Enumerator GetEnumerator()
         {
-            return new Enumerator(m_Dictionary);
+            return new Enumerator(_dictionary);
         }
 
         /// <summary>

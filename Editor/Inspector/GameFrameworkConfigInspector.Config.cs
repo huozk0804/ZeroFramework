@@ -20,7 +20,6 @@ namespace ZeroFramework.Editor
 
         void OnConfigInspectorGUI()
         {
-            GameFrameworkConfig t = (GameFrameworkConfig)target;
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
             {
                 EditorGUILayout.LabelField("Config Module", EditorStyles.boldLabel);

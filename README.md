@@ -14,6 +14,14 @@ Todo部分为正在开发，或待添加内容，如果需要使用则切换到p
 
 The Todo section is under development, or to be added, and switches to the preview branch if needed.
 
+### TODO
+
+-[ ] 对象池的梳理，以及引用对象池的处理。
+
+### Bug
+
+-[ ] 部分Package的配置还是与组件中的脚本强相关，需要想办法移除。
+
 ## Custom Packages
 
 可根据项目需求自定义移除添加。不过要注意的是部分组件包会依赖其他组件包，可以查看组件包中的README文档。

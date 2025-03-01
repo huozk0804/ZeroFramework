@@ -4,27 +4,27 @@ namespace ZeroFramework
 {
     public abstract class ScriptableObjectSingleton<T> : ScriptableObject, ISingleton where T : ScriptableObjectSingleton<T>
     {
-        protected static bool _onApplicationQuit = false;
-        protected static T _instance;
+        protected static bool onApplicationQuit = false;
+        protected static T instance;
 
+        public static bool IsApplicationQuit => onApplicationQuit;
         public static T Instance
         {
             get
             {
-                if (!_instance && !_onApplicationQuit)
+                if (!instance && !onApplicationQuit)
                 {
-                    _instance = UnityEngine.Resources.Load<T>(typeof(T).Name);
-                    if (!_instance)
+                    instance = UnityEngine.Resources.Load<T>(typeof(T).Name);
+                    if (!instance)
                     {
-                        _instance = CreateInstance<T>();
+                        instance = CreateInstance<T>();
                     }
                 }
 
-                return _instance;
+                return instance;
             }
         }
-
-        public static bool IsApplicationQuit => _onApplicationQuit;
+        
         public void OnDispose()
         {
             if (SingletonCreator.IsUnitTestMode)
@@ -34,7 +34,7 @@ namespace ZeroFramework
                 {
                     DestroyImmediate(this);
                 } while (curTrans);
-                _instance = null;
+                instance = null;
             }
             else
             {

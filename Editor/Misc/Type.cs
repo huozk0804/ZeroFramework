@@ -1,8 +1,7 @@
 ﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2024 All rights reserved.
-// Homepage:
-// Feedback: mailto:
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
 using System.Collections.Generic;
@@ -80,7 +79,7 @@ namespace ZeroFramework.Editor
         internal static string[] GetRuntimeTypeNames(System.Type typeBase)
         {
             string[] l1 = GetTypeNames(typeBase, RuntimeAssemblyNames);
-            var custom = GameFrameworkConfig.Instance.m_RuntimeAssemblyNames;
+            var custom = GameFrameworkConfig.Instance.runtimeAssemblyNames;
             if (custom != null && custom.Length > 0)
             {
                 string[] l2 = GetTypeNames(typeBase, custom);
@@ -107,7 +106,7 @@ namespace ZeroFramework.Editor
         internal static string[] GetRuntimeOrEditorTypeNames(System.Type typeBase)
         {
             string[] l1 = GetTypeNames(typeBase, RuntimeOrEditorAssemblyNames);
-            var custom = GameFrameworkConfig.Instance.m_RuntimeOrEditorAssemblyNames;
+            var custom = GameFrameworkConfig.Instance.runtimeOrEditorAssemblyNames;
             if (custom != null)
             {
                 string[] l2 = GetTypeNames(typeBase, custom);

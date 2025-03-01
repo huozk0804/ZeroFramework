@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Serialization;
 using ZeroFramework.Config;
 using ZeroFramework.Debugger;
 using ZeroFramework.Download;
@@ -15,22 +14,22 @@ using ZeroFramework.WebRequest;
 namespace ZeroFramework
 {
     [CreateAssetMenu(fileName = "GameFrameworkConfig", menuName = "Zero/Game Framework Config", order = 100)]
-    public sealed partial class GameFrameworkConfig : ScriptableObjectSingleton<GameFrameworkConfig>
+    public sealed class GameFrameworkConfig : ScriptableObjectSingleton<GameFrameworkConfig>
     {
         //Base
-        [SerializeField] public bool m_EditorResourceMode = true;
-        [SerializeField] public Language m_EditorLanguage = Language.Unspecified;
-        [SerializeField] public string m_TextHelperTypeName = "ZeroFramework.DefaultTextHelper";
-        [SerializeField] public string m_VersionHelperTypeName = "ZeroFramework.DefaultVersionHelper";
-        [SerializeField] public string m_LogHelperTypeName = "ZeroFramework.DefaultLogHelper";
-        [SerializeField] public string m_CompressionHelperTypeName = "ZeroFramework.DefaultCompressionHelper";
-        [SerializeField] public string m_JsonHelperTypeName = "ZeroFramework.DefaultJsonHelper";
-        [SerializeField] public int m_FrameRate = 30;
-        [SerializeField] public float m_GameSpeed = 1f;
-        [SerializeField] public bool m_RunInBackground = true;
-        [SerializeField] public bool m_NeverSleep = true;
-        [SerializeField] public string[] m_RuntimeAssemblyNames;
-        [SerializeField] public string[] m_RuntimeOrEditorAssemblyNames;
+        public bool editorResourceMode = true;
+        public Language editorLanguage = Language.Unspecified;
+        public string textHelperTypeName = "ZeroFramework.DefaultTextHelper";
+        public string versionHelperTypeName = "ZeroFramework.DefaultVersionHelper";
+        public string logHelperTypeName = "ZeroFramework.DefaultLogHelper";
+        public string compressionHelperTypeName = "ZeroFramework.DefaultCompressionHelper";
+        public string jsonHelperTypeName = "ZeroFramework.DefaultJsonHelper";
+        public int frameRate = 30;
+        public float gameSpeed = 1f;
+        public bool runInBackground = true;
+        public bool neverSleep = true;
+        public string[] runtimeAssemblyNames;
+        public string[] runtimeOrEditorAssemblyNames;
 
         //Download
         public string downloadAgentHelperTypeName = "ZeroFramework.UnityWebRequestDownloadAgentHelper";

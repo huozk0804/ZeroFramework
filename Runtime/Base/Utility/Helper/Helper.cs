@@ -1,8 +1,7 @@
 ﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2024 All rights reserved.
-// Homepage:
-// Feedback: mailto:
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
 using UnityEngine;
@@ -21,6 +20,7 @@ namespace ZeroFramework
         /// <param name="helperTypeName">要创建的辅助器类型名称。</param>
         /// <param name="customHelper">若要创建的辅助器类型为空时，使用的自定义辅助器类型。</param>
         /// <param name="index">要创建的辅助器索引。</param>
+        /// <param name="parent">辅助器的父物体(默认是Zero入口组件)</param>
         /// <returns>创建的辅助器。</returns>
         public static T CreateHelper<T>(string helperTypeName, T customHelper, int index = 0, Transform parent = null) where T : MonoBehaviour
         {

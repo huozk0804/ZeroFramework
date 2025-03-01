@@ -114,10 +114,10 @@ namespace ZeroFramework
         {
             _isInitialize = true;
 
-            FrameRate = GameFrameworkConfig.Instance.m_FrameRate;
-            GameSpeed = GameFrameworkConfig.Instance.m_GameSpeed;
-            RunInBackground = GameFrameworkConfig.Instance.m_RunInBackground;
-            NeverSleep = GameFrameworkConfig.Instance.m_NeverSleep;
+            FrameRate = GameFrameworkConfig.Instance.frameRate;
+            GameSpeed = GameFrameworkConfig.Instance.gameSpeed;
+            RunInBackground = GameFrameworkConfig.Instance.runInBackground;
+            NeverSleep = GameFrameworkConfig.Instance.neverSleep;
 
             //引用池设置处理
             var enableStrictCheck = GameFrameworkConfig.Instance.enableStrictCheck;
@@ -196,9 +196,8 @@ namespace ZeroFramework
             base.OnApplicationQuit();
         }
 
-        protected override void OnDestory()
+        protected override void OnDestroy()
         {
-            base.OnDestory();
             for (var current = _frameworkModules.Last; current != null; current = current.Previous)
             {
                 current.Value.Shutdown();
@@ -209,6 +208,7 @@ namespace ZeroFramework
             Utility.Marshal.FreeCachedHGlobal();
             GameFrameworkLog.SetLogHelper(null);
             _isInitialize = false;
+            base.OnDestroy();
         }
 
         #endregion
@@ -340,7 +340,7 @@ namespace ZeroFramework
 
         private void InitTextHelper()
         {
-            var name = GameFrameworkConfig.Instance.m_TextHelperTypeName;
+            var name = GameFrameworkConfig.Instance.textHelperTypeName;
             if (string.IsNullOrEmpty(name))
             {
                 return;
@@ -365,7 +365,7 @@ namespace ZeroFramework
 
         private void InitVersionHelper()
         {
-            var name = GameFrameworkConfig.Instance.m_VersionHelperTypeName;
+            var name = GameFrameworkConfig.Instance.versionHelperTypeName;
             if (string.IsNullOrEmpty(name))
             {
                 return;
@@ -390,7 +390,7 @@ namespace ZeroFramework
 
         private void InitLogHelper()
         {
-            var name = GameFrameworkConfig.Instance.m_LogHelperTypeName;
+            var name = GameFrameworkConfig.Instance.logHelperTypeName;
             if (string.IsNullOrEmpty(name))
             {
                 return;
@@ -415,7 +415,7 @@ namespace ZeroFramework
 
         private void InitCompressionHelper()
         {
-            var name = GameFrameworkConfig.Instance.m_CompressionHelperTypeName;
+            var name = GameFrameworkConfig.Instance.compressionHelperTypeName;
             if (string.IsNullOrEmpty(name))
             {
                 return;
@@ -441,7 +441,7 @@ namespace ZeroFramework
 
         private void InitJsonHelper()
         {
-            var name = GameFrameworkConfig.Instance.m_JsonHelperTypeName;
+            var name = GameFrameworkConfig.Instance.jsonHelperTypeName;
             if (string.IsNullOrEmpty(name))
             {
                 return;
@@ -487,28 +487,19 @@ namespace ZeroFramework
         /// <summary>
         /// 关闭框架
         /// </summary>
-        public void Shutdown(ShutdownType shutdownType)
+        public void Shutdown()
         {
-            Log.Info("Shutdown Game Framework ({0})...", shutdownType);
-            if (shutdownType == ShutdownType.None)
+            Log.Info("Quit Game.");
+            
+            for (var current = _frameworkModules.Last; current != null; current = current.Previous)
             {
-                return;
+                current.Value.Shutdown();
             }
-
-            if (shutdownType == ShutdownType.Restart)
-            {
-                //SceneManager.LoadScene(GameFrameworkSceneId);
-                return;
-            }
-
-            if (shutdownType == ShutdownType.Quit)
-            {
-                Application.Quit();
+            
+            Application.Quit();
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #endif
-                return;
-            }
         }
     }
 }

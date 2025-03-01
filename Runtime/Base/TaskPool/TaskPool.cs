@@ -1,8 +1,7 @@
 ﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2024 All rights reserved.
-// Homepage:
-// Feedback: mailto:
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
 using System.Collections.Generic;
@@ -15,20 +14,20 @@ namespace ZeroFramework
     /// <typeparam name="T">任务类型。</typeparam>
     internal sealed class TaskPool<T> where T : TaskBase
     {
-        private readonly Stack<ITaskAgent<T>> m_FreeAgents;
-        private readonly GameFrameworkLinkedList<ITaskAgent<T>> m_WorkingAgents;
-        private readonly GameFrameworkLinkedList<T> m_WaitingTasks;
-        private bool m_Paused;
+        private readonly Stack<ITaskAgent<T>> _freeAgents;
+        private readonly GameFrameworkLinkedList<ITaskAgent<T>> _workingAgents;
+        private readonly GameFrameworkLinkedList<T> _waitingTasks;
+        private bool _paused;
 
         /// <summary>
         /// 初始化任务池的新实例。
         /// </summary>
         public TaskPool()
         {
-            m_FreeAgents = new Stack<ITaskAgent<T>>();
-            m_WorkingAgents = new GameFrameworkLinkedList<ITaskAgent<T>>();
-            m_WaitingTasks = new GameFrameworkLinkedList<T>();
-            m_Paused = false;
+            _freeAgents = new Stack<ITaskAgent<T>>();
+            _workingAgents = new GameFrameworkLinkedList<ITaskAgent<T>>();
+            _waitingTasks = new GameFrameworkLinkedList<T>();
+            _paused = false;
         }
 
         /// <summary>
@@ -36,8 +35,8 @@ namespace ZeroFramework
         /// </summary>
         public bool Paused
         {
-            get => m_Paused;
-            set => m_Paused = value;
+            get => _paused;
+            set => _paused = value;
         }
 
         /// <summary>
@@ -48,17 +47,17 @@ namespace ZeroFramework
         /// <summary>
         /// 获取可用任务代理数量。
         /// </summary>
-        public int FreeAgentCount => m_FreeAgents.Count;
+        public int FreeAgentCount => _freeAgents.Count;
 
         /// <summary>
         /// 获取工作中任务代理数量。
         /// </summary>
-        public int WorkingAgentCount => m_WorkingAgents.Count;
+        public int WorkingAgentCount => _workingAgents.Count;
 
         /// <summary>
         /// 获取等待任务数量。
         /// </summary>
-        public int WaitingTaskCount => m_WaitingTasks.Count;
+        public int WaitingTaskCount => _waitingTasks.Count;
 
         /// <summary>
         /// 任务池轮询。
@@ -67,7 +66,7 @@ namespace ZeroFramework
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
         public void Update(float elapseSeconds, float realElapseSeconds)
         {
-            if (m_Paused)
+            if (_paused)
             {
                 return;
             }
@@ -85,7 +84,7 @@ namespace ZeroFramework
 
             while (FreeAgentCount > 0)
             {
-                m_FreeAgents.Pop().Shutdown();
+                _freeAgents.Pop().Shutdown();
             }
         }
 
@@ -101,7 +100,7 @@ namespace ZeroFramework
             }
 
             agent.Initialize();
-            m_FreeAgents.Push(agent);
+            _freeAgents.Push(agent);
         }
 
         /// <summary>
@@ -111,7 +110,7 @@ namespace ZeroFramework
         /// <returns>任务的信息。</returns>
         public TaskInfo GetTaskInfo(int serialId)
         {
-            foreach (ITaskAgent<T> workingAgent in m_WorkingAgents)
+            foreach (ITaskAgent<T> workingAgent in _workingAgents)
             {
                 T workingTask = workingAgent.Task;
                 if (workingTask.SerialId == serialId)
@@ -122,7 +121,7 @@ namespace ZeroFramework
                 }
             }
 
-            foreach (T waitingTask in m_WaitingTasks)
+            foreach (T waitingTask in _waitingTasks)
             {
                 if (waitingTask.SerialId == serialId)
                 {
@@ -159,7 +158,7 @@ namespace ZeroFramework
             }
 
             results.Clear();
-            foreach (ITaskAgent<T> workingAgent in m_WorkingAgents)
+            foreach (ITaskAgent<T> workingAgent in _workingAgents)
             {
                 T workingTask = workingAgent.Task;
                 if (workingTask.Tag == tag)
@@ -170,7 +169,7 @@ namespace ZeroFramework
                 }
             }
 
-            foreach (T waitingTask in m_WaitingTasks)
+            foreach (T waitingTask in _waitingTasks)
             {
                 if (waitingTask.Tag == tag)
                 {
@@ -187,8 +186,8 @@ namespace ZeroFramework
         public TaskInfo[] GetAllTaskInfos()
         {
             int index = 0;
-            TaskInfo[] results = new TaskInfo[m_WorkingAgents.Count + m_WaitingTasks.Count];
-            foreach (ITaskAgent<T> workingAgent in m_WorkingAgents)
+            TaskInfo[] results = new TaskInfo[_workingAgents.Count + _waitingTasks.Count];
+            foreach (ITaskAgent<T> workingAgent in _workingAgents)
             {
                 T workingTask = workingAgent.Task;
                 results[index++] = new TaskInfo(workingTask.SerialId, workingTask.Tag, workingTask.Priority,
@@ -196,7 +195,7 @@ namespace ZeroFramework
                     workingTask.Description);
             }
 
-            foreach (T waitingTask in m_WaitingTasks)
+            foreach (T waitingTask in _waitingTasks)
             {
                 results[index++] = new TaskInfo(waitingTask.SerialId, waitingTask.Tag, waitingTask.Priority,
                     waitingTask.UserData, TaskStatus.Todo, waitingTask.Description);
@@ -217,7 +216,7 @@ namespace ZeroFramework
             }
 
             results.Clear();
-            foreach (ITaskAgent<T> workingAgent in m_WorkingAgents)
+            foreach (ITaskAgent<T> workingAgent in _workingAgents)
             {
                 T workingTask = workingAgent.Task;
                 results.Add(new TaskInfo(workingTask.SerialId, workingTask.Tag, workingTask.Priority,
@@ -225,7 +224,7 @@ namespace ZeroFramework
                     workingTask.Description));
             }
 
-            foreach (T waitingTask in m_WaitingTasks)
+            foreach (T waitingTask in _waitingTasks)
             {
                 results.Add(new TaskInfo(waitingTask.SerialId, waitingTask.Tag, waitingTask.Priority,
                     waitingTask.UserData, TaskStatus.Todo, waitingTask.Description));
@@ -238,7 +237,7 @@ namespace ZeroFramework
         /// <param name="task">要增加的任务。</param>
         public void AddTask(T task)
         {
-            LinkedListNode<T> current = m_WaitingTasks.Last;
+            LinkedListNode<T> current = _waitingTasks.Last;
             while (current != null)
             {
                 if (task.Priority <= current.Value.Priority)
@@ -251,11 +250,11 @@ namespace ZeroFramework
 
             if (current != null)
             {
-                m_WaitingTasks.AddAfter(current, task);
+                _waitingTasks.AddAfter(current, task);
             }
             else
             {
-                m_WaitingTasks.AddFirst(task);
+                _waitingTasks.AddFirst(task);
             }
         }
 
@@ -266,17 +265,17 @@ namespace ZeroFramework
         /// <returns>是否移除任务成功。</returns>
         public bool RemoveTask(int serialId)
         {
-            foreach (T task in m_WaitingTasks)
+            foreach (T task in _waitingTasks)
             {
                 if (task.SerialId == serialId)
                 {
-                    m_WaitingTasks.Remove(task);
+                    _waitingTasks.Remove(task);
                     ReferencePool.Release(task);
                     return true;
                 }
             }
 
-            LinkedListNode<ITaskAgent<T>> currentWorkingAgent = m_WorkingAgents.First;
+            LinkedListNode<ITaskAgent<T>> currentWorkingAgent = _workingAgents.First;
             while (currentWorkingAgent != null)
             {
                 LinkedListNode<ITaskAgent<T>> next = currentWorkingAgent.Next;
@@ -285,8 +284,8 @@ namespace ZeroFramework
                 if (task.SerialId == serialId)
                 {
                     workingAgent.Reset();
-                    m_FreeAgents.Push(workingAgent);
-                    m_WorkingAgents.Remove(currentWorkingAgent);
+                    _freeAgents.Push(workingAgent);
+                    _workingAgents.Remove(currentWorkingAgent);
                     ReferencePool.Release(task);
                     return true;
                 }
@@ -306,14 +305,14 @@ namespace ZeroFramework
         {
             int count = 0;
 
-            LinkedListNode<T> currentWaitingTask = m_WaitingTasks.First;
+            LinkedListNode<T> currentWaitingTask = _waitingTasks.First;
             while (currentWaitingTask != null)
             {
                 LinkedListNode<T> next = currentWaitingTask.Next;
                 T task = currentWaitingTask.Value;
                 if (task.Tag == tag)
                 {
-                    m_WaitingTasks.Remove(currentWaitingTask);
+                    _waitingTasks.Remove(currentWaitingTask);
                     ReferencePool.Release(task);
                     count++;
                 }
@@ -321,7 +320,7 @@ namespace ZeroFramework
                 currentWaitingTask = next;
             }
 
-            LinkedListNode<ITaskAgent<T>> currentWorkingAgent = m_WorkingAgents.First;
+            LinkedListNode<ITaskAgent<T>> currentWorkingAgent = _workingAgents.First;
             while (currentWorkingAgent != null)
             {
                 LinkedListNode<ITaskAgent<T>> next = currentWorkingAgent.Next;
@@ -330,8 +329,8 @@ namespace ZeroFramework
                 if (task.Tag == tag)
                 {
                     workingAgent.Reset();
-                    m_FreeAgents.Push(workingAgent);
-                    m_WorkingAgents.Remove(currentWorkingAgent);
+                    _freeAgents.Push(workingAgent);
+                    _workingAgents.Remove(currentWorkingAgent);
                     ReferencePool.Release(task);
                     count++;
                 }
@@ -348,31 +347,31 @@ namespace ZeroFramework
         /// <returns>移除任务的数量。</returns>
         public int RemoveAllTasks()
         {
-            int count = m_WaitingTasks.Count + m_WorkingAgents.Count;
+            int count = _waitingTasks.Count + _workingAgents.Count;
 
-            foreach (T task in m_WaitingTasks)
+            foreach (T task in _waitingTasks)
             {
                 ReferencePool.Release(task);
             }
 
-            m_WaitingTasks.Clear();
+            _waitingTasks.Clear();
 
-            foreach (ITaskAgent<T> workingAgent in m_WorkingAgents)
+            foreach (ITaskAgent<T> workingAgent in _workingAgents)
             {
                 T task = workingAgent.Task;
                 workingAgent.Reset();
-                m_FreeAgents.Push(workingAgent);
+                _freeAgents.Push(workingAgent);
                 ReferencePool.Release(task);
             }
 
-            m_WorkingAgents.Clear();
+            _workingAgents.Clear();
 
             return count;
         }
 
         private void ProcessRunningTasks(float elapseSeconds, float realElapseSeconds)
         {
-            LinkedListNode<ITaskAgent<T>> current = m_WorkingAgents.First;
+            LinkedListNode<ITaskAgent<T>> current = _workingAgents.First;
             while (current != null)
             {
                 T task = current.Value.Task;
@@ -385,8 +384,8 @@ namespace ZeroFramework
 
                 LinkedListNode<ITaskAgent<T>> next = current.Next;
                 current.Value.Reset();
-                m_FreeAgents.Push(current.Value);
-                m_WorkingAgents.Remove(current);
+                _freeAgents.Push(current.Value);
+                _workingAgents.Remove(current);
                 ReferencePool.Release(task);
                 current = next;
             }
@@ -394,11 +393,11 @@ namespace ZeroFramework
 
         private void ProcessWaitingTasks(float elapseSeconds, float realElapseSeconds)
         {
-            LinkedListNode<T> current = m_WaitingTasks.First;
+            LinkedListNode<T> current = _waitingTasks.First;
             while (current != null && FreeAgentCount > 0)
             {
-                ITaskAgent<T> agent = m_FreeAgents.Pop();
-                LinkedListNode<ITaskAgent<T>> agentNode = m_WorkingAgents.AddLast(agent);
+                ITaskAgent<T> agent = _freeAgents.Pop();
+                LinkedListNode<ITaskAgent<T>> agentNode = _workingAgents.AddLast(agent);
                 T task = current.Value;
                 LinkedListNode<T> next = current.Next;
                 StartTaskStatus status = agent.Start(task);
@@ -406,14 +405,14 @@ namespace ZeroFramework
                     status == StartTaskStatus.UnknownError)
                 {
                     agent.Reset();
-                    m_FreeAgents.Push(agent);
-                    m_WorkingAgents.Remove(agentNode);
+                    _freeAgents.Push(agent);
+                    _workingAgents.Remove(agentNode);
                 }
 
                 if (status == StartTaskStatus.Done || status == StartTaskStatus.CanResume ||
                     status == StartTaskStatus.UnknownError)
                 {
-                    m_WaitingTasks.Remove(current);
+                    _waitingTasks.Remove(current);
                 }
 
                 if (status == StartTaskStatus.Done || status == StartTaskStatus.UnknownError)

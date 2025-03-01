@@ -1,25 +1,26 @@
+using System;
 using UnityEngine;
 
 namespace ZeroFramework
 {
     public abstract class MonoSingleton<T> : MonoBehaviour, ISingleton where T : MonoSingleton<T>
     {
-        protected static bool _onApplicationQuit = false;
-        protected static T _instance;
+        protected static bool onApplicationQuit = false;
+        protected static T instance;
         public static T Instance
         {
             get
             {
-                if (_instance == null && !_onApplicationQuit)
+                if (instance == null && !onApplicationQuit)
                 {
-                    _instance = SingletonCreator.CreateMonoSingleton<T>();
+                    instance = SingletonCreator.CreateMonoSingleton<T>();
                 }
 
-                return _instance;
+                return instance;
             }
         }
 
-        public static bool IsApplicationQuit => _onApplicationQuit;
+        public static bool IsApplicationQuit => onApplicationQuit;
 
         public virtual void OnDispose()
         {
@@ -33,7 +34,7 @@ namespace ZeroFramework
                     curTrans = parent;
                 } while (curTrans != null);
 
-                _instance = null;
+                instance = null;
             }
             else
             {
@@ -43,19 +44,19 @@ namespace ZeroFramework
 
         protected virtual void OnApplicationQuit()
         {
-            _onApplicationQuit = true;
-            if (_instance == null)
+            onApplicationQuit = true;
+            if (instance == null)
             {
                 return;
             }
 
-            Destroy(_instance.gameObject);
-            _instance = null;
+            Destroy(instance.gameObject);
+            instance = null;
         }
 
-        protected virtual void OnDestory()
+        protected virtual void OnDestroy()
         {
-            _instance = null;
+            instance = null;
         }
     }
 }

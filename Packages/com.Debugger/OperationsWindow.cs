@@ -1,8 +1,7 @@
 ﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2024 All rights reserved.
-// Homepage:
-// Feedback: mailto:
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
 using UnityEngine;
@@ -45,20 +44,10 @@ namespace ZeroFramework.Debugger
                 //        resourceCompoent.ForceUnloadUnusedAssets(true);
                 //    }
                 //}
-
-                if (GUILayout.Button("Shutdown Game Framework (None)", GUILayout.Height(30f)))
+                
+                if (GUILayout.Button("Quit Game", GUILayout.Height(30f)))
                 {
-                    Zero.Instance.Shutdown(ShutdownType.None);
-                }
-
-                if (GUILayout.Button("Shutdown Game Framework (Restart)", GUILayout.Height(30f)))
-                {
-					Zero.Instance.Shutdown(ShutdownType.Restart);
-                }
-
-                if (GUILayout.Button("Shutdown Game Framework (Quit)", GUILayout.Height(30f)))
-                {
-					Zero.Instance.Shutdown(ShutdownType.Quit);
+					Zero.Instance.Shutdown();
                 }
             }
             GUILayout.EndVertical();
