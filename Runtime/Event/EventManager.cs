@@ -13,25 +13,25 @@ namespace ZeroFramework
     /// </summary>
     public sealed class EventManager : GameFrameworkModule, IEventManager
     {
-        private readonly EventPool<BaseEventArgs> m_EventPool;
+        private readonly EventPool<BaseEventArgs> _eventPool;
 
         /// <summary>
         /// 初始化事件管理器的新实例。
         /// </summary>
         public EventManager()
         {
-            m_EventPool = new EventPool<BaseEventArgs>(EventPoolMode.AllowNoHandler | EventPoolMode.AllowMultiHandler);
+            _eventPool = new EventPool<BaseEventArgs>(EventPoolMode.AllowNoHandler | EventPoolMode.AllowMultiHandler);
         }
 
         /// <summary>
         /// 获取事件处理函数的数量。
         /// </summary>
-        public int EventHandlerCount => m_EventPool.EventHandlerCount;
+        public int EventHandlerCount => _eventPool.EventHandlerCount;
 
         /// <summary>
         /// 获取事件数量。
         /// </summary>
-        public int EventCount => m_EventPool.EventCount;
+        public int EventCount => _eventPool.EventCount;
 
         /// <summary>
         /// 获取游戏框架模块优先级。
@@ -46,7 +46,7 @@ namespace ZeroFramework
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
         public override void Update(float elapseSeconds, float realElapseSeconds)
         {
-            m_EventPool.Update(elapseSeconds, realElapseSeconds);
+            _eventPool.Update(elapseSeconds, realElapseSeconds);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace ZeroFramework
         /// </summary>
         public override void Shutdown()
         {
-            m_EventPool.Shutdown();
+            _eventPool.Shutdown();
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace ZeroFramework
         /// <returns>事件处理函数的数量。</returns>
         public int Count(int id)
         {
-            return m_EventPool.Count(id);
+            return _eventPool.Count(id);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace ZeroFramework
         /// <returns>是否存在事件处理函数。</returns>
         public bool Check(int id, EventHandler<BaseEventArgs> handler)
         {
-            return m_EventPool.Check(id, handler);
+            return _eventPool.Check(id, handler);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace ZeroFramework
         /// <param name="handler">要订阅的事件处理函数。</param>
         public void Subscribe(int id, EventHandler<BaseEventArgs> handler)
         {
-            m_EventPool.Subscribe(id, handler);
+            _eventPool.Subscribe(id, handler);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace ZeroFramework
         /// <param name="handler">要取消订阅的事件处理函数。</param>
         public void Unsubscribe(int id, EventHandler<BaseEventArgs> handler)
         {
-            m_EventPool.Unsubscribe(id, handler);
+            _eventPool.Unsubscribe(id, handler);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace ZeroFramework
         /// <param name="handler">要设置的默认事件处理函数。</param>
         public void SetDefaultHandler(EventHandler<BaseEventArgs> handler)
         {
-            m_EventPool.SetDefaultHandler(handler);
+            _eventPool.SetDefaultHandler(handler);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace ZeroFramework
         /// <param name="e">事件参数。</param>
         public void Fire(object sender, BaseEventArgs e)
         {
-            m_EventPool.Fire(sender, e);
+            _eventPool.Fire(sender, e);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace ZeroFramework
         /// <param name="e">事件参数。</param>
         public void FireNow(object sender, BaseEventArgs e)
         {
-            m_EventPool.FireNow(sender, e);
+            _eventPool.FireNow(sender, e);
         }
     }
 }

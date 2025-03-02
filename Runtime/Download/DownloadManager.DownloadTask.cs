@@ -13,24 +13,24 @@ namespace ZeroFramework.Download
         /// </summary>
         private sealed class DownloadTask : TaskBase
         {
-            private static int s_Serial = 0;
+            private static int Serial = 0;
 
-            private DownloadTaskStatus m_Status;
-            private string m_DownloadPath;
-            private string m_DownloadUri;
-            private int m_FlushSize;
-            private float m_Timeout;
+            private DownloadTaskStatus _status;
+            private string _downloadPath;
+            private string _downloadUri;
+            private int _flushSize;
+            private float _timeout;
 
             /// <summary>
             /// 初始化下载任务的新实例。
             /// </summary>
             public DownloadTask()
             {
-                m_Status = DownloadTaskStatus.Todo;
-                m_DownloadPath = null;
-                m_DownloadUri = null;
-                m_FlushSize = 0;
-                m_Timeout = 0f;
+                _status = DownloadTaskStatus.Todo;
+                _downloadPath = null;
+                _downloadUri = null;
+                _flushSize = 0;
+                _timeout = 0f;
             }
 
             /// <summary>
@@ -38,34 +38,34 @@ namespace ZeroFramework.Download
             /// </summary>
             public DownloadTaskStatus Status
             {
-                get => m_Status;
-                set => m_Status = value;
+                get => _status;
+                set => _status = value;
             }
 
             /// <summary>
             /// 获取下载后存放路径。
             /// </summary>
-            public string DownloadPath => m_DownloadPath;
+            public string DownloadPath => _downloadPath;
 
             /// <summary>
             /// 获取原始下载地址。
             /// </summary>
-            public string DownloadUri => m_DownloadUri;
+            public string DownloadUri => _downloadUri;
 
             /// <summary>
             /// 获取将缓冲区写入磁盘的临界大小。
             /// </summary>
-            public int FlushSize => m_FlushSize;
+            public int FlushSize => _flushSize;
 
             /// <summary>
             /// 获取下载超时时长，以秒为单位。
             /// </summary>
-            public float Timeout => m_Timeout;
+            public float Timeout => _timeout;
 
             /// <summary>
             /// 获取下载任务的描述。
             /// </summary>
-            public override string Description => m_DownloadPath;
+            public override string Description => _downloadPath;
 
             /// <summary>
             /// 创建下载任务。
@@ -81,11 +81,11 @@ namespace ZeroFramework.Download
             public static DownloadTask Create(string downloadPath, string downloadUri, string tag, int priority, int flushSize, float timeout, object userData)
             {
                 DownloadTask downloadTask = ReferencePool.Acquire<DownloadTask>();
-                downloadTask.Initialize(++s_Serial, tag, priority, userData);
-                downloadTask.m_DownloadPath = downloadPath;
-                downloadTask.m_DownloadUri = downloadUri;
-                downloadTask.m_FlushSize = flushSize;
-                downloadTask.m_Timeout = timeout;
+                downloadTask.Initialize(++Serial, tag, priority, userData);
+                downloadTask._downloadPath = downloadPath;
+                downloadTask._downloadUri = downloadUri;
+                downloadTask._flushSize = flushSize;
+                downloadTask._timeout = timeout;
                 return downloadTask;
             }
 
@@ -95,11 +95,11 @@ namespace ZeroFramework.Download
             public override void Clear()
             {
                 base.Clear();
-                m_Status = DownloadTaskStatus.Todo;
-                m_DownloadPath = null;
-                m_DownloadUri = null;
-                m_FlushSize = 0;
-                m_Timeout = 0f;
+                _status = DownloadTaskStatus.Todo;
+                _downloadPath = null;
+                _downloadUri = null;
+                _flushSize = 0;
+                _timeout = 0f;
             }
         }
     }

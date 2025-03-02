@@ -12,18 +12,18 @@ namespace ZeroFramework.Download
         {
             private sealed class DownloadCounterNode : IReference
             {
-                private long m_DeltaLength;
-                private float m_ElapseSeconds;
+                private long _deltaLength;
+                private float _elapseSeconds;
 
                 public DownloadCounterNode()
                 {
-                    m_DeltaLength = 0L;
-                    m_ElapseSeconds = 0f;
+                    _deltaLength = 0L;
+                    _elapseSeconds = 0f;
                 }
 
-                public long DeltaLength => m_DeltaLength;
+                public long DeltaLength => _deltaLength;
 
-                public float ElapseSeconds => m_ElapseSeconds;
+                public float ElapseSeconds => _elapseSeconds;
 
                 public static DownloadCounterNode Create()
                 {
@@ -32,18 +32,18 @@ namespace ZeroFramework.Download
 
                 public void Update(float elapseSeconds, float realElapseSeconds)
                 {
-                    m_ElapseSeconds += realElapseSeconds;
+                    _elapseSeconds += realElapseSeconds;
                 }
 
                 public void AddDeltaLength(int deltaLength)
                 {
-                    m_DeltaLength += deltaLength;
+                    _deltaLength += deltaLength;
                 }
 
                 public void Clear()
                 {
-                    m_DeltaLength = 0L;
-                    m_ElapseSeconds = 0f;
+                    _deltaLength = 0L;
+                    _elapseSeconds = 0f;
                 }
             }
         }

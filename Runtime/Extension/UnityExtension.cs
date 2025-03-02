@@ -15,7 +15,7 @@ namespace ZeroFramework
     /// </summary>
     public static class UnityExtension
     {
-        private static readonly List<Transform> s_CachedTransforms = new List<Transform>();
+        private static readonly List<Transform> CachedTransforms = new List<Transform>();
 
         /// <summary>
         /// 获取或增加组件。
@@ -69,13 +69,13 @@ namespace ZeroFramework
         /// <param name="layer">目标层次的编号。</param>
         public static void SetLayerRecursively(this GameObject gameObject, int layer)
         {
-            gameObject.GetComponentsInChildren(true, s_CachedTransforms);
-            for (int i = 0; i < s_CachedTransforms.Count; i++)
+            gameObject.GetComponentsInChildren(true, CachedTransforms);
+            for (int i = 0; i < CachedTransforms.Count; i++)
             {
-                s_CachedTransforms[i].gameObject.layer = layer;
+                CachedTransforms[i].gameObject.layer = layer;
             }
 
-            s_CachedTransforms.Clear();
+            CachedTransforms.Clear();
         }
 
         /// <summary>

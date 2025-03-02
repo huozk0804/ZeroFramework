@@ -16,29 +16,29 @@ namespace ZeroFramework.Download
     {
         private const int OneMegaBytes = 1024 * 1024;
 
-        private readonly TaskPool<DownloadTask> m_TaskPool;
-        private readonly DownloadCounter m_DownloadCounter;
-        private int m_FlushSize;
-        private float m_Timeout;
-        private EventHandler<DownloadStartEventArgs> m_DownloadStartEventHandler;
-        private EventHandler<DownloadUpdateEventArgs> m_DownloadUpdateEventHandler;
-        private EventHandler<DownloadSuccessEventArgs> m_DownloadSuccessEventHandler;
-        private EventHandler<DownloadFailureEventArgs> m_DownloadFailureEventHandler;
+        private readonly TaskPool<DownloadTask> _taskPool;
+        private readonly DownloadCounter _downloadCounter;
+        private int _flushSize;
+        private float _timeout;
+        private EventHandler<DownloadStartEventArgs> _downloadStartEventHandler;
+        private EventHandler<DownloadUpdateEventArgs> _downloadUpdateEventHandler;
+        private EventHandler<DownloadSuccessEventArgs> _downloadSuccessEventHandler;
+        private EventHandler<DownloadFailureEventArgs> _downloadFailureEventHandler;
 
         /// <summary>
         /// 初始化下载管理器的新实例。
         /// </summary>
         public DownloadManager()
         {
-            m_TaskPool = new TaskPool<DownloadTask>();
-            m_DownloadCounter = new DownloadCounter(1f, 10f);
-            m_FlushSize = GameFrameworkConfig.Instance.flushSize;
-            m_Timeout = GameFrameworkConfig.Instance.downloadTimeout;
+            _taskPool = new TaskPool<DownloadTask>();
+            _downloadCounter = new DownloadCounter(1f, 10f);
+            _flushSize = GameFrameworkConfig.Instance.flushSize;
+            _timeout = GameFrameworkConfig.Instance.downloadTimeout;
 
-            m_DownloadStartEventHandler = null;
-            m_DownloadUpdateEventHandler = null;
-            m_DownloadSuccessEventHandler = null;
-            m_DownloadFailureEventHandler = null;
+            _downloadStartEventHandler = null;
+            _downloadUpdateEventHandler = null;
+            _downloadSuccessEventHandler = null;
+            _downloadFailureEventHandler = null;
 
             var count = GameFrameworkConfig.Instance.downloadAgentHelperCount;
             var name = GameFrameworkConfig.Instance.downloadAgentHelperTypeName;
@@ -68,37 +68,37 @@ namespace ZeroFramework.Download
         /// </summary>
         public bool Paused
         {
-            get => m_TaskPool.Paused;
-            set => m_TaskPool.Paused = value;
+            get => _taskPool.Paused;
+            set => _taskPool.Paused = value;
         }
 
         /// <summary>
         /// 获取下载代理总数量。
         /// </summary>
-        public int TotalAgentCount => m_TaskPool.TotalAgentCount;
+        public int TotalAgentCount => _taskPool.TotalAgentCount;
 
         /// <summary>
         /// 获取可用下载代理数量。
         /// </summary>
-        public int FreeAgentCount => m_TaskPool.FreeAgentCount;
+        public int FreeAgentCount => _taskPool.FreeAgentCount;
 
         /// <summary>
         /// 获取工作中下载代理数量。
         /// </summary>
-        public int WorkingAgentCount => m_TaskPool.WorkingAgentCount;
+        public int WorkingAgentCount => _taskPool.WorkingAgentCount;
 
         /// <summary>
         /// 获取等待下载任务数量。
         /// </summary>
-        public int WaitingTaskCount => m_TaskPool.WaitingTaskCount;
+        public int WaitingTaskCount => _taskPool.WaitingTaskCount;
 
         /// <summary>
         /// 获取或设置将缓冲区写入磁盘的临界大小。
         /// </summary>
         public int FlushSize
         {
-            get => m_FlushSize;
-            set => m_FlushSize = value;
+            get => _flushSize;
+            set => _flushSize = value;
         }
 
         /// <summary>
@@ -106,22 +106,22 @@ namespace ZeroFramework.Download
         /// </summary>
         public float Timeout
         {
-            get => m_Timeout;
-            set => m_Timeout = value;
+            get => _timeout;
+            set => _timeout = value;
         }
 
         /// <summary>
         /// 获取当前下载速度。
         /// </summary>
-        public float CurrentSpeed => m_DownloadCounter.CurrentSpeed;
+        public float CurrentSpeed => _downloadCounter.CurrentSpeed;
 
         /// <summary>
         /// 下载开始事件。
         /// </summary>
         public event EventHandler<DownloadStartEventArgs> DownloadStart
         {
-            add => m_DownloadStartEventHandler += value;
-            remove => m_DownloadStartEventHandler -= value;
+            add => _downloadStartEventHandler += value;
+            remove => _downloadStartEventHandler -= value;
         }
 
         /// <summary>
@@ -129,8 +129,8 @@ namespace ZeroFramework.Download
         /// </summary>
         public event EventHandler<DownloadUpdateEventArgs> DownloadUpdate
         {
-            add => m_DownloadUpdateEventHandler += value;
-            remove => m_DownloadUpdateEventHandler -= value;
+            add => _downloadUpdateEventHandler += value;
+            remove => _downloadUpdateEventHandler -= value;
         }
 
         /// <summary>
@@ -138,8 +138,8 @@ namespace ZeroFramework.Download
         /// </summary>
         public event EventHandler<DownloadSuccessEventArgs> DownloadSuccess
         {
-            add => m_DownloadSuccessEventHandler += value;
-            remove => m_DownloadSuccessEventHandler -= value;
+            add => _downloadSuccessEventHandler += value;
+            remove => _downloadSuccessEventHandler -= value;
         }
 
         /// <summary>
@@ -147,8 +147,8 @@ namespace ZeroFramework.Download
         /// </summary>
         public event EventHandler<DownloadFailureEventArgs> DownloadFailure
         {
-            add => m_DownloadFailureEventHandler += value;
-            remove => m_DownloadFailureEventHandler -= value;
+            add => _downloadFailureEventHandler += value;
+            remove => _downloadFailureEventHandler -= value;
         }
 
         /// <summary>
@@ -158,8 +158,8 @@ namespace ZeroFramework.Download
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
         public override void Update(float elapseSeconds, float realElapseSeconds)
         {
-            m_TaskPool.Update(elapseSeconds, realElapseSeconds);
-            m_DownloadCounter.Update(elapseSeconds, realElapseSeconds);
+            _taskPool.Update(elapseSeconds, realElapseSeconds);
+            _downloadCounter.Update(elapseSeconds, realElapseSeconds);
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace ZeroFramework.Download
         /// </summary>
         public override void Shutdown()
         {
-            m_TaskPool.Shutdown();
-            m_DownloadCounter.Shutdown();
+            _taskPool.Shutdown();
+            _downloadCounter.Shutdown();
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace ZeroFramework.Download
             agent.DownloadAgentSuccess += OnDownloadAgentSuccess;
             agent.DownloadAgentFailure += OnDownloadAgentFailure;
 
-            m_TaskPool.AddAgent(agent);
+            _taskPool.AddAgent(agent);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace ZeroFramework.Download
         /// <returns>下载任务的信息。</returns>
         public TaskInfo GetDownloadInfo(int serialId)
         {
-            return m_TaskPool.GetTaskInfo(serialId);
+            return _taskPool.GetTaskInfo(serialId);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace ZeroFramework.Download
         /// <returns>下载任务的信息。</returns>
         public TaskInfo[] GetDownloadInfos(string tag)
         {
-            return m_TaskPool.GetTaskInfos(tag);
+            return _taskPool.GetTaskInfos(tag);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace ZeroFramework.Download
         /// <param name="results">下载任务的信息。</param>
         public void GetDownloadInfos(string tag, List<TaskInfo> results)
         {
-            m_TaskPool.GetTaskInfos(tag, results);
+            _taskPool.GetTaskInfos(tag, results);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace ZeroFramework.Download
         /// <returns>所有下载任务的信息。</returns>
         public TaskInfo[] GetAllDownloadInfos()
         {
-            return m_TaskPool.GetAllTaskInfos();
+            return _taskPool.GetAllTaskInfos();
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace ZeroFramework.Download
         /// <param name="results">所有下载任务的信息。</param>
         public void GetAllDownloadInfos(List<TaskInfo> results)
         {
-            m_TaskPool.GetAllTaskInfos(results);
+            _taskPool.GetAllTaskInfos(results);
         }
 
         /// <summary>
@@ -346,9 +346,9 @@ namespace ZeroFramework.Download
                 throw new GameFrameworkException("You must add download agent first.");
             }
 
-            DownloadTask downloadTask = DownloadTask.Create(downloadPath, downloadUri, tag, priority, m_FlushSize,
-                m_Timeout, userData);
-            m_TaskPool.AddTask(downloadTask);
+            DownloadTask downloadTask = DownloadTask.Create(downloadPath, downloadUri, tag, priority, _flushSize,
+                _timeout, userData);
+            _taskPool.AddTask(downloadTask);
             return downloadTask.SerialId;
         }
 
@@ -359,7 +359,7 @@ namespace ZeroFramework.Download
         /// <returns>是否移除下载任务成功。</returns>
         public bool RemoveDownload(int serialId)
         {
-            return m_TaskPool.RemoveTask(serialId);
+            return _taskPool.RemoveTask(serialId);
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace ZeroFramework.Download
         /// <returns>移除下载任务的数量。</returns>
         public int RemoveDownloads(string tag)
         {
-            return m_TaskPool.RemoveTasks(tag);
+            return _taskPool.RemoveTasks(tag);
         }
 
         /// <summary>
@@ -378,52 +378,52 @@ namespace ZeroFramework.Download
         /// <returns>移除下载任务的数量。</returns>
         public int RemoveAllDownloads()
         {
-            return m_TaskPool.RemoveAllTasks();
+            return _taskPool.RemoveAllTasks();
         }
 
         private void OnDownloadAgentStart(DownloadAgent sender)
         {
-            if (m_DownloadStartEventHandler != null)
+            if (_downloadStartEventHandler != null)
             {
                 DownloadStartEventArgs downloadStartEventArgs = DownloadStartEventArgs.Create(sender.Task.SerialId,
                     sender.Task.DownloadPath, sender.Task.DownloadUri, sender.CurrentLength, sender.Task.UserData);
-                m_DownloadStartEventHandler(this, downloadStartEventArgs);
+                _downloadStartEventHandler(this, downloadStartEventArgs);
                 ReferencePool.Release(downloadStartEventArgs);
             }
         }
 
         private void OnDownloadAgentUpdate(DownloadAgent sender, int deltaLength)
         {
-            m_DownloadCounter.RecordDeltaLength(deltaLength);
-            if (m_DownloadUpdateEventHandler != null)
+            _downloadCounter.RecordDeltaLength(deltaLength);
+            if (_downloadUpdateEventHandler != null)
             {
                 DownloadUpdateEventArgs downloadUpdateEventArgs = DownloadUpdateEventArgs.Create(sender.Task.SerialId,
                     sender.Task.DownloadPath, sender.Task.DownloadUri, sender.CurrentLength, sender.Task.UserData);
-                m_DownloadUpdateEventHandler(this, downloadUpdateEventArgs);
+                _downloadUpdateEventHandler(this, downloadUpdateEventArgs);
                 ReferencePool.Release(downloadUpdateEventArgs);
             }
         }
 
         private void OnDownloadAgentSuccess(DownloadAgent sender, long length)
         {
-            if (m_DownloadSuccessEventHandler != null)
+            if (_downloadSuccessEventHandler != null)
             {
                 DownloadSuccessEventArgs downloadSuccessEventArgs =
                     DownloadSuccessEventArgs.Create(sender.Task.SerialId, sender.Task.DownloadPath,
                         sender.Task.DownloadUri, sender.CurrentLength, sender.Task.UserData);
-                m_DownloadSuccessEventHandler(this, downloadSuccessEventArgs);
+                _downloadSuccessEventHandler(this, downloadSuccessEventArgs);
                 ReferencePool.Release(downloadSuccessEventArgs);
             }
         }
 
         private void OnDownloadAgentFailure(DownloadAgent sender, string errorMessage)
         {
-            if (m_DownloadFailureEventHandler != null)
+            if (_downloadFailureEventHandler != null)
             {
                 DownloadFailureEventArgs downloadFailureEventArgs =
                     DownloadFailureEventArgs.Create(sender.Task.SerialId, sender.Task.DownloadPath,
                         sender.Task.DownloadUri, errorMessage, sender.Task.UserData);
-                m_DownloadFailureEventHandler(this, downloadFailureEventArgs);
+                _downloadFailureEventHandler(this, downloadFailureEventArgs);
                 ReferencePool.Release(downloadFailureEventArgs);
             }
         }

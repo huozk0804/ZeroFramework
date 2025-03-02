@@ -16,20 +16,20 @@ namespace ZeroFramework
         private static readonly string[] EmptyStringArray = new string[] { };
         private static readonly string[] PathSplitSeparator = new string[] { ".", "/", "\\" };
         private const string RootName = "<Root>";
-        private DataNode m_Root;
+        private DataNode _root;
 
         /// <summary>
         /// 初始化数据结点管理器的新实例。
         /// </summary>
         public DataNodeManager()
         {
-            m_Root = DataNode.Create(RootName, null);
+            _root = DataNode.Create(RootName, null);
         }
 
         /// <summary>
         /// 获取根数据结点。
         /// </summary>
-        public IDataNode Root => m_Root;
+        public IDataNode Root => _root;
 
         /// <summary>
         /// 数据结点管理器轮询。
@@ -45,8 +45,8 @@ namespace ZeroFramework
         /// </summary>
         public override void Shutdown()
         {
-            ReferencePool.Release(m_Root);
-            m_Root = null;
+            ReferencePool.Release(_root);
+            _root = null;
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace ZeroFramework
         /// <returns>指定位置的数据结点，如果没有找到，则返回空。</returns>
         public IDataNode GetNode(string path, IDataNode node)
         {
-            IDataNode current = node ?? m_Root;
+            IDataNode current = node ?? _root;
             string[] splitedPath = GetSplitedPath(path);
             foreach (string i in splitedPath)
             {
@@ -203,7 +203,7 @@ namespace ZeroFramework
         /// <returns>指定位置的数据结点，如果没有找到，则增加相应的数据结点。</returns>
         public IDataNode GetOrAddNode(string path, IDataNode node)
         {
-            IDataNode current = node ?? m_Root;
+            IDataNode current = node ?? _root;
             string[] splitedPath = GetSplitedPath(path);
             foreach (string i in splitedPath)
             {
@@ -229,7 +229,7 @@ namespace ZeroFramework
         /// <param name="node">查找起始结点。</param>
         public void RemoveNode(string path, IDataNode node)
         {
-            IDataNode current = node ?? m_Root;
+            IDataNode current = node ?? _root;
             IDataNode parent = current.Parent;
             string[] splitedPath = GetSplitedPath(path);
             foreach (string i in splitedPath)
@@ -253,7 +253,7 @@ namespace ZeroFramework
         /// </summary>
         public void Clear()
         {
-            m_Root.Clear();
+            _root.Clear();
         }
 
         /// <summary>

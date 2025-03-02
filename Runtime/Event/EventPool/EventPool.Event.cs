@@ -13,31 +13,31 @@ namespace ZeroFramework
         /// </summary>
         private sealed class Event : IReference
         {
-            private object m_Sender;
-            private T m_EventArgs;
+            private object _sender;
+            private T _eventArgs;
 
             public Event()
             {
-                m_Sender = null;
-                m_EventArgs = null;
+                _sender = null;
+                _eventArgs = null;
             }
 
-            public object Sender => m_Sender;
+            public object Sender => _sender;
 
-            public T EventArgs => m_EventArgs;
+            public T EventArgs => _eventArgs;
 
             public static Event Create(object sender, T e)
             {
                 Event eventNode = ReferencePool.Acquire<Event>();
-                eventNode.m_Sender = sender;
-                eventNode.m_EventArgs = e;
+                eventNode._sender = sender;
+                eventNode._eventArgs = e;
                 return eventNode;
             }
 
             public void Clear()
             {
-                m_Sender = null;
-                m_EventArgs = null;
+                _sender = null;
+                _eventArgs = null;
             }
         }
     }

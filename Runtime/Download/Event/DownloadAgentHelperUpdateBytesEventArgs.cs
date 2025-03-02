@@ -11,14 +11,14 @@ namespace ZeroFramework.Download
     /// </summary>
     public sealed class DownloadAgentHelperUpdateBytesEventArgs : GameFrameworkEventArgs
     {
-        private byte[] m_Bytes;
+        private byte[] _bytes;
 
         /// <summary>
         /// 初始化下载代理辅助器更新数据流事件的新实例。
         /// </summary>
         public DownloadAgentHelperUpdateBytesEventArgs()
         {
-            m_Bytes = null;
+            _bytes = null;
             Offset = 0;
             Length = 0;
         }
@@ -59,7 +59,7 @@ namespace ZeroFramework.Download
 
             DownloadAgentHelperUpdateBytesEventArgs downloadAgentHelperUpdateBytesEventArgs =
                 ReferencePool.Acquire<DownloadAgentHelperUpdateBytesEventArgs>();
-            downloadAgentHelperUpdateBytesEventArgs.m_Bytes = bytes;
+            downloadAgentHelperUpdateBytesEventArgs._bytes = bytes;
             downloadAgentHelperUpdateBytesEventArgs.Offset = offset;
             downloadAgentHelperUpdateBytesEventArgs.Length = length;
             return downloadAgentHelperUpdateBytesEventArgs;
@@ -70,7 +70,7 @@ namespace ZeroFramework.Download
         /// </summary>
         public override void Clear()
         {
-            m_Bytes = null;
+            _bytes = null;
             Offset = 0;
             Length = 0;
         }
@@ -80,7 +80,7 @@ namespace ZeroFramework.Download
         /// </summary>
         public byte[] GetBytes()
         {
-            return m_Bytes;
+            return _bytes;
         }
     }
 }

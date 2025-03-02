@@ -15,7 +15,7 @@ namespace ZeroFramework
     /// </summary>
     public static class BinaryExtension
     {
-        private static readonly byte[] s_CachedBytes = new byte[byte.MaxValue + 1];
+        private static readonly byte[] CachedBytes = new byte[byte.MaxValue + 1];
 
         /// <summary>
         /// 从二进制流读取编码后的 32 位有符号整数。
@@ -162,12 +162,12 @@ namespace ZeroFramework
 
             for (byte i = 0; i < length; i++)
             {
-                s_CachedBytes[i] = binaryReader.ReadByte();
+                CachedBytes[i] = binaryReader.ReadByte();
             }
 
-            Utility.Encryption.GetSelfXorBytes(s_CachedBytes, 0, length, encryptBytes);
-            string value = Utility.Converter.GetString(s_CachedBytes, 0, length);
-            Array.Clear(s_CachedBytes, 0, length);
+            Utility.Encryption.GetSelfXorBytes(CachedBytes, 0, length, encryptBytes);
+            string value = Utility.Converter.GetString(CachedBytes, 0, length);
+            Array.Clear(CachedBytes, 0, length);
             return value;
         }
 
@@ -185,15 +185,15 @@ namespace ZeroFramework
                 return;
             }
 
-            int length = Utility.Converter.GetBytes(value, s_CachedBytes);
+            int length = Utility.Converter.GetBytes(value, CachedBytes);
             if (length > byte.MaxValue)
             {
                 throw new GameFrameworkException(Utility.Text.Format("String '{0}' is too long.", value));
             }
 
-            Utility.Encryption.GetSelfXorBytes(s_CachedBytes, encryptBytes);
+            Utility.Encryption.GetSelfXorBytes(CachedBytes, encryptBytes);
             binaryWriter.Write((byte)length);
-            binaryWriter.Write(s_CachedBytes, 0, length);
+            binaryWriter.Write(CachedBytes, 0, length);
         }
     }
 }

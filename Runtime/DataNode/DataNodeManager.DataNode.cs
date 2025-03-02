@@ -17,17 +17,17 @@ namespace ZeroFramework
         {
             private static readonly DataNode[] EmptyDataNodeArray = new DataNode[] { };
 
-            private string m_Name;
-            private Variable m_Data;
-            private DataNode m_Parent;
-            private List<DataNode> m_Childs;
+            private string _name;
+            private Variable _data;
+            private DataNode _parent;
+            private List<DataNode> _childs;
 
             public DataNode()
             {
-                m_Name = null;
-                m_Data = null;
-                m_Parent = null;
-                m_Childs = null;
+                _name = null;
+                _data = null;
+                _parent = null;
+                _childs = null;
             }
 
             /// <summary>
@@ -44,30 +44,30 @@ namespace ZeroFramework
                 }
 
                 DataNode node = ReferencePool.Acquire<DataNode>();
-                node.m_Name = name;
-                node.m_Parent = parent;
+                node._name = name;
+                node._parent = parent;
                 return node;
             }
 
             /// <summary>
             /// 获取数据结点的名称。
             /// </summary>
-            public string Name => m_Name;
+            public string Name => _name;
 
             /// <summary>
             /// 获取数据结点的完整名称。
             /// </summary>
-            public string FullName => m_Parent == null ? m_Name : Utility.Text.Format("{0}{1}{2}", m_Parent.FullName, PathSplitSeparator[0], m_Name);
+            public string FullName => _parent == null ? _name : Utility.Text.Format("{0}{1}{2}", _parent.FullName, PathSplitSeparator[0], _name);
 
             /// <summary>
             /// 获取父数据结点。
             /// </summary>
-            public IDataNode Parent => m_Parent;
+            public IDataNode Parent => _parent;
 
             /// <summary>
             /// 获取子数据结点的数量。
             /// </summary>
-            public int ChildCount => m_Childs != null ? m_Childs.Count : 0;
+            public int ChildCount => _childs != null ? _childs.Count : 0;
 
             /// <summary>
             /// 根据类型获取数据结点的数据。
@@ -76,7 +76,7 @@ namespace ZeroFramework
             /// <returns>指定类型的数据。</returns>
             public T GetData<T>() where T : Variable
             {
-                return (T)m_Data;
+                return (T)_data;
             }
 
             /// <summary>
@@ -85,7 +85,7 @@ namespace ZeroFramework
             /// <returns>数据结点数据。</returns>
             public Variable GetData()
             {
-                return m_Data;
+                return _data;
             }
 
             /// <summary>
@@ -104,12 +104,12 @@ namespace ZeroFramework
             /// <param name="data">要设置的数据。</param>
             public void SetData(Variable data)
             {
-                if (m_Data != null)
+                if (_data != null)
                 {
-                    ReferencePool.Release(m_Data);
+                    ReferencePool.Release(_data);
                 }
 
-                m_Data = data;
+                _data = data;
             }
 
             /// <summary>
@@ -134,12 +134,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Name is invalid.");
                 }
 
-                if (m_Childs == null)
+                if (_childs == null)
                 {
                     return false;
                 }
 
-                foreach (DataNode child in m_Childs)
+                foreach (DataNode child in _childs)
                 {
                     if (child.Name == name)
                     {
@@ -157,7 +157,7 @@ namespace ZeroFramework
             /// <returns>指定索引的子数据结点，如果索引越界，则返回空。</returns>
             public IDataNode GetChild(int index)
             {
-                return index >= 0 && index < ChildCount ? m_Childs[index] : null;
+                return index >= 0 && index < ChildCount ? _childs[index] : null;
             }
 
             /// <summary>
@@ -172,12 +172,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Name is invalid.");
                 }
 
-                if (m_Childs == null)
+                if (_childs == null)
                 {
                     return null;
                 }
 
-                foreach (DataNode child in m_Childs)
+                foreach (DataNode child in _childs)
                 {
                     if (child.Name == name)
                     {
@@ -203,12 +203,12 @@ namespace ZeroFramework
 
                 node = Create(name, this);
 
-                if (m_Childs == null)
+                if (_childs == null)
                 {
-                    m_Childs = new List<DataNode>();
+                    _childs = new List<DataNode>();
                 }
 
-                m_Childs.Add(node);
+                _childs.Add(node);
 
                 return node;
             }
@@ -219,12 +219,12 @@ namespace ZeroFramework
             /// <returns>所有子数据结点。</returns>
             public IDataNode[] GetAllChild()
             {
-                if (m_Childs == null)
+                if (_childs == null)
                 {
                     return EmptyDataNodeArray;
                 }
 
-                return m_Childs.ToArray();
+                return _childs.ToArray();
             }
 
             /// <summary>
@@ -239,12 +239,12 @@ namespace ZeroFramework
                 }
 
                 results.Clear();
-                if (m_Childs == null)
+                if (_childs == null)
                 {
                     return;
                 }
 
-                foreach (DataNode child in m_Childs)
+                foreach (DataNode child in _childs)
                 {
                     results.Add(child);
                 }
@@ -262,7 +262,7 @@ namespace ZeroFramework
                     return;
                 }
 
-                m_Childs.Remove(node);
+                _childs.Remove(node);
                 ReferencePool.Release(node);
             }
 
@@ -278,26 +278,26 @@ namespace ZeroFramework
                     return;
                 }
 
-                m_Childs.Remove(node);
+                _childs.Remove(node);
                 ReferencePool.Release(node);
             }
 
             public void Clear()
             {
-                if (m_Data != null)
+                if (_data != null)
                 {
-                    ReferencePool.Release(m_Data);
-                    m_Data = null;
+                    ReferencePool.Release(_data);
+                    _data = null;
                 }
 
-                if (m_Childs != null)
+                if (_childs != null)
                 {
-                    foreach (DataNode child in m_Childs)
+                    foreach (DataNode child in _childs)
                     {
                         ReferencePool.Release(child);
                     }
 
-                    m_Childs.Clear();
+                    _childs.Clear();
                 }
             }
 
@@ -316,12 +316,12 @@ namespace ZeroFramework
             /// <returns>数据字符串。</returns>
             public string ToDataString()
             {
-                if (m_Data == null)
+                if (_data == null)
                 {
                     return "<Null>";
                 }
 
-                return Utility.Text.Format("[{0}] {1}", m_Data.Type.Name, m_Data);
+                return Utility.Text.Format("[{0}] {1}", _data.Type.Name, _data);
             }
 
             /// <summary>
@@ -349,8 +349,8 @@ namespace ZeroFramework
 
             void IReference.Clear()
             {
-                m_Name = null;
-                m_Parent = null;
+                _name = null;
+                _parent = null;
                 Clear();
             }
         }
