@@ -1,8 +1,11 @@
 ﻿namespace ZeroFramework.UI
 {
-    public abstract class UISubForm : IReference
+    /// <summary>
+    /// 不单独存在，依附于UIForm实例存在
+    /// </summary>
+    public abstract class UIView : IReference
     {
-        public UIForm Parent { get; }
+        public UIPanel Parent { get; }
         
         public virtual void OnShow(object args)
         {
@@ -22,7 +25,7 @@
 
         public void Clear()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

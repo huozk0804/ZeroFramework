@@ -9,12 +9,12 @@ namespace ZeroFramework.UI
     /// <summary>
     /// 关闭界面完成事件。
     /// </summary>
-    public sealed class CloseUIFormCompleteEventArgs : GameFrameworkEventArgs
+    public sealed class CloseUIPanelCompleteEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化关闭界面完成事件的新实例。
         /// </summary>
-        public CloseUIFormCompleteEventArgs()
+        public CloseUIPanelCompleteEventArgs()
         {
             SerialId = 0;
             UIFormAssetName = null;
@@ -50,11 +50,11 @@ namespace ZeroFramework.UI
         /// <param name="uiGroup">界面所属的界面组。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的关闭界面完成事件。</returns>
-        public static CloseUIFormCompleteEventArgs Create(int serialId, string uiFormAssetName, IUIGroup uiGroup,
+        public static CloseUIPanelCompleteEventArgs Create(int serialId, string uiFormAssetName, IUIGroup uiGroup,
             object userData)
         {
-            CloseUIFormCompleteEventArgs closeUIFormCompleteEventArgs =
-                ReferencePool.Acquire<CloseUIFormCompleteEventArgs>();
+            CloseUIPanelCompleteEventArgs closeUIFormCompleteEventArgs =
+                ReferencePool.Acquire<CloseUIPanelCompleteEventArgs>();
             closeUIFormCompleteEventArgs.SerialId = serialId;
             closeUIFormCompleteEventArgs.UIFormAssetName = uiFormAssetName;
             closeUIFormCompleteEventArgs.UIGroup = uiGroup;

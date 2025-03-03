@@ -9,12 +9,12 @@ namespace ZeroFramework.UI
     /// <summary>
     /// 打开界面失败事件。
     /// </summary>
-    public sealed class OpenUIFormFailureEventArgs : GameFrameworkEventArgs
+    public sealed class OpenUIPanelFailureEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化打开界面失败事件的新实例。
         /// </summary>
-        public OpenUIFormFailureEventArgs()
+        public OpenUIPanelFailureEventArgs()
         {
             SerialId = 0;
             UIFormAssetName = null;
@@ -64,10 +64,10 @@ namespace ZeroFramework.UI
         /// <param name="errorMessage">错误信息。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的打开界面失败事件。</returns>
-        public static OpenUIFormFailureEventArgs Create(int serialId, string uiFormAssetName, string uiGroupName,
+        public static OpenUIPanelFailureEventArgs Create(int serialId, string uiFormAssetName, string uiGroupName,
             bool pauseCoveredUIForm, string errorMessage, object userData)
         {
-            OpenUIFormFailureEventArgs openUIFormFailureEventArgs = ReferencePool.Acquire<OpenUIFormFailureEventArgs>();
+            OpenUIPanelFailureEventArgs openUIFormFailureEventArgs = ReferencePool.Acquire<OpenUIPanelFailureEventArgs>();
             openUIFormFailureEventArgs.SerialId = serialId;
             openUIFormFailureEventArgs.UIFormAssetName = uiFormAssetName;
             openUIFormFailureEventArgs.UIGroupName = uiGroupName;

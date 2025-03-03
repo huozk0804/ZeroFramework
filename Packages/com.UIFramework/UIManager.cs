@@ -18,17 +18,18 @@ namespace ZeroFramework.UI
         private readonly Dictionary<string, UIGroup> _uiGroups;
         private readonly Dictionary<int, string> _uiFormsBeingLoaded;
         private readonly HashSet<int> _uiFormsToReleaseOnLoad;
-        private readonly Queue<IUIForm> _recycleQueue;
+        private readonly Queue<IUIPanel> _recycleQueue;
 
-        private IObjectPool<UIFormInstanceObject> _instancePool;
-        private IUIFormHelper _uiFormHelper;
-        private int _serial;
+        private IObjectPool<UIPanelInstanceObject> _instancePool;
+        private IUIPanelHelper _uiFormHelper;
+        private IUIGroupHelper _uiGroupHelper;
+		private int _serial;
         private bool _isShutdown;
-        private EventHandler<OpenUIFormSuccessEventArgs> _openUIFormSuccessEventHandler;
-        private EventHandler<OpenUIFormFailureEventArgs> _openUIFormFailureEventHandler;
-        private EventHandler<OpenUIFormUpdateEventArgs> _openUIFormUpdateEventHandler;
-        private EventHandler<OpenUIFormDependencyAssetEventArgs> _openUIFormDependencyAssetEventHandler;
-        private EventHandler<CloseUIFormCompleteEventArgs> _closeUIFormCompleteEventHandler;
+        private EventHandler<OpenUIPanelSuccessEventArgs> _openUIFormSuccessEventHandler;
+        private EventHandler<OpenUIPanelFailureEventArgs> _openUIFormFailureEventHandler;
+        private EventHandler<OpenUIPanelUpdateEventArgs> _openUIFormUpdateEventHandler;
+        private EventHandler<OpenUIPanelDependencyAssetEventArgs> _openUIFormDependencyAssetEventHandler;
+        private EventHandler<CloseUIPanelCompleteEventArgs> _closeUIFormCompleteEventHandler;
 
         /// <summary>
         /// 初始化界面管理器的新实例。
@@ -38,7 +39,7 @@ namespace ZeroFramework.UI
             _uiGroups = new Dictionary<string, UIGroup>(StringComparer.Ordinal);
             _uiFormsBeingLoaded = new Dictionary<int, string>();
             _uiFormsToReleaseOnLoad = new HashSet<int>();
-            _recycleQueue = new Queue<IUIForm>();
+            _recycleQueue = new Queue<IUIPanel>();
 
             _serial = 0;
             _isShutdown = false;
@@ -49,17 +50,22 @@ namespace ZeroFramework.UI
             _closeUIFormCompleteEventHandler = null;
 
             _instancePool =
-                Zero.Instance.ObjectPool.CreateSingleSpawnObjectPool<UIFormInstanceObject>("UI Instance Pool");
+                Zero.Instance.ObjectPool.CreateSingleSpawnObjectPool<UIPanelInstanceObject>("UI Instance Pool");
 
-            UIFormHelperBase uiFormHelper = Helper.CreateHelper(GameFrameworkConfig.Instance.uiFormHelperTypeName,
+            UIPanelHelperBase uiFormHelper = Helper.CreateHelper(GameFrameworkConfig.Instance.uiFormHelperTypeName,
                 GameFrameworkConfig.Instance.uiFormCustomHelper);
             if (uiFormHelper == null)
             {
                 Log.Error("Can not create ui form config helper.");
                 return;
             }
-
             SetUIFormHelper(uiFormHelper);
+
+            UIGroupHelperBase uIGroupHelper = Helper.CreateHelper(GameFrameworkConfig.Instance.uiGroupHelperTypeName, GameFrameworkConfig.Instance.uiGroupCustomHelper);
+            if (uIGroupHelper == null) {
+                Log.Error("Can not create ui group helper.");
+                return;
+            }
         }
 
         /// <summary>
@@ -106,7 +112,7 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 打开界面成功事件。
         /// </summary>
-        public event EventHandler<OpenUIFormSuccessEventArgs> OpenUIFormSuccess
+        public event EventHandler<OpenUIPanelSuccessEventArgs> OpenUIFormSuccess
         {
             add => _openUIFormSuccessEventHandler += value;
             remove => _openUIFormSuccessEventHandler -= value;
@@ -115,7 +121,7 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 打开界面失败事件。
         /// </summary>
-        public event EventHandler<OpenUIFormFailureEventArgs> OpenUIFormFailure
+        public event EventHandler<OpenUIPanelFailureEventArgs> OpenUIFormFailure
         {
             add => _openUIFormFailureEventHandler += value;
             remove => _openUIFormFailureEventHandler -= value;
@@ -124,7 +130,7 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 打开界面更新事件。
         /// </summary>
-        public event EventHandler<OpenUIFormUpdateEventArgs> OpenUIFormUpdate
+        public event EventHandler<OpenUIPanelUpdateEventArgs> OpenUIFormUpdate
         {
             add => _openUIFormUpdateEventHandler += value;
             remove => _openUIFormUpdateEventHandler -= value;
@@ -133,7 +139,7 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 打开界面时加载依赖资源事件。
         /// </summary>
-        public event EventHandler<OpenUIFormDependencyAssetEventArgs> OpenUIFormDependencyAsset
+        public event EventHandler<OpenUIPanelDependencyAssetEventArgs> OpenUIFormDependencyAsset
         {
             add => _openUIFormDependencyAssetEventHandler += value;
             remove => _openUIFormDependencyAssetEventHandler -= value;
@@ -142,7 +148,7 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 关闭界面完成事件。
         /// </summary>
-        public event EventHandler<CloseUIFormCompleteEventArgs> CloseUIFormComplete
+        public event EventHandler<CloseUIPanelCompleteEventArgs> CloseUIFormComplete
         {
             add => _closeUIFormCompleteEventHandler += value;
             remove => _closeUIFormCompleteEventHandler -= value;
@@ -157,7 +163,7 @@ namespace ZeroFramework.UI
         {
             while (_recycleQueue.Count > 0)
             {
-                IUIForm uiForm = _recycleQueue.Dequeue();
+                IUIPanel uiForm = _recycleQueue.Dequeue();
                 uiForm.OnRecycle();
                 _instancePool.Unspawn(uiForm.Handle);
             }
@@ -185,17 +191,33 @@ namespace ZeroFramework.UI
         /// 设置界面辅助器。
         /// </summary>
         /// <param name="uiFormHelper">界面辅助器。</param>
-        public void SetUIFormHelper(IUIFormHelper uiFormHelper)
+        public void SetUIFormHelper(IUIPanelHelper uiFormHelper)
         {
-            _uiFormHelper = uiFormHelper ?? throw new GameFrameworkException("UI form helper is invalid.");
+            if(uiFormHelper == null) {
+				throw new GameFrameworkException("UI form helper is invalid.");
+			}
+
+            _uiFormHelper = uiFormHelper;
         }
 
-        /// <summary>
-        /// 是否存在界面组。
-        /// </summary>
-        /// <param name="uiGroupName">界面组名称。</param>
-        /// <returns>是否存在界面组。</returns>
-        public bool HasUIGroup(string uiGroupName)
+		/// <summary>
+		/// 设置界面辅助器。
+		/// </summary>
+		/// <param name="uiFormHelper">界面辅助器。</param>
+		public void SetUIGroupHelper (IUIGroupHelper uiGroupHelper) {
+			if (uiGroupHelper == null) {
+				throw new GameFrameworkException("UI group helper is invalid.");
+			}
+
+			_uiGroupHelper = uiGroupHelper;
+		}
+
+		/// <summary>
+		/// 是否存在界面组。
+		/// </summary>
+		/// <param name="uiGroupName">界面组名称。</param>
+		/// <returns>是否存在界面组。</returns>
+		public bool HasUIGroup(string uiGroupName)
         {
             if (string.IsNullOrEmpty(uiGroupName))
             {
@@ -259,13 +281,22 @@ namespace ZeroFramework.UI
             }
         }
 
-        /// <summary>
-        /// 增加界面组。
-        /// </summary>
-        /// <param name="uiGroupName">界面组名称。</param>
-        /// <param name="uiGroupHelper">界面组辅助器。</param>
-        /// <returns>是否增加界面组成功。</returns>
-        public bool AddUIGroup(string uiGroupName, IUIGroupHelper uiGroupHelper)
+		/// <summary>
+		/// 增加界面组。
+		/// </summary>
+		/// <param name="uiGroupName">界面组名称。</param>
+		/// <returns>是否增加界面组成功。</returns>
+		public bool AddUIGroup (string uiGroupName) {
+			return AddUIGroup(uiGroupName, 0, _uiGroupHelper);
+		}
+
+		/// <summary>
+		/// 增加界面组。
+		/// </summary>
+		/// <param name="uiGroupName">界面组名称。</param>
+		/// <param name="uiGroupHelper">界面组辅助器。</param>
+		/// <returns>是否增加界面组成功。</returns>
+		public bool AddUIGroup(string uiGroupName, IUIGroupHelper uiGroupHelper)
         {
             return AddUIGroup(uiGroupName, 0, uiGroupHelper);
         }
@@ -345,11 +376,11 @@ namespace ZeroFramework.UI
         /// </summary>
         /// <param name="serialId">界面序列编号。</param>
         /// <returns>要获取的界面。</returns>
-        public IUIForm GetUIForm(int serialId)
+        public IUIPanel GetUIForm(int serialId)
         {
             foreach (KeyValuePair<string, UIGroup> uiGroup in _uiGroups)
             {
-                IUIForm uiForm = uiGroup.Value.GetUIForm(serialId);
+                IUIPanel uiForm = uiGroup.Value.GetUIForm(serialId);
                 if (uiForm != null)
                 {
                     return uiForm;
@@ -364,7 +395,7 @@ namespace ZeroFramework.UI
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        public IUIForm GetUIForm(string uiFormAssetName)
+        public IUIPanel GetUIForm(string uiFormAssetName)
         {
             if (string.IsNullOrEmpty(uiFormAssetName))
             {
@@ -373,7 +404,7 @@ namespace ZeroFramework.UI
 
             foreach (KeyValuePair<string, UIGroup> uiGroup in _uiGroups)
             {
-                IUIForm uiForm = uiGroup.Value.GetUIForm(uiFormAssetName);
+                IUIPanel uiForm = uiGroup.Value.GetUIForm(uiFormAssetName);
                 if (uiForm != null)
                 {
                     return uiForm;
@@ -388,14 +419,14 @@ namespace ZeroFramework.UI
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        public IUIForm[] GetUIForms(string uiFormAssetName)
+        public IUIPanel[] GetUIForms(string uiFormAssetName)
         {
             if (string.IsNullOrEmpty(uiFormAssetName))
             {
                 throw new GameFrameworkException("UI form asset name is invalid.");
             }
 
-            List<IUIForm> results = new List<IUIForm>();
+            List<IUIPanel> results = new List<IUIPanel>();
             foreach (KeyValuePair<string, UIGroup> uiGroup in _uiGroups)
             {
                 results.AddRange(uiGroup.Value.GetUIForms(uiFormAssetName));
@@ -409,7 +440,7 @@ namespace ZeroFramework.UI
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <param name="results">要获取的界面。</param>
-        public void GetUIForms(string uiFormAssetName, List<IUIForm> results)
+        public void GetUIForms(string uiFormAssetName, List<IUIPanel> results)
         {
             if (string.IsNullOrEmpty(uiFormAssetName))
             {
@@ -432,9 +463,9 @@ namespace ZeroFramework.UI
         /// 获取所有已加载的界面。
         /// </summary>
         /// <returns>所有已加载的界面。</returns>
-        public IUIForm[] GetAllLoadedUIForms()
+        public IUIPanel[] GetAllLoadedUIForms()
         {
-            List<IUIForm> results = new List<IUIForm>();
+            List<IUIPanel> results = new List<IUIPanel>();
             foreach (KeyValuePair<string, UIGroup> uiGroup in _uiGroups)
             {
                 results.AddRange(uiGroup.Value.GetAllUIForms());
@@ -447,7 +478,7 @@ namespace ZeroFramework.UI
         /// 获取所有已加载的界面。
         /// </summary>
         /// <param name="results">所有已加载的界面。</param>
-        public void GetAllLoadedUIForms(List<IUIForm> results)
+        public void GetAllLoadedUIForms(List<IUIPanel> results)
         {
             if (results == null)
             {
@@ -525,7 +556,7 @@ namespace ZeroFramework.UI
         /// </summary>
         /// <param name="uiForm">界面。</param>
         /// <returns>界面是否合法。</returns>
-        public bool IsValidUIForm(IUIForm uiForm)
+        public bool IsValidUIForm(IUIPanel uiForm)
         {
             if (uiForm == null)
             {
@@ -655,7 +686,7 @@ namespace ZeroFramework.UI
             }
 
             int serialId = ++_serial;
-            UIFormInstanceObject uiFormInstanceObject = _instancePool.Spawn(uiFormAssetName);
+            UIPanelInstanceObject uiFormInstanceObject = _instancePool.Spawn(uiFormAssetName);
             if (uiFormInstanceObject == null)
             {
                 _uiFormsBeingLoaded.Add(serialId, uiFormAssetName);
@@ -695,7 +726,7 @@ namespace ZeroFramework.UI
                 return;
             }
 
-            IUIForm uiForm = GetUIForm(serialId);
+            IUIPanel uiForm = GetUIForm(serialId);
             if (uiForm == null)
             {
                 throw new GameFrameworkException(Utility.Text.Format("Can not find UI form '{0}'.", serialId));
@@ -708,7 +739,7 @@ namespace ZeroFramework.UI
         /// 关闭界面。
         /// </summary>
         /// <param name="uiForm">要关闭的界面。</param>
-        public void CloseUIForm(IUIForm uiForm)
+        public void CloseUIForm(IUIPanel uiForm)
         {
             CloseUIForm(uiForm, null);
         }
@@ -718,7 +749,7 @@ namespace ZeroFramework.UI
         /// </summary>
         /// <param name="uiForm">要关闭的界面。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public void CloseUIForm(IUIForm uiForm, object userData)
+        public void CloseUIForm(IUIPanel uiForm, object userData)
         {
             if (uiForm == null)
             {
@@ -737,8 +768,8 @@ namespace ZeroFramework.UI
 
             if (_closeUIFormCompleteEventHandler != null)
             {
-                CloseUIFormCompleteEventArgs closeUIFormCompleteEventArgs =
-                    CloseUIFormCompleteEventArgs.Create(uiForm.SerialId, uiForm.UIFormAssetName, uiGroup, userData);
+                CloseUIPanelCompleteEventArgs closeUIFormCompleteEventArgs =
+                    CloseUIPanelCompleteEventArgs.Create(uiForm.SerialId, uiForm.UIFormAssetName, uiGroup, userData);
                 _closeUIFormCompleteEventHandler(this, closeUIFormCompleteEventArgs);
                 ReferencePool.Release(closeUIFormCompleteEventArgs);
             }
@@ -760,8 +791,8 @@ namespace ZeroFramework.UI
         /// <param name="userData">用户自定义数据。</param>
         public void CloseAllLoadedUIForms(object userData)
         {
-            IUIForm[] uiForms = GetAllLoadedUIForms();
-            foreach (IUIForm uiForm in uiForms)
+            IUIPanel[] uiForms = GetAllLoadedUIForms();
+            foreach (IUIPanel uiForm in uiForms)
             {
                 if (!HasUIForm(uiForm.SerialId))
                 {
@@ -789,7 +820,7 @@ namespace ZeroFramework.UI
         /// 激活界面。
         /// </summary>
         /// <param name="uiForm">要激活的界面。</param>
-        public void RefocusUIForm(IUIForm uiForm)
+        public void RefocusUIForm(IUIPanel uiForm)
         {
             RefocusUIForm(uiForm, null);
         }
@@ -799,7 +830,7 @@ namespace ZeroFramework.UI
         /// </summary>
         /// <param name="uiForm">要激活的界面。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public void RefocusUIForm(IUIForm uiForm, object userData)
+        public void RefocusUIForm(IUIPanel uiForm, object userData)
         {
             if (uiForm == null)
             {
@@ -852,7 +883,7 @@ namespace ZeroFramework.UI
         {
             try
             {
-                IUIForm uiForm = _uiFormHelper.CreateUIForm(uiFormInstance, uiGroup, userData);
+                IUIPanel uiForm = _uiFormHelper.CreateUIForm(uiFormInstance, uiGroup, userData);
                 if (uiForm == null)
                 {
                     throw new GameFrameworkException("Can not create UI form in UI form helper.");
@@ -865,8 +896,8 @@ namespace ZeroFramework.UI
 
                 if (_openUIFormSuccessEventHandler != null)
                 {
-                    OpenUIFormSuccessEventArgs openUIFormSuccessEventArgs =
-                        OpenUIFormSuccessEventArgs.Create(uiForm, duration, userData);
+                    OpenUIPanelSuccessEventArgs openUIFormSuccessEventArgs =
+                        OpenUIPanelSuccessEventArgs.Create(uiForm, duration, userData);
                     _openUIFormSuccessEventHandler(this, openUIFormSuccessEventArgs);
                     ReferencePool.Release(openUIFormSuccessEventArgs);
                 }
@@ -875,7 +906,7 @@ namespace ZeroFramework.UI
             {
                 if (_openUIFormFailureEventHandler != null)
                 {
-                    OpenUIFormFailureEventArgs openUIFormFailureEventArgs = OpenUIFormFailureEventArgs.Create(serialId,
+                    OpenUIPanelFailureEventArgs openUIFormFailureEventArgs = OpenUIPanelFailureEventArgs.Create(serialId,
                         uiFormAssetName, uiGroup.Name, pauseCoveredUIForm, exception.ToString(), userData);
                     _openUIFormFailureEventHandler(this, openUIFormFailureEventArgs);
                     ReferencePool.Release(openUIFormFailureEventArgs);
@@ -889,7 +920,7 @@ namespace ZeroFramework.UI
         private void LoadAssetSuccessCallback(string uiFormAssetName, object uiFormAsset, float duration,
             object userData)
         {
-            OpenUIFormInfo openUIFormInfo = (OpenUIFormInfo)userData;
+            OpenUIPanelInfo openUIFormInfo = (OpenUIPanelInfo)userData;
             if (openUIFormInfo == null)
             {
                 throw new GameFrameworkException("Open UI form info is invalid.");
@@ -904,7 +935,7 @@ namespace ZeroFramework.UI
             }
 
             _uiFormsBeingLoaded.Remove(openUIFormInfo.SerialId);
-            UIFormInstanceObject uiFormInstanceObject = UIFormInstanceObject.Create(uiFormAssetName, uiFormAsset,
+            UIPanelInstanceObject uiFormInstanceObject = UIPanelInstanceObject.Create(uiFormAssetName, uiFormAsset,
                 _uiFormHelper.InstantiateUIForm(uiFormAsset), _uiFormHelper);
             _instancePool.Register(uiFormInstanceObject, true);
 
@@ -917,7 +948,7 @@ namespace ZeroFramework.UI
         private void LoadAssetFailureCallback(string uiFormAssetName, LoadResourceStatus status, string errorMessage,
             object userData)
         {
-            OpenUIFormInfo openUIFormInfo = (OpenUIFormInfo)userData;
+            OpenUIPanelInfo openUIFormInfo = (OpenUIPanelInfo)userData;
             if (openUIFormInfo == null)
             {
                 throw new GameFrameworkException("Open UI form info is invalid.");
@@ -935,8 +966,8 @@ namespace ZeroFramework.UI
                     uiFormAssetName, status, errorMessage);
             if (_openUIFormFailureEventHandler != null)
             {
-                OpenUIFormFailureEventArgs openUIFormFailureEventArgs =
-                    OpenUIFormFailureEventArgs.Create(openUIFormInfo.SerialId, uiFormAssetName,
+                OpenUIPanelFailureEventArgs openUIFormFailureEventArgs =
+                    OpenUIPanelFailureEventArgs.Create(openUIFormInfo.SerialId, uiFormAssetName,
                         openUIFormInfo.UIGroup.Name, openUIFormInfo.PauseCoveredUIForm, appendErrorMessage,
                         openUIFormInfo.UserData);
                 _openUIFormFailureEventHandler(this, openUIFormFailureEventArgs);
@@ -949,7 +980,7 @@ namespace ZeroFramework.UI
 
         private void LoadAssetUpdateCallback(string uiFormAssetName, float progress, object userData)
         {
-            OpenUIFormInfo openUIFormInfo = (OpenUIFormInfo)userData;
+            OpenUIPanelInfo openUIFormInfo = (OpenUIPanelInfo)userData;
             if (openUIFormInfo == null)
             {
                 throw new GameFrameworkException("Open UI form info is invalid.");
@@ -957,8 +988,8 @@ namespace ZeroFramework.UI
 
             if (_openUIFormUpdateEventHandler != null)
             {
-                OpenUIFormUpdateEventArgs openUIFormUpdateEventArgs =
-                    OpenUIFormUpdateEventArgs.Create(openUIFormInfo.SerialId, uiFormAssetName,
+                OpenUIPanelUpdateEventArgs openUIFormUpdateEventArgs =
+                    OpenUIPanelUpdateEventArgs.Create(openUIFormInfo.SerialId, uiFormAssetName,
                         openUIFormInfo.UIGroup.Name, openUIFormInfo.PauseCoveredUIForm, progress,
                         openUIFormInfo.UserData);
                 _openUIFormUpdateEventHandler(this, openUIFormUpdateEventArgs);
@@ -969,7 +1000,7 @@ namespace ZeroFramework.UI
         private void LoadAssetDependencyAssetCallback(string uiFormAssetName, string dependencyAssetName,
             int loadedCount, int totalCount, object userData)
         {
-            OpenUIFormInfo openUIFormInfo = (OpenUIFormInfo)userData;
+            OpenUIPanelInfo openUIFormInfo = (OpenUIPanelInfo)userData;
             if (openUIFormInfo == null)
             {
                 throw new GameFrameworkException("Open UI form info is invalid.");
@@ -977,8 +1008,8 @@ namespace ZeroFramework.UI
 
             if (_openUIFormDependencyAssetEventHandler != null)
             {
-                OpenUIFormDependencyAssetEventArgs openUIFormDependencyAssetEventArgs =
-                    OpenUIFormDependencyAssetEventArgs.Create(openUIFormInfo.SerialId, uiFormAssetName,
+                OpenUIPanelDependencyAssetEventArgs openUIFormDependencyAssetEventArgs =
+                    OpenUIPanelDependencyAssetEventArgs.Create(openUIFormInfo.SerialId, uiFormAssetName,
                         openUIFormInfo.UIGroup.Name, openUIFormInfo.PauseCoveredUIForm, dependencyAssetName,
                         loadedCount, totalCount, openUIFormInfo.UserData);
                 _openUIFormDependencyAssetEventHandler(this, openUIFormDependencyAssetEventArgs);

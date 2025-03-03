@@ -149,17 +149,10 @@ namespace ZeroFramework
         public float instanceExpireTime = 60f;
         public int instancePriority = 0;
         public string uiFormHelperTypeName = "ZeroFramework.UI.DefaultUIFormHelper";
-        public UIFormHelperBase uiFormCustomHelper = null;
+        public UIPanelHelperBase uiFormCustomHelper = null;
         public string uiGroupHelperTypeName = "ZeroFramework.UI.DefaultUIGroupHelper";
         public UIGroupHelperBase uiGroupCustomHelper = null;
-        public UIGroup[] uiGroups = null;
-
-        [Serializable]
-        public sealed class UIGroup
-        {
-            public string name = null;
-            public int depth = 0;
-        }
+        public MonoBehaviour[] customBindingComponent = null;
 
         #endregion
     }

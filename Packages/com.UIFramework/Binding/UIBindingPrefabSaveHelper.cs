@@ -1,8 +1,5 @@
 ﻿#if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Reflection;
 using UnityEditor;
 
 #if UNITY_2019_1_OR_NEWER
@@ -15,7 +12,7 @@ using UnityEditor.Experimental.SceneManagement;
 
 namespace ZeroFramework.UI
 {
-    public class UIBindingPrefabSaveHelper : UnityEditor.AssetModificationProcessor
+    public class UIBindingPrefabSaveHelper : AssetModificationProcessor
     {
         static UIBindingPrefabSaveHelper()
         {

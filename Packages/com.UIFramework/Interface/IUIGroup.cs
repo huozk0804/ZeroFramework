@@ -44,7 +44,7 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 获取当前界面。
         /// </summary>
-        IUIForm CurrentUIForm { get;}
+        IUIPanel CurrentUIForm { get;}
 
         /// <summary>
         /// 获取界面组辅助器。
@@ -70,39 +70,39 @@ namespace ZeroFramework.UI
         /// </summary>
         /// <param name="serialId">界面序列编号。</param>
         /// <returns>要获取的界面。</returns>
-        IUIForm GetUIForm(int serialId);
+        IUIPanel GetUIForm(int serialId);
 
         /// <summary>
         /// 从界面组中获取界面。
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        IUIForm GetUIForm(string uiFormAssetName);
+        IUIPanel GetUIForm(string uiFormAssetName);
 
         /// <summary>
         /// 从界面组中获取界面。
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        IUIForm[] GetUIForms(string uiFormAssetName);
+        IUIPanel[] GetUIForms(string uiFormAssetName);
 
         /// <summary>
         /// 从界面组中获取界面。
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <param name="results">要获取的界面。</param>
-        void GetUIForms(string uiFormAssetName, List<IUIForm> results);
+        void GetUIForms(string uiFormAssetName, List<IUIPanel> results);
 
         /// <summary>
         /// 从界面组中获取所有界面。
         /// </summary>
         /// <returns>界面组中的所有界面。</returns>
-        IUIForm[] GetAllUIForms();
+        IUIPanel[] GetAllUIForms();
 
         /// <summary>
         /// 从界面组中获取所有界面。
         /// </summary>
         /// <param name="results">界面组中的所有界面。</param>
-        void GetAllUIForms(List<IUIForm> results);
+        void GetAllUIForms(List<IUIPanel> results);
     }
 }

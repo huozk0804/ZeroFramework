@@ -9,12 +9,12 @@ namespace ZeroFramework.UI
     /// <summary>
     /// 打开界面更新事件。
     /// </summary>
-    public sealed class OpenUIFormUpdateEventArgs : GameFrameworkEventArgs
+    public sealed class OpenUIPanelUpdateEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化打开界面更新事件的新实例。
         /// </summary>
-        public OpenUIFormUpdateEventArgs()
+        public OpenUIPanelUpdateEventArgs()
         {
             SerialId = 0;
             UIFormAssetName = null;
@@ -64,10 +64,10 @@ namespace ZeroFramework.UI
         /// <param name="progress">打开界面进度。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的打开界面更新事件。</returns>
-        public static OpenUIFormUpdateEventArgs Create(int serialId, string uiFormAssetName, string uiGroupName,
+        public static OpenUIPanelUpdateEventArgs Create(int serialId, string uiFormAssetName, string uiGroupName,
             bool pauseCoveredUIForm, float progress, object userData)
         {
-            OpenUIFormUpdateEventArgs openUIFormUpdateEventArgs = ReferencePool.Acquire<OpenUIFormUpdateEventArgs>();
+            OpenUIPanelUpdateEventArgs openUIFormUpdateEventArgs = ReferencePool.Acquire<OpenUIPanelUpdateEventArgs>();
             openUIFormUpdateEventArgs.SerialId = serialId;
             openUIFormUpdateEventArgs.UIFormAssetName = uiFormAssetName;
             openUIFormUpdateEventArgs.UIGroupName = uiGroupName;

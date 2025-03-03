@@ -13,20 +13,20 @@ namespace ZeroFramework.UI
             /// <summary>
             /// 界面组界面信息。
             /// </summary>
-            private sealed class UIFormInfo : IReference
+            private sealed class UIPanelInfo : IReference
             {
-                private IUIForm _uiForm;
+                private IUIPanel _uiForm;
                 private bool _paused;
                 private bool _covered;
 
-                public UIFormInfo()
+                public UIPanelInfo()
                 {
                     _uiForm = null;
                     _paused = false;
                     _covered = false;
                 }
 
-                public IUIForm UIForm => _uiForm;
+                public IUIPanel UIForm => _uiForm;
 
                 public bool Paused
                 {
@@ -40,14 +40,14 @@ namespace ZeroFramework.UI
                     set => _covered = value;
                 }
 
-                public static UIFormInfo Create(IUIForm uiForm)
+                public static UIPanelInfo Create(IUIPanel uiForm)
                 {
                     if (uiForm == null)
                     {
                         throw new GameFrameworkException("UI form is invalid.");
                     }
 
-                    UIFormInfo uiFormInfo = ReferencePool.Acquire<UIFormInfo>();
+                    UIPanelInfo uiFormInfo = ReferencePool.Acquire<UIPanelInfo>();
                     uiFormInfo._uiForm = uiForm;
                     uiFormInfo._paused = true;
                     uiFormInfo._covered = true;

@@ -24,7 +24,6 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
-// using XLua;
 using UnityEngine.Profiling;
 
 #if UNITY_EDITOR
@@ -125,13 +124,6 @@ namespace ZeroFramework.UI
             { "Animation", typeof(Animation) },
             { "VideoPlayer", typeof(UnityEngine.Video.VideoPlayer) },
             { "CanvasGroup", typeof(CanvasGroup) },
-
-            ////////自定义控件类型请放这里////////
-
-            { "TextMeshProUGUI", typeof(TMPro.TextMeshProUGUI) },
-
-            //////////////////////////////////////
-
             { "Image", typeof(Image) },
             { "RectTransform", typeof(RectTransform) },
             { "Transform", typeof(Transform) },
@@ -283,139 +275,6 @@ namespace ZeroFramework.UI
         }
 
         #endregion
-
-        /*#region BindDataToLuaTable
-
-        public void BindDataToLua(IBindableUI ui, LuaTable luaTable)
-        {
-            if (luaTable == null)
-                return;
-
-            foreach (var itemData in ctrlItemDatas)
-            {
-                var targets = itemData.targets;
-                if (targets.Length == 0)
-                {
-                    Debug.LogErrorFormat("control {0} is null", itemData.name);
-                    continue;
-                }
-
-                if (targets.Length == 1)
-                {
-                    if (targets[0] != null)
-                        luaTable.Set(itemData.name, itemData.targets[0]);
-                    else
-                        Debug.LogErrorFormat("Component {0} is null", itemData.name);
-                }
-                else
-                {
-                    LuaTable tmpTbl = luaTable.env.NewTable();
-                    for (int i = 0, imax = targets.Length; i < imax; i++)
-                    {
-                        if (targets[i] != null)
-                            tmpTbl.Set(i + 1, targets[i]);
-                        else
-                            Debug.LogErrorFormat("Component {0}[{1}] is null", itemData.name, i);
-                    }
-
-                    luaTable.Set(itemData.name, tmpTbl);
-                }
-            }
-
-            foreach (var subUI in subUIItemDatas)
-            {
-                luaTable.Set(subUI.name, subUI.subUIData);
-            }
-
-            if (bindUIRefs == null)
-                bindUIRefs = new List<WeakReference<IBindableUI>>();
-
-            bindUIRefs.Add(new WeakReference<IBindableUI>(ui));
-        }
-
-        #endregion
-
-        #region UnBind
-
-        private static List<UIControlData> s_tmpControlDataForUnbind = new List<UIControlData>();
-
-        /// <summary>
-        /// 解除指定UI及其子节点自动绑定字段的引用
-        /// </summary>
-        /// <param name="uiGo"></param>
-        public static void UnBindUI(GameObject uiGo)
-        {
-            if (uiGo == null)
-                return;
-
-#if DEBUG_LOG
-            float time = Time.realtimeSinceStartup;
-            Profiler.BeginSample("UnBindUI");
-#endif
-
-            uiGo.GetComponentsInChildren(true, s_tmpControlDataForUnbind);
-            for (int i = 0, imax = s_tmpControlDataForUnbind.Count; i < imax; i++)
-            {
-                UIControlData controlData = s_tmpControlDataForUnbind[i];
-                if (controlData.bindUIRefs == null)
-                    continue;
-
-                List<WeakReference<IBindableUI>> bindUIRefs = controlData.bindUIRefs;
-                for (int j = 0, jmax = bindUIRefs.Count; j < jmax; j++)
-                {
-                    WeakReference<IBindableUI> bindUIRef = bindUIRefs[j];
-                    IBindableUI bindUI;
-                    if (!bindUIRef.TryGetTarget(out bindUI))
-                        continue;
-
-                    LuaViewRunner luaViewRunner = bindUI as LuaViewRunner;
-                    if (luaViewRunner == null)
-                    {
-                        UIFieldsInfo fieldInfos = GetUIFieldsInfo(bindUI.GetType());
-                        var controls = fieldInfos.controls;
-                        for (int k = 0, kmax = controls.Count; k < kmax; k++)
-                            controls[k].SetValue(bindUI, null);
-
-                        var subUIs = fieldInfos.subUIs;
-                        for (int k = 0, kmax = subUIs.Count; k < kmax; k++)
-                            subUIs[k].SetValue(bindUI, null);
-                    }
-                    else
-                    {
-                        LuaTable luaTable = luaViewRunner.luaUI;
-                        if (luaTable == null)
-                            continue;
-
-                        List<CtrlItemData> ctrlItemData = controlData.ctrlItemDatas;
-                        for (int k = 0, kmax = ctrlItemData.Count; k < kmax; k++)
-                        {
-                            CtrlItemData itemData = ctrlItemData[k];
-                            luaTable.Set<string, object>(itemData.name, null);
-                        }
-
-                        List<SubUIItemData> subUIItemDatas = controlData.subUIItemDatas;
-                        for (int k = 0, kmax = subUIItemDatas.Count; k < kmax; k++)
-                        {
-                            SubUIItemData subUIItemData = subUIItemDatas[k];
-                            luaTable.Set<string, object>(subUIItemData.name, null);
-                        }
-                    }
-                }
-
-                controlData.bindUIRefs = null;
-            }
-
-            s_tmpControlDataForUnbind.Clear();
-
-#if DEBUG_LOG
-            Profiler.EndSample();
-            float span = Time.realtimeSinceStartup - time;
-            if (span > 0.002f)
-                Debug.LogWarningFormat("UnBindUI {0} 耗时{1}ms", uiGo.Name, span * 1000f);
-#endif
-        }
-
-        #endregion*/
 
         #region Get,不建议使用
 

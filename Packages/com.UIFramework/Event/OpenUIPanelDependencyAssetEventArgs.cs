@@ -9,12 +9,12 @@ namespace ZeroFramework.UI
     /// <summary>
     /// 打开界面时加载依赖资源事件。
     /// </summary>
-    public sealed class OpenUIFormDependencyAssetEventArgs : GameFrameworkEventArgs
+    public sealed class OpenUIPanelDependencyAssetEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化打开界面时加载依赖资源事件的新实例。
         /// </summary>
-        public OpenUIFormDependencyAssetEventArgs()
+        public OpenUIPanelDependencyAssetEventArgs()
         {
             SerialId = 0;
             UIFormAssetName = null;
@@ -78,12 +78,12 @@ namespace ZeroFramework.UI
         /// <param name="totalCount">总共加载依赖资源数量。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的打开界面时加载依赖资源事件。</returns>
-        public static OpenUIFormDependencyAssetEventArgs Create(int serialId, string uiFormAssetName,
+        public static OpenUIPanelDependencyAssetEventArgs Create(int serialId, string uiFormAssetName,
             string uiGroupName, bool pauseCoveredUIForm, string dependencyAssetName, int loadedCount, int totalCount,
             object userData)
         {
-            OpenUIFormDependencyAssetEventArgs openUIFormDependencyAssetEventArgs =
-                ReferencePool.Acquire<OpenUIFormDependencyAssetEventArgs>();
+            OpenUIPanelDependencyAssetEventArgs openUIFormDependencyAssetEventArgs =
+                ReferencePool.Acquire<OpenUIPanelDependencyAssetEventArgs>();
             openUIFormDependencyAssetEventArgs.SerialId = serialId;
             openUIFormDependencyAssetEventArgs.UIFormAssetName = uiFormAssetName;
             openUIFormDependencyAssetEventArgs.UIGroupName = uiGroupName;

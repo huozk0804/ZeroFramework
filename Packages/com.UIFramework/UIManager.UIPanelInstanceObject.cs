@@ -4,6 +4,8 @@
 // Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
+using UnityEngine;
+
 namespace ZeroFramework.UI
 {
     public sealed partial class UIManager : GameFrameworkModule, IUIManager
@@ -11,18 +13,18 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 界面实例对象。
         /// </summary>
-        private sealed class UIFormInstanceObject : ObjectBase
+        private sealed class UIPanelInstanceObject : ObjectBase
         {
             private object _uiFormAsset;
-            private IUIFormHelper _uiFormHelper;
+            private IUIPanelHelper _uiFormHelper;
 
-            public UIFormInstanceObject()
+            public UIPanelInstanceObject()
             {
                 _uiFormAsset = null;
                 _uiFormHelper = null;
             }
 
-            public static UIFormInstanceObject Create(string name, object uiFormAsset, object uiFormInstance, IUIFormHelper uiFormHelper)
+            public static UIPanelInstanceObject Create(string name, object uiFormAsset, object uiFormInstance, IUIPanelHelper uiFormHelper)
             {
                 if (uiFormAsset == null)
                 {
@@ -34,7 +36,7 @@ namespace ZeroFramework.UI
                     throw new GameFrameworkException("UI form helper is invalid.");
                 }
 
-                UIFormInstanceObject uiFormInstanceObject = ReferencePool.Acquire<UIFormInstanceObject>();
+                UIPanelInstanceObject uiFormInstanceObject = ReferencePool.Acquire<UIPanelInstanceObject>();
                 uiFormInstanceObject.Initialize(name, uiFormInstance);
                 uiFormInstanceObject._uiFormAsset = uiFormAsset;
                 uiFormInstanceObject._uiFormHelper = uiFormHelper;

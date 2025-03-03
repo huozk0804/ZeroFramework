@@ -8,14 +8,14 @@ namespace ZeroFramework.UI
 {
     public sealed partial class UIManager : GameFrameworkModule, IUIManager
     {
-        private sealed class OpenUIFormInfo : IReference
+        private sealed class OpenUIPanelInfo : IReference
         {
             private int _serialId;
             private UIGroup _uiGroup;
             private bool _pauseCoveredUIForm;
             private object _userData;
 
-            public OpenUIFormInfo()
+            public OpenUIPanelInfo()
             {
                 _serialId = 0;
                 _uiGroup = null;
@@ -31,9 +31,9 @@ namespace ZeroFramework.UI
 
             public object UserData => _userData;
 
-            public static OpenUIFormInfo Create(int serialId, UIGroup uiGroup, bool pauseCoveredUIForm, object userData)
+            public static OpenUIPanelInfo Create(int serialId, UIGroup uiGroup, bool pauseCoveredUIForm, object userData)
             {
-                OpenUIFormInfo openUIFormInfo = ReferencePool.Acquire<OpenUIFormInfo>();
+                OpenUIPanelInfo openUIFormInfo = ReferencePool.Acquire<OpenUIPanelInfo>();
                 openUIFormInfo._serialId = serialId;
                 openUIFormInfo._uiGroup = uiGroup;
                 openUIFormInfo._pauseCoveredUIForm = pauseCoveredUIForm;

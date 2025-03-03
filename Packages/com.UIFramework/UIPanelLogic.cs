@@ -11,18 +11,18 @@ namespace ZeroFramework.UI
     /// <summary>
     /// 界面逻辑基类。
     /// </summary>
-    public abstract class UIFormLogic : MonoBehaviour
+    public abstract class UIPanelLogic : MonoBehaviour
     {
         private bool _available = false;
         private bool _visible = false;
-        private UIForm _uiForm = null;
+        private UIPanel _uiForm = null;
         private Transform _cachedTransform = null;
         private int _originalLayer = 0;
 
         /// <summary>
         /// 获取界面。
         /// </summary>
-        public UIForm UIForm => _uiForm;
+        public UIPanel UIForm => _uiForm;
 
         /// <summary>
         /// 获取或设置界面名称。
@@ -78,7 +78,7 @@ namespace ZeroFramework.UI
                 _cachedTransform = transform;
             }
 
-            _uiForm = GetComponent<UIForm>();
+            _uiForm = GetComponent<UIPanel>();
             _originalLayer = gameObject.layer;
         }
 

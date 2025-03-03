@@ -12,14 +12,15 @@ namespace ZeroFramework.UI
     /// <summary>
     /// 界面。
     /// </summary>
-    public sealed class UIForm : MonoBehaviour, IUIForm
-    {
+    public abstract class UIPanel : MonoBehaviour, IUIPanel
+	{
         private int _serialId;
         private string _uiFormAssetName;
         private IUIGroup _uiGroup;
         private int _depthInUIGroup;
         private bool _pauseCoveredUIForm;
-        private UIFormLogic _uiFormLogic;
+        private GameObject _gameObject;
+        private UIPanelLogic _uiFormLogic;
 
         /// <summary>
         /// 获取界面序列编号。
@@ -34,7 +35,7 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 获取界面实例。
         /// </summary>
-        public object Handle => gameObject;
+        public GameObject Handle => _gameObject;
 
         /// <summary>
         /// 获取界面所属的界面组。
@@ -54,7 +55,7 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 获取界面逻辑。
         /// </summary>
-        public UIFormLogic Logic => _uiFormLogic;
+        public UIPanelLogic Logic => _uiFormLogic;
 
         /// <summary>
         /// 初始化界面。
@@ -78,7 +79,7 @@ namespace ZeroFramework.UI
                 return;
             }
 
-            _uiFormLogic = GetComponent<UIFormLogic>();
+            _uiFormLogic = GetComponent<UIPanelLogic>();
             if (_uiFormLogic == null)
             {
                 Log.Error("UI form '{0}' can not get UI form logic.", uiFormAssetName);
@@ -257,5 +258,9 @@ namespace ZeroFramework.UI
                 Log.Error("UI form '[{0}]{1}' OnDepthChanged with exception '{2}'.", _serialId, _uiFormAssetName, exception);
             }
         }
-    }
+
+		public void Clear () {
+			throw new NotImplementedException();
+		}
+	}
 }

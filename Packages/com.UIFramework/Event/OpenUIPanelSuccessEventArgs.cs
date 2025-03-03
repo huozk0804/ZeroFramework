@@ -9,12 +9,12 @@ namespace ZeroFramework.UI
     /// <summary>
     /// 打开界面成功事件。
     /// </summary>
-    public sealed class OpenUIFormSuccessEventArgs : GameFrameworkEventArgs
+    public sealed class OpenUIPanelSuccessEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
         /// 初始化打开界面成功事件的新实例。
         /// </summary>
-        public OpenUIFormSuccessEventArgs()
+        public OpenUIPanelSuccessEventArgs()
         {
             UIForm = null;
             Duration = 0f;
@@ -24,7 +24,7 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 获取打开成功的界面。
         /// </summary>
-        public IUIForm UIForm { get; private set; }
+        public IUIPanel UIForm { get; private set; }
 
         /// <summary>
         /// 获取加载持续时间。
@@ -43,9 +43,9 @@ namespace ZeroFramework.UI
         /// <param name="duration">加载持续时间。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的打开界面成功事件。</returns>
-        public static OpenUIFormSuccessEventArgs Create(IUIForm uiForm, float duration, object userData)
+        public static OpenUIPanelSuccessEventArgs Create(IUIPanel uiForm, float duration, object userData)
         {
-            OpenUIFormSuccessEventArgs openUIFormSuccessEventArgs = ReferencePool.Acquire<OpenUIFormSuccessEventArgs>();
+            OpenUIPanelSuccessEventArgs openUIFormSuccessEventArgs = ReferencePool.Acquire<OpenUIPanelSuccessEventArgs>();
             openUIFormSuccessEventArgs.UIForm = uiForm;
             openUIFormSuccessEventArgs.Duration = duration;
             openUIFormSuccessEventArgs.UserData = userData;

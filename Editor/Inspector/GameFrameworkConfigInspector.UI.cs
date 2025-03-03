@@ -14,9 +14,9 @@ namespace ZeroFramework.Editor
         private SerializedProperty _instanceCapacity = null;
         private SerializedProperty _instanceExpireTime = null;
         private SerializedProperty _instancePriority = null;
-        private SerializedProperty _uiGroups = null;
+        private SerializedProperty _customBindingComponent = null;
 
-        private readonly HelperInfo<UIFormHelperBase> _uiFormHelperInfo = new HelperInfo<UIFormHelperBase>("uiForm");
+        private readonly HelperInfo<UIPanelHelperBase> _uiFormHelperInfo = new HelperInfo<UIPanelHelperBase>("uiForm");
 
         private readonly HelperInfo<UIGroupHelperBase>
             _uiGroupHelperInfo = new HelperInfo<UIGroupHelperBase>("uiGroup");
@@ -41,9 +41,9 @@ namespace ZeroFramework.Editor
             _instanceCapacity = serializedObject.FindProperty("instanceCapacity");
             _instanceExpireTime = serializedObject.FindProperty("instanceExpireTime");
             _instancePriority = serializedObject.FindProperty("instancePriority");
-            _uiGroups = serializedObject.FindProperty("uiGroups");
+			_customBindingComponent = serializedObject.FindProperty("customBindingComponent");
 
-            _uiFormHelperInfo.Init(serializedObject);
+			_uiFormHelperInfo.Init(serializedObject);
             _uiGroupHelperInfo.Init(serializedObject);
 
             _uiFormHelperInfo.Refresh();
@@ -76,7 +76,7 @@ namespace ZeroFramework.Editor
             {
                 _uiFormHelperInfo.Draw();
                 _uiGroupHelperInfo.Draw();
-                EditorGUILayout.PropertyField(_uiGroups, true);
+                EditorGUILayout.PropertyField(_customBindingComponent);
             }
             EditorGUI.EndDisabledGroup();
         }

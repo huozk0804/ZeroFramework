@@ -42,33 +42,33 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 打开界面成功事件。
         /// </summary>
-        event EventHandler<OpenUIFormSuccessEventArgs> OpenUIFormSuccess;
+        event EventHandler<OpenUIPanelSuccessEventArgs> OpenUIFormSuccess;
 
         /// <summary>
         /// 打开界面失败事件。
         /// </summary>
-        event EventHandler<OpenUIFormFailureEventArgs> OpenUIFormFailure;
+        event EventHandler<OpenUIPanelFailureEventArgs> OpenUIFormFailure;
 
         /// <summary>
         /// 打开界面更新事件。
         /// </summary>
-        event EventHandler<OpenUIFormUpdateEventArgs> OpenUIFormUpdate;
+        event EventHandler<OpenUIPanelUpdateEventArgs> OpenUIFormUpdate;
 
         /// <summary>
         /// 打开界面时加载依赖资源事件。
         /// </summary>
-        event EventHandler<OpenUIFormDependencyAssetEventArgs> OpenUIFormDependencyAsset;
+        event EventHandler<OpenUIPanelDependencyAssetEventArgs> OpenUIFormDependencyAsset;
 
         /// <summary>
         /// 关闭界面完成事件。
         /// </summary>
-        event EventHandler<CloseUIFormCompleteEventArgs> CloseUIFormComplete;
+        event EventHandler<CloseUIPanelCompleteEventArgs> CloseUIFormComplete;
 
         /// <summary>
         /// 设置界面辅助器。
         /// </summary>
         /// <param name="uiFormHelper">界面辅助器。</param>
-        void SetUIFormHelper(IUIFormHelper uiFormHelper);
+        void SetUIFormHelper(IUIPanelHelper uiFormHelper);
 
         /// <summary>
         /// 是否存在界面组。
@@ -132,40 +132,40 @@ namespace ZeroFramework.UI
         /// </summary>
         /// <param name="serialId">界面序列编号。</param>
         /// <returns>要获取的界面。</returns>
-        IUIForm GetUIForm(int serialId);
+        IUIPanel GetUIForm(int serialId);
 
         /// <summary>
         /// 获取界面。
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        IUIForm GetUIForm(string uiFormAssetName);
+        IUIPanel GetUIForm(string uiFormAssetName);
 
         /// <summary>
         /// 获取界面。
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        IUIForm[] GetUIForms(string uiFormAssetName);
+        IUIPanel[] GetUIForms(string uiFormAssetName);
 
         /// <summary>
         /// 获取界面。
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <param name="results">要获取的界面。</param>
-        void GetUIForms(string uiFormAssetName, List<IUIForm> results);
+        void GetUIForms(string uiFormAssetName, List<IUIPanel> results);
 
         /// <summary>
         /// 获取所有已加载的界面。
         /// </summary>
         /// <returns>所有已加载的界面。</returns>
-        IUIForm[] GetAllLoadedUIForms();
+        IUIPanel[] GetAllLoadedUIForms();
 
         /// <summary>
         /// 获取所有已加载的界面。
         /// </summary>
         /// <param name="results">所有已加载的界面。</param>
-        void GetAllLoadedUIForms(List<IUIForm> results);
+        void GetAllLoadedUIForms(List<IUIPanel> results);
 
         /// <summary>
         /// 获取所有正在加载界面的序列编号。
@@ -198,7 +198,7 @@ namespace ZeroFramework.UI
         /// </summary>
         /// <param name="uiForm">界面。</param>
         /// <returns>界面是否合法。</returns>
-        bool IsValidUIForm(IUIForm uiForm);
+        bool IsValidUIForm(IUIPanel uiForm);
 
         /// <summary>
         /// 打开界面。
@@ -294,14 +294,14 @@ namespace ZeroFramework.UI
         /// 关闭界面。
         /// </summary>
         /// <param name="uiForm">要关闭的界面。</param>
-        void CloseUIForm(IUIForm uiForm);
+        void CloseUIForm(IUIPanel uiForm);
 
         /// <summary>
         /// 关闭界面。
         /// </summary>
         /// <param name="uiForm">要关闭的界面。</param>
         /// <param name="userData">用户自定义数据。</param>
-        void CloseUIForm(IUIForm uiForm, object userData);
+        void CloseUIForm(IUIPanel uiForm, object userData);
 
         /// <summary>
         /// 关闭所有已加载的界面。
@@ -323,14 +323,14 @@ namespace ZeroFramework.UI
         /// 激活界面。
         /// </summary>
         /// <param name="uiForm">要激活的界面。</param>
-        void RefocusUIForm(IUIForm uiForm);
+        void RefocusUIForm(IUIPanel uiForm);
 
         /// <summary>
         /// 激活界面。
         /// </summary>
         /// <param name="uiForm">要激活的界面。</param>
         /// <param name="userData">用户自定义数据。</param>
-        void RefocusUIForm(IUIForm uiForm, object userData);
+        void RefocusUIForm(IUIPanel uiForm, object userData);
 
         /// <summary>
         /// 设置界面实例是否被加锁。

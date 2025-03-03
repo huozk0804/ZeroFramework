@@ -4,12 +4,14 @@
 // Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
+using UnityEngine;
+
 namespace ZeroFramework.UI
 {
     /// <summary>
     /// 界面接口。
     /// </summary>
-    public interface IUIForm
+    public interface IUIPanel
     {
         /// <summary>
         /// 获取界面序列编号。
@@ -24,7 +26,7 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 获取界面实例。
         /// </summary>
-        object Handle {  get;}
+        GameObject Handle {  get;}
 
         /// <summary>
         /// 获取界面所属的界面组。
