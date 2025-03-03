@@ -10,43 +10,43 @@ namespace ZeroFramework.UI
     {
         private sealed class OpenUIFormInfo : IReference
         {
-            private int m_SerialId;
-            private UIGroup m_UIGroup;
-            private bool m_PauseCoveredUIForm;
-            private object m_UserData;
+            private int _serialId;
+            private UIGroup _uiGroup;
+            private bool _pauseCoveredUIForm;
+            private object _userData;
 
             public OpenUIFormInfo()
             {
-                m_SerialId = 0;
-                m_UIGroup = null;
-                m_PauseCoveredUIForm = false;
-                m_UserData = null;
+                _serialId = 0;
+                _uiGroup = null;
+                _pauseCoveredUIForm = false;
+                _userData = null;
             }
 
-            public int SerialId => m_SerialId;
+            public int SerialId => _serialId;
 
-            public UIGroup UIGroup => m_UIGroup;
+            public UIGroup UIGroup => _uiGroup;
 
-            public bool PauseCoveredUIForm => m_PauseCoveredUIForm;
+            public bool PauseCoveredUIForm => _pauseCoveredUIForm;
 
-            public object UserData => m_UserData;
+            public object UserData => _userData;
 
             public static OpenUIFormInfo Create(int serialId, UIGroup uiGroup, bool pauseCoveredUIForm, object userData)
             {
                 OpenUIFormInfo openUIFormInfo = ReferencePool.Acquire<OpenUIFormInfo>();
-                openUIFormInfo.m_SerialId = serialId;
-                openUIFormInfo.m_UIGroup = uiGroup;
-                openUIFormInfo.m_PauseCoveredUIForm = pauseCoveredUIForm;
-                openUIFormInfo.m_UserData = userData;
+                openUIFormInfo._serialId = serialId;
+                openUIFormInfo._uiGroup = uiGroup;
+                openUIFormInfo._pauseCoveredUIForm = pauseCoveredUIForm;
+                openUIFormInfo._userData = userData;
                 return openUIFormInfo;
             }
 
             public void Clear()
             {
-                m_SerialId = 0;
-                m_UIGroup = null;
-                m_PauseCoveredUIForm = false;
-                m_UserData = null;
+                _serialId = 0;
+                _uiGroup = null;
+                _pauseCoveredUIForm = false;
+                _userData = null;
             }
         }
     }

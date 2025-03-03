@@ -15,12 +15,12 @@ namespace ZeroFramework.UI
         /// </summary>
         private sealed partial class UIGroup : IUIGroup
         {
-            private readonly string m_Name;
-            private int m_Depth;
-            private bool m_Pause;
-            private readonly IUIGroupHelper m_UIGroupHelper;
-            private readonly GameFrameworkLinkedList<UIFormInfo> m_UIFormInfos;
-            private LinkedListNode<UIFormInfo> m_CachedNode;
+            private readonly string _name;
+            private int _depth;
+            private bool _pause;
+            private readonly IUIGroupHelper _uiGroupHelper;
+            private readonly GameFrameworkLinkedList<UIFormInfo> _uiFormInfos;
+            private LinkedListNode<UIFormInfo> _cachedNode;
 
             /// <summary>
             /// 初始化界面组的新实例。
@@ -40,34 +40,34 @@ namespace ZeroFramework.UI
                     throw new GameFrameworkException("UI group helper is invalid.");
                 }
 
-                m_Name = name;
-                m_Pause = false;
-                m_UIGroupHelper = uiGroupHelper;
-                m_UIFormInfos = new GameFrameworkLinkedList<UIFormInfo>();
-                m_CachedNode = null;
+                _name = name;
+                _pause = false;
+                _uiGroupHelper = uiGroupHelper;
+                _uiFormInfos = new GameFrameworkLinkedList<UIFormInfo>();
+                _cachedNode = null;
                 Depth = depth;
             }
 
             /// <summary>
             /// 获取界面组名称。
             /// </summary>
-            public string Name => m_Name;
+            public string Name => _name;
 
             /// <summary>
             /// 获取或设置界面组深度。
             /// </summary>
             public int Depth
             {
-                get => m_Depth;
+                get => _depth;
                 set
                 {
-                    if (m_Depth == value)
+                    if (_depth == value)
                     {
                         return;
                     }
 
-                    m_Depth = value;
-                    m_UIGroupHelper.SetDepth(m_Depth);
+                    _depth = value;
+                    _uiGroupHelper.SetDepth(_depth);
                     Refresh();
                 }
             }
@@ -77,15 +77,15 @@ namespace ZeroFramework.UI
             /// </summary>
             public bool Pause
             {
-                get => m_Pause;
+                get => _pause;
                 set
                 {
-                    if (m_Pause == value)
+                    if (_pause == value)
                     {
                         return;
                     }
 
-                    m_Pause = value;
+                    _pause = value;
                     Refresh();
                 }
             }
@@ -93,17 +93,17 @@ namespace ZeroFramework.UI
             /// <summary>
             /// 获取界面组中界面数量。
             /// </summary>
-            public int UIFormCount => m_UIFormInfos.Count;
+            public int UIFormCount => _uiFormInfos.Count;
 
             /// <summary>
             /// 获取当前界面。
             /// </summary>
-            public IUIForm CurrentUIForm => m_UIFormInfos.First?.Value.UIForm;
+            public IUIForm CurrentUIForm => _uiFormInfos.First?.Value.UIForm;
 
             /// <summary>
             /// 获取界面组辅助器。
             /// </summary>
-            public IUIGroupHelper Helper => m_UIGroupHelper;
+            public IUIGroupHelper Helper => _uiGroupHelper;
 
             /// <summary>
             /// 界面组轮询。
@@ -112,7 +112,7 @@ namespace ZeroFramework.UI
             /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
             public void Update(float elapseSeconds, float realElapseSeconds)
             {
-                LinkedListNode<UIFormInfo> current = m_UIFormInfos.First;
+                LinkedListNode<UIFormInfo> current = _uiFormInfos.First;
                 while (current != null)
                 {
                     if (current.Value.Paused)
@@ -120,10 +120,10 @@ namespace ZeroFramework.UI
                         break;
                     }
 
-                    m_CachedNode = current.Next;
+                    _cachedNode = current.Next;
                     current.Value.UIForm.OnUpdate(elapseSeconds, realElapseSeconds);
-                    current = m_CachedNode;
-                    m_CachedNode = null;
+                    current = _cachedNode;
+                    _cachedNode = null;
                 }
             }
 
@@ -134,7 +134,7 @@ namespace ZeroFramework.UI
             /// <returns>界面组中是否存在界面。</returns>
             public bool HasUIForm(int serialId)
             {
-                foreach (UIFormInfo uiFormInfo in m_UIFormInfos)
+                foreach (UIFormInfo uiFormInfo in _uiFormInfos)
                 {
                     if (uiFormInfo.UIForm.SerialId == serialId)
                     {
@@ -157,7 +157,7 @@ namespace ZeroFramework.UI
                     throw new GameFrameworkException("UI form asset name is invalid.");
                 }
 
-                foreach (UIFormInfo uiFormInfo in m_UIFormInfos)
+                foreach (UIFormInfo uiFormInfo in _uiFormInfos)
                 {
                     if (uiFormInfo.UIForm.UIFormAssetName == uiFormAssetName)
                     {
@@ -175,7 +175,7 @@ namespace ZeroFramework.UI
             /// <returns>要获取的界面。</returns>
             public IUIForm GetUIForm(int serialId)
             {
-                foreach (UIFormInfo uiFormInfo in m_UIFormInfos)
+                foreach (UIFormInfo uiFormInfo in _uiFormInfos)
                 {
                     if (uiFormInfo.UIForm.SerialId == serialId)
                     {
@@ -198,7 +198,7 @@ namespace ZeroFramework.UI
                     throw new GameFrameworkException("UI form asset name is invalid.");
                 }
 
-                foreach (UIFormInfo uiFormInfo in m_UIFormInfos)
+                foreach (UIFormInfo uiFormInfo in _uiFormInfos)
                 {
                     if (uiFormInfo.UIForm.UIFormAssetName == uiFormAssetName)
                     {
@@ -222,7 +222,7 @@ namespace ZeroFramework.UI
                 }
 
                 List<IUIForm> results = new List<IUIForm>();
-                foreach (UIFormInfo uiFormInfo in m_UIFormInfos)
+                foreach (UIFormInfo uiFormInfo in _uiFormInfos)
                 {
                     if (uiFormInfo.UIForm.UIFormAssetName == uiFormAssetName)
                     {
@@ -251,7 +251,7 @@ namespace ZeroFramework.UI
                 }
 
                 results.Clear();
-                foreach (UIFormInfo uiFormInfo in m_UIFormInfos)
+                foreach (UIFormInfo uiFormInfo in _uiFormInfos)
                 {
                     if (uiFormInfo.UIForm.UIFormAssetName == uiFormAssetName)
                     {
@@ -267,7 +267,7 @@ namespace ZeroFramework.UI
             public IUIForm[] GetAllUIForms()
             {
                 List<IUIForm> results = new List<IUIForm>();
-                foreach (UIFormInfo uiFormInfo in m_UIFormInfos)
+                foreach (UIFormInfo uiFormInfo in _uiFormInfos)
                 {
                     results.Add(uiFormInfo.UIForm);
                 }
@@ -287,7 +287,7 @@ namespace ZeroFramework.UI
                 }
 
                 results.Clear();
-                foreach (UIFormInfo uiFormInfo in m_UIFormInfos)
+                foreach (UIFormInfo uiFormInfo in _uiFormInfos)
                 {
                     results.Add(uiFormInfo.UIForm);
                 }
@@ -299,7 +299,7 @@ namespace ZeroFramework.UI
             /// <param name="uiForm">要增加的界面。</param>
             public void AddUIForm(IUIForm uiForm)
             {
-                m_UIFormInfos.AddFirst(UIFormInfo.Create(uiForm));
+                _uiFormInfos.AddFirst(UIFormInfo.Create(uiForm));
             }
 
             /// <summary>
@@ -326,14 +326,14 @@ namespace ZeroFramework.UI
                     uiForm.OnPause();
                 }
 
-                if (m_CachedNode != null && m_CachedNode.Value.UIForm == uiForm)
+                if (_cachedNode != null && _cachedNode.Value.UIForm == uiForm)
                 {
-                    m_CachedNode = m_CachedNode.Next;
+                    _cachedNode = _cachedNode.Next;
                 }
 
-                if (!m_UIFormInfos.Remove(uiFormInfo))
+                if (!_uiFormInfos.Remove(uiFormInfo))
                 {
-                    throw new GameFrameworkException(Utility.Text.Format("UI group '{0}' not exists specified UI form '[{1}]{2}'.", m_Name, uiForm.SerialId, uiForm.UIFormAssetName));
+                    throw new GameFrameworkException(Utility.Text.Format("UI group '{0}' not exists specified UI form '[{1}]{2}'.", _name, uiForm.SerialId, uiForm.UIFormAssetName));
                 }
 
                 ReferencePool.Release(uiFormInfo);
@@ -352,8 +352,8 @@ namespace ZeroFramework.UI
                     throw new GameFrameworkException("Can not find UI form info.");
                 }
 
-                m_UIFormInfos.Remove(uiFormInfo);
-                m_UIFormInfos.AddFirst(uiFormInfo);
+                _uiFormInfos.Remove(uiFormInfo);
+                _uiFormInfos.AddFirst(uiFormInfo);
             }
 
             /// <summary>
@@ -361,8 +361,8 @@ namespace ZeroFramework.UI
             /// </summary>
             public void Refresh()
             {
-                LinkedListNode<UIFormInfo> current = m_UIFormInfos.First;
-                bool pause = m_Pause;
+                LinkedListNode<UIFormInfo> current = _uiFormInfos.First;
+                bool pause = _pause;
                 bool cover = false;
                 int depth = UIFormCount;
                 while (current != null && current.Value != null)
@@ -447,7 +447,7 @@ namespace ZeroFramework.UI
 
             internal void InternalGetUIForms(string uiFormAssetName, List<IUIForm> results)
             {
-                foreach (UIFormInfo uiFormInfo in m_UIFormInfos)
+                foreach (UIFormInfo uiFormInfo in _uiFormInfos)
                 {
                     if (uiFormInfo.UIForm.UIFormAssetName == uiFormAssetName)
                     {
@@ -458,7 +458,7 @@ namespace ZeroFramework.UI
 
             internal void InternalGetAllUIForms(List<IUIForm> results)
             {
-                foreach (UIFormInfo uiFormInfo in m_UIFormInfos)
+                foreach (UIFormInfo uiFormInfo in _uiFormInfos)
                 {
                     results.Add(uiFormInfo.UIForm);
                 }
@@ -471,7 +471,7 @@ namespace ZeroFramework.UI
                     throw new GameFrameworkException("UI form is invalid.");
                 }
 
-                foreach (UIFormInfo uiFormInfo in m_UIFormInfos)
+                foreach (UIFormInfo uiFormInfo in _uiFormInfos)
                 {
                     if (uiFormInfo.UIForm == uiForm)
                     {

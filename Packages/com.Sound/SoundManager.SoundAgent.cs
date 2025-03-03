@@ -15,14 +15,14 @@ namespace ZeroFramework.Sound
         /// </summary>
         private sealed class SoundAgent : ISoundAgent
         {
-            private readonly SoundGroup m_SoundGroup;
-            private readonly ISoundHelper m_SoundHelper;
-            private readonly ISoundAgentHelper m_SoundAgentHelper;
-            private int m_SerialId;
-            private object m_SoundAsset;
-            private DateTime m_SetSoundAssetTime;
-            private bool m_MuteInSoundGroup;
-            private float m_VolumeInSoundGroup;
+            private readonly SoundGroup _soundGroup;
+            private readonly ISoundHelper _soundHelper;
+            private readonly ISoundAgentHelper _soundAgentHelper;
+            private int _serialId;
+            private object _soundAsset;
+            private DateTime _setSoundAssetTime;
+            private bool _muteInSoundGroup;
+            private float _volumeInSoundGroup;
 
             /// <summary>
             /// 初始化声音代理的新实例。
@@ -47,62 +47,62 @@ namespace ZeroFramework.Sound
                     throw new GameFrameworkException("Sound agent helper is invalid.");
                 }
 
-                m_SoundGroup = soundGroup;
-                m_SoundHelper = soundHelper;
-                m_SoundAgentHelper = soundAgentHelper;
-                m_SoundAgentHelper.ResetSoundAgent += OnResetSoundAgent;
-                m_SerialId = 0;
-                m_SoundAsset = null;
+                _soundGroup = soundGroup;
+                _soundHelper = soundHelper;
+                _soundAgentHelper = soundAgentHelper;
+                _soundAgentHelper.ResetSoundAgent += OnResetSoundAgent;
+                _serialId = 0;
+                _soundAsset = null;
                 Reset();
             }
 
             /// <summary>
             /// 获取所在的声音组。
             /// </summary>
-            public ISoundGroup SoundGroup => m_SoundGroup;
+            public ISoundGroup SoundGroup => _soundGroup;
 
             /// <summary>
             /// 获取或设置声音的序列编号。
             /// </summary>
             public int SerialId
             {
-                get => m_SerialId;
-                set => m_SerialId = value;
+                get => _serialId;
+                set => _serialId = value;
             }
 
             /// <summary>
             /// 获取当前是否正在播放。
             /// </summary>
-            public bool IsPlaying => m_SoundAgentHelper.IsPlaying;
+            public bool IsPlaying => _soundAgentHelper.IsPlaying;
 
             /// <summary>
             /// 获取声音长度。
             /// </summary>
-            public float Length => m_SoundAgentHelper.Length;
+            public float Length => _soundAgentHelper.Length;
 
             /// <summary>
             /// 获取或设置播放位置。
             /// </summary>
             public float Time
             {
-                get => m_SoundAgentHelper.Time;
-                set => m_SoundAgentHelper.Time = value;
+                get => _soundAgentHelper.Time;
+                set => _soundAgentHelper.Time = value;
             }
 
             /// <summary>
             /// 获取是否静音。
             /// </summary>
-            public bool Mute => m_SoundAgentHelper.Mute;
+            public bool Mute => _soundAgentHelper.Mute;
 
             /// <summary>
             /// 获取或设置在声音组内是否静音。
             /// </summary>
             public bool MuteInSoundGroup
             {
-                get => m_MuteInSoundGroup;
+                get => _muteInSoundGroup;
                 set
                 {
-                    m_MuteInSoundGroup = value;
+                    _muteInSoundGroup = value;
                     RefreshMute();
                 }
             }
@@ -112,8 +112,8 @@ namespace ZeroFramework.Sound
             /// </summary>
             public bool Loop
             {
-                get => m_SoundAgentHelper.Loop;
-                set => m_SoundAgentHelper.Loop = value;
+                get => _soundAgentHelper.Loop;
+                set => _soundAgentHelper.Loop = value;
             }
 
             /// <summary>
@@ -121,24 +121,24 @@ namespace ZeroFramework.Sound
             /// </summary>
             public int Priority
             {
-                get => m_SoundAgentHelper.Priority;
-                set => m_SoundAgentHelper.Priority = value;
+                get => _soundAgentHelper.Priority;
+                set => _soundAgentHelper.Priority = value;
             }
 
             /// <summary>
             /// 获取音量大小。
             /// </summary>
-            public float Volume => m_SoundAgentHelper.Volume;
+            public float Volume => _soundAgentHelper.Volume;
 
             /// <summary>
             /// 获取或设置在声音组内音量大小。
             /// </summary>
             public float VolumeInSoundGroup
             {
-                get => m_VolumeInSoundGroup;
+                get => _volumeInSoundGroup;
                 set
                 {
-                    m_VolumeInSoundGroup = value;
+                    _volumeInSoundGroup = value;
                     RefreshVolume();
                 }
             }
@@ -148,8 +148,8 @@ namespace ZeroFramework.Sound
             /// </summary>
             public float Pitch
             {
-                get => m_SoundAgentHelper.Pitch;
-                set => m_SoundAgentHelper.Pitch = value;
+                get => _soundAgentHelper.Pitch;
+                set => _soundAgentHelper.Pitch = value;
             }
 
             /// <summary>
@@ -157,8 +157,8 @@ namespace ZeroFramework.Sound
             /// </summary>
             public float PanStereo
             {
-                get => m_SoundAgentHelper.PanStereo;
-                set => m_SoundAgentHelper.PanStereo = value;
+                get => _soundAgentHelper.PanStereo;
+                set => _soundAgentHelper.PanStereo = value;
             }
 
             /// <summary>
@@ -166,8 +166,8 @@ namespace ZeroFramework.Sound
             /// </summary>
             public float SpatialBlend
             {
-                get => m_SoundAgentHelper.SpatialBlend;
-                set => m_SoundAgentHelper.SpatialBlend = value;
+                get => _soundAgentHelper.SpatialBlend;
+                set => _soundAgentHelper.SpatialBlend = value;
             }
 
             /// <summary>
@@ -175,8 +175,8 @@ namespace ZeroFramework.Sound
             /// </summary>
             public float MaxDistance
             {
-                get => m_SoundAgentHelper.MaxDistance;
-                set => m_SoundAgentHelper.MaxDistance = value;
+                get => _soundAgentHelper.MaxDistance;
+                set => _soundAgentHelper.MaxDistance = value;
             }
 
             /// <summary>
@@ -184,26 +184,26 @@ namespace ZeroFramework.Sound
             /// </summary>
             public float DopplerLevel
             {
-                get => m_SoundAgentHelper.DopplerLevel;
-                set => m_SoundAgentHelper.DopplerLevel = value;
+                get => _soundAgentHelper.DopplerLevel;
+                set => _soundAgentHelper.DopplerLevel = value;
             }
 
             /// <summary>
             /// 获取声音代理辅助器。
             /// </summary>
-            public ISoundAgentHelper Helper => m_SoundAgentHelper;
+            public ISoundAgentHelper Helper => _soundAgentHelper;
 
             /// <summary>
             /// 获取声音创建时间。
             /// </summary>
-            internal DateTime SetSoundAssetTime => m_SetSoundAssetTime;
+            internal DateTime SetSoundAssetTime => _setSoundAssetTime;
 
             /// <summary>
             /// 播放声音。
             /// </summary>
             public void Play()
             {
-                m_SoundAgentHelper.Play(Constant.DefaultFadeInSeconds);
+                _soundAgentHelper.Play(Constant.DefaultFadeInSeconds);
             }
 
             /// <summary>
@@ -212,7 +212,7 @@ namespace ZeroFramework.Sound
             /// <param name="fadeInSeconds">声音淡入时间，以秒为单位。</param>
             public void Play(float fadeInSeconds)
             {
-                m_SoundAgentHelper.Play(fadeInSeconds);
+                _soundAgentHelper.Play(fadeInSeconds);
             }
 
             /// <summary>
@@ -220,7 +220,7 @@ namespace ZeroFramework.Sound
             /// </summary>
             public void Stop()
             {
-                m_SoundAgentHelper.Stop(Constant.DefaultFadeOutSeconds);
+                _soundAgentHelper.Stop(Constant.DefaultFadeOutSeconds);
             }
 
             /// <summary>
@@ -229,7 +229,7 @@ namespace ZeroFramework.Sound
             /// <param name="fadeOutSeconds">声音淡出时间，以秒为单位。</param>
             public void Stop(float fadeOutSeconds)
             {
-                m_SoundAgentHelper.Stop(fadeOutSeconds);
+                _soundAgentHelper.Stop(fadeOutSeconds);
             }
 
             /// <summary>
@@ -237,7 +237,7 @@ namespace ZeroFramework.Sound
             /// </summary>
             public void Pause()
             {
-                m_SoundAgentHelper.Pause(Constant.DefaultFadeOutSeconds);
+                _soundAgentHelper.Pause(Constant.DefaultFadeOutSeconds);
             }
 
             /// <summary>
@@ -246,7 +246,7 @@ namespace ZeroFramework.Sound
             /// <param name="fadeOutSeconds">声音淡出时间，以秒为单位。</param>
             public void Pause(float fadeOutSeconds)
             {
-                m_SoundAgentHelper.Pause(fadeOutSeconds);
+                _soundAgentHelper.Pause(fadeOutSeconds);
             }
 
             /// <summary>
@@ -254,7 +254,7 @@ namespace ZeroFramework.Sound
             /// </summary>
             public void Resume()
             {
-                m_SoundAgentHelper.Resume(Constant.DefaultFadeInSeconds);
+                _soundAgentHelper.Resume(Constant.DefaultFadeInSeconds);
             }
 
             /// <summary>
@@ -263,7 +263,7 @@ namespace ZeroFramework.Sound
             /// <param name="fadeInSeconds">声音淡入时间，以秒为单位。</param>
             public void Resume(float fadeInSeconds)
             {
-                m_SoundAgentHelper.Resume(fadeInSeconds);
+                _soundAgentHelper.Resume(fadeInSeconds);
             }
 
             /// <summary>
@@ -271,13 +271,13 @@ namespace ZeroFramework.Sound
             /// </summary>
             public void Reset()
             {
-                if (m_SoundAsset != null)
+                if (_soundAsset != null)
                 {
-                    m_SoundHelper.ReleaseSoundAsset(m_SoundAsset);
-                    m_SoundAsset = null;
+                    _soundHelper.ReleaseSoundAsset(_soundAsset);
+                    _soundAsset = null;
                 }
 
-                m_SetSoundAssetTime = DateTime.MinValue;
+                _setSoundAssetTime = DateTime.MinValue;
                 Time = Constant.DefaultTime;
                 MuteInSoundGroup = Constant.DefaultMute;
                 Loop = Constant.DefaultLoop;
@@ -288,25 +288,25 @@ namespace ZeroFramework.Sound
                 SpatialBlend = Constant.DefaultSpatialBlend;
                 MaxDistance = Constant.DefaultMaxDistance;
                 DopplerLevel = Constant.DefaultDopplerLevel;
-                m_SoundAgentHelper.Reset();
+                _soundAgentHelper.Reset();
             }
 
             internal bool SetSoundAsset(object soundAsset)
             {
                 Reset();
-                m_SoundAsset = soundAsset;
-                m_SetSoundAssetTime = DateTime.UtcNow;
-                return m_SoundAgentHelper.SetSoundAsset(soundAsset);
+                _soundAsset = soundAsset;
+                _setSoundAssetTime = DateTime.UtcNow;
+                return _soundAgentHelper.SetSoundAsset(soundAsset);
             }
 
             internal void RefreshMute()
             {
-                m_SoundAgentHelper.Mute = m_SoundGroup.Mute || m_MuteInSoundGroup;
+                _soundAgentHelper.Mute = _soundGroup.Mute || _muteInSoundGroup;
             }
 
             internal void RefreshVolume()
             {
-                m_SoundAgentHelper.Volume = m_SoundGroup.Volume * m_VolumeInSoundGroup;
+                _soundAgentHelper.Volume = _soundGroup.Volume * _volumeInSoundGroup;
             }
 
             private void OnResetSoundAgent(object sender, ResetSoundAgentEventArgs e)

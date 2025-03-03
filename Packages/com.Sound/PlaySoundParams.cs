@@ -11,36 +11,36 @@ namespace ZeroFramework.Sound
     /// </summary>
     public sealed class PlaySoundParams : IReference
     {
-        private bool m_Referenced;
-        private float m_Time;
-        private bool m_MuteInSoundGroup;
-        private bool m_Loop;
-        private int m_Priority;
-        private float m_VolumeInSoundGroup;
-        private float m_FadeInSeconds;
-        private float m_Pitch;
-        private float m_PanStereo;
-        private float m_SpatialBlend;
-        private float m_MaxDistance;
-        private float m_DopplerLevel;
+        private bool _referenced;
+        private float _time;
+        private bool _muteInSoundGroup;
+        private bool _loop;
+        private int _priority;
+        private float _volumeInSoundGroup;
+        private float _fadeInSeconds;
+        private float _pitch;
+        private float _panStereo;
+        private float _spatialBlend;
+        private float _maxDistance;
+        private float _dopplerLevel;
 
         /// <summary>
         /// 初始化播放声音参数的新实例。
         /// </summary>
         public PlaySoundParams()
         {
-            m_Referenced = false;
-            m_Time = Constant.DefaultTime;
-            m_MuteInSoundGroup = Constant.DefaultMute;
-            m_Loop = Constant.DefaultLoop;
-            m_Priority = Constant.DefaultPriority;
-            m_VolumeInSoundGroup = Constant.DefaultVolume;
-            m_FadeInSeconds = Constant.DefaultFadeInSeconds;
-            m_Pitch = Constant.DefaultPitch;
-            m_PanStereo = Constant.DefaultPanStereo;
-            m_SpatialBlend = Constant.DefaultSpatialBlend;
-            m_MaxDistance = Constant.DefaultMaxDistance;
-            m_DopplerLevel = Constant.DefaultDopplerLevel;
+            _referenced = false;
+            _time = Constant.DefaultTime;
+            _muteInSoundGroup = Constant.DefaultMute;
+            _loop = Constant.DefaultLoop;
+            _priority = Constant.DefaultPriority;
+            _volumeInSoundGroup = Constant.DefaultVolume;
+            _fadeInSeconds = Constant.DefaultFadeInSeconds;
+            _pitch = Constant.DefaultPitch;
+            _panStereo = Constant.DefaultPanStereo;
+            _spatialBlend = Constant.DefaultSpatialBlend;
+            _maxDistance = Constant.DefaultMaxDistance;
+            _dopplerLevel = Constant.DefaultDopplerLevel;
         }
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public float Time
         {
-            get => m_Time;
-            set => m_Time = value;
+            get => _time;
+            set => _time = value;
         }
 
         /// <summary>
@@ -57,8 +57,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public bool MuteInSoundGroup
         {
-            get => m_MuteInSoundGroup;
-            set => m_MuteInSoundGroup = value;
+            get => _muteInSoundGroup;
+            set => _muteInSoundGroup = value;
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public bool Loop
         {
-            get => m_Loop;
-            set => m_Loop = value;
+            get => _loop;
+            set => _loop = value;
         }
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public int Priority
         {
-            get => m_Priority;
-            set => m_Priority = value;
+            get => _priority;
+            set => _priority = value;
         }
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public float VolumeInSoundGroup
         {
-            get => m_VolumeInSoundGroup;
-            set => m_VolumeInSoundGroup = value;
+            get => _volumeInSoundGroup;
+            set => _volumeInSoundGroup = value;
         }
 
         /// <summary>
@@ -93,8 +93,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public float FadeInSeconds
         {
-            get => m_FadeInSeconds;
-            set => m_FadeInSeconds = value;
+            get => _fadeInSeconds;
+            set => _fadeInSeconds = value;
         }
 
         /// <summary>
@@ -102,8 +102,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public float Pitch
         {
-            get => m_Pitch;
-            set => m_Pitch = value;
+            get => _pitch;
+            set => _pitch = value;
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public float PanStereo
         {
-            get => m_PanStereo;
-            set => m_PanStereo = value;
+            get => _panStereo;
+            set => _panStereo = value;
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public float SpatialBlend
         {
-            get => m_SpatialBlend;
-            set => m_SpatialBlend = value;
+            get => _spatialBlend;
+            set => _spatialBlend = value;
         }
 
         /// <summary>
@@ -129,8 +129,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public float MaxDistance
         {
-            get => m_MaxDistance;
-            set => m_MaxDistance = value;
+            get => _maxDistance;
+            set => _maxDistance = value;
         }
 
         /// <summary>
@@ -138,11 +138,11 @@ namespace ZeroFramework.Sound
         /// </summary>
         public float DopplerLevel
         {
-            get => m_DopplerLevel;
-            set => m_DopplerLevel = value;
+            get => _dopplerLevel;
+            set => _dopplerLevel = value;
         }
 
-        internal bool Referenced => m_Referenced;
+        internal bool Referenced => _referenced;
 
         /// <summary>
         /// 创建播放声音参数。
@@ -151,7 +151,7 @@ namespace ZeroFramework.Sound
         public static PlaySoundParams Create()
         {
             PlaySoundParams playSoundParams = ReferencePool.Acquire<PlaySoundParams>();
-            playSoundParams.m_Referenced = true;
+            playSoundParams._referenced = true;
             return playSoundParams;
         }
 
@@ -160,17 +160,17 @@ namespace ZeroFramework.Sound
         /// </summary>
         public void Clear()
         {
-            m_Time = Constant.DefaultTime;
-            m_MuteInSoundGroup = Constant.DefaultMute;
-            m_Loop = Constant.DefaultLoop;
-            m_Priority = Constant.DefaultPriority;
-            m_VolumeInSoundGroup = Constant.DefaultVolume;
-            m_FadeInSeconds = Constant.DefaultFadeInSeconds;
-            m_Pitch = Constant.DefaultPitch;
-            m_PanStereo = Constant.DefaultPanStereo;
-            m_SpatialBlend = Constant.DefaultSpatialBlend;
-            m_MaxDistance = Constant.DefaultMaxDistance;
-            m_DopplerLevel = Constant.DefaultDopplerLevel;
+            _time = Constant.DefaultTime;
+            _muteInSoundGroup = Constant.DefaultMute;
+            _loop = Constant.DefaultLoop;
+            _priority = Constant.DefaultPriority;
+            _volumeInSoundGroup = Constant.DefaultVolume;
+            _fadeInSeconds = Constant.DefaultFadeInSeconds;
+            _pitch = Constant.DefaultPitch;
+            _panStereo = Constant.DefaultPanStereo;
+            _spatialBlend = Constant.DefaultSpatialBlend;
+            _maxDistance = Constant.DefaultMaxDistance;
+            _dopplerLevel = Constant.DefaultDopplerLevel;
         }
     }
 }

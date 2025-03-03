@@ -11,7 +11,7 @@ namespace ZeroFramework.Debugger
     internal abstract class ScrollableDebuggerWindowBase : IDebuggerWindow
     {
         private const float TitleWidth = 240f;
-        private Vector2 m_ScrollPosition = Vector2.zero;
+        private Vector2 _scrollPosition = Vector2.zero;
 
         public virtual void Initialize(params object[] args)
         {
@@ -35,7 +35,7 @@ namespace ZeroFramework.Debugger
 
         public void OnDraw()
         {
-            m_ScrollPosition = GUILayout.BeginScrollView(m_ScrollPosition);
+            _scrollPosition = GUILayout.BeginScrollView(_scrollPosition);
             {
                 OnDrawScrollableWindow();
             }

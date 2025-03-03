@@ -13,26 +13,26 @@ namespace ZeroFramework.Config
         [StructLayout(LayoutKind.Auto)]
         private struct ConfigData
         {
-            private readonly bool m_BoolValue;
-            private readonly int m_IntValue;
-            private readonly float m_FloatValue;
-            private readonly string m_StringValue;
+            private readonly bool _boolValue;
+            private readonly int _intValue;
+            private readonly float _floatValue;
+            private readonly string _stringValue;
 
             public ConfigData(bool boolValue, int intValue, float floatValue, string stringValue)
             {
-                m_BoolValue = boolValue;
-                m_IntValue = intValue;
-                m_FloatValue = floatValue;
-                m_StringValue = stringValue;
+                _boolValue = boolValue;
+                _intValue = intValue;
+                _floatValue = floatValue;
+                _stringValue = stringValue;
             }
 
-            public bool BoolValue => m_BoolValue;
+            public bool BoolValue => _boolValue;
 
-            public int IntValue => m_IntValue;
+            public int IntValue => _intValue;
 
-            public float FloatValue => m_FloatValue;
+            public float FloatValue => _floatValue;
 
-            public string StringValue => m_StringValue;
+            public string StringValue => _stringValue;
         }
     }
 }

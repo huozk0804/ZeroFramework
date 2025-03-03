@@ -15,39 +15,39 @@ namespace ZeroFramework.Network
     /// </summary>
     public sealed partial class NetworkManager : GameFrameworkModule, INetworkManager
     {
-        private readonly Dictionary<string, NetworkChannelBase> m_NetworkChannels;
+        private readonly Dictionary<string, NetworkChannelBase> _networkChannels;
 
-        private EventHandler<NetworkConnectedEventArgs> m_NetworkConnectedEventHandler;
-        private EventHandler<NetworkClosedEventArgs> m_NetworkClosedEventHandler;
-        private EventHandler<NetworkMissHeartBeatEventArgs> m_NetworkMissHeartBeatEventHandler;
-        private EventHandler<NetworkErrorEventArgs> m_NetworkErrorEventHandler;
-        private EventHandler<NetworkCustomErrorEventArgs> m_NetworkCustomErrorEventHandler;
+        private EventHandler<NetworkConnectedEventArgs> _networkConnectedEventHandler;
+        private EventHandler<NetworkClosedEventArgs> _networkClosedEventHandler;
+        private EventHandler<NetworkMissHeartBeatEventArgs> _networkMissHeartBeatEventHandler;
+        private EventHandler<NetworkErrorEventArgs> _networkErrorEventHandler;
+        private EventHandler<NetworkCustomErrorEventArgs> _networkCustomErrorEventHandler;
 
         /// <summary>
         /// 初始化网络管理器的新实例。
         /// </summary>
         public NetworkManager()
         {
-            m_NetworkChannels = new Dictionary<string, NetworkChannelBase>(StringComparer.Ordinal);
-            m_NetworkConnectedEventHandler = null;
-            m_NetworkClosedEventHandler = null;
-            m_NetworkMissHeartBeatEventHandler = null;
-            m_NetworkErrorEventHandler = null;
-            m_NetworkCustomErrorEventHandler = null;
+            _networkChannels = new Dictionary<string, NetworkChannelBase>(StringComparer.Ordinal);
+            _networkConnectedEventHandler = null;
+            _networkClosedEventHandler = null;
+            _networkMissHeartBeatEventHandler = null;
+            _networkErrorEventHandler = null;
+            _networkCustomErrorEventHandler = null;
         }
 
         /// <summary>
         /// 获取网络频道数量。
         /// </summary>
-        public int NetworkChannelCount => m_NetworkChannels.Count;
+        public int NetworkChannelCount => _networkChannels.Count;
 
         /// <summary>
         /// 网络连接成功事件。
         /// </summary>
         public event EventHandler<NetworkConnectedEventArgs> NetworkConnected
         {
-            add => m_NetworkConnectedEventHandler += value;
-            remove => m_NetworkConnectedEventHandler -= value;
+            add => _networkConnectedEventHandler += value;
+            remove => _networkConnectedEventHandler -= value;
         }
 
         /// <summary>
@@ -55,8 +55,8 @@ namespace ZeroFramework.Network
         /// </summary>
         public event EventHandler<NetworkClosedEventArgs> NetworkClosed
         {
-            add => m_NetworkClosedEventHandler += value;
-            remove => m_NetworkClosedEventHandler -= value;
+            add => _networkClosedEventHandler += value;
+            remove => _networkClosedEventHandler -= value;
         }
 
         /// <summary>
@@ -64,8 +64,8 @@ namespace ZeroFramework.Network
         /// </summary>
         public event EventHandler<NetworkMissHeartBeatEventArgs> NetworkMissHeartBeat
         {
-            add => m_NetworkMissHeartBeatEventHandler += value;
-            remove => m_NetworkMissHeartBeatEventHandler -= value;
+            add => _networkMissHeartBeatEventHandler += value;
+            remove => _networkMissHeartBeatEventHandler -= value;
         }
 
         /// <summary>
@@ -73,8 +73,8 @@ namespace ZeroFramework.Network
         /// </summary>
         public event EventHandler<NetworkErrorEventArgs> NetworkError
         {
-            add => m_NetworkErrorEventHandler += value;
-            remove => m_NetworkErrorEventHandler -= value;
+            add => _networkErrorEventHandler += value;
+            remove => _networkErrorEventHandler -= value;
         }
 
         /// <summary>
@@ -82,8 +82,8 @@ namespace ZeroFramework.Network
         /// </summary>
         public event EventHandler<NetworkCustomErrorEventArgs> NetworkCustomError
         {
-            add => m_NetworkCustomErrorEventHandler += value;
-            remove => m_NetworkCustomErrorEventHandler -= value;
+            add => _networkCustomErrorEventHandler += value;
+            remove => _networkCustomErrorEventHandler -= value;
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace ZeroFramework.Network
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
         public override void Update(float elapseSeconds, float realElapseSeconds)
         {
-            foreach (KeyValuePair<string, NetworkChannelBase> networkChannel in m_NetworkChannels)
+            foreach (KeyValuePair<string, NetworkChannelBase> networkChannel in _networkChannels)
             {
                 networkChannel.Value.Update(elapseSeconds, realElapseSeconds);
             }
@@ -104,7 +104,7 @@ namespace ZeroFramework.Network
         /// </summary>
         public override void Shutdown()
         {
-            foreach (KeyValuePair<string, NetworkChannelBase> networkChannel in m_NetworkChannels)
+            foreach (KeyValuePair<string, NetworkChannelBase> networkChannel in _networkChannels)
             {
                 NetworkChannelBase networkChannelBase = networkChannel.Value;
                 networkChannelBase.NetworkChannelConnected -= OnNetworkChannelConnected;
@@ -115,7 +115,7 @@ namespace ZeroFramework.Network
                 networkChannelBase.Shutdown();
             }
 
-            m_NetworkChannels.Clear();
+            _networkChannels.Clear();
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace ZeroFramework.Network
         /// <returns>是否存在网络频道。</returns>
         public bool HasNetworkChannel(string name)
         {
-            return m_NetworkChannels.ContainsKey(name ?? string.Empty);
+            return _networkChannels.ContainsKey(name ?? string.Empty);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace ZeroFramework.Network
         /// <returns>要获取的网络频道。</returns>
         public INetworkChannel GetNetworkChannel(string name)
         {
-            if (m_NetworkChannels.TryGetValue(name ?? string.Empty, out var networkChannel))
+            if (_networkChannels.TryGetValue(name ?? string.Empty, out var networkChannel))
             {
                 return networkChannel;
             }
@@ -150,8 +150,8 @@ namespace ZeroFramework.Network
         public INetworkChannel[] GetAllNetworkChannels()
         {
             int index = 0;
-            INetworkChannel[] results = new INetworkChannel[m_NetworkChannels.Count];
-            foreach (KeyValuePair<string, NetworkChannelBase> networkChannel in m_NetworkChannels)
+            INetworkChannel[] results = new INetworkChannel[_networkChannels.Count];
+            foreach (KeyValuePair<string, NetworkChannelBase> networkChannel in _networkChannels)
             {
                 results[index++] = networkChannel.Value;
             }
@@ -171,7 +171,7 @@ namespace ZeroFramework.Network
             }
 
             results.Clear();
-            foreach (KeyValuePair<string, NetworkChannelBase> networkChannel in m_NetworkChannels)
+            foreach (KeyValuePair<string, NetworkChannelBase> networkChannel in _networkChannels)
             {
                 results.Add(networkChannel.Value);
             }
@@ -221,7 +221,7 @@ namespace ZeroFramework.Network
             networkChannel.NetworkChannelMissHeartBeat += OnNetworkChannelMissHeartBeat;
             networkChannel.NetworkChannelError += OnNetworkChannelError;
             networkChannel.NetworkChannelCustomError += OnNetworkChannelCustomError;
-            m_NetworkChannels.Add(name, networkChannel);
+            _networkChannels.Add(name, networkChannel);
             return networkChannel;
         }
 
@@ -232,7 +232,7 @@ namespace ZeroFramework.Network
         /// <returns>是否销毁网络频道成功。</returns>
         public bool DestroyNetworkChannel(string name)
         {
-            if (!m_NetworkChannels.TryGetValue(name ?? string.Empty, out var networkChannel))
+            if (!_networkChannels.TryGetValue(name ?? string.Empty, out var networkChannel))
             {
 				return false;
 			}
@@ -243,17 +243,17 @@ namespace ZeroFramework.Network
 			networkChannel.NetworkChannelError -= OnNetworkChannelError;
 			networkChannel.NetworkChannelCustomError -= OnNetworkChannelCustomError;
 			networkChannel.Shutdown();
-			return m_NetworkChannels.Remove(name);
+			return _networkChannels.Remove(name);
         }
 
         private void OnNetworkChannelConnected(NetworkChannelBase networkChannel, object userData)
         {
-            if (m_NetworkConnectedEventHandler != null)
+            if (_networkConnectedEventHandler != null)
             {
-                lock (m_NetworkConnectedEventHandler)
+                lock (_networkConnectedEventHandler)
                 {
                     NetworkConnectedEventArgs networkConnectedEventArgs = NetworkConnectedEventArgs.Create(networkChannel, userData);
-                    m_NetworkConnectedEventHandler(this, networkConnectedEventArgs);
+                    _networkConnectedEventHandler(this, networkConnectedEventArgs);
                     ReferencePool.Release(networkConnectedEventArgs);
                 }
             }
@@ -261,12 +261,12 @@ namespace ZeroFramework.Network
 
         private void OnNetworkChannelClosed(NetworkChannelBase networkChannel)
         {
-            if (m_NetworkClosedEventHandler != null)
+            if (_networkClosedEventHandler != null)
             {
-                lock (m_NetworkClosedEventHandler)
+                lock (_networkClosedEventHandler)
                 {
                     NetworkClosedEventArgs networkClosedEventArgs = NetworkClosedEventArgs.Create(networkChannel);
-                    m_NetworkClosedEventHandler(this, networkClosedEventArgs);
+                    _networkClosedEventHandler(this, networkClosedEventArgs);
                     ReferencePool.Release(networkClosedEventArgs);
                 }
             }
@@ -274,12 +274,12 @@ namespace ZeroFramework.Network
 
         private void OnNetworkChannelMissHeartBeat(NetworkChannelBase networkChannel, int missHeartBeatCount)
         {
-            if (m_NetworkMissHeartBeatEventHandler != null)
+            if (_networkMissHeartBeatEventHandler != null)
             {
-                lock (m_NetworkMissHeartBeatEventHandler)
+                lock (_networkMissHeartBeatEventHandler)
                 {
                     NetworkMissHeartBeatEventArgs networkMissHeartBeatEventArgs = NetworkMissHeartBeatEventArgs.Create(networkChannel, missHeartBeatCount);
-                    m_NetworkMissHeartBeatEventHandler(this, networkMissHeartBeatEventArgs);
+                    _networkMissHeartBeatEventHandler(this, networkMissHeartBeatEventArgs);
                     ReferencePool.Release(networkMissHeartBeatEventArgs);
                 }
             }
@@ -287,12 +287,12 @@ namespace ZeroFramework.Network
 
         private void OnNetworkChannelError(NetworkChannelBase networkChannel, NetworkErrorCode errorCode, SocketError socketErrorCode, string errorMessage)
         {
-            if (m_NetworkErrorEventHandler != null)
+            if (_networkErrorEventHandler != null)
             {
-                lock (m_NetworkErrorEventHandler)
+                lock (_networkErrorEventHandler)
                 {
                     NetworkErrorEventArgs networkErrorEventArgs = NetworkErrorEventArgs.Create(networkChannel, errorCode, socketErrorCode, errorMessage);
-                    m_NetworkErrorEventHandler(this, networkErrorEventArgs);
+                    _networkErrorEventHandler(this, networkErrorEventArgs);
                     ReferencePool.Release(networkErrorEventArgs);
                 }
             }
@@ -300,12 +300,12 @@ namespace ZeroFramework.Network
 
         private void OnNetworkChannelCustomError(NetworkChannelBase networkChannel, object customErrorData)
         {
-            if (m_NetworkCustomErrorEventHandler != null)
+            if (_networkCustomErrorEventHandler != null)
             {
-                lock (m_NetworkCustomErrorEventHandler)
+                lock (_networkCustomErrorEventHandler)
                 {
                     NetworkCustomErrorEventArgs networkCustomErrorEventArgs = NetworkCustomErrorEventArgs.Create(networkChannel, customErrorData);
-                    m_NetworkCustomErrorEventHandler(this, networkCustomErrorEventArgs);
+                    _networkCustomErrorEventHandler(this, networkCustomErrorEventArgs);
                     ReferencePool.Release(networkCustomErrorEventArgs);
                 }
             }

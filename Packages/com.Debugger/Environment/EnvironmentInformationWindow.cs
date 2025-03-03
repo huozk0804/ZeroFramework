@@ -15,12 +15,12 @@ namespace ZeroFramework.Debugger
 {
     internal sealed class EnvironmentInformationWindow : ScrollableDebuggerWindowBase
     {
-        private IResourceManager m_ResourceManager = null;
+        private IResourceManager _resourceManager = null;
 
         public override void Initialize(params object[] args)
         {
-            m_ResourceManager = Zero.Instance.Resource;
-            if (m_ResourceManager == null)
+            _resourceManager = Zero.Instance.Resource;
+            if (_resourceManager == null)
             {
                 Log.Fatal("Resource component is invalid.");
                 return;

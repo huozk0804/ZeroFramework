@@ -18,16 +18,16 @@ namespace ZeroFramework
         private const float DefaultExpireTime = float.MaxValue;
         private const int DefaultPriority = 0;
 
-        private readonly Dictionary<TypeNamePair, ObjectPoolBase> m_ObjectPools;
-        private readonly Comparison<ObjectPoolBase> m_ObjectPoolComparer;
+        private readonly Dictionary<TypeNamePair, ObjectPoolBase> _objectPools;
+        private readonly Comparison<ObjectPoolBase> _objectPoolComparer;
 
         /// <summary>
         /// 初始化对象池管理器的新实例。
         /// </summary>
         public ObjectPoolManager()
         {
-            m_ObjectPools = new Dictionary<TypeNamePair, ObjectPoolBase>();
-            m_ObjectPoolComparer = ObjectPoolComparer;
+            _objectPools = new Dictionary<TypeNamePair, ObjectPoolBase>();
+            _objectPoolComparer = ObjectPoolComparer;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace ZeroFramework
         /// <summary>
         /// 获取对象池数量。
         /// </summary>
-        public int Count => m_ObjectPools.Count;
+        public int Count => _objectPools.Count;
 
         /// <summary>
         /// 对象池管理器轮询。
@@ -48,7 +48,7 @@ namespace ZeroFramework
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
         public override void Update(float elapseSeconds, float realElapseSeconds)
         {
-            foreach (var objectPool in m_ObjectPools)
+            foreach (var objectPool in _objectPools)
             {
                 objectPool.Value.Update(elapseSeconds, realElapseSeconds);
             }
@@ -59,12 +59,12 @@ namespace ZeroFramework
         /// </summary>
         public override void Shutdown()
         {
-            foreach (var objectPool in m_ObjectPools)
+            foreach (var objectPool in _objectPools)
             {
                 objectPool.Value.Shutdown();
             }
 
-            m_ObjectPools.Clear();
+            _objectPools.Clear();
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace ZeroFramework
                 throw new GameFrameworkException("Condition is invalid.");
             }
 
-            foreach (var objectPool in m_ObjectPools)
+            foreach (var objectPool in _objectPools)
             {
                 if (condition(objectPool.Value))
                 {
@@ -230,7 +230,7 @@ namespace ZeroFramework
                 throw new GameFrameworkException("Condition is invalid.");
             }
 
-            foreach (KeyValuePair<TypeNamePair, ObjectPoolBase> objectPool in m_ObjectPools)
+            foreach (KeyValuePair<TypeNamePair, ObjectPoolBase> objectPool in _objectPools)
             {
                 if (condition(objectPool.Value))
                 {
@@ -254,7 +254,7 @@ namespace ZeroFramework
             }
 
             List<ObjectPoolBase> results = new List<ObjectPoolBase>();
-            foreach (KeyValuePair<TypeNamePair, ObjectPoolBase> objectPool in m_ObjectPools)
+            foreach (KeyValuePair<TypeNamePair, ObjectPoolBase> objectPool in _objectPools)
             {
                 if (condition(objectPool.Value))
                 {
@@ -283,7 +283,7 @@ namespace ZeroFramework
             }
 
             results.Clear();
-            foreach (var objectPool in m_ObjectPools)
+            foreach (var objectPool in _objectPools)
             {
                 if (condition(objectPool.Value))
                 {
@@ -320,19 +320,19 @@ namespace ZeroFramework
             if (sort)
             {
                 List<ObjectPoolBase> results = new List<ObjectPoolBase>();
-                foreach (var objectPool in m_ObjectPools)
+                foreach (var objectPool in _objectPools)
                 {
                     results.Add(objectPool.Value);
                 }
 
-                results.Sort(m_ObjectPoolComparer);
+                results.Sort(_objectPoolComparer);
                 return results.ToArray();
             }
             else
             {
                 int index = 0;
-                ObjectPoolBase[] results = new ObjectPoolBase[m_ObjectPools.Count];
-                foreach (var objectPool in m_ObjectPools)
+                ObjectPoolBase[] results = new ObjectPoolBase[_objectPools.Count];
+                foreach (var objectPool in _objectPools)
                 {
                     results[index++] = objectPool.Value;
                 }
@@ -354,14 +354,14 @@ namespace ZeroFramework
             }
 
             results.Clear();
-            foreach (KeyValuePair<TypeNamePair, ObjectPoolBase> objectPool in m_ObjectPools)
+            foreach (KeyValuePair<TypeNamePair, ObjectPoolBase> objectPool in _objectPools)
             {
                 results.Add(objectPool.Value);
             }
 
             if (sort)
             {
-                results.Sort(m_ObjectPoolComparer);
+                results.Sort(_objectPoolComparer);
             }
         }
 
@@ -1273,13 +1273,13 @@ namespace ZeroFramework
 
         private bool InternalHasObjectPool(TypeNamePair typeNamePair)
         {
-            return m_ObjectPools.ContainsKey(typeNamePair);
+            return _objectPools.ContainsKey(typeNamePair);
         }
 
         private ObjectPoolBase InternalGetObjectPool(TypeNamePair typeNamePair)
         {
             ObjectPoolBase objectPool = null;
-            if (m_ObjectPools.TryGetValue(typeNamePair, out objectPool))
+            if (_objectPools.TryGetValue(typeNamePair, out objectPool))
             {
                 return objectPool;
             }
@@ -1298,7 +1298,7 @@ namespace ZeroFramework
 
             ObjectPool<T> objectPool = new ObjectPool<T>(name, allowMultiSpawn, autoReleaseInterval, capacity,
                 expireTime, priority);
-            m_ObjectPools.Add(typeNamePair, objectPool);
+            _objectPools.Add(typeNamePair, objectPool);
             return objectPool;
         }
 
@@ -1325,17 +1325,17 @@ namespace ZeroFramework
             Type objectPoolType = typeof(ObjectPool<>).MakeGenericType(objectType);
             ObjectPoolBase objectPool = (ObjectPoolBase)Activator.CreateInstance(objectPoolType, name, allowMultiSpawn,
                 autoReleaseInterval, capacity, expireTime, priority);
-            m_ObjectPools.Add(typeNamePair, objectPool);
+            _objectPools.Add(typeNamePair, objectPool);
             return objectPool;
         }
 
         private bool InternalDestroyObjectPool(TypeNamePair typeNamePair)
         {
             ObjectPoolBase objectPool = null;
-            if (m_ObjectPools.TryGetValue(typeNamePair, out objectPool))
+            if (_objectPools.TryGetValue(typeNamePair, out objectPool))
             {
                 objectPool.Shutdown();
-                return m_ObjectPools.Remove(typeNamePair);
+                return _objectPools.Remove(typeNamePair);
             }
 
             return false;

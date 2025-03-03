@@ -11,31 +11,31 @@ namespace ZeroFramework.WebRequest
 {
     internal sealed class WWWFormInfo : IReference
     {
-        private WWWForm m_WWWForm;
-        private object m_UserData;
+        private WWWForm _wwwForm;
+        private object _userData;
 
         public WWWFormInfo()
         {
-            m_WWWForm = null;
-            m_UserData = null;
+            _wwwForm = null;
+            _userData = null;
         }
 
-        public WWWForm WWWForm => m_WWWForm;
+        public WWWForm WWWForm => _wwwForm;
 
-        public object UserData => m_UserData;
+        public object UserData => _userData;
 
         public static WWWFormInfo Create(WWWForm wwwForm, object userData)
         {
             WWWFormInfo wwwFormInfo = ReferencePool.Acquire<WWWFormInfo>();
-            wwwFormInfo.m_WWWForm = wwwForm;
-            wwwFormInfo.m_UserData = userData;
+            wwwFormInfo._wwwForm = wwwForm;
+            wwwFormInfo._userData = userData;
             return wwwFormInfo;
         }
 
         public void Clear()
         {
-            m_WWWForm = null;
-            m_UserData = null;
+            _wwwForm = null;
+            _userData = null;
         }
     }
 }

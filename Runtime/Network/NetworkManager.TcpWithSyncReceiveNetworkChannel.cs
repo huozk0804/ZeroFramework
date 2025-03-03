@@ -17,8 +17,8 @@ namespace ZeroFramework.Network
         /// </summary>
         private sealed class TcpWithSyncReceiveNetworkChannel : NetworkChannelBase
         {
-            private readonly AsyncCallback m_ConnectCallback;
-            private readonly AsyncCallback m_SendCallback;
+            private readonly AsyncCallback _connectCallback;
+            private readonly AsyncCallback _sendCallback;
 
             /// <summary>
             /// 初始化网络频道的新实例。
@@ -28,8 +28,8 @@ namespace ZeroFramework.Network
             public TcpWithSyncReceiveNetworkChannel(string name, INetworkChannelHelper networkChannelHelper)
                 : base(name, networkChannelHelper)
             {
-                m_ConnectCallback = ConnectCallback;
-                m_SendCallback = SendCallback;
+                _connectCallback = ConnectCallback;
+                _sendCallback = SendCallback;
             }
 
             /// <summary>
@@ -46,8 +46,8 @@ namespace ZeroFramework.Network
             public override void Connect(IPAddress ipAddress, int port, object userData)
             {
                 base.Connect(ipAddress, port, userData);
-                m_Socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                if (m_Socket == null)
+                _socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                if (_socket == null)
                 {
                     string errorMessage = "Initialize network channel failure.";
                     if (NetworkChannelError != null)
@@ -59,7 +59,7 @@ namespace ZeroFramework.Network
                     throw new GameFrameworkException(errorMessage);
                 }
 
-                m_NetworkChannelHelper.PrepareForConnecting();
+                _networkChannelHelper.PrepareForConnecting();
                 ConnectAsync(ipAddress, port, userData);
             }
 
@@ -77,7 +77,7 @@ namespace ZeroFramework.Network
             protected override void ProcessReceive()
             {
                 base.ProcessReceive();
-                while (m_Socket.Available > 0)
+                while (_socket.Available > 0)
                 {
                     if (!ReceiveSync())
                     {
@@ -90,7 +90,7 @@ namespace ZeroFramework.Network
             {
                 try
                 {
-                    m_Socket.BeginConnect(ipAddress, port, m_ConnectCallback, new ConnectState(m_Socket, userData));
+                    _socket.BeginConnect(ipAddress, port, _connectCallback, new ConnectState(_socket, userData));
                 }
                 catch (Exception exception)
                 {
@@ -118,7 +118,7 @@ namespace ZeroFramework.Network
                 }
                 catch (Exception exception)
                 {
-                    m_Active = false;
+                    _active = false;
                     if (NetworkChannelError != null)
                     {
                         SocketException socketException = exception as SocketException;
@@ -129,19 +129,19 @@ namespace ZeroFramework.Network
                     throw;
                 }
 
-                m_SendPacketCount = 0;
-                m_ReceivedPacketCount = 0;
+                _sendPacketCount = 0;
+                _receivedPacketCount = 0;
 
-                lock (m_SendPacketPool)
+                lock (_sendPacketPool)
                 {
-                    m_SendPacketPool.Clear();
+                    _sendPacketPool.Clear();
                 }
 
-                m_ReceivePacketPool.Clear();
+                _receivePacketPool.Clear();
 
-                lock (m_HeartBeatState)
+                lock (_heartBeatState)
                 {
-                    m_HeartBeatState.Reset(true);
+                    _heartBeatState.Reset(true);
                 }
 
                 if (NetworkChannelConnected != null)
@@ -149,18 +149,18 @@ namespace ZeroFramework.Network
                     NetworkChannelConnected(this, socketUserData.UserData);
                 }
 
-                m_Active = true;
+                _active = true;
             }
 
             private void SendAsync()
             {
                 try
                 {
-                    m_Socket.BeginSend(m_SendState.Stream.GetBuffer(), (int)m_SendState.Stream.Position, (int)(m_SendState.Stream.Length - m_SendState.Stream.Position), SocketFlags.None, m_SendCallback, m_Socket);
+                    _socket.BeginSend(_sendState.Stream.GetBuffer(), (int)_sendState.Stream.Position, (int)(_sendState.Stream.Length - _sendState.Stream.Position), SocketFlags.None, _sendCallback, _socket);
                 }
                 catch (Exception exception)
                 {
-                    m_Active = false;
+                    _active = false;
                     if (NetworkChannelError != null)
                     {
                         SocketException socketException = exception as SocketException;
@@ -187,7 +187,7 @@ namespace ZeroFramework.Network
                 }
                 catch (Exception exception)
                 {
-                    m_Active = false;
+                    _active = false;
                     if (NetworkChannelError != null)
                     {
                         SocketException socketException = exception as SocketException;
@@ -198,41 +198,41 @@ namespace ZeroFramework.Network
                     throw;
                 }
 
-                m_SendState.Stream.Position += bytesSent;
-                if (m_SendState.Stream.Position < m_SendState.Stream.Length)
+                _sendState.Stream.Position += bytesSent;
+                if (_sendState.Stream.Position < _sendState.Stream.Length)
                 {
                     SendAsync();
                     return;
                 }
 
-                m_SendPacketCount++;
-                m_SendState.Reset();
+                _sendPacketCount++;
+                _sendState.Reset();
             }
 
             private bool ReceiveSync()
             {
                 try
                 {
-                    int bytesReceived = m_Socket.Receive(m_ReceiveState.Stream.GetBuffer(), (int)m_ReceiveState.Stream.Position, (int)(m_ReceiveState.Stream.Length - m_ReceiveState.Stream.Position), SocketFlags.None);
+                    int bytesReceived = _socket.Receive(_receiveState.Stream.GetBuffer(), (int)_receiveState.Stream.Position, (int)(_receiveState.Stream.Length - _receiveState.Stream.Position), SocketFlags.None);
                     if (bytesReceived <= 0)
                     {
                         Close();
                         return false;
                     }
 
-                    m_ReceiveState.Stream.Position += bytesReceived;
-                    if (m_ReceiveState.Stream.Position < m_ReceiveState.Stream.Length)
+                    _receiveState.Stream.Position += bytesReceived;
+                    if (_receiveState.Stream.Position < _receiveState.Stream.Length)
                     {
                         return false;
                     }
 
-                    m_ReceiveState.Stream.Position = 0L;
+                    _receiveState.Stream.Position = 0L;
 
                     bool processSuccess = false;
-                    if (m_ReceiveState.PacketHeader != null)
+                    if (_receiveState.PacketHeader != null)
                     {
                         processSuccess = ProcessPacket();
-                        m_ReceivedPacketCount++;
+                        _receivedPacketCount++;
                     }
                     else
                     {
@@ -243,7 +243,7 @@ namespace ZeroFramework.Network
                 }
                 catch (Exception exception)
                 {
-                    m_Active = false;
+                    _active = false;
                     if (NetworkChannelError != null)
                     {
                         SocketException socketException = exception as SocketException;

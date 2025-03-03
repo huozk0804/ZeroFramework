@@ -11,14 +11,14 @@ namespace ZeroFramework.WebRequest
     /// </summary>
     public sealed class WebRequestAgentHelperCompleteEventArgs : GameFrameworkEventArgs
     {
-        private byte[] m_WebResponseBytes;
+        private byte[] _webResponseBytes;
 
         /// <summary>
         /// 初始化 Web 请求代理辅助器完成事件的新实例。
         /// </summary>
         public WebRequestAgentHelperCompleteEventArgs()
         {
-            m_WebResponseBytes = null;
+            _webResponseBytes = null;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace ZeroFramework.WebRequest
         {
             WebRequestAgentHelperCompleteEventArgs webRequestAgentHelperCompleteEventArgs =
                 ReferencePool.Acquire<WebRequestAgentHelperCompleteEventArgs>();
-            webRequestAgentHelperCompleteEventArgs.m_WebResponseBytes = webResponseBytes;
+            webRequestAgentHelperCompleteEventArgs._webResponseBytes = webResponseBytes;
             return webRequestAgentHelperCompleteEventArgs;
         }
 
@@ -39,7 +39,7 @@ namespace ZeroFramework.WebRequest
         /// </summary>
         public override void Clear()
         {
-            m_WebResponseBytes = null;
+            _webResponseBytes = null;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace ZeroFramework.WebRequest
         /// <returns>Web 响应的数据流。</returns>
         public byte[] GetWebResponseBytes()
         {
-            return m_WebResponseBytes;
+            return _webResponseBytes;
         }
     }
 }

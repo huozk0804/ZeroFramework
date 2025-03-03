@@ -15,36 +15,34 @@ namespace ZeroFramework.Scenes
     /// </summary>
     public sealed class ScenesManager : GameFrameworkModule, IScenesManager
     {
-        private readonly List<string> m_LoadedSceneAssetNames;
-        private readonly List<string> m_LoadingSceneAssetNames;
-        private readonly List<string> m_UnloadingSceneAssetNames;
-        // private readonly LoadSceneCallbacks m_LoadSceneCallbacks;
-        // private readonly UnloadSceneCallbacks m_UnloadSceneCallbacks;
-        private EventHandler<LoadSceneSuccessEventArgs> m_LoadSceneSuccessEventHandler;
-        private EventHandler<LoadSceneFailureEventArgs> m_LoadSceneFailureEventHandler;
-        private EventHandler<LoadSceneUpdateEventArgs> m_LoadSceneUpdateEventHandler;
-        private EventHandler<LoadSceneDependencyAssetEventArgs> m_LoadSceneDependencyAssetEventHandler;
-        private EventHandler<UnloadSceneSuccessEventArgs> m_UnloadSceneSuccessEventHandler;
-        private EventHandler<UnloadSceneFailureEventArgs> m_UnloadSceneFailureEventHandler;
+        private readonly List<string> _loadedSceneAssetNames;
+        private readonly List<string> _loadingSceneAssetNames;
+        private readonly List<string> _unloadingSceneAssetNames;
+        private EventHandler<LoadSceneSuccessEventArgs> _loadSceneSuccessEventHandler;
+        private EventHandler<LoadSceneFailureEventArgs> _loadSceneFailureEventHandler;
+        private EventHandler<LoadSceneUpdateEventArgs> _loadSceneUpdateEventHandler;
+        private EventHandler<LoadSceneDependencyAssetEventArgs> _loadSceneDependencyAssetEventHandler;
+        private EventHandler<UnloadSceneSuccessEventArgs> _unloadSceneSuccessEventHandler;
+        private EventHandler<UnloadSceneFailureEventArgs> _unloadSceneFailureEventHandler;
 
         /// <summary>
         /// 初始化场景管理器的新实例。
         /// </summary>
         public ScenesManager()
         {
-            m_LoadedSceneAssetNames = new List<string>();
-            m_LoadingSceneAssetNames = new List<string>();
-            m_UnloadingSceneAssetNames = new List<string>();
+            _loadedSceneAssetNames = new List<string>();
+            _loadingSceneAssetNames = new List<string>();
+            _unloadingSceneAssetNames = new List<string>();
             //TODO:资源框架引用待修改
             // m_LoadSceneCallbacks = new LoadSceneCallbacks(LoadSceneSuccessCallback, LoadSceneFailureCallback,
                 // LoadSceneUpdateCallback, LoadSceneDependencyAssetCallback);
             // m_UnloadSceneCallbacks = new UnloadSceneCallbacks(UnloadSceneSuccessCallback, UnloadSceneFailureCallback);
-            m_LoadSceneSuccessEventHandler = null;
-            m_LoadSceneFailureEventHandler = null;
-            m_LoadSceneUpdateEventHandler = null;
-            m_LoadSceneDependencyAssetEventHandler = null;
-            m_UnloadSceneSuccessEventHandler = null;
-            m_UnloadSceneFailureEventHandler = null;
+            _loadSceneSuccessEventHandler = null;
+            _loadSceneFailureEventHandler = null;
+            _loadSceneUpdateEventHandler = null;
+            _loadSceneDependencyAssetEventHandler = null;
+            _unloadSceneSuccessEventHandler = null;
+            _unloadSceneFailureEventHandler = null;
         }
 
         /// <summary>
@@ -58,8 +56,8 @@ namespace ZeroFramework.Scenes
         /// </summary>
         public event EventHandler<LoadSceneSuccessEventArgs> LoadSceneSuccess
         {
-            add => m_LoadSceneSuccessEventHandler += value;
-            remove => m_LoadSceneSuccessEventHandler -= value;
+            add => _loadSceneSuccessEventHandler += value;
+            remove => _loadSceneSuccessEventHandler -= value;
         }
 
         /// <summary>
@@ -67,8 +65,8 @@ namespace ZeroFramework.Scenes
         /// </summary>
         public event EventHandler<LoadSceneFailureEventArgs> LoadSceneFailure
         {
-            add => m_LoadSceneFailureEventHandler += value;
-            remove => m_LoadSceneFailureEventHandler -= value;
+            add => _loadSceneFailureEventHandler += value;
+            remove => _loadSceneFailureEventHandler -= value;
         }
 
         /// <summary>
@@ -76,8 +74,8 @@ namespace ZeroFramework.Scenes
         /// </summary>
         public event EventHandler<LoadSceneUpdateEventArgs> LoadSceneUpdate
         {
-            add => m_LoadSceneUpdateEventHandler += value;
-            remove => m_LoadSceneUpdateEventHandler -= value;
+            add => _loadSceneUpdateEventHandler += value;
+            remove => _loadSceneUpdateEventHandler -= value;
         }
 
         /// <summary>
@@ -85,8 +83,8 @@ namespace ZeroFramework.Scenes
         /// </summary>
         public event EventHandler<LoadSceneDependencyAssetEventArgs> LoadSceneDependencyAsset
         {
-            add => m_LoadSceneDependencyAssetEventHandler += value;
-            remove => m_LoadSceneDependencyAssetEventHandler -= value;
+            add => _loadSceneDependencyAssetEventHandler += value;
+            remove => _loadSceneDependencyAssetEventHandler -= value;
         }
 
         /// <summary>
@@ -94,8 +92,8 @@ namespace ZeroFramework.Scenes
         /// </summary>
         public event EventHandler<UnloadSceneSuccessEventArgs> UnloadSceneSuccess
         {
-            add => m_UnloadSceneSuccessEventHandler += value;
-            remove => m_UnloadSceneSuccessEventHandler -= value;
+            add => _unloadSceneSuccessEventHandler += value;
+            remove => _unloadSceneSuccessEventHandler -= value;
         }
 
         /// <summary>
@@ -103,8 +101,8 @@ namespace ZeroFramework.Scenes
         /// </summary>
         public event EventHandler<UnloadSceneFailureEventArgs> UnloadSceneFailure
         {
-            add => m_UnloadSceneFailureEventHandler += value;
-            remove => m_UnloadSceneFailureEventHandler -= value;
+            add => _unloadSceneFailureEventHandler += value;
+            remove => _unloadSceneFailureEventHandler -= value;
         }
 
         /// <summary>
@@ -121,7 +119,7 @@ namespace ZeroFramework.Scenes
         /// </summary>
         public override void Shutdown()
         {
-            string[] loadedSceneAssetNames = m_LoadedSceneAssetNames.ToArray();
+            string[] loadedSceneAssetNames = _loadedSceneAssetNames.ToArray();
             foreach (string loadedSceneAssetName in loadedSceneAssetNames)
             {
                 if (SceneIsUnloading(loadedSceneAssetName))
@@ -132,9 +130,9 @@ namespace ZeroFramework.Scenes
                 UnloadScene(loadedSceneAssetName);
             }
 
-            m_LoadedSceneAssetNames.Clear();
-            m_LoadingSceneAssetNames.Clear();
-            m_UnloadingSceneAssetNames.Clear();
+            _loadedSceneAssetNames.Clear();
+            _loadingSceneAssetNames.Clear();
+            _unloadingSceneAssetNames.Clear();
         }
 
         /// <summary>
@@ -149,7 +147,7 @@ namespace ZeroFramework.Scenes
                 throw new GameFrameworkException("Scene asset name is invalid.");
             }
 
-            return m_LoadedSceneAssetNames.Contains(sceneAssetName);
+            return _loadedSceneAssetNames.Contains(sceneAssetName);
         }
 
         /// <summary>
@@ -158,7 +156,7 @@ namespace ZeroFramework.Scenes
         /// <returns>已加载场景的资源名称。</returns>
         public string[] GetLoadedSceneAssetNames()
         {
-            return m_LoadedSceneAssetNames.ToArray();
+            return _loadedSceneAssetNames.ToArray();
         }
 
         /// <summary>
@@ -173,7 +171,7 @@ namespace ZeroFramework.Scenes
             }
 
             results.Clear();
-            results.AddRange(m_LoadedSceneAssetNames);
+            results.AddRange(_loadedSceneAssetNames);
         }
 
         /// <summary>
@@ -188,7 +186,7 @@ namespace ZeroFramework.Scenes
                 throw new GameFrameworkException("Scene asset name is invalid.");
             }
 
-            return m_LoadingSceneAssetNames.Contains(sceneAssetName);
+            return _loadingSceneAssetNames.Contains(sceneAssetName);
         }
 
         /// <summary>
@@ -197,7 +195,7 @@ namespace ZeroFramework.Scenes
         /// <returns>正在加载场景的资源名称。</returns>
         public string[] GetLoadingSceneAssetNames()
         {
-            return m_LoadingSceneAssetNames.ToArray();
+            return _loadingSceneAssetNames.ToArray();
         }
 
         /// <summary>
@@ -212,7 +210,7 @@ namespace ZeroFramework.Scenes
             }
 
             results.Clear();
-            results.AddRange(m_LoadingSceneAssetNames);
+            results.AddRange(_loadingSceneAssetNames);
         }
 
         /// <summary>
@@ -227,7 +225,7 @@ namespace ZeroFramework.Scenes
                 throw new GameFrameworkException("Scene asset name is invalid.");
             }
 
-            return m_UnloadingSceneAssetNames.Contains(sceneAssetName);
+            return _unloadingSceneAssetNames.Contains(sceneAssetName);
         }
 
         /// <summary>
@@ -236,7 +234,7 @@ namespace ZeroFramework.Scenes
         /// <returns>正在卸载场景的资源名称。</returns>
         public string[] GetUnloadingSceneAssetNames()
         {
-            return m_UnloadingSceneAssetNames.ToArray();
+            return _unloadingSceneAssetNames.ToArray();
         }
 
         /// <summary>
@@ -251,7 +249,7 @@ namespace ZeroFramework.Scenes
             }
 
             results.Clear();
-            results.AddRange(m_UnloadingSceneAssetNames);
+            results.AddRange(_unloadingSceneAssetNames);
         }
 
         /// <summary>
@@ -326,7 +324,7 @@ namespace ZeroFramework.Scenes
                     sceneAssetName));
             }
 
-            m_LoadingSceneAssetNames.Add(sceneAssetName);
+            _loadingSceneAssetNames.Add(sceneAssetName);
             //TODO:资源框架引用待修改
             // Zero.Instance.Resource.LoadScene(sceneAssetName, priority, m_LoadSceneCallbacks, userData);
         }
@@ -370,20 +368,20 @@ namespace ZeroFramework.Scenes
                     sceneAssetName));
             }
 
-            m_UnloadingSceneAssetNames.Add(sceneAssetName);
+            _unloadingSceneAssetNames.Add(sceneAssetName);
             //TODO:资源框架引用待修改
             // Zero.Instance.Resource.UnloadScene(sceneAssetName, m_UnloadSceneCallbacks, userData);
         }
 
         private void LoadSceneSuccessCallback(string sceneAssetName, float duration, object userData)
         {
-            m_LoadingSceneAssetNames.Remove(sceneAssetName);
-            m_LoadedSceneAssetNames.Add(sceneAssetName);
-            if (m_LoadSceneSuccessEventHandler != null)
+            _loadingSceneAssetNames.Remove(sceneAssetName);
+            _loadedSceneAssetNames.Add(sceneAssetName);
+            if (_loadSceneSuccessEventHandler != null)
             {
                 LoadSceneSuccessEventArgs loadSceneSuccessEventArgs =
                     LoadSceneSuccessEventArgs.Create(sceneAssetName, duration, userData);
-                m_LoadSceneSuccessEventHandler(this, loadSceneSuccessEventArgs);
+                _loadSceneSuccessEventHandler(this, loadSceneSuccessEventArgs);
                 ReferencePool.Release(loadSceneSuccessEventArgs);
             }
         }
@@ -391,15 +389,15 @@ namespace ZeroFramework.Scenes
         private void LoadSceneFailureCallback(string sceneAssetName, LoadResourceStatus status, string errorMessage,
             object userData)
         {
-            m_LoadingSceneAssetNames.Remove(sceneAssetName);
+            _loadingSceneAssetNames.Remove(sceneAssetName);
             string appendErrorMessage =
                 Utility.Text.Format("Load scene failure, scene asset name '{0}', status '{1}', error message '{2}'.",
                     sceneAssetName, status, errorMessage);
-            if (m_LoadSceneFailureEventHandler != null)
+            if (_loadSceneFailureEventHandler != null)
             {
                 LoadSceneFailureEventArgs loadSceneFailureEventArgs =
                     LoadSceneFailureEventArgs.Create(sceneAssetName, appendErrorMessage, userData);
-                m_LoadSceneFailureEventHandler(this, loadSceneFailureEventArgs);
+                _loadSceneFailureEventHandler(this, loadSceneFailureEventArgs);
                 ReferencePool.Release(loadSceneFailureEventArgs);
                 return;
             }
@@ -409,11 +407,11 @@ namespace ZeroFramework.Scenes
 
         private void LoadSceneUpdateCallback(string sceneAssetName, float progress, object userData)
         {
-            if (m_LoadSceneUpdateEventHandler != null)
+            if (_loadSceneUpdateEventHandler != null)
             {
                 LoadSceneUpdateEventArgs loadSceneUpdateEventArgs =
                     LoadSceneUpdateEventArgs.Create(sceneAssetName, progress, userData);
-                m_LoadSceneUpdateEventHandler(this, loadSceneUpdateEventArgs);
+                _loadSceneUpdateEventHandler(this, loadSceneUpdateEventArgs);
                 ReferencePool.Release(loadSceneUpdateEventArgs);
             }
         }
@@ -421,37 +419,37 @@ namespace ZeroFramework.Scenes
         private void LoadSceneDependencyAssetCallback(string sceneAssetName, string dependencyAssetName,
             int loadedCount, int totalCount, object userData)
         {
-            if (m_LoadSceneDependencyAssetEventHandler != null)
+            if (_loadSceneDependencyAssetEventHandler != null)
             {
                 LoadSceneDependencyAssetEventArgs loadSceneDependencyAssetEventArgs =
                     LoadSceneDependencyAssetEventArgs.Create(sceneAssetName, dependencyAssetName, loadedCount,
                         totalCount, userData);
-                m_LoadSceneDependencyAssetEventHandler(this, loadSceneDependencyAssetEventArgs);
+                _loadSceneDependencyAssetEventHandler(this, loadSceneDependencyAssetEventArgs);
                 ReferencePool.Release(loadSceneDependencyAssetEventArgs);
             }
         }
 
         private void UnloadSceneSuccessCallback(string sceneAssetName, object userData)
         {
-            m_UnloadingSceneAssetNames.Remove(sceneAssetName);
-            m_LoadedSceneAssetNames.Remove(sceneAssetName);
-            if (m_UnloadSceneSuccessEventHandler != null)
+            _unloadingSceneAssetNames.Remove(sceneAssetName);
+            _loadedSceneAssetNames.Remove(sceneAssetName);
+            if (_unloadSceneSuccessEventHandler != null)
             {
                 UnloadSceneSuccessEventArgs unloadSceneSuccessEventArgs =
                     UnloadSceneSuccessEventArgs.Create(sceneAssetName, userData);
-                m_UnloadSceneSuccessEventHandler(this, unloadSceneSuccessEventArgs);
+                _unloadSceneSuccessEventHandler(this, unloadSceneSuccessEventArgs);
                 ReferencePool.Release(unloadSceneSuccessEventArgs);
             }
         }
 
         private void UnloadSceneFailureCallback(string sceneAssetName, object userData)
         {
-            m_UnloadingSceneAssetNames.Remove(sceneAssetName);
-            if (m_UnloadSceneFailureEventHandler != null)
+            _unloadingSceneAssetNames.Remove(sceneAssetName);
+            if (_unloadSceneFailureEventHandler != null)
             {
                 UnloadSceneFailureEventArgs unloadSceneFailureEventArgs =
                     UnloadSceneFailureEventArgs.Create(sceneAssetName, userData);
-                m_UnloadSceneFailureEventHandler(this, unloadSceneFailureEventArgs);
+                _unloadSceneFailureEventHandler(this, unloadSceneFailureEventArgs);
                 ReferencePool.Release(unloadSceneFailureEventArgs);
                 return;
             }

@@ -14,20 +14,20 @@ namespace ZeroFramework.Localization
     /// </summary>
     public sealed partial class LocalizationManager : GameFrameworkModule, ILocalizationManager
     {
-        private readonly Dictionary<string, string> m_Dictionary;
-        private readonly DataProvider<ILocalizationManager> m_DataProvider;
-        private ILocalizationHelper m_LocalizationHelper;
-        private Language m_Language;
+        private readonly Dictionary<string, string> _dictionary;
+        private readonly DataProvider<ILocalizationManager> _dataProvider;
+        private ILocalizationHelper _localizationHelper;
+        private Language _language;
 
         /// <summary>
         /// 初始化本地化管理器的新实例。
         /// </summary>
         public LocalizationManager()
         {
-            m_Dictionary = new Dictionary<string, string>(StringComparer.Ordinal);
-            m_DataProvider = new DataProvider<ILocalizationManager>(this);
-            m_LocalizationHelper = null;
-            m_Language = Language.Unspecified;
+            _dictionary = new Dictionary<string, string>(StringComparer.Ordinal);
+            _dataProvider = new DataProvider<ILocalizationManager>(this);
+            _localizationHelper = null;
+            _language = Language.Unspecified;
 
             var typeName = GameFrameworkConfig.Instance.localizationHelperTypeName;
             var helperBase = GameFrameworkConfig.Instance.localizationCustomHelper;
@@ -54,7 +54,7 @@ namespace ZeroFramework.Localization
         /// </summary>
         public Language Language
         {
-            get => m_Language;
+            get => _language;
             set
             {
                 if (value == Language.Unspecified)
@@ -62,7 +62,7 @@ namespace ZeroFramework.Localization
                     throw new GameFrameworkException("Language is invalid.");
                 }
 
-                m_Language = value;
+                _language = value;
             }
         }
 
@@ -73,19 +73,19 @@ namespace ZeroFramework.Localization
         {
             get
             {
-                if (m_LocalizationHelper == null)
+                if (_localizationHelper == null)
                 {
                     throw new GameFrameworkException("You must set localization helper first.");
                 }
 
-                return m_LocalizationHelper.SystemLanguage;
+                return _localizationHelper.SystemLanguage;
             }
         }
 
         /// <summary>
         /// 获取字典数量。
         /// </summary>
-        public int DictionaryCount => m_Dictionary.Count;
+        public int DictionaryCount => _dictionary.Count;
 
         /// <summary>
         /// 获取缓冲二进制流的大小。
@@ -97,8 +97,8 @@ namespace ZeroFramework.Localization
         /// </summary>
         public event EventHandler<ReadDataSuccessEventArgs> ReadDataSuccess
         {
-            add => m_DataProvider.ReadDataSuccess += value;
-            remove => m_DataProvider.ReadDataSuccess -= value;
+            add => _dataProvider.ReadDataSuccess += value;
+            remove => _dataProvider.ReadDataSuccess -= value;
         }
 
         /// <summary>
@@ -106,8 +106,8 @@ namespace ZeroFramework.Localization
         /// </summary>
         public event EventHandler<ReadDataFailureEventArgs> ReadDataFailure
         {
-            add => m_DataProvider.ReadDataFailure += value;
-            remove => m_DataProvider.ReadDataFailure -= value;
+            add => _dataProvider.ReadDataFailure += value;
+            remove => _dataProvider.ReadDataFailure -= value;
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace ZeroFramework.Localization
         /// </summary>
         public event EventHandler<ReadDataUpdateEventArgs> ReadDataUpdate
         {
-            add => m_DataProvider.ReadDataUpdate += value;
-            remove => m_DataProvider.ReadDataUpdate -= value;
+            add => _dataProvider.ReadDataUpdate += value;
+            remove => _dataProvider.ReadDataUpdate -= value;
         }
 
         /// <summary>
@@ -124,8 +124,8 @@ namespace ZeroFramework.Localization
         /// </summary>
         public event EventHandler<ReadDataDependencyAssetEventArgs> ReadDataDependencyAsset
         {
-            add => m_DataProvider.ReadDataDependencyAsset += value;
-            remove => m_DataProvider.ReadDataDependencyAsset -= value;
+            add => _dataProvider.ReadDataDependencyAsset += value;
+            remove => _dataProvider.ReadDataDependencyAsset -= value;
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace ZeroFramework.Localization
         /// <param name="dataProviderHelper">本地化数据提供者辅助器。</param>
         public void SetDataProviderHelper(IDataProviderHelper<ILocalizationManager> dataProviderHelper)
         {
-            m_DataProvider.SetDataProviderHelper(dataProviderHelper);
+            _dataProvider.SetDataProviderHelper(dataProviderHelper);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace ZeroFramework.Localization
                 throw new GameFrameworkException("Localization helper is invalid.");
             }
 
-            m_LocalizationHelper = localizationHelper;
+            _localizationHelper = localizationHelper;
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace ZeroFramework.Localization
         /// <param name="dictionaryAssetName">字典资源名称。</param>
         public void ReadData(string dictionaryAssetName)
         {
-            m_DataProvider.ReadData(dictionaryAssetName);
+            _dataProvider.ReadData(dictionaryAssetName);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace ZeroFramework.Localization
         /// <param name="priority">加载字典资源的优先级。</param>
         public void ReadData(string dictionaryAssetName, int priority)
         {
-            m_DataProvider.ReadData(dictionaryAssetName, priority);
+            _dataProvider.ReadData(dictionaryAssetName, priority);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace ZeroFramework.Localization
         /// <param name="userData">用户自定义数据。</param>
         public void ReadData(string dictionaryAssetName, object userData)
         {
-            m_DataProvider.ReadData(dictionaryAssetName, userData);
+            _dataProvider.ReadData(dictionaryAssetName, userData);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace ZeroFramework.Localization
         /// <returns>是否解析字典成功。</returns>
         public bool ParseData(string dictionaryString)
         {
-            return m_DataProvider.ParseData(dictionaryString);
+            return _dataProvider.ParseData(dictionaryString);
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace ZeroFramework.Localization
         /// <returns>是否解析字典成功。</returns>
         public bool ParseData(string dictionaryString, object userData)
         {
-            return m_DataProvider.ParseData(dictionaryString, userData);
+            return _dataProvider.ParseData(dictionaryString, userData);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace ZeroFramework.Localization
         /// <returns>是否解析字典成功。</returns>
         public bool ParseData(byte[] dictionaryBytes)
         {
-            return m_DataProvider.ParseData(dictionaryBytes);
+            return _dataProvider.ParseData(dictionaryBytes);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace ZeroFramework.Localization
         /// <returns>是否解析字典成功。</returns>
         public bool ParseData(byte[] dictionaryBytes, object userData)
         {
-            return m_DataProvider.ParseData(dictionaryBytes, userData);
+            return _dataProvider.ParseData(dictionaryBytes, userData);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace ZeroFramework.Localization
         /// <returns>是否解析字典成功。</returns>
         public bool ParseData(byte[] dictionaryBytes, int startIndex, int length)
         {
-            return m_DataProvider.ParseData(dictionaryBytes, startIndex, length);
+            return _dataProvider.ParseData(dictionaryBytes, startIndex, length);
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace ZeroFramework.Localization
         /// <returns>是否解析字典成功。</returns>
         public bool ParseData(byte[] dictionaryBytes, int startIndex, int length, object userData)
         {
-            return m_DataProvider.ParseData(dictionaryBytes, startIndex, length, userData);
+            return _dataProvider.ParseData(dictionaryBytes, startIndex, length, userData);
         }
 
         /// <summary>
@@ -986,7 +986,7 @@ namespace ZeroFramework.Localization
                 throw new GameFrameworkException("Key is invalid.");
             }
 
-            return m_Dictionary.ContainsKey(key);
+            return _dictionary.ContainsKey(key);
         }
 
         /// <summary>
@@ -1001,7 +1001,7 @@ namespace ZeroFramework.Localization
                 throw new GameFrameworkException("Key is invalid.");
             }
 
-            if (m_Dictionary.TryGetValue(key, out var value))
+            if (_dictionary.TryGetValue(key, out var value))
             {
                 return value;
             }
@@ -1022,12 +1022,12 @@ namespace ZeroFramework.Localization
                 throw new GameFrameworkException("Key is invalid.");
             }
 
-            if (m_Dictionary.ContainsKey(key))
+            if (_dictionary.ContainsKey(key))
             {
                 return false;
             }
 
-            m_Dictionary.Add(key, value ?? string.Empty);
+            _dictionary.Add(key, value ?? string.Empty);
             return true;
         }
 
@@ -1043,7 +1043,7 @@ namespace ZeroFramework.Localization
                 throw new GameFrameworkException("Key is invalid.");
             }
 
-            return m_Dictionary.Remove(key);
+            return _dictionary.Remove(key);
         }
 
         /// <summary>
@@ -1051,7 +1051,7 @@ namespace ZeroFramework.Localization
         /// </summary>
         public void RemoveAllRawStrings()
         {
-            m_Dictionary.Clear();
+            _dictionary.Clear();
         }
     }
 }

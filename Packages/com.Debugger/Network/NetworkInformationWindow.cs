@@ -11,12 +11,12 @@ namespace ZeroFramework.Debugger
 {
     internal sealed class NetworkInformationWindow : ScrollableDebuggerWindowBase
     {
-        private INetworkManager m_NetworkManager = null;
+        private INetworkManager _networkManager = null;
 
         public override void Initialize(params object[] args)
         {
-            m_NetworkManager = Zero.Instance.Network;
-            if (m_NetworkManager == null)
+            _networkManager = Zero.Instance.Network;
+            if (_networkManager == null)
             {
                 Log.Fatal("Network component is invalid.");
                 return;
@@ -28,10 +28,10 @@ namespace ZeroFramework.Debugger
             GUILayout.Label("<b>Network Information</b>");
             GUILayout.BeginVertical("box");
             {
-                DrawItem("Network Channel Count", m_NetworkManager.NetworkChannelCount.ToString());
+                DrawItem("Network Channel Count", _networkManager.NetworkChannelCount.ToString());
             }
             GUILayout.EndVertical();
-            INetworkChannel[] networkChannels = m_NetworkManager.GetAllNetworkChannels();
+            INetworkChannel[] networkChannels = _networkManager.GetAllNetworkChannels();
             for (int i = 0; i < networkChannels.Length; i++)
             {
                 DrawNetworkChannel(networkChannels[i]);

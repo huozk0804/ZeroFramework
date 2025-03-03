@@ -11,7 +11,7 @@ namespace ZeroFramework.WebRequest
     /// </summary>
     public sealed class WebRequestSuccessEventArgs : GameFrameworkEventArgs
     {
-        private byte[] m_WebResponseBytes;
+        private byte[] _webResponseBytes;
 
         /// <summary>
         /// 初始化 Web 请求成功事件的新实例。
@@ -20,7 +20,7 @@ namespace ZeroFramework.WebRequest
         {
             SerialId = 0;
             WebRequestUri = null;
-            m_WebResponseBytes = null;
+            _webResponseBytes = null;
             UserData = null;
         }
 
@@ -53,7 +53,7 @@ namespace ZeroFramework.WebRequest
             WebRequestSuccessEventArgs webRequestSuccessEventArgs = ReferencePool.Acquire<WebRequestSuccessEventArgs>();
             webRequestSuccessEventArgs.SerialId = serialId;
             webRequestSuccessEventArgs.WebRequestUri = webRequestUri;
-            webRequestSuccessEventArgs.m_WebResponseBytes = webResponseBytes;
+            webRequestSuccessEventArgs._webResponseBytes = webResponseBytes;
             webRequestSuccessEventArgs.UserData = userData;
             return webRequestSuccessEventArgs;
         }
@@ -65,7 +65,7 @@ namespace ZeroFramework.WebRequest
         {
             SerialId = 0;
             WebRequestUri = null;
-            m_WebResponseBytes = null;
+            _webResponseBytes = null;
             UserData = null;
         }
 
@@ -75,7 +75,7 @@ namespace ZeroFramework.WebRequest
         /// <returns>Web 响应的数据流。</returns>
         public byte[] GetWebResponseBytes()
         {
-            return m_WebResponseBytes;
+            return _webResponseBytes;
         }
     }
 }

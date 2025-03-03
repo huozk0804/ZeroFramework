@@ -15,34 +15,34 @@ namespace ZeroFramework.Entity
         /// </summary>
         private sealed class EntityInfo : IReference
         {
-            private IEntity m_Entity;
-            private EntityStatus m_Status;
-            private IEntity m_ParentEntity;
-            private List<IEntity> m_ChildEntities;
+            private IEntity _entity;
+            private EntityStatus _status;
+            private IEntity _parentEntity;
+            private List<IEntity> _childEntities;
 
             public EntityInfo()
             {
-                m_Entity = null;
-                m_Status = EntityStatus.Unknown;
-                m_ParentEntity = null;
-                m_ChildEntities = new List<IEntity>();
+                _entity = null;
+                _status = EntityStatus.Unknown;
+                _parentEntity = null;
+                _childEntities = new List<IEntity>();
             }
 
-            public IEntity Entity => m_Entity;
+            public IEntity Entity => _entity;
 
             public EntityStatus Status
             {
-                get => m_Status;
-                set => m_Status = value;
+                get => _status;
+                set => _status = value;
             }
 
             public IEntity ParentEntity
             {
-                get => m_ParentEntity;
-                set => m_ParentEntity = value;
+                get => _parentEntity;
+                set => _parentEntity = value;
             }
 
-            public int ChildEntityCount => m_ChildEntities.Count;
+            public int ChildEntityCount => _childEntities.Count;
 
             public static EntityInfo Create(IEntity entity)
             {
@@ -52,27 +52,27 @@ namespace ZeroFramework.Entity
                 }
 
                 EntityInfo entityInfo = ReferencePool.Acquire<EntityInfo>();
-                entityInfo.m_Entity = entity;
-                entityInfo.m_Status = EntityStatus.WillInit;
+                entityInfo._entity = entity;
+                entityInfo._status = EntityStatus.WillInit;
                 return entityInfo;
             }
 
             public void Clear()
             {
-                m_Entity = null;
-                m_Status = EntityStatus.Unknown;
-                m_ParentEntity = null;
-                m_ChildEntities.Clear();
+                _entity = null;
+                _status = EntityStatus.Unknown;
+                _parentEntity = null;
+                _childEntities.Clear();
             }
 
             public IEntity GetChildEntity()
             {
-                return m_ChildEntities.Count > 0 ? m_ChildEntities[0] : null;
+                return _childEntities.Count > 0 ? _childEntities[0] : null;
             }
 
             public IEntity[] GetChildEntities()
             {
-                return m_ChildEntities.ToArray();
+                return _childEntities.ToArray();
             }
 
             public void GetChildEntities(List<IEntity> results)
@@ -83,7 +83,7 @@ namespace ZeroFramework.Entity
                 }
 
                 results.Clear();
-                foreach (IEntity childEntity in m_ChildEntities)
+                foreach (IEntity childEntity in _childEntities)
                 {
                     results.Add(childEntity);
                 }
@@ -91,17 +91,17 @@ namespace ZeroFramework.Entity
 
             public void AddChildEntity(IEntity childEntity)
             {
-                if (m_ChildEntities.Contains(childEntity))
+                if (_childEntities.Contains(childEntity))
                 {
                     throw new GameFrameworkException("Can not add child entity which is already exist.");
                 }
 
-                m_ChildEntities.Add(childEntity);
+                _childEntities.Add(childEntity);
             }
 
             public void RemoveChildEntity(IEntity childEntity)
             {
-                if (!m_ChildEntities.Remove(childEntity))
+                if (!_childEntities.Remove(childEntity))
                 {
                     throw new GameFrameworkException("Can not remove child entity which is not exist.");
                 }

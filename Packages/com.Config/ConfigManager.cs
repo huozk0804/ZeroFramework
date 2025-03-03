@@ -14,20 +14,20 @@ namespace ZeroFramework.Config
     /// </summary>
     public sealed partial class ConfigManager : GameFrameworkModule, IConfigManager
     {
-        private readonly Dictionary<string, ConfigData> m_ConfigDatas;
-        private readonly DataProvider<IConfigManager> m_DataProvider;
-        private IConfigHelper m_ConfigHelper;
-        private bool m_EnableLoadConfigUpdateEvent;
-        private bool m_EnableLoadConfigDependencyAssetEvent;
+        private readonly Dictionary<string, ConfigData> _configDatas;
+        private readonly DataProvider<IConfigManager> _dataProvider;
+        private IConfigHelper _configHelper;
+        private bool _enableLoadConfigUpdateEvent;
+        private bool _enableLoadConfigDependencyAssetEvent;
 
         /// <summary>
         /// 初始化全局配置管理器的新实例。
         /// </summary>
         public ConfigManager()
         {
-            m_ConfigDatas = new Dictionary<string, ConfigData>(StringComparer.Ordinal);
-            m_DataProvider = new DataProvider<IConfigManager>(this);
-            m_ConfigHelper = null;
+            _configDatas = new Dictionary<string, ConfigData>(StringComparer.Ordinal);
+            _dataProvider = new DataProvider<IConfigManager>(this);
+            _configHelper = null;
 
             ConfigHelperBase configHelper = Helper.CreateHelper(GameFrameworkConfig.Instance.configHelperTypeName,
                 GameFrameworkConfig.Instance.configCustomHelper);
@@ -47,14 +47,14 @@ namespace ZeroFramework.Config
                 EnsureCachedBytesSize(size);
             }
             
-            m_EnableLoadConfigUpdateEvent = GameFrameworkConfig.Instance.enableLoadConfigUpdateEvent;
-            m_EnableLoadConfigDependencyAssetEvent = GameFrameworkConfig.Instance.enableLoadConfigDependencyAssetEvent;
+            _enableLoadConfigUpdateEvent = GameFrameworkConfig.Instance.enableLoadConfigUpdateEvent;
+            _enableLoadConfigDependencyAssetEvent = GameFrameworkConfig.Instance.enableLoadConfigDependencyAssetEvent;
         }
 
         /// <summary>
         /// 获取全局配置项数量。
         /// </summary>
-        public int Count => m_ConfigDatas.Count;
+        public int Count => _configDatas.Count;
 
         /// <summary>
         /// 获取缓冲二进制流的大小。
@@ -66,8 +66,8 @@ namespace ZeroFramework.Config
         /// </summary>
         public event EventHandler<ReadDataSuccessEventArgs> ReadDataSuccess
         {
-            add => m_DataProvider.ReadDataSuccess += value;
-            remove => m_DataProvider.ReadDataSuccess -= value;
+            add => _dataProvider.ReadDataSuccess += value;
+            remove => _dataProvider.ReadDataSuccess -= value;
         }
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace ZeroFramework.Config
         /// </summary>
         public event EventHandler<ReadDataFailureEventArgs> ReadDataFailure
         {
-            add => m_DataProvider.ReadDataFailure += value;
-            remove => m_DataProvider.ReadDataFailure -= value;
+            add => _dataProvider.ReadDataFailure += value;
+            remove => _dataProvider.ReadDataFailure -= value;
         }
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace ZeroFramework.Config
         /// </summary>
         public event EventHandler<ReadDataUpdateEventArgs> ReadDataUpdate
         {
-            add => m_DataProvider.ReadDataUpdate += value;
-            remove => m_DataProvider.ReadDataUpdate -= value;
+            add => _dataProvider.ReadDataUpdate += value;
+            remove => _dataProvider.ReadDataUpdate -= value;
         }
 
         /// <summary>
@@ -93,8 +93,8 @@ namespace ZeroFramework.Config
         /// </summary>
         public event EventHandler<ReadDataDependencyAssetEventArgs> ReadDataDependencyAsset
         {
-            add => m_DataProvider.ReadDataDependencyAsset += value;
-            remove => m_DataProvider.ReadDataDependencyAsset -= value;
+            add => _dataProvider.ReadDataDependencyAsset += value;
+            remove => _dataProvider.ReadDataDependencyAsset -= value;
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace ZeroFramework.Config
         /// <param name="dataProviderHelper">全局配置数据提供者辅助器。</param>
         public void SetDataProviderHelper(IDataProviderHelper<IConfigManager> dataProviderHelper)
         {
-            m_DataProvider.SetDataProviderHelper(dataProviderHelper);
+            _dataProvider.SetDataProviderHelper(dataProviderHelper);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace ZeroFramework.Config
                 throw new GameFrameworkException("Config helper is invalid.");
             }
 
-            m_ConfigHelper = configHelper;
+            _configHelper = configHelper;
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace ZeroFramework.Config
         /// <param name="configAssetName">全局配置资源名称。</param>
         public void ReadData(string configAssetName)
         {
-            m_DataProvider.ReadData(configAssetName);
+            _dataProvider.ReadData(configAssetName);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace ZeroFramework.Config
         /// <param name="priority">加载全局配置资源的优先级。</param>
         public void ReadData(string configAssetName, int priority)
         {
-            m_DataProvider.ReadData(configAssetName, priority);
+            _dataProvider.ReadData(configAssetName, priority);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace ZeroFramework.Config
         /// <param name="userData">用户自定义数据。</param>
         public void ReadData(string configAssetName, object userData)
         {
-            m_DataProvider.ReadData(configAssetName, userData);
+            _dataProvider.ReadData(configAssetName, userData);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace ZeroFramework.Config
         /// <returns>是否解析全局配置成功。</returns>
         public bool ParseData(string configString)
         {
-            return m_DataProvider.ParseData(configString);
+            return _dataProvider.ParseData(configString);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace ZeroFramework.Config
         /// <returns>是否解析全局配置成功。</returns>
         public bool ParseData(string configString, object userData)
         {
-            return m_DataProvider.ParseData(configString, userData);
+            return _dataProvider.ParseData(configString, userData);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace ZeroFramework.Config
         /// <returns>是否解析全局配置成功。</returns>
         public bool ParseData(byte[] configBytes)
         {
-            return m_DataProvider.ParseData(configBytes);
+            return _dataProvider.ParseData(configBytes);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace ZeroFramework.Config
         /// <returns>是否解析全局配置成功。</returns>
         public bool ParseData(byte[] configBytes, object userData)
         {
-            return m_DataProvider.ParseData(configBytes, userData);
+            return _dataProvider.ParseData(configBytes, userData);
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace ZeroFramework.Config
         /// <returns>是否解析全局配置成功。</returns>
         public bool ParseData(byte[] configBytes, int startIndex, int length)
         {
-            return m_DataProvider.ParseData(configBytes, startIndex, length);
+            return _dataProvider.ParseData(configBytes, startIndex, length);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace ZeroFramework.Config
         /// <returns>是否解析全局配置成功。</returns>
         public bool ParseData(byte[] configBytes, int startIndex, int length, object userData)
         {
-            return m_DataProvider.ParseData(configBytes, startIndex, length, userData);
+            return _dataProvider.ParseData(configBytes, startIndex, length, userData);
         }
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace ZeroFramework.Config
                 return false;
             }
 
-            m_ConfigDatas.Add(configName, new ConfigData(boolValue, intValue, floatValue, stringValue));
+            _configDatas.Add(configName, new ConfigData(boolValue, intValue, floatValue, stringValue));
             return true;
         }
 
@@ -416,7 +416,7 @@ namespace ZeroFramework.Config
                 return false;
             }
 
-            return m_ConfigDatas.Remove(configName);
+            return _configDatas.Remove(configName);
         }
 
         /// <summary>
@@ -424,7 +424,7 @@ namespace ZeroFramework.Config
         /// </summary>
         public void RemoveAllConfigs()
         {
-            m_ConfigDatas.Clear();
+            _configDatas.Clear();
         }
 
         private ConfigData? GetConfigData(string configName)
@@ -435,7 +435,7 @@ namespace ZeroFramework.Config
             }
 
             ConfigData configData = default(ConfigData);
-            if (m_ConfigDatas.TryGetValue(configName, out configData))
+            if (_configDatas.TryGetValue(configName, out configData))
             {
                 return configData;
             }

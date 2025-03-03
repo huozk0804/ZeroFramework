@@ -13,19 +13,19 @@ namespace ZeroFramework.WebRequest
         /// </summary>
         private sealed class WebRequestTask : TaskBase
         {
-            private static int s_Serial = 0;
+            private static int _serial = 0;
 
-            private WebRequestTaskStatus m_Status;
-            private string m_WebRequestUri;
-            private byte[] m_PostData;
-            private float m_Timeout;
+            private WebRequestTaskStatus _status;
+            private string _webRequestUri;
+            private byte[] _postData;
+            private float _timeout;
 
             public WebRequestTask()
             {
-                m_Status = WebRequestTaskStatus.Todo;
-                m_WebRequestUri = null;
-                m_PostData = null;
-                m_Timeout = 0f;
+                _status = WebRequestTaskStatus.Todo;
+                _webRequestUri = null;
+                _postData = null;
+                _timeout = 0f;
             }
 
             /// <summary>
@@ -33,24 +33,24 @@ namespace ZeroFramework.WebRequest
             /// </summary>
             public WebRequestTaskStatus Status
             {
-                get => m_Status;
-                set => m_Status = value;
+                get => _status;
+                set => _status = value;
             }
 
             /// <summary>
             /// 获取要发送的远程地址。
             /// </summary>
-            public string WebRequestUri => m_WebRequestUri;
+            public string WebRequestUri => _webRequestUri;
 
             /// <summary>
             /// 获取 Web 请求超时时长，以秒为单位。
             /// </summary>
-            public float Timeout => m_Timeout;
+            public float Timeout => _timeout;
 
             /// <summary>
             /// 获取 Web 请求任务的描述。
             /// </summary>
-            public override string Description => m_WebRequestUri;
+            public override string Description => _webRequestUri;
 
             /// <summary>
             /// 创建 Web 请求任务。
@@ -65,10 +65,10 @@ namespace ZeroFramework.WebRequest
             public static WebRequestTask Create(string webRequestUri, byte[] postData, string tag, int priority, float timeout, object userData)
             {
                 WebRequestTask webRequestTask = ReferencePool.Acquire<WebRequestTask>();
-                webRequestTask.Initialize(++s_Serial, tag, priority, userData);
-                webRequestTask.m_WebRequestUri = webRequestUri;
-                webRequestTask.m_PostData = postData;
-                webRequestTask.m_Timeout = timeout;
+                webRequestTask.Initialize(++_serial, tag, priority, userData);
+                webRequestTask._webRequestUri = webRequestUri;
+                webRequestTask._postData = postData;
+                webRequestTask._timeout = timeout;
                 return webRequestTask;
             }
 
@@ -78,10 +78,10 @@ namespace ZeroFramework.WebRequest
             public override void Clear()
             {
                 base.Clear();
-                m_Status = WebRequestTaskStatus.Todo;
-                m_WebRequestUri = null;
-                m_PostData = null;
-                m_Timeout = 0f;
+                _status = WebRequestTaskStatus.Todo;
+                _webRequestUri = null;
+                _postData = null;
+                _timeout = 0f;
             }
 
             /// <summary>
@@ -89,7 +89,7 @@ namespace ZeroFramework.WebRequest
             /// </summary>
             public byte[] GetPostData()
             {
-                return m_PostData;
+                return _postData;
             }
         }
     }

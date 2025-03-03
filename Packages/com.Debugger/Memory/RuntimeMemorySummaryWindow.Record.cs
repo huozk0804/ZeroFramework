@@ -10,29 +10,29 @@ namespace ZeroFramework.Debugger
     {
         private sealed class Record
         {
-            private readonly string m_Name;
-            private int m_Count;
-            private long m_Size;
+            private readonly string _name;
+            private int _count;
+            private long _size;
 
             public Record(string name)
             {
-                m_Name = name;
-                m_Count = 0;
-                m_Size = 0L;
+                _name = name;
+                _count = 0;
+                _size = 0L;
             }
 
-            public string Name => m_Name;
+            public string Name => _name;
 
             public int Count
             {
-                get => m_Count;
-                set => m_Count = value;
+                get => _count;
+                set => _count = value;
             }
 
             public long Size
             {
-                get => m_Size;
-                set => m_Size = value;
+                get => _size;
+                set => _size = value;
             }
         }
     }

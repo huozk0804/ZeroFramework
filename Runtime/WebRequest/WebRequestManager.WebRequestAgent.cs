@@ -13,9 +13,9 @@ namespace ZeroFramework.WebRequest
         /// </summary>
         private sealed class WebRequestAgent : ITaskAgent<WebRequestTask>
         {
-            private readonly IWebRequestAgentHelper m_Helper;
-            private WebRequestTask m_Task;
-            private float m_WaitTime;
+            private readonly IWebRequestAgentHelper _helper;
+            private WebRequestTask _task;
+            private float _waitTime;
 
             public GameFrameworkAction<WebRequestAgent> WebRequestAgentStart;
             public GameFrameworkAction<WebRequestAgent, byte[]> WebRequestAgentSuccess;
@@ -32,9 +32,9 @@ namespace ZeroFramework.WebRequest
                     throw new GameFrameworkException("Web request agent helper is invalid.");
                 }
 
-                m_Helper = webRequestAgentHelper;
-                m_Task = null;
-                m_WaitTime = 0f;
+                _helper = webRequestAgentHelper;
+                _task = null;
+                _waitTime = 0f;
 
                 WebRequestAgentStart = null;
                 WebRequestAgentSuccess = null;
@@ -44,7 +44,7 @@ namespace ZeroFramework.WebRequest
             /// <summary>
             /// 获取 Web 请求任务。
             /// </summary>
-            public WebRequestTask Task => m_Task;
+            public WebRequestTask Task => _task;
 
             /// <summary>
             /// 获取已经等待时间。
@@ -53,7 +53,7 @@ namespace ZeroFramework.WebRequest
             {
                 get
                 {
-                    return m_WaitTime;
+                    return _waitTime;
                 }
             }
 
@@ -62,8 +62,8 @@ namespace ZeroFramework.WebRequest
             /// </summary>
             public void Initialize()
             {
-                m_Helper.WebRequestAgentHelperComplete += OnWebRequestAgentHelperComplete;
-                m_Helper.WebRequestAgentHelperError += OnWebRequestAgentHelperError;
+                _helper.WebRequestAgentHelperComplete += OnWebRequestAgentHelperComplete;
+                _helper.WebRequestAgentHelperError += OnWebRequestAgentHelperError;
             }
 
             /// <summary>
@@ -73,10 +73,10 @@ namespace ZeroFramework.WebRequest
             /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
             public void Update(float elapseSeconds, float realElapseSeconds)
             {
-                if (m_Task.Status == WebRequestTaskStatus.Doing)
+                if (_task.Status == WebRequestTaskStatus.Doing)
                 {
-                    m_WaitTime += realElapseSeconds;
-                    if (m_WaitTime >= m_Task.Timeout)
+                    _waitTime += realElapseSeconds;
+                    if (_waitTime >= _task.Timeout)
                     {
                         WebRequestAgentHelperErrorEventArgs webRequestAgentHelperErrorEventArgs = WebRequestAgentHelperErrorEventArgs.Create("Timeout");
                         OnWebRequestAgentHelperError(this, webRequestAgentHelperErrorEventArgs);
@@ -91,8 +91,8 @@ namespace ZeroFramework.WebRequest
             public void Shutdown()
             {
                 Reset();
-                m_Helper.WebRequestAgentHelperComplete -= OnWebRequestAgentHelperComplete;
-                m_Helper.WebRequestAgentHelperError -= OnWebRequestAgentHelperError;
+                _helper.WebRequestAgentHelperComplete -= OnWebRequestAgentHelperComplete;
+                _helper.WebRequestAgentHelperError -= OnWebRequestAgentHelperError;
             }
 
             /// <summary>
@@ -107,25 +107,25 @@ namespace ZeroFramework.WebRequest
                     throw new GameFrameworkException("Task is invalid.");
                 }
 
-                m_Task = task;
-                m_Task.Status = WebRequestTaskStatus.Doing;
+                _task = task;
+                _task.Status = WebRequestTaskStatus.Doing;
 
                 if (WebRequestAgentStart != null)
                 {
                     WebRequestAgentStart(this);
                 }
 
-                byte[] postData = m_Task.GetPostData();
+                byte[] postData = _task.GetPostData();
                 if (postData == null)
                 {
-                    m_Helper.Request(m_Task.WebRequestUri, m_Task.UserData);
+                    _helper.Request(_task.WebRequestUri, _task.UserData);
                 }
                 else
                 {
-                    m_Helper.Request(m_Task.WebRequestUri, postData, m_Task.UserData);
+                    _helper.Request(_task.WebRequestUri, postData, _task.UserData);
                 }
 
-                m_WaitTime = 0f;
+                _waitTime = 0f;
                 return StartTaskStatus.CanResume;
             }
 
@@ -134,35 +134,35 @@ namespace ZeroFramework.WebRequest
             /// </summary>
             public void Reset()
             {
-                m_Helper.Reset();
-                m_Task = null;
-                m_WaitTime = 0f;
+                _helper.Reset();
+                _task = null;
+                _waitTime = 0f;
             }
 
             private void OnWebRequestAgentHelperComplete(object sender, WebRequestAgentHelperCompleteEventArgs e)
             {
-                m_Helper.Reset();
-                m_Task.Status = WebRequestTaskStatus.Done;
+                _helper.Reset();
+                _task.Status = WebRequestTaskStatus.Done;
 
                 if (WebRequestAgentSuccess != null)
                 {
                     WebRequestAgentSuccess(this, e.GetWebResponseBytes());
                 }
 
-                m_Task.Done = true;
+                _task.Done = true;
             }
 
             private void OnWebRequestAgentHelperError(object sender, WebRequestAgentHelperErrorEventArgs e)
             {
-                m_Helper.Reset();
-                m_Task.Status = WebRequestTaskStatus.Error;
+                _helper.Reset();
+                _task.Status = WebRequestTaskStatus.Error;
 
                 if (WebRequestAgentFailure != null)
                 {
                     WebRequestAgentFailure(this, e.ErrorMessage);
                 }
 
-                m_Task.Done = true;
+                _task.Done = true;
             }
         }
     }

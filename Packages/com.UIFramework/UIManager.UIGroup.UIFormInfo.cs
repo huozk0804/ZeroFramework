@@ -15,29 +15,29 @@ namespace ZeroFramework.UI
             /// </summary>
             private sealed class UIFormInfo : IReference
             {
-                private IUIForm m_UIForm;
-                private bool m_Paused;
-                private bool m_Covered;
+                private IUIForm _uiForm;
+                private bool _paused;
+                private bool _covered;
 
                 public UIFormInfo()
                 {
-                    m_UIForm = null;
-                    m_Paused = false;
-                    m_Covered = false;
+                    _uiForm = null;
+                    _paused = false;
+                    _covered = false;
                 }
 
-                public IUIForm UIForm => m_UIForm;
+                public IUIForm UIForm => _uiForm;
 
                 public bool Paused
                 {
-                    get => m_Paused;
-                    set => m_Paused = value;
+                    get => _paused;
+                    set => _paused = value;
                 }
 
                 public bool Covered
                 {
-                    get => m_Covered;
-                    set => m_Covered = value;
+                    get => _covered;
+                    set => _covered = value;
                 }
 
                 public static UIFormInfo Create(IUIForm uiForm)
@@ -48,17 +48,17 @@ namespace ZeroFramework.UI
                     }
 
                     UIFormInfo uiFormInfo = ReferencePool.Acquire<UIFormInfo>();
-                    uiFormInfo.m_UIForm = uiForm;
-                    uiFormInfo.m_Paused = true;
-                    uiFormInfo.m_Covered = true;
+                    uiFormInfo._uiForm = uiForm;
+                    uiFormInfo._paused = true;
+                    uiFormInfo._covered = true;
                     return uiFormInfo;
                 }
 
                 public void Clear()
                 {
-                    m_UIForm = null;
-                    m_Paused = false;
-                    m_Covered = false;
+                    _uiForm = null;
+                    _paused = false;
+                    _covered = false;
                 }
             }
         }

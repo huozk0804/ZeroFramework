@@ -15,12 +15,12 @@ namespace ZeroFramework.Sound
         /// </summary>
         private sealed class SoundGroup : ISoundGroup
         {
-            private readonly string m_Name;
-            private readonly ISoundGroupHelper m_SoundGroupHelper;
-            private readonly List<SoundAgent> m_SoundAgents;
-            private bool m_AvoidBeingReplacedBySamePriority;
-            private bool m_Mute;
-            private float m_Volume;
+            private readonly string _name;
+            private readonly ISoundGroupHelper _soundGroupHelper;
+            private readonly List<SoundAgent> _soundAgents;
+            private bool _avoidBeingReplacedBySamePriority;
+            private bool _mute;
+            private float _volume;
 
             /// <summary>
             /// 初始化声音组的新实例。
@@ -39,28 +39,28 @@ namespace ZeroFramework.Sound
                     throw new GameFrameworkException("Sound group helper is invalid.");
                 }
 
-                m_Name = name;
-                m_SoundGroupHelper = soundGroupHelper;
-                m_SoundAgents = new List<SoundAgent>();
+                _name = name;
+                _soundGroupHelper = soundGroupHelper;
+                _soundAgents = new List<SoundAgent>();
             }
 
             /// <summary>
             /// 获取声音组名称。
             /// </summary>
-            public string Name => m_Name;
+            public string Name => _name;
 
             /// <summary>
             /// 获取声音代理数。
             /// </summary>
-            public int SoundAgentCount => m_SoundAgents.Count;
+            public int SoundAgentCount => _soundAgents.Count;
 
             /// <summary>
             /// 获取或设置声音组中的声音是否避免被同优先级声音替换。
             /// </summary>
             public bool AvoidBeingReplacedBySamePriority
             {
-                get => m_AvoidBeingReplacedBySamePriority;
-                set => m_AvoidBeingReplacedBySamePriority = value;
+                get => _avoidBeingReplacedBySamePriority;
+                set => _avoidBeingReplacedBySamePriority = value;
             }
 
             /// <summary>
@@ -68,11 +68,11 @@ namespace ZeroFramework.Sound
             /// </summary>
             public bool Mute
             {
-                get => m_Mute;
+                get => _mute;
                 set
                 {
-                    m_Mute = value;
-                    foreach (SoundAgent soundAgent in m_SoundAgents)
+                    _mute = value;
+                    foreach (SoundAgent soundAgent in _soundAgents)
                     {
                         soundAgent.RefreshMute();
                     }
@@ -84,11 +84,11 @@ namespace ZeroFramework.Sound
             /// </summary>
             public float Volume
             {
-                get => m_Volume;
+                get => _volume;
                 set
                 {
-                    m_Volume = value;
-                    foreach (SoundAgent soundAgent in m_SoundAgents)
+                    _volume = value;
+                    foreach (SoundAgent soundAgent in _soundAgents)
                     {
                         soundAgent.RefreshVolume();
                     }
@@ -98,7 +98,7 @@ namespace ZeroFramework.Sound
             /// <summary>
             /// 获取声音组辅助器。
             /// </summary>
-            public ISoundGroupHelper Helper => m_SoundGroupHelper;
+            public ISoundGroupHelper Helper => _soundGroupHelper;
 
             /// <summary>
             /// 增加声音代理辅助器。
@@ -107,7 +107,7 @@ namespace ZeroFramework.Sound
             /// <param name="soundAgentHelper">要增加的声音代理辅助器。</param>
             public void AddSoundAgentHelper(ISoundHelper soundHelper, ISoundAgentHelper soundAgentHelper)
             {
-                m_SoundAgents.Add(new SoundAgent(this, soundHelper, soundAgentHelper));
+                _soundAgents.Add(new SoundAgent(this, soundHelper, soundAgentHelper));
             }
 
             /// <summary>
@@ -123,7 +123,7 @@ namespace ZeroFramework.Sound
             {
                 errorCode = null;
                 SoundAgent candidateAgent = null;
-                foreach (SoundAgent soundAgent in m_SoundAgents)
+                foreach (SoundAgent soundAgent in _soundAgents)
                 {
                     if (!soundAgent.IsPlaying)
                     {
@@ -138,7 +138,7 @@ namespace ZeroFramework.Sound
                             candidateAgent = soundAgent;
                         }
                     }
-                    else if (!m_AvoidBeingReplacedBySamePriority && soundAgent.Priority == playSoundParams.Priority)
+                    else if (!_avoidBeingReplacedBySamePriority && soundAgent.Priority == playSoundParams.Priority)
                     {
                         if (candidateAgent == null || soundAgent.SetSoundAssetTime < candidateAgent.SetSoundAssetTime)
                         {
@@ -182,7 +182,7 @@ namespace ZeroFramework.Sound
             /// <returns>是否停止播放声音成功。</returns>
             public bool StopSound(int serialId, float fadeOutSeconds)
             {
-                foreach (SoundAgent soundAgent in m_SoundAgents)
+                foreach (SoundAgent soundAgent in _soundAgents)
                 {
                     if (soundAgent.SerialId != serialId)
                     {
@@ -204,7 +204,7 @@ namespace ZeroFramework.Sound
             /// <returns>是否暂停播放声音成功。</returns>
             public bool PauseSound(int serialId, float fadeOutSeconds)
             {
-                foreach (SoundAgent soundAgent in m_SoundAgents)
+                foreach (SoundAgent soundAgent in _soundAgents)
                 {
                     if (soundAgent.SerialId != serialId)
                     {
@@ -226,7 +226,7 @@ namespace ZeroFramework.Sound
             /// <returns>是否恢复播放声音成功。</returns>
             public bool ResumeSound(int serialId, float fadeInSeconds)
             {
-                foreach (SoundAgent soundAgent in m_SoundAgents)
+                foreach (SoundAgent soundAgent in _soundAgents)
                 {
                     if (soundAgent.SerialId != serialId)
                     {
@@ -245,7 +245,7 @@ namespace ZeroFramework.Sound
             /// </summary>
             public void StopAllLoadedSounds()
             {
-                foreach (SoundAgent soundAgent in m_SoundAgents)
+                foreach (SoundAgent soundAgent in _soundAgents)
                 {
                     if (soundAgent.IsPlaying)
                     {
@@ -260,7 +260,7 @@ namespace ZeroFramework.Sound
             /// <param name="fadeOutSeconds">声音淡出时间，以秒为单位。</param>
             public void StopAllLoadedSounds(float fadeOutSeconds)
             {
-                foreach (SoundAgent soundAgent in m_SoundAgents)
+                foreach (SoundAgent soundAgent in _soundAgents)
                 {
                     if (soundAgent.IsPlaying)
                     {

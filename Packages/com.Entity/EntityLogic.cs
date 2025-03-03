@@ -13,17 +13,17 @@ namespace ZeroFramework.Entity
     /// </summary>
     public abstract class EntityLogic : MonoBehaviour
     {
-        private bool m_Available;
-        private bool m_Visible;
-        private Entity m_Entity;
-        private Transform m_CachedTransform;
-        private int m_OriginalLayer;
-        private Transform m_OriginalTransform;
+        private bool _available;
+        private bool _visible;
+        private Entity _entity;
+        private Transform _cachedTransform;
+        private int _originalLayer;
+        private Transform _originalTransform;
 
         /// <summary>
         /// 获取实体。
         /// </summary>
-        public Entity Entity => m_Entity;
+        public Entity Entity => _entity;
 
         /// <summary>
         /// 获取或设置实体名称。
@@ -37,28 +37,28 @@ namespace ZeroFramework.Entity
         /// <summary>
         /// 获取实体是否可用。
         /// </summary>
-        public bool Available => m_Available;
+        public bool Available => _available;
 
         /// <summary>
         /// 获取或设置实体是否可见。
         /// </summary>
         public bool Visible
         {
-            get => m_Available && m_Visible;
+            get => _available && _visible;
             set
             {
-                if (!m_Available)
+                if (!_available)
                 {
                     Log.Warning("Entity '{0}' is not available.", Name);
                     return;
                 }
 
-                if (m_Visible == value)
+                if (_visible == value)
                 {
                     return;
                 }
 
-                m_Visible = value;
+                _visible = value;
                 InternalSetVisible(value);
             }
         }
@@ -66,7 +66,7 @@ namespace ZeroFramework.Entity
         /// <summary>
         /// 获取已缓存的 Transform。
         /// </summary>
-        public Transform CachedTransform => m_CachedTransform;
+        public Transform CachedTransform => _cachedTransform;
 
         /// <summary>
         /// 实体初始化。
@@ -74,14 +74,14 @@ namespace ZeroFramework.Entity
         /// <param name="userData">用户自定义数据。</param>
         protected internal virtual void OnInit(object userData)
         {
-            if (m_CachedTransform == null)
+            if (_cachedTransform == null)
             {
-                m_CachedTransform = transform;
+                _cachedTransform = transform;
             }
 
-            m_Entity = GetComponent<Entity>();
-            m_OriginalLayer = gameObject.layer;
-            m_OriginalTransform = CachedTransform.parent;
+            _entity = GetComponent<Entity>();
+            _originalLayer = gameObject.layer;
+            _originalTransform = CachedTransform.parent;
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace ZeroFramework.Entity
         /// <param name="userData">用户自定义数据。</param>
         protected internal virtual void OnShow(object userData)
         {
-            m_Available = true;
+            _available = true;
             Visible = true;
         }
 
@@ -108,9 +108,9 @@ namespace ZeroFramework.Entity
         /// <param name="userData">用户自定义数据。</param>
         protected internal virtual void OnHide(bool isShutdown, object userData)
         {
-            gameObject.SetLayerRecursively(m_OriginalLayer);
+            gameObject.SetLayerRecursively(_originalLayer);
             Visible = false;
-            m_Available = false;
+            _available = false;
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace ZeroFramework.Entity
         /// <param name="userData">用户自定义数据。</param>
         protected internal virtual void OnDetachFrom(EntityLogic parentEntity, object userData)
         {
-            CachedTransform.SetParent(m_OriginalTransform);
+            CachedTransform.SetParent(_originalTransform);
         }
 
         /// <summary>

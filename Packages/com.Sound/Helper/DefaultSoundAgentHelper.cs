@@ -17,30 +17,30 @@ namespace ZeroFramework.Sound
     /// </summary>
     public class DefaultSoundAgentHelper : SoundAgentHelperBase
     {
-        private Transform m_CachedTransform = null;
-        private AudioSource m_AudioSource = null;
-        private EntityLogic m_BindingEntityLogic = null;
-        private float m_VolumeWhenPause = 0f;
-        private bool m_ApplicationPauseFlag = false;
-        private EventHandler<ResetSoundAgentEventArgs> m_ResetSoundAgentEventHandler = null;
+        private Transform _cachedTransform = null;
+        private AudioSource _audioSource = null;
+        private EntityLogic _bindingEntityLogic = null;
+        private float _volumeWhenPause = 0f;
+        private bool _applicationPauseFlag = false;
+        private EventHandler<ResetSoundAgentEventArgs> _resetSoundAgentEventHandler = null;
 
         /// <summary>
         /// 获取当前是否正在播放。
         /// </summary>
-        public override bool IsPlaying => m_AudioSource.isPlaying;
+        public override bool IsPlaying => _audioSource.isPlaying;
 
         /// <summary>
         /// 获取声音长度。
         /// </summary>
-        public override float Length => m_AudioSource.clip != null ? m_AudioSource.clip.length : 0f;
+        public override float Length => _audioSource.clip != null ? _audioSource.clip.length : 0f;
 
         /// <summary>
         /// 获取或设置播放位置。
         /// </summary>
         public override float Time
         {
-            get => m_AudioSource.time;
-            set => m_AudioSource.time = value;
+            get => _audioSource.time;
+            set => _audioSource.time = value;
         }
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public override bool Mute
         {
-            get => m_AudioSource.mute;
-            set => m_AudioSource.mute = value;
+            get => _audioSource.mute;
+            set => _audioSource.mute = value;
         }
 
         /// <summary>
@@ -57,8 +57,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public override bool Loop
         {
-            get => m_AudioSource.loop;
-            set => m_AudioSource.loop = value;
+            get => _audioSource.loop;
+            set => _audioSource.loop = value;
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public override int Priority
         {
-            get => 128 - m_AudioSource.priority;
-            set => m_AudioSource.priority = 128 - value;
+            get => 128 - _audioSource.priority;
+            set => _audioSource.priority = 128 - value;
         }
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public override float Volume
         {
-            get => m_AudioSource.volume;
-            set => m_AudioSource.volume = value;
+            get => _audioSource.volume;
+            set => _audioSource.volume = value;
         }
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public override float Pitch
         {
-            get => m_AudioSource.pitch;
-            set => m_AudioSource.pitch = value;
+            get => _audioSource.pitch;
+            set => _audioSource.pitch = value;
         }
 
         /// <summary>
@@ -93,8 +93,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public override float PanStereo
         {
-            get => m_AudioSource.panStereo;
-            set => m_AudioSource.panStereo = value;
+            get => _audioSource.panStereo;
+            set => _audioSource.panStereo = value;
         }
 
         /// <summary>
@@ -102,8 +102,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public override float SpatialBlend
         {
-            get => m_AudioSource.spatialBlend;
-            set => m_AudioSource.spatialBlend = value;
+            get => _audioSource.spatialBlend;
+            set => _audioSource.spatialBlend = value;
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace ZeroFramework.Sound
         /// </summary>
         public override float MaxDistance
         {
-            get => m_AudioSource.maxDistance;
+            get => _audioSource.maxDistance;
 
-            set => m_AudioSource.maxDistance = value;
+            set => _audioSource.maxDistance = value;
         }
 
         /// <summary>
@@ -121,8 +121,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public override float DopplerLevel
         {
-            get => m_AudioSource.dopplerLevel;
-            set => m_AudioSource.dopplerLevel = value;
+            get => _audioSource.dopplerLevel;
+            set => _audioSource.dopplerLevel = value;
         }
 
         /// <summary>
@@ -130,8 +130,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public override AudioMixerGroup AudioMixerGroup
         {
-            get => m_AudioSource.outputAudioMixerGroup;
-            set => m_AudioSource.outputAudioMixerGroup = value;
+            get => _audioSource.outputAudioMixerGroup;
+            set => _audioSource.outputAudioMixerGroup = value;
         }
 
         /// <summary>
@@ -139,8 +139,8 @@ namespace ZeroFramework.Sound
         /// </summary>
         public override event EventHandler<ResetSoundAgentEventArgs> ResetSoundAgent
         {
-            add => m_ResetSoundAgentEventHandler += value;
-            remove => m_ResetSoundAgentEventHandler -= value;
+            add => _resetSoundAgentEventHandler += value;
+            remove => _resetSoundAgentEventHandler -= value;
         }
 
         /// <summary>
@@ -151,12 +151,12 @@ namespace ZeroFramework.Sound
         {
             StopAllCoroutines();
 
-            m_AudioSource.Play();
+            _audioSource.Play();
             if (fadeInSeconds > 0f)
             {
-                float volume = m_AudioSource.volume;
-                m_AudioSource.volume = 0f;
-                StartCoroutine(FadeToVolume(m_AudioSource, volume, fadeInSeconds));
+                float volume = _audioSource.volume;
+                _audioSource.volume = 0f;
+                StartCoroutine(FadeToVolume(_audioSource, volume, fadeInSeconds));
             }
         }
 
@@ -174,7 +174,7 @@ namespace ZeroFramework.Sound
             }
             else
             {
-                m_AudioSource.Stop();
+                _audioSource.Stop();
             }
         }
 
@@ -186,14 +186,14 @@ namespace ZeroFramework.Sound
         {
             StopAllCoroutines();
 
-            m_VolumeWhenPause = m_AudioSource.volume;
+            _volumeWhenPause = _audioSource.volume;
             if (fadeOutSeconds > 0f && gameObject.activeInHierarchy)
             {
                 StartCoroutine(PauseCo(fadeOutSeconds));
             }
             else
             {
-                m_AudioSource.Pause();
+                _audioSource.Pause();
             }
         }
 
@@ -205,14 +205,14 @@ namespace ZeroFramework.Sound
         {
             StopAllCoroutines();
 
-            m_AudioSource.UnPause();
+            _audioSource.UnPause();
             if (fadeInSeconds > 0f)
             {
-                StartCoroutine(FadeToVolume(m_AudioSource, m_VolumeWhenPause, fadeInSeconds));
+                StartCoroutine(FadeToVolume(_audioSource, _volumeWhenPause, fadeInSeconds));
             }
             else
             {
-                m_AudioSource.volume = m_VolumeWhenPause;
+                _audioSource.volume = _volumeWhenPause;
             }
         }
 
@@ -221,10 +221,10 @@ namespace ZeroFramework.Sound
         /// </summary>
         public override void Reset()
         {
-            m_CachedTransform.localPosition = Vector3.zero;
-            m_AudioSource.clip = null;
-            m_BindingEntityLogic = null;
-            m_VolumeWhenPause = 0f;
+            _cachedTransform.localPosition = Vector3.zero;
+            _audioSource.clip = null;
+            _bindingEntityLogic = null;
+            _volumeWhenPause = 0f;
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace ZeroFramework.Sound
                 return false;
             }
 
-            m_AudioSource.clip = audioClip;
+            _audioSource.clip = audioClip;
             return true;
         }
 
@@ -250,17 +250,17 @@ namespace ZeroFramework.Sound
         /// <param name="bindingEntity">声音绑定的实体。</param>
         public override void SetBindingEntity(Entity.Entity bindingEntity)
         {
-            m_BindingEntityLogic = bindingEntity.Logic;
-            if (m_BindingEntityLogic != null)
+            _bindingEntityLogic = bindingEntity.Logic;
+            if (_bindingEntityLogic != null)
             {
                 UpdateAgentPosition();
                 return;
             }
 
-            if (m_ResetSoundAgentEventHandler != null)
+            if (_resetSoundAgentEventHandler != null)
             {
                 ResetSoundAgentEventArgs resetSoundAgentEventArgs = ResetSoundAgentEventArgs.Create();
-                m_ResetSoundAgentEventHandler(this, resetSoundAgentEventArgs);
+                _resetSoundAgentEventHandler(this, resetSoundAgentEventArgs);
                 ReferencePool.Release(resetSoundAgentEventArgs);
             }
         }
@@ -271,28 +271,28 @@ namespace ZeroFramework.Sound
         /// <param name="worldPosition">声音所在的世界坐标。</param>
         public override void SetWorldPosition(Vector3 worldPosition)
         {
-            m_CachedTransform.position = worldPosition;
+            _cachedTransform.position = worldPosition;
         }
 
         private void Awake()
         {
-            m_CachedTransform = transform;
-            m_AudioSource = gameObject.GetOrAddComponent<AudioSource>();
-            m_AudioSource.playOnAwake = false;
-            m_AudioSource.rolloffMode = AudioRolloffMode.Custom;
+            _cachedTransform = transform;
+            _audioSource = gameObject.GetOrAddComponent<AudioSource>();
+            _audioSource.playOnAwake = false;
+            _audioSource.rolloffMode = AudioRolloffMode.Custom;
         }
 
         private void Update()
         {
-            if (!m_ApplicationPauseFlag && !IsPlaying && m_AudioSource.clip != null && m_ResetSoundAgentEventHandler != null)
+            if (!_applicationPauseFlag && !IsPlaying && _audioSource.clip != null && _resetSoundAgentEventHandler != null)
             {
                 ResetSoundAgentEventArgs resetSoundAgentEventArgs = ResetSoundAgentEventArgs.Create();
-                m_ResetSoundAgentEventHandler(this, resetSoundAgentEventArgs);
+                _resetSoundAgentEventHandler(this, resetSoundAgentEventArgs);
                 ReferencePool.Release(resetSoundAgentEventArgs);
                 return;
             }
 
-            if (m_BindingEntityLogic != null)
+            if (_bindingEntityLogic != null)
             {
                 UpdateAgentPosition();
             }
@@ -300,35 +300,35 @@ namespace ZeroFramework.Sound
 
         private void OnApplicationPause(bool pause)
         {
-            m_ApplicationPauseFlag = pause;
+            _applicationPauseFlag = pause;
         }
 
         private void UpdateAgentPosition()
         {
-            if (m_BindingEntityLogic.Available)
+            if (_bindingEntityLogic.Available)
             {
-                m_CachedTransform.position = m_BindingEntityLogic.CachedTransform.position;
+                _cachedTransform.position = _bindingEntityLogic.CachedTransform.position;
                 return;
             }
 
-            if (m_ResetSoundAgentEventHandler != null)
+            if (_resetSoundAgentEventHandler != null)
             {
                 ResetSoundAgentEventArgs resetSoundAgentEventArgs = ResetSoundAgentEventArgs.Create();
-                m_ResetSoundAgentEventHandler(this, resetSoundAgentEventArgs);
+                _resetSoundAgentEventHandler(this, resetSoundAgentEventArgs);
                 ReferencePool.Release(resetSoundAgentEventArgs);
             }
         }
 
         private IEnumerator StopCo(float fadeOutSeconds)
         {
-            yield return FadeToVolume(m_AudioSource, 0f, fadeOutSeconds);
-            m_AudioSource.Stop();
+            yield return FadeToVolume(_audioSource, 0f, fadeOutSeconds);
+            _audioSource.Stop();
         }
 
         private IEnumerator PauseCo(float fadeOutSeconds)
         {
-            yield return FadeToVolume(m_AudioSource, 0f, fadeOutSeconds);
-            m_AudioSource.Pause();
+            yield return FadeToVolume(_audioSource, 0f, fadeOutSeconds);
+            _audioSource.Pause();
         }
 
         private IEnumerator FadeToVolume(AudioSource audioSource, float volume, float duration)

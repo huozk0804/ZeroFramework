@@ -13,41 +13,41 @@ namespace ZeroFramework
     /// </summary>
     public abstract class ObjectBase : IReference
     {
-        private string m_Name;
-        private object m_Target;
-        private bool m_Locked;
-        private int m_Priority;
-        private DateTime m_LastUseTime;
+        private string _name;
+        private object _target;
+        private bool _locked;
+        private int _priority;
+        private DateTime _lastUseTime;
 
         /// <summary>
         /// 初始化对象基类的新实例。
         /// </summary>
         public ObjectBase()
         {
-            m_Name = null;
-            m_Target = null;
-            m_Locked = false;
-            m_Priority = 0;
-            m_LastUseTime = default(DateTime);
+            _name = null;
+            _target = null;
+            _locked = false;
+            _priority = 0;
+            _lastUseTime = default(DateTime);
         }
 
         /// <summary>
         /// 获取对象名称。
         /// </summary>
-        public string Name => m_Name;
+        public string Name => _name;
 
         /// <summary>
         /// 获取对象。
         /// </summary>
-        public object Target => m_Target;
+        public object Target => _target;
 
         /// <summary>
         /// 获取或设置对象是否被加锁。
         /// </summary>
         public bool Locked
         {
-            get => m_Locked;
-            set => m_Locked = value;
+            get => _locked;
+            set => _locked = value;
         }
 
         /// <summary>
@@ -55,8 +55,8 @@ namespace ZeroFramework
         /// </summary>
         public int Priority
         {
-            get => m_Priority;
-            set => m_Priority = value;
+            get => _priority;
+            set => _priority = value;
         }
 
         /// <summary>
@@ -69,8 +69,8 @@ namespace ZeroFramework
         /// </summary>
         public DateTime LastUseTime
         {
-            get => m_LastUseTime;
-            internal set => m_LastUseTime = value;
+            get => _lastUseTime;
+            internal set => _lastUseTime = value;
         }
 
         /// <summary>
@@ -128,11 +128,11 @@ namespace ZeroFramework
                 throw new GameFrameworkException(Utility.Text.Format("Target '{0}' is invalid.", name));
             }
 
-            m_Name = name ?? string.Empty;
-            m_Target = target;
-            m_Locked = locked;
-            m_Priority = priority;
-            m_LastUseTime = DateTime.UtcNow;
+            _name = name ?? string.Empty;
+            _target = target;
+            _locked = locked;
+            _priority = priority;
+            _lastUseTime = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -140,11 +140,11 @@ namespace ZeroFramework
         /// </summary>
         public virtual void Clear()
         {
-            m_Name = null;
-            m_Target = null;
-            m_Locked = false;
-            m_Priority = 0;
-            m_LastUseTime = default(DateTime);
+            _name = null;
+            _target = null;
+            _locked = false;
+            _priority = 0;
+            _lastUseTime = default(DateTime);
         }
 
         /// <summary>

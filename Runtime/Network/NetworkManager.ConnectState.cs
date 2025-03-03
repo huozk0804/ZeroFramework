@@ -12,18 +12,18 @@ namespace ZeroFramework.Network
     {
         private sealed class ConnectState
         {
-            private readonly Socket m_Socket;
-            private readonly object m_UserData;
+            private readonly Socket _socket;
+            private readonly object _userData;
 
             public ConnectState(Socket socket, object userData)
             {
-                m_Socket = socket;
-                m_UserData = userData;
+                _socket = socket;
+                _userData = userData;
             }
 
-            public Socket Socket => m_Socket;
+            public Socket Socket => _socket;
 
-            public object UserData => m_UserData;
+            public object UserData => _userData;
         }
     }
 }

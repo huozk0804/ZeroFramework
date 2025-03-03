@@ -13,14 +13,14 @@ namespace ZeroFramework
     /// </summary>
     public abstract class FsmBase
     {
-        private string m_Name;
+        private string _name;
 
         /// <summary>
         /// 初始化有限状态机基类的新实例。
         /// </summary>
         public FsmBase()
         {
-            m_Name = string.Empty;
+            _name = string.Empty;
         }
 
         /// <summary>
@@ -28,14 +28,14 @@ namespace ZeroFramework
         /// </summary>
         public string Name
         {
-            get => m_Name;
-            protected set => m_Name = value ?? string.Empty;
+            get => _name;
+            protected set => _name = value ?? string.Empty;
         }
 
         /// <summary>
         /// 获取有限状态机完整名称。
         /// </summary>
-        public string FullName => new TypeNamePair(OwnerType, m_Name).ToString();
+        public string FullName => new TypeNamePair(OwnerType, _name).ToString();
 
         /// <summary>
         /// 获取有限状态机持有者类型。

@@ -14,21 +14,21 @@ namespace ZeroFramework.Network
         private sealed class SendState : IDisposable
         {
             private const int DefaultBufferLength = 1024 * 64;
-            private MemoryStream m_Stream;
-            private bool m_Disposed;
+            private MemoryStream _stream;
+            private bool _disposed;
 
             public SendState()
             {
-                m_Stream = new MemoryStream(DefaultBufferLength);
-                m_Disposed = false;
+                _stream = new MemoryStream(DefaultBufferLength);
+                _disposed = false;
             }
 
-            public MemoryStream Stream => m_Stream;
+            public MemoryStream Stream => _stream;
 
             public void Reset()
             {
-                m_Stream.Position = 0L;
-                m_Stream.SetLength(0L);
+                _stream.Position = 0L;
+                _stream.SetLength(0L);
             }
 
             public void Dispose()
@@ -39,21 +39,21 @@ namespace ZeroFramework.Network
 
             private void Dispose(bool disposing)
             {
-                if (m_Disposed)
+                if (_disposed)
                 {
                     return;
                 }
 
                 if (disposing)
                 {
-                    if (m_Stream != null)
+                    if (_stream != null)
                     {
-                        m_Stream.Dispose();
-                        m_Stream = null;
+                        _stream.Dispose();
+                        _stream = null;
                     }
                 }
 
-                m_Disposed = true;
+                _disposed = true;
             }
         }
     }

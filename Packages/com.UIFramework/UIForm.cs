@@ -14,22 +14,22 @@ namespace ZeroFramework.UI
     /// </summary>
     public sealed class UIForm : MonoBehaviour, IUIForm
     {
-        private int m_SerialId;
-        private string m_UIFormAssetName;
-        private IUIGroup m_UIGroup;
-        private int m_DepthInUIGroup;
-        private bool m_PauseCoveredUIForm;
-        private UIFormLogic m_UIFormLogic;
+        private int _serialId;
+        private string _uiFormAssetName;
+        private IUIGroup _uiGroup;
+        private int _depthInUIGroup;
+        private bool _pauseCoveredUIForm;
+        private UIFormLogic _uiFormLogic;
 
         /// <summary>
         /// 获取界面序列编号。
         /// </summary>
-        public int SerialId => m_SerialId;
+        public int SerialId => _serialId;
 
         /// <summary>
         /// 获取界面资源名称。
         /// </summary>
-        public string UIFormAssetName => m_UIFormAssetName;
+        public string UIFormAssetName => _uiFormAssetName;
 
         /// <summary>
         /// 获取界面实例。
@@ -39,22 +39,22 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 获取界面所属的界面组。
         /// </summary>
-        public IUIGroup UIGroup => m_UIGroup;
+        public IUIGroup UIGroup => _uiGroup;
 
         /// <summary>
         /// 获取界面深度。
         /// </summary>
-        public int DepthInUIGroup => m_DepthInUIGroup;
+        public int DepthInUIGroup => _depthInUIGroup;
 
         /// <summary>
         /// 获取是否暂停被覆盖的界面。
         /// </summary>
-        public bool PauseCoveredUIForm => m_PauseCoveredUIForm;
+        public bool PauseCoveredUIForm => _pauseCoveredUIForm;
 
         /// <summary>
         /// 获取界面逻辑。
         /// </summary>
-        public UIFormLogic Logic => m_UIFormLogic;
+        public UIFormLogic Logic => _uiFormLogic;
 
         /// <summary>
         /// 初始化界面。
@@ -67,19 +67,19 @@ namespace ZeroFramework.UI
         /// <param name="userData">用户自定义数据。</param>
         public void OnInit(int serialId, string uiFormAssetName, IUIGroup uiGroup, bool pauseCoveredUIForm, bool isNewInstance, object userData)
         {
-            m_SerialId = serialId;
-            m_UIFormAssetName = uiFormAssetName;
-            m_UIGroup = uiGroup;
-            m_DepthInUIGroup = 0;
-            m_PauseCoveredUIForm = pauseCoveredUIForm;
+            _serialId = serialId;
+            _uiFormAssetName = uiFormAssetName;
+            _uiGroup = uiGroup;
+            _depthInUIGroup = 0;
+            _pauseCoveredUIForm = pauseCoveredUIForm;
 
             if (!isNewInstance)
             {
                 return;
             }
 
-            m_UIFormLogic = GetComponent<UIFormLogic>();
-            if (m_UIFormLogic == null)
+            _uiFormLogic = GetComponent<UIFormLogic>();
+            if (_uiFormLogic == null)
             {
                 Log.Error("UI form '{0}' can not get UI form logic.", uiFormAssetName);
                 return;
@@ -87,11 +87,11 @@ namespace ZeroFramework.UI
 
             try
             {
-                m_UIFormLogic.OnInit(userData);
+                _uiFormLogic.OnInit(userData);
             }
             catch (Exception exception)
             {
-                Log.Error("UI form '[{0}]{1}' OnInit with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
+                Log.Error("UI form '[{0}]{1}' OnInit with exception '{2}'.", _serialId, _uiFormAssetName, exception);
             }
         }
 
@@ -102,16 +102,16 @@ namespace ZeroFramework.UI
         {
             try
             {
-                m_UIFormLogic.OnRecycle();
+                _uiFormLogic.OnRecycle();
             }
             catch (Exception exception)
             {
-                Log.Error("UI form '[{0}]{1}' OnRecycle with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
+                Log.Error("UI form '[{0}]{1}' OnRecycle with exception '{2}'.", _serialId, _uiFormAssetName, exception);
             }
 
-            m_SerialId = 0;
-            m_DepthInUIGroup = 0;
-            m_PauseCoveredUIForm = true;
+            _serialId = 0;
+            _depthInUIGroup = 0;
+            _pauseCoveredUIForm = true;
         }
 
         /// <summary>
@@ -122,11 +122,11 @@ namespace ZeroFramework.UI
         {
             try
             {
-                m_UIFormLogic.OnOpen(userData);
+                _uiFormLogic.OnOpen(userData);
             }
             catch (Exception exception)
             {
-                Log.Error("UI form '[{0}]{1}' OnOpen with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
+                Log.Error("UI form '[{0}]{1}' OnOpen with exception '{2}'.", _serialId, _uiFormAssetName, exception);
             }
         }
 
@@ -139,11 +139,11 @@ namespace ZeroFramework.UI
         {
             try
             {
-                m_UIFormLogic.OnClose(isShutdown, userData);
+                _uiFormLogic.OnClose(isShutdown, userData);
             }
             catch (Exception exception)
             {
-                Log.Error("UI form '[{0}]{1}' OnClose with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
+                Log.Error("UI form '[{0}]{1}' OnClose with exception '{2}'.", _serialId, _uiFormAssetName, exception);
             }
         }
 
@@ -154,11 +154,11 @@ namespace ZeroFramework.UI
         {
             try
             {
-                m_UIFormLogic.OnPause();
+                _uiFormLogic.OnPause();
             }
             catch (Exception exception)
             {
-                Log.Error("UI form '[{0}]{1}' OnPause with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
+                Log.Error("UI form '[{0}]{1}' OnPause with exception '{2}'.", _serialId, _uiFormAssetName, exception);
             }
         }
 
@@ -169,11 +169,11 @@ namespace ZeroFramework.UI
         {
             try
             {
-                m_UIFormLogic.OnResume();
+                _uiFormLogic.OnResume();
             }
             catch (Exception exception)
             {
-                Log.Error("UI form '[{0}]{1}' OnResume with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
+                Log.Error("UI form '[{0}]{1}' OnResume with exception '{2}'.", _serialId, _uiFormAssetName, exception);
             }
         }
 
@@ -184,11 +184,11 @@ namespace ZeroFramework.UI
         {
             try
             {
-                m_UIFormLogic.OnCover();
+                _uiFormLogic.OnCover();
             }
             catch (Exception exception)
             {
-                Log.Error("UI form '[{0}]{1}' OnCover with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
+                Log.Error("UI form '[{0}]{1}' OnCover with exception '{2}'.", _serialId, _uiFormAssetName, exception);
             }
         }
 
@@ -199,11 +199,11 @@ namespace ZeroFramework.UI
         {
             try
             {
-                m_UIFormLogic.OnReveal();
+                _uiFormLogic.OnReveal();
             }
             catch (Exception exception)
             {
-                Log.Error("UI form '[{0}]{1}' OnReveal with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
+                Log.Error("UI form '[{0}]{1}' OnReveal with exception '{2}'.", _serialId, _uiFormAssetName, exception);
             }
         }
 
@@ -215,11 +215,11 @@ namespace ZeroFramework.UI
         {
             try
             {
-                m_UIFormLogic.OnRefocus(userData);
+                _uiFormLogic.OnRefocus(userData);
             }
             catch (Exception exception)
             {
-                Log.Error("UI form '[{0}]{1}' OnRefocus with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
+                Log.Error("UI form '[{0}]{1}' OnRefocus with exception '{2}'.", _serialId, _uiFormAssetName, exception);
             }
         }
 
@@ -232,11 +232,11 @@ namespace ZeroFramework.UI
         {
             try
             {
-                m_UIFormLogic.OnUpdate(elapseSeconds, realElapseSeconds);
+                _uiFormLogic.OnUpdate(elapseSeconds, realElapseSeconds);
             }
             catch (Exception exception)
             {
-                Log.Error("UI form '[{0}]{1}' OnUpdate with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
+                Log.Error("UI form '[{0}]{1}' OnUpdate with exception '{2}'.", _serialId, _uiFormAssetName, exception);
             }
         }
 
@@ -247,14 +247,14 @@ namespace ZeroFramework.UI
         /// <param name="depthInUIGroup">界面在界面组中的深度。</param>
         public void OnDepthChanged(int uiGroupDepth, int depthInUIGroup)
         {
-            m_DepthInUIGroup = depthInUIGroup;
+            _depthInUIGroup = depthInUIGroup;
             try
             {
-                m_UIFormLogic.OnDepthChanged(uiGroupDepth, depthInUIGroup);
+                _uiFormLogic.OnDepthChanged(uiGroupDepth, depthInUIGroup);
             }
             catch (Exception exception)
             {
-                Log.Error("UI form '[{0}]{1}' OnDepthChanged with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
+                Log.Error("UI form '[{0}]{1}' OnDepthChanged with exception '{2}'.", _serialId, _uiFormAssetName, exception);
             }
         }
     }

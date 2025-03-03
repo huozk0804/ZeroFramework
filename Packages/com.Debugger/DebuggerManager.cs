@@ -11,15 +11,15 @@ namespace ZeroFramework.Debugger
 	/// </summary>
 	internal sealed partial class DebuggerManager : GameFrameworkModule, IDebuggerManager
 	{
-		private readonly DebuggerWindowGroup m_DebuggerWindowRoot;
-		private bool m_ActiveWindow;
+		private readonly DebuggerWindowGroup _debuggerWindowRoot;
+		private bool _activeWindow;
 
 		/// <summary>
 		/// 初始化调试器管理器的新实例。
 		/// </summary>
 		public DebuggerManager () {
-			m_DebuggerWindowRoot = new DebuggerWindowGroup();
-			m_ActiveWindow = false;
+			_debuggerWindowRoot = new DebuggerWindowGroup();
+			_activeWindow = false;
 		}
 
 		/// <summary>
@@ -32,14 +32,14 @@ namespace ZeroFramework.Debugger
 		/// 获取或设置调试器窗口是否激活。
 		/// </summary>
 		public bool ActiveWindow {
-			get => m_ActiveWindow;
-			set => m_ActiveWindow = value;
+			get => _activeWindow;
+			set => _activeWindow = value;
 		}
 
 		/// <summary>
 		/// 调试器窗口根结点。
 		/// </summary>
-		public IDebuggerWindowGroup DebuggerWindowRoot => m_DebuggerWindowRoot;
+		public IDebuggerWindowGroup DebuggerWindowRoot => _debuggerWindowRoot;
 
 		/// <summary>
 		/// 调试器管理器轮询。
@@ -47,19 +47,19 @@ namespace ZeroFramework.Debugger
 		/// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
 		/// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
 		public override void Update (float elapseSeconds, float realElapseSeconds) {
-			if (!m_ActiveWindow) {
+			if (!_activeWindow) {
 				return;
 			}
 
-			m_DebuggerWindowRoot.OnUpdate(elapseSeconds, realElapseSeconds);
+			_debuggerWindowRoot.OnUpdate(elapseSeconds, realElapseSeconds);
 		}
 
 		/// <summary>
 		/// 关闭并清理调试器管理器。
 		/// </summary>
 		public override void Shutdown () {
-			m_ActiveWindow = false;
-			m_DebuggerWindowRoot.Shutdown();
+			_activeWindow = false;
+			_debuggerWindowRoot.Shutdown();
 		}
 
 		/// <summary>
@@ -77,7 +77,7 @@ namespace ZeroFramework.Debugger
 				throw new GameFrameworkException("Debugger window is invalid.");
 			}
 
-			m_DebuggerWindowRoot.RegisterDebuggerWindow(path, debuggerWindow);
+			_debuggerWindowRoot.RegisterDebuggerWindow(path, debuggerWindow);
 			debuggerWindow.Initialize(args);
 		}
 
@@ -87,7 +87,7 @@ namespace ZeroFramework.Debugger
 		/// <param name="path">调试器窗口路径。</param>
 		/// <returns>是否解除注册调试器窗口成功。</returns>
 		public bool UnregisterDebuggerWindow (string path) {
-			return m_DebuggerWindowRoot.UnregisterDebuggerWindow(path);
+			return _debuggerWindowRoot.UnregisterDebuggerWindow(path);
 		}
 
 		/// <summary>
@@ -96,7 +96,7 @@ namespace ZeroFramework.Debugger
 		/// <param name="path">调试器窗口路径。</param>
 		/// <returns>要获取的调试器窗口。</returns>
 		public IDebuggerWindow GetDebuggerWindow (string path) {
-			return m_DebuggerWindowRoot.GetDebuggerWindow(path);
+			return _debuggerWindowRoot.GetDebuggerWindow(path);
 		}
 
 		/// <summary>
@@ -105,7 +105,7 @@ namespace ZeroFramework.Debugger
 		/// <param name="path">调试器窗口路径。</param>
 		/// <returns>是否成功选中调试器窗口。</returns>
 		public bool SelectDebuggerWindow (string path) {
-			return m_DebuggerWindowRoot.SelectDebuggerWindow(path);
+			return _debuggerWindowRoot.SelectDebuggerWindow(path);
 		}
 	}
 }

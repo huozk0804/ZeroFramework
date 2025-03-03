@@ -2,7 +2,7 @@
 {
     public abstract class UISubForm : IReference
     {
-        public UIForm parent { get; }
+        public UIForm Parent { get; }
         
         public virtual void OnShow(object args)
         {

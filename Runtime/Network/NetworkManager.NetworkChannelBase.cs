@@ -20,21 +20,21 @@ namespace ZeroFramework.Network
         {
             private const float DefaultHeartBeatInterval = 30f;
 
-            private readonly string m_Name;
-            protected readonly Queue<Packet> m_SendPacketPool;
-            protected readonly EventPool<Packet> m_ReceivePacketPool;
-            protected readonly INetworkChannelHelper m_NetworkChannelHelper;
-            protected AddressFamily m_AddressFamily;
-            protected bool m_ResetHeartBeatElapseSecondsWhenReceivePacket;
-            protected float m_HeartBeatInterval;
-            protected Socket m_Socket;
-            protected readonly SendState m_SendState;
-            protected readonly ReceiveState m_ReceiveState;
-            protected readonly HeartBeatState m_HeartBeatState;
-            protected int m_SendPacketCount;
-            protected int m_ReceivedPacketCount;
-            protected bool m_Active;
-            private bool m_Disposed;
+            private readonly string _name;
+            protected readonly Queue<Packet> _sendPacketPool;
+            protected readonly EventPool<Packet> _receivePacketPool;
+            protected readonly INetworkChannelHelper _networkChannelHelper;
+            protected AddressFamily _addressFamily;
+            protected bool _resetHeartBeatElapseSecondsWhenReceivePacket;
+            protected float _heartBeatInterval;
+            protected Socket _socket;
+            protected readonly SendState _sendState;
+            protected readonly ReceiveState _receiveState;
+            protected readonly HeartBeatState _heartBeatState;
+            protected int _sendPacketCount;
+            protected int _receivedPacketCount;
+            protected bool _active;
+            private bool _disposed;
 
             public GameFrameworkAction<NetworkChannelBase, object> NetworkChannelConnected;
             public GameFrameworkAction<NetworkChannelBase> NetworkChannelClosed;
@@ -49,21 +49,21 @@ namespace ZeroFramework.Network
             /// <param name="networkChannelHelper">网络频道辅助器。</param>
             public NetworkChannelBase(string name, INetworkChannelHelper networkChannelHelper)
             {
-                m_Name = name ?? string.Empty;
-                m_SendPacketPool = new Queue<Packet>();
-                m_ReceivePacketPool = new EventPool<Packet>(EventPoolMode.Default);
-                m_NetworkChannelHelper = networkChannelHelper;
-                m_AddressFamily = AddressFamily.Unknown;
-                m_ResetHeartBeatElapseSecondsWhenReceivePacket = false;
-                m_HeartBeatInterval = DefaultHeartBeatInterval;
-                m_Socket = null;
-                m_SendState = new SendState();
-                m_ReceiveState = new ReceiveState();
-                m_HeartBeatState = new HeartBeatState();
-                m_SendPacketCount = 0;
-                m_ReceivedPacketCount = 0;
-                m_Active = false;
-                m_Disposed = false;
+                _name = name ?? string.Empty;
+                _sendPacketPool = new Queue<Packet>();
+                _receivePacketPool = new EventPool<Packet>(EventPoolMode.Default);
+                _networkChannelHelper = networkChannelHelper;
+                _addressFamily = AddressFamily.Unknown;
+                _resetHeartBeatElapseSecondsWhenReceivePacket = false;
+                _heartBeatInterval = DefaultHeartBeatInterval;
+                _socket = null;
+                _sendState = new SendState();
+                _receiveState = new ReceiveState();
+                _heartBeatState = new HeartBeatState();
+                _sendPacketCount = 0;
+                _receivedPacketCount = 0;
+                _active = false;
+                _disposed = false;
 
                 NetworkChannelConnected = null;
                 NetworkChannelClosed = null;
@@ -77,12 +77,12 @@ namespace ZeroFramework.Network
             /// <summary>
             /// 获取网络频道名称。
             /// </summary>
-            public string Name => m_Name;
+            public string Name => _name;
 
             /// <summary>
             /// 获取网络频道所使用的 Socket。
             /// </summary>
-            public Socket Socket => m_Socket;
+            public Socket Socket => _socket;
 
             /// <summary>
             /// 获取是否已连接。
@@ -91,9 +91,9 @@ namespace ZeroFramework.Network
             {
                 get
                 {
-                    if (m_Socket != null)
+                    if (_socket != null)
                     {
-                        return m_Socket.Connected;
+                        return _socket.Connected;
                     }
 
                     return false;
@@ -111,55 +111,55 @@ namespace ZeroFramework.Network
             /// <summary>
             /// 获取网络地址类型。
             /// </summary>
-            public AddressFamily AddressFamily => m_AddressFamily;
+            public AddressFamily AddressFamily => _addressFamily;
 
             /// <summary>
             /// 获取要发送的消息包数量。
             /// </summary>
-            public int SendPacketCount => m_SendPacketPool.Count;
+            public int SendPacketCount => _sendPacketPool.Count;
 
             /// <summary>
             /// 获取累计发送的消息包数量。
             /// </summary>
-            public int SentPacketCount => m_SendPacketCount;
+            public int SentPacketCount => _sendPacketCount;
 
             /// <summary>
             /// 获取已接收未处理的消息包数量。
             /// </summary>
-            public int ReceivePacketCount => m_ReceivePacketPool.EventCount;
+            public int ReceivePacketCount => _receivePacketPool.EventCount;
 
             /// <summary>
             /// 获取累计已接收的消息包数量。
             /// </summary>
-            public int ReceivedPacketCount => m_ReceivedPacketCount;
+            public int ReceivedPacketCount => _receivedPacketCount;
 
             /// <summary>
             /// 获取或设置当收到消息包时是否重置心跳流逝时间。
             /// </summary>
             public bool ResetHeartBeatElapseSecondsWhenReceivePacket
             {
-                get => m_ResetHeartBeatElapseSecondsWhenReceivePacket;
-                set => m_ResetHeartBeatElapseSecondsWhenReceivePacket = value;
+                get => _resetHeartBeatElapseSecondsWhenReceivePacket;
+                set => _resetHeartBeatElapseSecondsWhenReceivePacket = value;
             }
 
             /// <summary>
             /// 获取丢失心跳的次数。
             /// </summary>
-            public int MissHeartBeatCount => m_HeartBeatState.MissHeartBeatCount;
+            public int MissHeartBeatCount => _heartBeatState.MissHeartBeatCount;
 
             /// <summary>
             /// 获取或设置心跳间隔时长，以秒为单位。
             /// </summary>
             public float HeartBeatInterval
             {
-                get => m_HeartBeatInterval;
-                set => m_HeartBeatInterval = value;
+                get => _heartBeatInterval;
+                set => _heartBeatInterval = value;
             }
 
             /// <summary>
             /// 获取心跳等待时长，以秒为单位。
             /// </summary>
-            public float HeartBeatElapseSeconds => m_HeartBeatState.HeartBeatElapseSeconds;
+            public float HeartBeatElapseSeconds => _heartBeatState.HeartBeatElapseSeconds;
 
             /// <summary>
             /// 网络频道轮询。
@@ -168,42 +168,42 @@ namespace ZeroFramework.Network
             /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
             public virtual void Update(float elapseSeconds, float realElapseSeconds)
             {
-                if (m_Socket == null || !m_Active)
+                if (_socket == null || !_active)
                 {
                     return;
                 }
 
                 ProcessSend();
                 ProcessReceive();
-                if (m_Socket == null || !m_Active)
+                if (_socket == null || !_active)
                 {
                     return;
                 }
 
-                m_ReceivePacketPool.Update(elapseSeconds, realElapseSeconds);
+                _receivePacketPool.Update(elapseSeconds, realElapseSeconds);
 
-                if (m_HeartBeatInterval > 0f)
+                if (_heartBeatInterval > 0f)
                 {
                     bool sendHeartBeat = false;
                     int missHeartBeatCount = 0;
-                    lock (m_HeartBeatState)
+                    lock (_heartBeatState)
                     {
-                        if (m_Socket == null || !m_Active)
+                        if (_socket == null || !_active)
                         {
                             return;
                         }
 
-                        m_HeartBeatState.HeartBeatElapseSeconds += realElapseSeconds;
-                        if (m_HeartBeatState.HeartBeatElapseSeconds >= m_HeartBeatInterval)
+                        _heartBeatState.HeartBeatElapseSeconds += realElapseSeconds;
+                        if (_heartBeatState.HeartBeatElapseSeconds >= _heartBeatInterval)
                         {
                             sendHeartBeat = true;
-                            missHeartBeatCount = m_HeartBeatState.MissHeartBeatCount;
-                            m_HeartBeatState.HeartBeatElapseSeconds = 0f;
-                            m_HeartBeatState.MissHeartBeatCount++;
+                            missHeartBeatCount = _heartBeatState.MissHeartBeatCount;
+                            _heartBeatState.HeartBeatElapseSeconds = 0f;
+                            _heartBeatState.MissHeartBeatCount++;
                         }
                     }
 
-                    if (sendHeartBeat && m_NetworkChannelHelper.SendHeartBeat())
+                    if (sendHeartBeat && _networkChannelHelper.SendHeartBeat())
                     {
                         if (missHeartBeatCount > 0 && NetworkChannelMissHeartBeat != null)
                         {
@@ -219,8 +219,8 @@ namespace ZeroFramework.Network
             public virtual void Shutdown()
             {
                 Close();
-                m_ReceivePacketPool.Shutdown();
-                m_NetworkChannelHelper.Shutdown();
+                _receivePacketPool.Shutdown();
+                _networkChannelHelper.Shutdown();
             }
 
             /// <summary>
@@ -234,7 +234,7 @@ namespace ZeroFramework.Network
                     throw new GameFrameworkException("Packet handler is invalid.");
                 }
 
-                m_ReceivePacketPool.Subscribe(handler.Id, handler.Handle);
+                _receivePacketPool.Subscribe(handler.Id, handler.Handle);
             }
 
             /// <summary>
@@ -243,7 +243,7 @@ namespace ZeroFramework.Network
             /// <param name="handler">要设置的默认事件处理函数。</param>
             public void SetDefaultHandler(EventHandler<Packet> handler)
             {
-                m_ReceivePacketPool.SetDefaultHandler(handler);
+                _receivePacketPool.SetDefaultHandler(handler);
             }
 
             /// <summary>
@@ -264,20 +264,20 @@ namespace ZeroFramework.Network
             /// <param name="userData">用户自定义数据。</param>
             public virtual void Connect(IPAddress ipAddress, int port, object userData)
             {
-                if (m_Socket != null)
+                if (_socket != null)
                 {
                     Close();
-                    m_Socket = null;
+                    _socket = null;
                 }
 
                 switch (ipAddress.AddressFamily)
                 {
                     case System.Net.Sockets.AddressFamily.InterNetwork:
-                        m_AddressFamily = AddressFamily.IPv4;
+                        _addressFamily = AddressFamily.IPv4;
                         break;
 
                     case System.Net.Sockets.AddressFamily.InterNetworkV6:
-                        m_AddressFamily = AddressFamily.IPv6;
+                        _addressFamily = AddressFamily.IPv6;
                         break;
 
                     default:
@@ -291,8 +291,8 @@ namespace ZeroFramework.Network
                         throw new GameFrameworkException(errorMessage);
                 }
 
-                m_SendState.Reset();
-                m_ReceiveState.PrepareForPacketHeader(m_NetworkChannelHelper.PacketHeaderLength);
+                _sendState.Reset();
+                _receiveState.PrepareForPacketHeader(_networkChannelHelper.PacketHeaderLength);
             }
 
             /// <summary>
@@ -302,24 +302,24 @@ namespace ZeroFramework.Network
             {
                 lock (this)
                 {
-                    if (m_Socket == null)
+                    if (_socket == null)
                     {
                         return;
                     }
 
-                    m_Active = false;
+                    _active = false;
 
                     try
                     {
-                        m_Socket.Shutdown(SocketShutdown.Both);
+                        _socket.Shutdown(SocketShutdown.Both);
                     }
                     catch
                     {
                     }
                     finally
                     {
-                        m_Socket.Close();
-                        m_Socket = null;
+                        _socket.Close();
+                        _socket = null;
 
                         if (NetworkChannelClosed != null)
                         {
@@ -327,19 +327,19 @@ namespace ZeroFramework.Network
                         }
                     }
 
-                    m_SendPacketCount = 0;
-                    m_ReceivedPacketCount = 0;
+                    _sendPacketCount = 0;
+                    _receivedPacketCount = 0;
 
-                    lock (m_SendPacketPool)
+                    lock (_sendPacketPool)
                     {
-                        m_SendPacketPool.Clear();
+                        _sendPacketPool.Clear();
                     }
 
-                    m_ReceivePacketPool.Clear();
+                    _receivePacketPool.Clear();
 
-                    lock (m_HeartBeatState)
+                    lock (_heartBeatState)
                     {
-                        m_HeartBeatState.Reset(true);
+                        _heartBeatState.Reset(true);
                     }
                 }
             }
@@ -351,7 +351,7 @@ namespace ZeroFramework.Network
             /// <param name="packet">要发送的消息包。</param>
             public void Send<T>(T packet) where T : Packet
             {
-                if (m_Socket == null)
+                if (_socket == null)
                 {
                     string errorMessage = "You must connect first.";
                     if (NetworkChannelError != null)
@@ -363,7 +363,7 @@ namespace ZeroFramework.Network
                     throw new GameFrameworkException(errorMessage);
                 }
 
-                if (!m_Active)
+                if (!_active)
                 {
                     string errorMessage = "Socket is not active.";
                     if (NetworkChannelError != null)
@@ -387,9 +387,9 @@ namespace ZeroFramework.Network
                     throw new GameFrameworkException(errorMessage);
                 }
 
-                lock (m_SendPacketPool)
+                lock (_sendPacketPool)
                 {
-                    m_SendPacketPool.Enqueue(packet);
+                    _sendPacketPool.Enqueue(packet);
                 }
             }
 
@@ -408,7 +408,7 @@ namespace ZeroFramework.Network
             /// <param name="disposing">释放资源标记。</param>
             private void Dispose(bool disposing)
             {
-                if (m_Disposed)
+                if (_disposed)
                 {
                     return;
                 }
@@ -416,36 +416,36 @@ namespace ZeroFramework.Network
                 if (disposing)
                 {
                     Close();
-                    m_SendState.Dispose();
-                    m_ReceiveState.Dispose();
+                    _sendState.Dispose();
+                    _receiveState.Dispose();
                 }
 
-                m_Disposed = true;
+                _disposed = true;
             }
 
             protected virtual bool ProcessSend()
             {
-                if (m_SendState.Stream.Length > 0 || m_SendPacketPool.Count <= 0)
+                if (_sendState.Stream.Length > 0 || _sendPacketPool.Count <= 0)
                 {
                     return false;
                 }
 
-                while (m_SendPacketPool.Count > 0)
+                while (_sendPacketPool.Count > 0)
                 {
                     Packet packet = null;
-                    lock (m_SendPacketPool)
+                    lock (_sendPacketPool)
                     {
-                        packet = m_SendPacketPool.Dequeue();
+                        packet = _sendPacketPool.Dequeue();
                     }
 
                     bool serializeResult = false;
                     try
                     {
-                        serializeResult = m_NetworkChannelHelper.Serialize(packet, m_SendState.Stream);
+                        serializeResult = _networkChannelHelper.Serialize(packet, _sendState.Stream);
                     }
                     catch (Exception exception)
                     {
-                        m_Active = false;
+                        _active = false;
                         if (NetworkChannelError != null)
                         {
                             SocketException socketException = exception as SocketException;
@@ -469,7 +469,7 @@ namespace ZeroFramework.Network
                     }
                 }
 
-                m_SendState.Stream.Position = 0L;
+                _sendState.Stream.Position = 0L;
                 return true;
             }
 
@@ -482,7 +482,7 @@ namespace ZeroFramework.Network
                 try
                 {
                     object customErrorData = null;
-                    IPacketHeader packetHeader = m_NetworkChannelHelper.DeserializePacketHeader(m_ReceiveState.Stream, out customErrorData);
+                    IPacketHeader packetHeader = _networkChannelHelper.DeserializePacketHeader(_receiveState.Stream, out customErrorData);
 
                     if (customErrorData != null && NetworkChannelCustomError != null)
                     {
@@ -501,17 +501,17 @@ namespace ZeroFramework.Network
                         throw new GameFrameworkException(errorMessage);
                     }
 
-                    m_ReceiveState.PrepareForPacket(packetHeader);
+                    _receiveState.PrepareForPacket(packetHeader);
                     if (packetHeader.PacketLength <= 0)
                     {
                         bool processSuccess = ProcessPacket();
-                        m_ReceivedPacketCount++;
+                        _receivedPacketCount++;
                         return processSuccess;
                     }
                 }
                 catch (Exception exception)
                 {
-                    m_Active = false;
+                    _active = false;
                     if (NetworkChannelError != null)
                     {
                         SocketException socketException = exception as SocketException;
@@ -527,15 +527,15 @@ namespace ZeroFramework.Network
 
             protected virtual bool ProcessPacket()
             {
-                lock (m_HeartBeatState)
+                lock (_heartBeatState)
                 {
-                    m_HeartBeatState.Reset(m_ResetHeartBeatElapseSecondsWhenReceivePacket);
+                    _heartBeatState.Reset(_resetHeartBeatElapseSecondsWhenReceivePacket);
                 }
 
                 try
                 {
                     object customErrorData = null;
-                    Packet packet = m_NetworkChannelHelper.DeserializePacket(m_ReceiveState.PacketHeader, m_ReceiveState.Stream, out customErrorData);
+                    Packet packet = _networkChannelHelper.DeserializePacket(_receiveState.PacketHeader, _receiveState.Stream, out customErrorData);
 
                     if (customErrorData != null && NetworkChannelCustomError != null)
                     {
@@ -544,14 +544,14 @@ namespace ZeroFramework.Network
 
                     if (packet != null)
                     {
-                        m_ReceivePacketPool.Fire(this, packet);
+                        _receivePacketPool.Fire(this, packet);
                     }
 
-                    m_ReceiveState.PrepareForPacketHeader(m_NetworkChannelHelper.PacketHeaderLength);
+                    _receiveState.PrepareForPacketHeader(_networkChannelHelper.PacketHeaderLength);
                 }
                 catch (Exception exception)
                 {
-                    m_Active = false;
+                    _active = false;
                     if (NetworkChannelError != null)
                     {
                         SocketException socketException = exception as SocketException;
