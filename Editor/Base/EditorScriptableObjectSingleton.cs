@@ -7,18 +7,18 @@ namespace ZeroFramework.Editor
     public abstract class EditorScriptableObjectSingleton<T> : ScriptableObject
         where T : EditorScriptableObjectSingleton<T>
     {
-        protected static T instance;
+        protected static T _Instance;
 
         public static T Instance
         {
             get
             {
-                if (!instance)
+                if (!_Instance)
                 {
                     LoadInstance();
                 }
 
-                return instance;
+                return _Instance;
             }
         }
 
@@ -28,26 +28,26 @@ namespace ZeroFramework.Editor
             string[] array = AssetDatabase.FindAssets("t:" + name);
             if (array.Length == 0)
             {
-                instance = CreateInstance<T>();
-                AssetDatabase.CreateAsset(instance, "Assets/" + name + ".asset");
+                _Instance = CreateInstance<T>();
+                AssetDatabase.CreateAsset(_Instance, "Assets/" + name + ".asset");
             }
             else
             {
                 if (array.Length > 1)
                 {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.AppendLine($"There are {array.Length} {name} in the project:");
+                    StringBuilder tips = new StringBuilder();
+                    tips.AppendLine($"There are {array.Length} {name} in the project:");
                     foreach (string text in array)
                     {
-                        stringBuilder.AppendLine(AssetDatabase.GUIDToAssetPath(text));
+                        tips.AppendLine(AssetDatabase.GUIDToAssetPath(text));
                     }
 
-                    stringBuilder.Append("Use " + AssetDatabase.GUIDToAssetPath(array[0]));
-                    Log.Warning(stringBuilder);
+                    tips.Append("Use " + AssetDatabase.GUIDToAssetPath(array[0]));
+                    Log.Warning(tips);
                 }
 
-                string text2 = AssetDatabase.GUIDToAssetPath(array[0]);
-                instance = AssetDatabase.LoadAssetAtPath<T>(text2);
+                string path = AssetDatabase.GUIDToAssetPath(array[0]);
+                _Instance = AssetDatabase.LoadAssetAtPath<T>(path);
             }
         }
     }

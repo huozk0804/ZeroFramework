@@ -14,7 +14,7 @@ namespace ZeroFramework.Editor
     /// </summary>
     public static class ScriptingDefineSymbols
     {
-        private static readonly BuildTargetGroup[] BuildTargetGroups = new BuildTargetGroup[]
+        private static readonly BuildTargetGroup[] _BuildTargetGroups = new BuildTargetGroup[]
         {
             BuildTargetGroup.Standalone,
             BuildTargetGroup.iOS,
@@ -110,7 +110,7 @@ namespace ZeroFramework.Editor
                 return;
             }
 
-            foreach (BuildTargetGroup buildTargetGroup in BuildTargetGroups)
+            foreach (BuildTargetGroup buildTargetGroup in _BuildTargetGroups)
             {
                 AddScriptingDefineSymbol(buildTargetGroup, scriptingDefineSymbol);
             }
@@ -127,7 +127,7 @@ namespace ZeroFramework.Editor
                 return;
             }
 
-            foreach (BuildTargetGroup buildTargetGroup in BuildTargetGroups)
+            foreach (BuildTargetGroup buildTargetGroup in _BuildTargetGroups)
             {
                 RemoveScriptingDefineSymbol(buildTargetGroup, scriptingDefineSymbol);
             }

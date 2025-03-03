@@ -7,9 +7,9 @@ namespace ZeroFramework.Editor
     public sealed partial class GameFrameworkConfigInspector : GameFrameworkInspector
     {
         private const string NoneOptionName = "<None>";
-        private static readonly float[] GameSpeed = new float[] { 0f, 0.01f, 0.1f, 0.25f, 0.5f, 1f, 1.5f, 2f, 4f, 8f };
+        private static readonly float[] _GameSpeed = new float[] { 0f, 0.01f, 0.1f, 0.25f, 0.5f, 1f, 1.5f, 2f, 4f, 8f };
 
-        private static readonly string[] GameSpeedForDisplay = new string[]
+        private static readonly string[] _GameSpeedForDisplay = new string[]
             { "0x", "0.01x", "0.1x", "0.25x", "0.5x", "1x", "1.5x", "2x", "4x", "8x" };
 
         private SerializedProperty _editorResourceMode = null;
@@ -138,7 +138,7 @@ namespace ZeroFramework.Editor
             {
                 float gameSpeed = EditorGUILayout.Slider("Game Speed", this._gameSpeed.floatValue, 0f, 8f);
                 int selectedGameSpeed =
-                    GUILayout.SelectionGrid(GetSelectedGameSpeed(gameSpeed), GameSpeedForDisplay, 5);
+                    GUILayout.SelectionGrid(GetSelectedGameSpeed(gameSpeed), _GameSpeedForDisplay, 5);
                 if (selectedGameSpeed >= 0)
                 {
                     gameSpeed = GetGameSpeed(selectedGameSpeed);
@@ -261,22 +261,22 @@ namespace ZeroFramework.Editor
         {
             if (selectedGameSpeed < 0)
             {
-                return GameSpeed[0];
+                return _GameSpeed[0];
             }
 
-            if (selectedGameSpeed >= GameSpeed.Length)
+            if (selectedGameSpeed >= _GameSpeed.Length)
             {
-                return GameSpeed[GameSpeed.Length - 1];
+                return _GameSpeed[_GameSpeed.Length - 1];
             }
 
-            return GameSpeed[selectedGameSpeed];
+            return _GameSpeed[selectedGameSpeed];
         }
 
         private int GetSelectedGameSpeed(float gameSpeed)
         {
-            for (int i = 0; i < GameSpeed.Length; i++)
+            for (int i = 0; i < _GameSpeed.Length; i++)
             {
-                if (gameSpeed == GameSpeed[i])
+                if (gameSpeed == _GameSpeed[i])
                 {
                     return i;
                 }

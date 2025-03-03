@@ -17,19 +17,19 @@ namespace ZeroFramework.Editor
     /// </summary>
     internal static class BuildSettings
     {
-        private static readonly string s_ConfigurationPath = null;
-        private static readonly List<string> s_DefaultSceneNames = new List<string>();
-        private static readonly List<string> s_SearchScenePaths = new List<string>();
+        private static readonly string _ConfigurationPath = null;
+        private static readonly List<string> _DefaultSceneNames = new List<string>();
+        private static readonly List<string> _SearchScenePaths = new List<string>();
 
         static BuildSettings()
         {
-            s_ConfigurationPath = Type.GetConfigurationPath<BuildSettingsConfigPathAttribute>() ??
+            _ConfigurationPath = Type.GetConfigurationPath<BuildSettingsConfigPathAttribute>() ??
                                   Utility.Path.GetRegularPath(Path.Combine(Application.dataPath,
                                       "ZeroFramework/Configs/BuildSettings.xml"));
-            s_DefaultSceneNames.Clear();
-            s_SearchScenePaths.Clear();
+            _DefaultSceneNames.Clear();
+            _SearchScenePaths.Clear();
 
-            if (!File.Exists(s_ConfigurationPath))
+            if (!File.Exists(_ConfigurationPath))
             {
                 return;
             }
@@ -37,7 +37,7 @@ namespace ZeroFramework.Editor
             try
             {
                 XmlDocument xmlDocument = new XmlDocument();
-                xmlDocument.Load(s_ConfigurationPath);
+                xmlDocument.Load(_ConfigurationPath);
                 XmlNode xmlRoot = xmlDocument.SelectSingleNode("ZeroFramework");
                 XmlNode xmlBuildSettings = xmlRoot.SelectSingleNode("BuildSettings");
                 XmlNode xmlDefaultScenes = xmlBuildSettings.SelectSingleNode("DefaultScenes");
@@ -56,7 +56,7 @@ namespace ZeroFramework.Editor
                     }
 
                     string defaultSceneName = xmlNode.Attributes.GetNamedItem("Name").Value;
-                    s_DefaultSceneNames.Add(defaultSceneName);
+                    _DefaultSceneNames.Add(defaultSceneName);
                 }
 
                 xmlNodeList = xmlSearchScenePaths.ChildNodes;
@@ -69,7 +69,7 @@ namespace ZeroFramework.Editor
                     }
 
                     string searchScenePath = xmlNode.Attributes.GetNamedItem("Path").Value;
-                    s_SearchScenePaths.Add(searchScenePath);
+                    _SearchScenePaths.Add(searchScenePath);
                 }
             }
             catch
@@ -84,7 +84,7 @@ namespace ZeroFramework.Editor
         public static void DefaultScenes()
         {
             HashSet<string> sceneNames = new HashSet<string>();
-            foreach (string sceneName in s_DefaultSceneNames)
+            foreach (string sceneName in _DefaultSceneNames)
             {
                 sceneNames.Add(sceneName);
             }
@@ -107,12 +107,12 @@ namespace ZeroFramework.Editor
         public static void AllScenes()
         {
             HashSet<string> sceneNames = new HashSet<string>();
-            foreach (string sceneName in s_DefaultSceneNames)
+            foreach (string sceneName in _DefaultSceneNames)
             {
                 sceneNames.Add(sceneName);
             }
 
-            string[] sceneGuids = AssetDatabase.FindAssets("t:Scene", s_SearchScenePaths.ToArray());
+            string[] sceneGuids = AssetDatabase.FindAssets("t:Scene", _SearchScenePaths.ToArray());
             foreach (string sceneGuid in sceneGuids)
             {
                 string sceneName = AssetDatabase.GUIDToAssetPath(sceneGuid);

@@ -17,8 +17,8 @@ namespace ZeroFramework
         public static partial class Verifier
         {
             private const int CachedBytesLength = 0x1000;
-            private static readonly byte[] s_CachedBytes = new byte[CachedBytesLength];
-            private static readonly Crc32 s_Algorithm = new Crc32();
+            private static readonly byte[] _CachedBytes = new byte[CachedBytesLength];
+            private static readonly Crc32 _Algorithm = new Crc32();
 
             /// <summary>
             /// 计算二进制流的 CRC32。
@@ -54,9 +54,9 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Offset or length is invalid.");
                 }
 
-                s_Algorithm.HashCore(bytes, offset, length);
-                int result = (int)s_Algorithm.HashFinal();
-                s_Algorithm.Initialize();
+                _Algorithm.HashCore(bytes, offset, length);
+                int result = (int)_Algorithm.HashFinal();
+                _Algorithm.Initialize();
                 return result;
             }
 
@@ -74,10 +74,10 @@ namespace ZeroFramework
 
                 while (true)
                 {
-                    int bytesRead = stream.Read(s_CachedBytes, 0, CachedBytesLength);
+                    int bytesRead = stream.Read(_CachedBytes, 0, CachedBytesLength);
                     if (bytesRead > 0)
                     {
-                        s_Algorithm.HashCore(s_CachedBytes, 0, bytesRead);
+                        _Algorithm.HashCore(_CachedBytes, 0, bytesRead);
                     }
                     else
                     {
@@ -85,9 +85,9 @@ namespace ZeroFramework
                     }
                 }
 
-                int result = (int)s_Algorithm.HashFinal();
-                s_Algorithm.Initialize();
-                Array.Clear(s_CachedBytes, 0, CachedBytesLength);
+                int result = (int)_Algorithm.HashFinal();
+                _Algorithm.Initialize();
+                Array.Clear(_CachedBytes, 0, CachedBytesLength);
                 return result;
             }
 
@@ -166,21 +166,21 @@ namespace ZeroFramework
                 int codeIndex = 0;
                 while (true)
                 {
-                    int bytesRead = stream.Read(s_CachedBytes, 0, CachedBytesLength);
+                    int bytesRead = stream.Read(_CachedBytes, 0, CachedBytesLength);
                     if (bytesRead > 0)
                     {
                         if (length > 0)
                         {
                             for (int i = 0; i < bytesRead && i < length; i++)
                             {
-                                s_CachedBytes[i] ^= code[codeIndex++];
+                                _CachedBytes[i] ^= code[codeIndex++];
                                 codeIndex %= codeLength;
                             }
 
                             length -= bytesRead;
                         }
 
-                        s_Algorithm.HashCore(s_CachedBytes, 0, bytesRead);
+                        _Algorithm.HashCore(_CachedBytes, 0, bytesRead);
                     }
                     else
                     {
@@ -188,9 +188,9 @@ namespace ZeroFramework
                     }
                 }
 
-                int result = (int)s_Algorithm.HashFinal();
-                s_Algorithm.Initialize();
-                Array.Clear(s_CachedBytes, 0, CachedBytesLength);
+                int result = (int)_Algorithm.HashFinal();
+                _Algorithm.Initialize();
+                Array.Clear(_CachedBytes, 0, CachedBytesLength);
                 return result;
             }
         }

@@ -14,7 +14,7 @@ namespace ZeroFramework.Editor
     /// </summary>
     internal static class Type
     {
-        private static readonly string[] RuntimeAssemblyNames =
+        private static readonly string[] _RuntimeAssemblyNames =
         {
 #if UNITY_2017_3_OR_NEWER
             "ZeroFramework.Runtime",
@@ -22,7 +22,7 @@ namespace ZeroFramework.Editor
             "Assembly-CSharp",
         };
 
-        private static readonly string[] RuntimeOrEditorAssemblyNames =
+        private static readonly string[] _RuntimeOrEditorAssemblyNames =
         {
 #if UNITY_2017_3_OR_NEWER
             "ZeroFramework.Runtime",
@@ -78,7 +78,7 @@ namespace ZeroFramework.Editor
         /// <returns>指定基类的所有子类的名称。</returns>
         internal static string[] GetRuntimeTypeNames(System.Type typeBase)
         {
-            string[] l1 = GetTypeNames(typeBase, RuntimeAssemblyNames);
+            string[] l1 = GetTypeNames(typeBase, _RuntimeAssemblyNames);
             var custom = GameFrameworkConfig.Instance.runtimeAssemblyNames;
             if (custom != null && custom.Length > 0)
             {
@@ -105,7 +105,7 @@ namespace ZeroFramework.Editor
         /// <returns>指定基类的所有子类的名称。</returns>
         internal static string[] GetRuntimeOrEditorTypeNames(System.Type typeBase)
         {
-            string[] l1 = GetTypeNames(typeBase, RuntimeOrEditorAssemblyNames);
+            string[] l1 = GetTypeNames(typeBase, _RuntimeOrEditorAssemblyNames);
             var custom = GameFrameworkConfig.Instance.runtimeOrEditorAssemblyNames;
             if (custom != null)
             {

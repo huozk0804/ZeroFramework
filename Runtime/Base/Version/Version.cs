@@ -12,7 +12,7 @@ namespace ZeroFramework
     public static partial class Version
     {
         private const string FrameworkVersionString = "2021.12.29";
-        private static IVersionHelper s_VersionHelper = null;
+        private static IVersionHelper _VersionHelper = null;
 
         /// <summary>
         /// 获取游戏框架版本号。
@@ -26,9 +26,9 @@ namespace ZeroFramework
         {
             get
             {
-                if (s_VersionHelper == null)
+                if (_VersionHelper == null)
                     return string.Empty;
-                return s_VersionHelper.GameVersion;
+                return _VersionHelper.GameVersion;
             }
         }
 
@@ -36,9 +36,9 @@ namespace ZeroFramework
         {
             get
             {
-                if (s_VersionHelper == null)
+                if (_VersionHelper == null)
                     return string.Empty;
-                return s_VersionHelper.GameResVersion;
+                return _VersionHelper.GameResVersion;
             }
         }
 
@@ -49,9 +49,9 @@ namespace ZeroFramework
         {
             get
             {
-                if (s_VersionHelper == null)
+                if (_VersionHelper == null)
                     return 0;
-                return s_VersionHelper.InternalGameVersion;
+                return _VersionHelper.InternalGameVersion;
             }
         }
 
@@ -61,7 +61,7 @@ namespace ZeroFramework
         /// <param name="versionHelper">要设置的版本号辅助器。</param>
         public static void SetVersionHelper(IVersionHelper versionHelper)
         {
-            s_VersionHelper = versionHelper;
+            _VersionHelper = versionHelper;
         }
     }
 }

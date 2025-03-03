@@ -13,7 +13,7 @@ namespace ZeroFramework
         /// </summary>
         public static partial class Text
         {
-            private static ITextHelper s_TextHelper = null;
+            private static ITextHelper _TextHelper = null;
 
             /// <summary>
             /// 设置字符辅助器。
@@ -21,7 +21,7 @@ namespace ZeroFramework
             /// <param name="textHelper">要设置的字符辅助器。</param>
             public static void SetTextHelper(ITextHelper textHelper)
             {
-                s_TextHelper = textHelper;
+                _TextHelper = textHelper;
             }
 
             /// <summary>
@@ -38,12 +38,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg);
                 }
 
-                return s_TextHelper.Format(format, arg);
+                return _TextHelper.Format(format, arg);
             }
 
             /// <summary>
@@ -62,12 +62,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2);
+                return _TextHelper.Format(format, arg1, arg2);
             }
 
             /// <summary>
@@ -88,12 +88,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3);
+                return _TextHelper.Format(format, arg1, arg2, arg3);
             }
 
             /// <summary>
@@ -116,12 +116,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4);
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4);
             }
 
             /// <summary>
@@ -146,12 +146,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4, arg5);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5);
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5);
             }
 
             /// <summary>
@@ -179,12 +179,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4, arg5, arg6);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6);
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6);
             }
 
             /// <summary>
@@ -214,12 +214,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
             }
 
             /// <summary>
@@ -251,12 +251,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
             }
 
             /// <summary>
@@ -290,12 +290,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
             }
 
             /// <summary>
@@ -331,12 +331,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
             }
 
             /// <summary>
@@ -374,12 +374,12 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
             }
 
             /// <summary>
@@ -419,13 +419,13 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
                         arg12);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
                     arg12);
             }
 
@@ -469,13 +469,13 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
                         arg12, arg13);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
                     arg12, arg13);
             }
 
@@ -521,13 +521,13 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
                         arg12, arg13, arg14);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
                     arg12, arg13, arg14);
             }
 
@@ -575,13 +575,13 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
                         arg12, arg13, arg14, arg15);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
                     arg12, arg13, arg14, arg15);
             }
 
@@ -631,13 +631,13 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Format is invalid.");
                 }
 
-                if (s_TextHelper == null)
+                if (_TextHelper == null)
                 {
                     return string.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
                         arg12, arg13, arg14, arg15, arg16);
                 }
 
-                return s_TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
+                return _TextHelper.Format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
                     arg12, arg13, arg14, arg15, arg16);
             }
         }
