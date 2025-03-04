@@ -242,7 +242,7 @@ namespace ZeroFramework
         /// <returns>新增下载任务的序列编号。</returns>
         public int AddDownload(string downloadPath, string downloadUri)
         {
-            return AddDownload(downloadPath, downloadUri, null, Constant.DefaultPriority, null);
+            return AddDownload(downloadPath, downloadUri, null, DownloadConstant.DefaultPriority, null);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace ZeroFramework
         /// <returns>新增下载任务的序列编号。</returns>
         public int AddDownload(string downloadPath, string downloadUri, string tag)
         {
-            return AddDownload(downloadPath, downloadUri, tag, Constant.DefaultPriority, null);
+            return AddDownload(downloadPath, downloadUri, tag, DownloadConstant.DefaultPriority, null);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace ZeroFramework
         /// <returns>新增下载任务的序列编号。</returns>
         public int AddDownload(string downloadPath, string downloadUri, object userData)
         {
-            return AddDownload(downloadPath, downloadUri, null, Constant.DefaultPriority, userData);
+            return AddDownload(downloadPath, downloadUri, null, DownloadConstant.DefaultPriority, userData);
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace ZeroFramework
         /// <returns>新增下载任务的序列编号。</returns>
         public int AddDownload(string downloadPath, string downloadUri, string tag, object userData)
         {
-            return AddDownload(downloadPath, downloadUri, tag, Constant.DefaultPriority, userData);
+            return AddDownload(downloadPath, downloadUri, tag, DownloadConstant.DefaultPriority, userData);
         }
 
         /// <summary>

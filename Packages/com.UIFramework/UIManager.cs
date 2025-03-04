@@ -573,7 +573,7 @@ namespace ZeroFramework.UI
         /// <returns>界面的序列编号。</returns>
         public int OpenUIForm(string uiFormAssetName, string uiGroupName)
         {
-            return OpenUIForm(uiFormAssetName, uiGroupName, Constant.DefaultPriority, false, null);
+            return OpenUIForm(uiFormAssetName, uiGroupName, ResourceConst.DefaultPriority, false, null);
         }
 
         /// <summary>
@@ -597,7 +597,7 @@ namespace ZeroFramework.UI
         /// <returns>界面的序列编号。</returns>
         public int OpenUIForm(string uiFormAssetName, string uiGroupName, bool pauseCoveredUIForm)
         {
-            return OpenUIForm(uiFormAssetName, uiGroupName, Constant.DefaultPriority, pauseCoveredUIForm, null);
+            return OpenUIForm(uiFormAssetName, uiGroupName, ResourceConst.DefaultPriority, pauseCoveredUIForm, null);
         }
 
         /// <summary>
@@ -609,7 +609,7 @@ namespace ZeroFramework.UI
         /// <returns>界面的序列编号。</returns>
         public int OpenUIForm(string uiFormAssetName, string uiGroupName, object userData)
         {
-            return OpenUIForm(uiFormAssetName, uiGroupName, Constant.DefaultPriority, false, userData);
+            return OpenUIForm(uiFormAssetName, uiGroupName, ResourceConst.DefaultPriority, false, userData);
         }
 
         /// <summary>
@@ -648,7 +648,7 @@ namespace ZeroFramework.UI
         /// <returns>界面的序列编号。</returns>
         public int OpenUIForm(string uiFormAssetName, string uiGroupName, bool pauseCoveredUIForm, object userData)
         {
-            return OpenUIForm(uiFormAssetName, uiGroupName, Constant.DefaultPriority, pauseCoveredUIForm, userData);
+            return OpenUIForm(uiFormAssetName, uiGroupName, ResourceConst.DefaultPriority, pauseCoveredUIForm, userData);
         }
 
         /// <summary>

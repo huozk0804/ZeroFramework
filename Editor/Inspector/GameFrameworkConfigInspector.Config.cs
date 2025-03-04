@@ -20,20 +20,12 @@ namespace ZeroFramework.Editor
 
         void OnConfigInspectorGUI()
         {
-            EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
-            {
-                EditorGUILayout.LabelField("Config Module", EditorStyles.boldLabel);
-                EditorGUILayout.BeginVertical("box");
-                {
-                    EditorGUILayout.PropertyField(_enableLoadConfigUpdateEvent);
-                    EditorGUILayout.PropertyField(_enableLoadConfigDependencyAssetEvent);
-                    _configHelperInfo.Draw();
-                    EditorGUILayout.PropertyField(_configCachedBytesSize);
-                }
-                EditorGUILayout.EndVertical();
-            }
-            EditorGUI.EndDisabledGroup();
-
+            EditorGUILayout.LabelField("Config Module", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(_enableLoadConfigUpdateEvent);
+            EditorGUILayout.PropertyField(_enableLoadConfigDependencyAssetEvent);
+            _configHelperInfo.Draw();
+            EditorGUILayout.PropertyField(_configCachedBytesSize);
+            EditorGUILayout.EndVertical();
             serializedObject.ApplyModifiedProperties();
             Repaint();
         }

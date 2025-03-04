@@ -191,7 +191,7 @@ namespace ZeroFramework
         /// <returns>新增 Web 请求任务的序列编号。</returns>
         public int AddWebRequest(string webRequestUri)
         {
-            return AddWebRequest(webRequestUri, null, null, Constant.DefaultPriority, null);
+            return AddWebRequest(webRequestUri, null, null, WebConstant.DefaultPriority, null);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace ZeroFramework
         /// <returns>新增 Web 请求任务的序列编号。</returns>
         public int AddWebRequest(string webRequestUri, byte[] postData)
         {
-            return AddWebRequest(webRequestUri, postData, null, Constant.DefaultPriority, null);
+            return AddWebRequest(webRequestUri, postData, null, WebConstant.DefaultPriority, null);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace ZeroFramework
         /// <returns>新增 Web 请求任务的序列编号。</returns>
         public int AddWebRequest(string webRequestUri, string tag)
         {
-            return AddWebRequest(webRequestUri, null, tag, Constant.DefaultPriority, null);
+            return AddWebRequest(webRequestUri, null, tag, WebConstant.DefaultPriority, null);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace ZeroFramework
         /// <returns>新增 Web 请求任务的序列编号。</returns>
         public int AddWebRequest(string webRequestUri, object userData)
         {
-            return AddWebRequest(webRequestUri, null, null, Constant.DefaultPriority, userData);
+            return AddWebRequest(webRequestUri, null, null, WebConstant.DefaultPriority, userData);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace ZeroFramework
         /// <returns>新增 Web 请求任务的序列编号。</returns>
         public int AddWebRequest(string webRequestUri, byte[] postData, string tag)
         {
-            return AddWebRequest(webRequestUri, postData, tag, Constant.DefaultPriority, null);
+            return AddWebRequest(webRequestUri, postData, tag, WebConstant.DefaultPriority, null);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace ZeroFramework
         /// <returns>新增 Web 请求任务的序列编号。</returns>
         public int AddWebRequest(string webRequestUri, byte[] postData, object userData)
         {
-            return AddWebRequest(webRequestUri, postData, null, Constant.DefaultPriority, userData);
+            return AddWebRequest(webRequestUri, postData, null, WebConstant.DefaultPriority, userData);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace ZeroFramework
         /// <returns>新增 Web 请求任务的序列编号。</returns>
         public int AddWebRequest(string webRequestUri, string tag, object userData)
         {
-            return AddWebRequest(webRequestUri, null, tag, Constant.DefaultPriority, userData);
+            return AddWebRequest(webRequestUri, null, tag, WebConstant.DefaultPriority, userData);
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace ZeroFramework
         /// <returns>新增 Web 请求任务的序列编号。</returns>
         public int AddWebRequest(string webRequestUri, byte[] postData, string tag, object userData)
         {
-            return AddWebRequest(webRequestUri, postData, tag, Constant.DefaultPriority, userData);
+            return AddWebRequest(webRequestUri, postData, tag, WebConstant.DefaultPriority, userData);
         }
 
         /// <summary>

@@ -11,14 +11,14 @@ namespace ZeroFramework
     {
         private const int DefaultDpi = 96; // default windows dpi
 
+        [SerializeField] private bool isInitialize;
         private float _gameSpeedBeforePause = 1f;
-        [SerializeField] private bool _isInitialize;
         private int _frameRate;
         private float _gameSpeed;
         private bool _runInBackground;
         private bool _neverSleep;
 
-        public bool IsInitialize => _isInitialize;
+        public bool IsInitialize => isInitialize;
 
         /// <summary>
         /// 获取或设置游戏帧率。
@@ -108,7 +108,7 @@ namespace ZeroFramework
 
         private void Awake()
         {
-            _isInitialize = true;
+            isInitialize = true;
 
             FrameRate = GameFrameworkConfig.Instance.frameRate;
             GameSpeed = GameFrameworkConfig.Instance.gameSpeed;
@@ -203,7 +203,7 @@ namespace ZeroFramework
             ReferencePool.ClearAll();
             Utility.Marshal.FreeCachedHGlobal();
             GameFrameworkLog.SetLogHelper(null);
-            _isInitialize = false;
+            isInitialize = false;
             base.OnDestroy();
         }
 
@@ -214,13 +214,13 @@ namespace ZeroFramework
         private readonly GameFrameworkLinkedList<GameFrameworkModule> _frameworkModules =
             new GameFrameworkLinkedList<GameFrameworkModule>();
 
-        public IObjectPoolManager ObjectPool => GetModule<IObjectPoolManager>();
-        public IProcedureManager Procedure => GetModule<IProcedureManager>();
-        public IEventManager Event => GetModule<IEventManager>();
-        public IFsmManager Fsm => GetModule<IFsmManager>();
         public IDataNodeManager DataNode => GetModule<IDataNodeManager>();
         public IDownloadManager Download => GetModule<IDownloadManager>();
+        public IEventManager Event => GetModule<IEventManager>();
+        public IFsmManager Fsm => GetModule<IFsmManager>();
         public INetworkManager Network => GetModule<INetworkManager>();
+        public IObjectPoolManager ObjectPool => GetModule<IObjectPoolManager>();
+        public IProcedureManager Procedure => GetModule<IProcedureManager>();
         public IResourceManager Resource => GetModule<IResourceManager>();
         public IWebRequestManager WebRequest => GetModule<IWebRequestManager>();
 
@@ -229,7 +229,7 @@ namespace ZeroFramework
         /// </summary>
         public T GetModule<T>() where T : class
         {
-            if (!_isInitialize)
+            if (!isInitialize)
             {
                 throw new GameFrameworkException("Get module before must be initialized.");
             }
@@ -486,12 +486,12 @@ namespace ZeroFramework
         public void Shutdown()
         {
             Log.Info("Quit Game.");
-            
+
             for (var current = _frameworkModules.Last; current != null; current = current.Previous)
             {
                 current.Value.Shutdown();
             }
-            
+
             Application.Quit();
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

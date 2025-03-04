@@ -5,14 +5,12 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 using ZeroFramework.Config;
-using ZeroFramework.Download;
 using ZeroFramework.Entity;
 using ZeroFramework.Localization;
 using ZeroFramework.Scenes;
 using ZeroFramework.Setting;
 using ZeroFramework.Sound;
 using ZeroFramework.UI;
-using ZeroFramework;
 
 namespace ZeroFramework.Editor
 {

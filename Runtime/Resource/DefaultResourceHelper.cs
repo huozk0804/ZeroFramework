@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace ZeroFramework
 {
+	/// <summary>
+	/// 默认资源加载helper,仅限编辑器下使用
+	/// </summary>
 	public class DefaultResourceHelper : ResourceHelperBase
 	{
 		public override T LoadAsset<T> (string location, string packageName = "") {

@@ -1,5 +1,4 @@
 using UnityEditor;
-using ZeroFramework.Download;
 
 namespace ZeroFramework.Editor
 {
