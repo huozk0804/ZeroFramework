@@ -4,8 +4,6 @@
 // Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
-using ZeroFramework.Resource;
-
 namespace ZeroFramework.Sound
 {
     /// <summary>

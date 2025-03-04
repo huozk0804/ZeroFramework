@@ -4,7 +4,7 @@
 // Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
-namespace ZeroFramework.Download
+namespace ZeroFramework
 {
     /// <summary>
     /// 下载代理辅助器完成事件。

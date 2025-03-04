@@ -4,7 +4,7 @@
 // Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
-namespace ZeroFramework.Network
+namespace ZeroFramework
 {
     /// <summary>
     /// 用户自定义网络错误事件。

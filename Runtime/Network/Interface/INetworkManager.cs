@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ZeroFramework.Network
+namespace ZeroFramework
 {
     /// <summary>
     /// 网络管理器接口。

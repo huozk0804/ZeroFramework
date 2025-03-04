@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 using UnityEngine.Experimental.Networking;
 #endif
 
-namespace ZeroFramework.Download
+namespace ZeroFramework
 {
     public partial class UnityWebRequestDownloadAgentHelper : DownloadAgentHelperBase, IDisposable
     {

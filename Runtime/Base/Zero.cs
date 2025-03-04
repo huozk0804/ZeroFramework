@@ -2,10 +2,6 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using ZeroFramework.Debugger;
-using ZeroFramework.Download;
-using ZeroFramework.Network;
-using ZeroFramework.Resource;
-using ZeroFramework;
 
 namespace ZeroFramework
 {

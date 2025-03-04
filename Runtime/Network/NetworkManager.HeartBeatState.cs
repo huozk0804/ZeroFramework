@@ -4,7 +4,7 @@
 // Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
-namespace ZeroFramework.Network
+namespace ZeroFramework
 {
     public sealed partial class NetworkManager : GameFrameworkModule, INetworkManager
     {

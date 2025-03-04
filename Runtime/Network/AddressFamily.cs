@@ -4,7 +4,7 @@
 // Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
-namespace ZeroFramework.Network
+namespace ZeroFramework
 {
     /// <summary>
     /// 网络地址类型。

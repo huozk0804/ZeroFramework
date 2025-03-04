@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ZeroFramework.Download
+namespace ZeroFramework
 {
     /// <summary>
     /// 下载管理器。

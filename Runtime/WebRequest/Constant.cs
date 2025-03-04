@@ -9,7 +9,7 @@ namespace ZeroFramework
     /// <summary>
     /// Web 请求相关常量。
     /// </summary>
-    internal static class Constant
+    internal static class WebConstant
     {
         /// <summary>
         /// 默认 Web 请求任务优先级。

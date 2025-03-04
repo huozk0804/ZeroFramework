@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Audio;
 using ZeroFramework.Config;
 using ZeroFramework.Debugger;
-using ZeroFramework.Download;
 using ZeroFramework.Entity;
 using ZeroFramework.Localization;
 using ZeroFramework.Setting;

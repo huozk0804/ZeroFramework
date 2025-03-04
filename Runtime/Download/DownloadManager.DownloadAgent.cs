@@ -7,7 +7,7 @@
 using System;
 using System.IO;
 
-namespace ZeroFramework.Download
+namespace ZeroFramework
 {
     public sealed partial class DownloadManager : GameFrameworkModule, IDownloadManager
     {

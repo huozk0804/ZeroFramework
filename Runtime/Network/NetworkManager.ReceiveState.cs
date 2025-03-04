@@ -7,7 +7,7 @@
 using System;
 using System.IO;
 
-namespace ZeroFramework.Network
+namespace ZeroFramework
 {
     public sealed partial class NetworkManager : GameFrameworkModule, INetworkManager
     {

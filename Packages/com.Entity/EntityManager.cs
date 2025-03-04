@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using ZeroFramework.Resource;
 
 namespace ZeroFramework.Entity
 {

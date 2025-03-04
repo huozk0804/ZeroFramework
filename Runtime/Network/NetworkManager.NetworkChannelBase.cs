@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 
-namespace ZeroFramework.Network
+namespace ZeroFramework
 {
     public sealed partial class NetworkManager : GameFrameworkModule, INetworkManager
     {

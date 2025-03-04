@@ -4,7 +4,6 @@
 // Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
-using ZeroFramework.Resource;
 using System;
 
 namespace ZeroFramework
@@ -129,8 +128,8 @@ namespace ZeroFramework
             }
 
             IResourceManager resource = Zero.Instance.Resource;
-            HasAssetResult result = resource.HasAsset(dataAssetName);
-            switch (result)
+            //HasAssetResult result = resource.HasAsset(dataAssetName);
+            //switch (result)
             {
                 //TODO:资源框架引用待修改
                 // case HasAssetResult.AssetOnDisk:
@@ -179,9 +178,9 @@ namespace ZeroFramework
                 //
                 //     break;
 
-                default:
-                    throw new GameFrameworkException(Utility.Text.Format("Data asset '{0}' is '{1}'.", dataAssetName,
-                        result));
+                //default:
+                //    throw new GameFrameworkException(Utility.Text.Format("Data asset '{0}' is '{1}'.", dataAssetName,
+                //        result));
             }
         }
 
@@ -364,23 +363,23 @@ namespace ZeroFramework
             }
         }
 
-        private void LoadAssetOrBinaryFailureCallback(string dataAssetName, LoadResourceStatus status,
-            string errorMessage, object userData)
-        {
-            string appendErrorMessage =
-                Utility.Text.Format("Load data failure, data asset name '{0}', status '{1}', error message '{2}'.",
-                    dataAssetName, status, errorMessage);
-            if (_readDataFailureEventHandler != null)
-            {
-                ReadDataFailureEventArgs loadDataFailureEventArgs =
-                    ReadDataFailureEventArgs.Create(dataAssetName, appendErrorMessage, userData);
-                _readDataFailureEventHandler(this, loadDataFailureEventArgs);
-                ReferencePool.Release(loadDataFailureEventArgs);
-                return;
-            }
+        //private void LoadAssetOrBinaryFailureCallback(string dataAssetName, LoadResourceStatus status,
+        //    string errorMessage, object userData)
+        //{
+        //    string appendErrorMessage =
+        //        Utility.Text.Format("Load data failure, data asset name '{0}', status '{1}', error message '{2}'.",
+        //            dataAssetName, status, errorMessage);
+        //    if (_readDataFailureEventHandler != null)
+        //    {
+        //        ReadDataFailureEventArgs loadDataFailureEventArgs =
+        //            ReadDataFailureEventArgs.Create(dataAssetName, appendErrorMessage, userData);
+        //        _readDataFailureEventHandler(this, loadDataFailureEventArgs);
+        //        ReferencePool.Release(loadDataFailureEventArgs);
+        //        return;
+        //    }
 
-            throw new GameFrameworkException(appendErrorMessage);
-        }
+        //    throw new GameFrameworkException(appendErrorMessage);
+        //}
 
         private void LoadAssetUpdateCallback(string dataAssetName, float progress, object userData)
         {

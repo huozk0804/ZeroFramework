@@ -4,12 +4,12 @@
 // Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
-namespace ZeroFramework.Download
+namespace ZeroFramework
 {
     /// <summary>
     /// 下载相关常量。
     /// </summary>
-    internal static class Constant
+    internal static class DownloadConstant
     {
         /// <summary>
         /// 默认下载任务优先级。

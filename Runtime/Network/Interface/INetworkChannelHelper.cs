@@ -6,7 +6,7 @@
 
 using System.IO;
 
-namespace ZeroFramework.Network
+namespace ZeroFramework
 {
     /// <summary>
     /// 网络频道辅助器接口。

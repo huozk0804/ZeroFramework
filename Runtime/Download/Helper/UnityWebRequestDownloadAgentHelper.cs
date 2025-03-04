@@ -12,7 +12,7 @@ using UnityEngine.Networking;
 using UnityEngine.Experimental.Networking;
 #endif
 
-namespace ZeroFramework.Download
+namespace ZeroFramework
 {
     /// <summary>
     /// 使用 UnityWebRequest 实现的下载代理辅助器。

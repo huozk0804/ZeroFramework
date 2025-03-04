@@ -6,7 +6,7 @@
 
 using System.Net.Sockets;
 
-namespace ZeroFramework.Network
+namespace ZeroFramework
 {
     /// <summary>
     /// 网络错误事件。

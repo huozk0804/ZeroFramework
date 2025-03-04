@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using ZeroFramework.Resource;
 
 namespace ZeroFramework
 {

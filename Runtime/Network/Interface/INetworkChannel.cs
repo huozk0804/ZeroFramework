@@ -8,7 +8,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 
-namespace ZeroFramework.Network
+namespace ZeroFramework
 {
     /// <summary>
     /// 网络频道接口。

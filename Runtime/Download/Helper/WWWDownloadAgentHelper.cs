@@ -7,12 +7,11 @@
 #if !UNITY_2018_3_OR_NEWER
 
 using ZeroFramework;
-using ZeroFramework.Download;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ZeroFramework.Download
+namespace ZeroFramework
 {
     /// <summary>
     /// WWW 下载代理辅助器。
