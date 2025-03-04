@@ -7,7 +7,7 @@
 using ZeroFramework;
 using UnityEngine;
 
-namespace ZeroFramework.WebRequest
+namespace ZeroFramework
 {
     internal sealed class WWWFormInfo : IReference
     {

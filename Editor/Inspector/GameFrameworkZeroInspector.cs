@@ -12,7 +12,7 @@ using ZeroFramework.Scenes;
 using ZeroFramework.Setting;
 using ZeroFramework.Sound;
 using ZeroFramework.UI;
-using ZeroFramework.WebRequest;
+using ZeroFramework;
 
 namespace ZeroFramework.Editor
 {

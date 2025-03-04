@@ -1,11 +1,16 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace ZeroFramework.Resource
+namespace ZeroFramework
 {
     public interface IResourceHelper
     {
-        T LoadAsset<T>(string location, string packageName = "") where T : UnityEngine.Object;
+        void OnStart ();
+        void OnUpdate (float elapseSeconds, float realElapseSeconds);
+        void OnShutdown ();
+
+
+		T LoadAsset<T>(string location, string packageName = "") where T : UnityEngine.Object;
 		T LoadSubAsset<T> (string location, string subName, string packageName = "") where T : UnityEngine.Object;
 		Object[] LoadSubAssets(string location, string packageName = "");
         byte[] LoadRawFile(string location, string packageName = "");

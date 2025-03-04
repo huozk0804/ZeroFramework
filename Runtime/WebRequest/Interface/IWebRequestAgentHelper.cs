@@ -6,7 +6,7 @@
 
 using System;
 
-namespace ZeroFramework.WebRequest
+namespace ZeroFramework
 {
     /// <summary>
     /// Web 请求代理辅助器接口。

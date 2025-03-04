@@ -2,7 +2,7 @@
 using Cysharp.Threading.Tasks;
 using Object = UnityEngine.Object;
 
-namespace ZeroFramework.Resource
+namespace ZeroFramework
 {
     public sealed class ResourceManager : GameFrameworkModule, IResourceManager
     {
@@ -10,22 +10,36 @@ namespace ZeroFramework.Resource
 
         public ResourceManager()
         {
-        }
+			ResourceHelperBase helper = Helper.CreateHelper(GameFrameworkConfig.Instance.resourceHelperTypeName,
+				GameFrameworkConfig.Instance.resourceCustomHelper);
+			if (helper == null) {
+				Log.Error("Can not create resources config helper.");
+				return;
+			}
+			SetResourceHelper(helper);
+            _resourceHelper?.OnStart();
+		}
 
         public override int Priority { get; } = 3;
 
         public override void Update(float elapseSeconds, float realElapseSeconds)
         {
+            _resourceHelper?.OnUpdate(elapseSeconds, realElapseSeconds);
         }
 
         public override void Shutdown()
         {
+            _resourceHelper?.OnShutdown();
         }
 
-        public HasAssetResult HasAsset(string location)
-        {
-            throw new NotImplementedException();
-        }
+        public void SetResourceHelper(IResourceHelper helper) {
+            if(helper == null) {
+				throw new GameFrameworkException("Resource form helper is invalid.");
+			}
+
+            _resourceHelper = helper;
+			_resourceHelper?.OnStart();
+		}
 
 
         #region 同步加载资源接口

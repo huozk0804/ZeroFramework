@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ZeroFramework.WebRequest
+namespace ZeroFramework
 {
     /// <summary>
     /// Web 请求管理器。

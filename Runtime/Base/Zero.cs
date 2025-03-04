@@ -5,7 +5,7 @@ using ZeroFramework.Debugger;
 using ZeroFramework.Download;
 using ZeroFramework.Network;
 using ZeroFramework.Resource;
-using ZeroFramework.WebRequest;
+using ZeroFramework;
 
 namespace ZeroFramework
 {

@@ -4,7 +4,7 @@
 // Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
-namespace ZeroFramework.WebRequest
+namespace ZeroFramework
 {
     public sealed partial class WebRequestManager : GameFrameworkModule, IWebRequestManager
     {

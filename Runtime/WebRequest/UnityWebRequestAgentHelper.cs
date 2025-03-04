@@ -12,7 +12,7 @@ using UnityEngine.Experimental.Networking;
 #endif
 using Utility = ZeroFramework.Utility;
 
-namespace ZeroFramework.WebRequest
+namespace ZeroFramework
 {
     /// <summary>
     /// 使用 UnityWebRequest 实现的 Web 请求代理辅助器。

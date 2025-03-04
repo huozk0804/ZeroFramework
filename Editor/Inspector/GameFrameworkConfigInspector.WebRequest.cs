@@ -1,5 +1,5 @@
 using UnityEditor;
-using ZeroFramework.WebRequest;
+using ZeroFramework;
 
 namespace ZeroFramework.Editor
 {

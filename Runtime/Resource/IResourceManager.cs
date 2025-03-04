@@ -1,12 +1,10 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 
-namespace ZeroFramework.Resource
+namespace ZeroFramework
 {
 	public interface IResourceManager
 	{
-		HasAssetResult HasAsset (string location);
-
 		T LoadAsset<T> (string location, string packageName = "") where T : UnityEngine.Object;
 		T LoadSubAsset<T> (string location, string subName, string packageName = "") where T : UnityEngine.Object;
 		UnityEngine.Object LoadAsset (string location, Type type, string packageName = "");

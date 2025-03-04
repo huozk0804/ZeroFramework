@@ -9,7 +9,6 @@ using ZeroFramework.Localization;
 using ZeroFramework.Setting;
 using ZeroFramework.Sound;
 using ZeroFramework.UI;
-using ZeroFramework.WebRequest;
 
 namespace ZeroFramework
 {
@@ -42,14 +41,19 @@ namespace ZeroFramework
         public ReferenceStrictCheckType enableStrictCheck = ReferenceStrictCheckType.AlwaysEnable;
 
         //WebRequest
-        public string webRequestAgentHelperTypeName = "ZeroFramework.WebRequest.UnityWebRequestAgentHelper";
+        public string webRequestAgentHelperTypeName = "ZeroFramework.UnityWebRequestAgentHelper";
         public WebRequestAgentHelperBase webRequestAgentCustomHelper = null;
         public int webRequestAgentHelperCount = 1;
         public float webRequestTimeout = 30f;
 
-        #region com.Config
+		//Resources
+		public ResourceHelperBase resourceCustomHelper = null;
+		public string resourceHelperTypeName = "ZeroFramework.DefaultResourceHelper";
+	
 
-        public bool enableLoadConfigUpdateEvent = false;
+		#region com.Config
+
+		public bool enableLoadConfigUpdateEvent = false;
         public bool enableLoadConfigDependencyAssetEvent = false;
         public string configHelperTypeName = "ZeroFramework.DefaultConfigHelper";
         public ConfigHelperBase configCustomHelper = null;

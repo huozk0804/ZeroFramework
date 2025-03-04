@@ -4,7 +4,7 @@
 // Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
-namespace ZeroFramework.WebRequest
+namespace ZeroFramework
 {
     /// <summary>
     /// Web 请求代理辅助器完成事件。

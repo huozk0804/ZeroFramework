@@ -7,11 +7,11 @@
 #if !UNITY_2018_3_OR_NEWER
 
 using ZeroFramework;
-using ZeroFramework.WebRequest;
+using ZeroFramework;
 using System;
 using UnityEngine;
 
-namespace ZeroFramework.WebRequest
+namespace ZeroFramework
 {
     /// <summary>
     /// WWW Web 请求代理辅助器。
