@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Windows;
 
 namespace ZeroFramework.Editor
 {
@@ -89,7 +90,7 @@ namespace ZeroFramework.Editor
 
             string str = Regex.Replace(fieldName, @"^m_", string.Empty);
             str = Regex.Replace(str, @"((?<=[a-z])[A-Z]|[A-Z](?=[a-z]))", @" $1").TrimStart();
-            return str;
+            return char.ToUpper(str[0]) + str.Substring(1);
         }
     }
 }

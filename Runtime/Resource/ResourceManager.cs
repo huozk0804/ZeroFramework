@@ -16,6 +16,7 @@ namespace ZeroFramework
 				Log.Error("Can not create resources config helper.");
 				return;
 			}
+
 			SetResourceHelper(helper);
             _resourceHelper?.OnStart();
 		}
@@ -41,10 +42,18 @@ namespace ZeroFramework
 			_resourceHelper?.OnStart();
 		}
 
+		public void UnloadAsset (object asset) {
+			throw new NotImplementedException();
+		}
 
-        #region 同步加载资源接口
+		public HasAssetResult HasAsset (string assetName) {
+			throw new NotImplementedException();
+		}
 
-        public T LoadAsset<T>(string location, string packageName = "") where T : Object
+
+		#region 同步加载资源接口
+
+		public T LoadAsset<T>(string location, string packageName = "") where T : Object
         {
             if (_resourceHelper == null)
             {

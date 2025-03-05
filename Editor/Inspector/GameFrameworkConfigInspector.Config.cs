@@ -25,7 +25,6 @@ namespace ZeroFramework.Editor
             EditorGUILayout.PropertyField(_enableLoadConfigDependencyAssetEvent);
             _configHelperInfo.Draw();
             EditorGUILayout.PropertyField(_configCachedBytesSize);
-            EditorGUILayout.EndVertical();
             serializedObject.ApplyModifiedProperties();
             Repaint();
         }
