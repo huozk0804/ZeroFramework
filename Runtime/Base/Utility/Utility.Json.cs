@@ -15,7 +15,7 @@ namespace ZeroFramework
         /// </summary>
         public static partial class Json
         {
-            private static IJsonHelper JsonHelper = null;
+            private static IJsonHelper _JsonHelper = null;
 
             /// <summary>
             /// 设置 JSON 辅助器。
@@ -23,7 +23,7 @@ namespace ZeroFramework
             /// <param name="jsonHelper">要设置的 JSON 辅助器。</param>
             public static void SetJsonHelper(IJsonHelper jsonHelper)
             {
-                JsonHelper = jsonHelper;
+                _JsonHelper = jsonHelper;
             }
 
             /// <summary>
@@ -33,14 +33,14 @@ namespace ZeroFramework
             /// <returns>序列化后的 JSON 字符串。</returns>
             public static string ToJson(object obj)
             {
-                if (JsonHelper == null)
+                if (_JsonHelper == null)
                 {
                     throw new GameFrameworkException("JSON helper is invalid.");
                 }
 
                 try
                 {
-                    return JsonHelper.ToJson(obj);
+                    return _JsonHelper.ToJson(obj);
                 }
                 catch (Exception exception)
                 {
@@ -61,14 +61,14 @@ namespace ZeroFramework
             /// <returns>反序列化后的对象。</returns>
             public static T ToObject<T>(string json)
             {
-                if (JsonHelper == null)
+                if (_JsonHelper == null)
                 {
                     throw new GameFrameworkException("JSON helper is invalid.");
                 }
 
                 try
                 {
-                    return JsonHelper.ToObject<T>(json);
+                    return _JsonHelper.ToObject<T>(json);
                 }
                 catch (Exception exception)
                 {
@@ -89,7 +89,7 @@ namespace ZeroFramework
             /// <returns>反序列化后的对象。</returns>
             public static object ToObject(Type objectType, string json)
             {
-                if (JsonHelper == null)
+                if (_JsonHelper == null)
                 {
                     throw new GameFrameworkException("JSON helper is invalid.");
                 }
@@ -101,7 +101,7 @@ namespace ZeroFramework
 
                 try
                 {
-                    return JsonHelper.ToObject(objectType, json);
+                    return _JsonHelper.ToObject(objectType, json);
                 }
                 catch (Exception exception)
                 {

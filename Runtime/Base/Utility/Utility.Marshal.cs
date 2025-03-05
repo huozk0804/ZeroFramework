@@ -16,7 +16,7 @@ namespace ZeroFramework
         public static class Marshal
         {
             private const int BlockSize = 1024 * 4;
-            private static IntPtr CachedHGlobalPtr = IntPtr.Zero;
+            private static IntPtr _CachedHGlobalPtr = IntPtr.Zero;
 
             /// <summary>
             /// 获取缓存的从进程的非托管内存中分配的内存的大小。
@@ -34,11 +34,11 @@ namespace ZeroFramework
                     throw new GameFrameworkException("Ensure size is invalid.");
                 }
 
-                if (CachedHGlobalPtr == IntPtr.Zero || CachedHGlobalSize < ensureSize)
+                if (_CachedHGlobalPtr == IntPtr.Zero || CachedHGlobalSize < ensureSize)
                 {
                     FreeCachedHGlobal();
                     int size = (ensureSize - 1 + BlockSize) / BlockSize * BlockSize;
-                    CachedHGlobalPtr = System.Runtime.InteropServices.Marshal.AllocHGlobal(size);
+                    _CachedHGlobalPtr = System.Runtime.InteropServices.Marshal.AllocHGlobal(size);
 					CachedHGlobalSize = size;
                 }
             }
@@ -48,10 +48,10 @@ namespace ZeroFramework
             /// </summary>
             public static void FreeCachedHGlobal()
             {
-                if (CachedHGlobalPtr != IntPtr.Zero)
+                if (_CachedHGlobalPtr != IntPtr.Zero)
                 {
-                    System.Runtime.InteropServices.Marshal.FreeHGlobal(CachedHGlobalPtr);
-                    CachedHGlobalPtr = IntPtr.Zero;
+                    System.Runtime.InteropServices.Marshal.FreeHGlobal(_CachedHGlobalPtr);
+                    _CachedHGlobalPtr = IntPtr.Zero;
 					CachedHGlobalSize = 0;
                 }
             }
@@ -82,9 +82,9 @@ namespace ZeroFramework
                 }
 
                 EnsureCachedHGlobalSize(structureSize);
-                System.Runtime.InteropServices.Marshal.StructureToPtr(structure, CachedHGlobalPtr, true);
+                System.Runtime.InteropServices.Marshal.StructureToPtr(structure, _CachedHGlobalPtr, true);
                 byte[] result = new byte[structureSize];
-                System.Runtime.InteropServices.Marshal.Copy(CachedHGlobalPtr, result, 0, structureSize);
+                System.Runtime.InteropServices.Marshal.Copy(_CachedHGlobalPtr, result, 0, structureSize);
                 return result;
             }
 
@@ -155,8 +155,8 @@ namespace ZeroFramework
                 }
 
                 EnsureCachedHGlobalSize(structureSize);
-                System.Runtime.InteropServices.Marshal.StructureToPtr(structure, CachedHGlobalPtr, true);
-                System.Runtime.InteropServices.Marshal.Copy(CachedHGlobalPtr, result, startIndex, structureSize);
+                System.Runtime.InteropServices.Marshal.StructureToPtr(structure, _CachedHGlobalPtr, true);
+                System.Runtime.InteropServices.Marshal.Copy(_CachedHGlobalPtr, result, startIndex, structureSize);
             }
 
             /// <summary>
@@ -226,8 +226,8 @@ namespace ZeroFramework
                 }
 
                 EnsureCachedHGlobalSize(structureSize);
-                System.Runtime.InteropServices.Marshal.Copy(buffer, startIndex, CachedHGlobalPtr, structureSize);
-                return (T)System.Runtime.InteropServices.Marshal.PtrToStructure(CachedHGlobalPtr, typeof(T));
+                System.Runtime.InteropServices.Marshal.Copy(buffer, startIndex, _CachedHGlobalPtr, structureSize);
+                return (T)System.Runtime.InteropServices.Marshal.PtrToStructure(_CachedHGlobalPtr, typeof(T));
             }
         }
     }

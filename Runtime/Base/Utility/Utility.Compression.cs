@@ -16,7 +16,7 @@ namespace ZeroFramework
         /// </summary>
         public static partial class Compression
         {
-            private static ICompressionHelper CompressionHelper = null;
+            private static ICompressionHelper _CompressionHelper = null;
 
             /// <summary>
             /// 设置压缩解压缩辅助器。
@@ -24,7 +24,7 @@ namespace ZeroFramework
             /// <param name="compressionHelper">要设置的压缩解压缩辅助器。</param>
             public static void SetCompressionHelper(ICompressionHelper compressionHelper)
             {
-                CompressionHelper = compressionHelper;
+                _CompressionHelper = compressionHelper;
             }
 
             /// <summary>
@@ -90,7 +90,7 @@ namespace ZeroFramework
             /// <returns>是否压缩数据成功。</returns>
             public static bool Compress(byte[] bytes, int offset, int length, Stream compressedStream)
             {
-                if (CompressionHelper == null)
+                if (_CompressionHelper == null)
                 {
                     throw new GameFrameworkException("Compressed helper is invalid.");
                 }
@@ -112,7 +112,7 @@ namespace ZeroFramework
 
                 try
                 {
-                    return CompressionHelper.Compress(bytes, offset, length, compressedStream);
+                    return _CompressionHelper.Compress(bytes, offset, length, compressedStream);
                 }
                 catch (Exception exception)
                 {
@@ -154,7 +154,7 @@ namespace ZeroFramework
             /// <returns>是否压缩数据成功。</returns>
             public static bool Compress(Stream stream, Stream compressedStream)
             {
-                if (CompressionHelper == null)
+                if (_CompressionHelper == null)
                 {
                     throw new GameFrameworkException("Compressed helper is invalid.");
                 }
@@ -171,7 +171,7 @@ namespace ZeroFramework
 
                 try
                 {
-                    return CompressionHelper.Compress(stream, compressedStream);
+                    return _CompressionHelper.Compress(stream, compressedStream);
                 }
                 catch (Exception exception)
                 {
@@ -248,7 +248,7 @@ namespace ZeroFramework
             /// <returns>是否解压缩数据成功。</returns>
             public static bool Decompress(byte[] bytes, int offset, int length, Stream decompressedStream)
             {
-                if (CompressionHelper == null)
+                if (_CompressionHelper == null)
                 {
                     throw new GameFrameworkException("Compressed helper is invalid.");
                 }
@@ -270,7 +270,7 @@ namespace ZeroFramework
 
                 try
                 {
-                    return CompressionHelper.Decompress(bytes, offset, length, decompressedStream);
+                    return _CompressionHelper.Decompress(bytes, offset, length, decompressedStream);
                 }
                 catch (Exception exception)
                 {
@@ -312,7 +312,7 @@ namespace ZeroFramework
             /// <returns>是否解压缩数据成功。</returns>
             public static bool Decompress(Stream stream, Stream decompressedStream)
             {
-                if (CompressionHelper == null)
+                if (_CompressionHelper == null)
                 {
                     throw new GameFrameworkException("Compressed helper is invalid.");
                 }
@@ -329,7 +329,7 @@ namespace ZeroFramework
 
                 try
                 {
-                    return CompressionHelper.Decompress(stream, decompressedStream);
+                    return _CompressionHelper.Decompress(stream, decompressedStream);
                 }
                 catch (Exception exception)
                 {
