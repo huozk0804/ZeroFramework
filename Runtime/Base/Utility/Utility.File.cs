@@ -1,3 +1,9 @@
+//------------------------------------------------------------
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
+//------------------------------------------------------------
+
 using System;
 using System.IO;
 using System.Text;
@@ -6,17 +12,6 @@ using UnityEngine;
 
 namespace ZeroFramework
 {
-    /// <summary>
-    /// Unity平台路径类型。
-    /// </summary>
-    public enum UnityPlatformPathType : int
-    {
-        DataPath = 0,
-        StreamingAssetsPath,
-        PersistentDataPath,
-        TemporaryCachePath,
-    }
-
     public static partial class Utility
     {
         /// <summary>

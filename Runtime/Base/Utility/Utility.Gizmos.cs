@@ -1,10 +1,16 @@
+//------------------------------------------------------------
+// Zero Framework
+// Copyright © 2025-2026 All rights reserved.
+// Feedback: https://github.com/huozk0804/ZeroFramework
+//------------------------------------------------------------
+
 using UnityEngine;
 
 namespace ZeroFramework
 {
     public static partial class Utility
     {
-        public static class GizmosUtil
+        public static class Gizmos
         {
             public static void DrawFrustum(FrustumPlanes frustum)
             {
@@ -15,15 +21,15 @@ namespace ZeroFramework
                 var p2 = new Vector3(frustum.right, frustum.bottom, frustum.zFar);
                 var p3 = new Vector3(frustum.left, frustum.bottom, frustum.zFar);
                 UnityEngine.Gizmos.DrawLine(p0, p1);
-                Gizmos.DrawLine(p1, p2);
-                Gizmos.DrawLine(p2, p3);
-                Gizmos.DrawLine(p3, p0);
+                UnityEngine.Gizmos.DrawLine(p1, p2);
+				UnityEngine.Gizmos.DrawLine(p2, p3);
+				UnityEngine.Gizmos.DrawLine(p3, p0);
                 var f = frustum.zNear > 0 && frustum.zNear < frustum.zFar ? frustum.zNear / frustum.zFar : 0;
                 f = 1 - f;
-                Gizmos.DrawRay(p0, -p0 * f);
-                Gizmos.DrawRay(p1, -p1 * f);
-                Gizmos.DrawRay(p2, -p2 * f);
-                Gizmos.DrawRay(p3, -p3 * f);
+				UnityEngine.Gizmos.DrawRay(p0, -p0 * f);
+				UnityEngine.Gizmos.DrawRay(p1, -p1 * f);
+				UnityEngine.Gizmos.DrawRay(p2, -p2 * f);
+				UnityEngine.Gizmos.DrawRay(p3, -p3 * f);
                 f = 1 - f;
                 if (f > 0)
                 {
@@ -31,23 +37,23 @@ namespace ZeroFramework
                     p1 *= f;
                     p2 *= f;
                     p3 *= f;
-                    Gizmos.DrawLine(p0, p1);
-                    Gizmos.DrawLine(p1, p2);
-                    Gizmos.DrawLine(p2, p3);
-                    Gizmos.DrawLine(p3, p0);
+                    UnityEngine.Gizmos.DrawLine(p0, p1);
+					UnityEngine.Gizmos.DrawLine(p1, p2);
+					UnityEngine.Gizmos.DrawLine(p2, p3);
+					UnityEngine.Gizmos.DrawLine(p3, p0);
                 }
             }
 
             public static void DrawWiredCube(Vector3 center, Vector3 size, float bodyTransparency = 0.5f)
             {
-                Color color = Gizmos.color;
+                Color color = UnityEngine.Gizmos.color;
                 float a = color.a;
                 color.a = a * bodyTransparency;
-                Gizmos.color = color;
-                Gizmos.DrawCube(center, size);
+				UnityEngine.Gizmos.color = color;
+				UnityEngine.Gizmos.DrawCube(center, size);
                 color.a = a;
-                Gizmos.color = color;
-                Gizmos.DrawWireCube(center, size);
+				UnityEngine.Gizmos.color = color;
+				UnityEngine.Gizmos.DrawWireCube(center, size);
             }
 
             public static float LodArc(Vector3 pos)
@@ -68,27 +74,27 @@ namespace ZeroFramework
             {
                 if (angle < 1 || direction.sqrMagnitude <= 0.00001f)
                 {
-                    Gizmos.DrawRay(center, direction);
+					UnityEngine.Gizmos.DrawRay(center, direction);
                     return;
                 }
 
-                float sides = Mathf.Ceil(angle / (LodArc(Gizmos.matrix.MultiplyPoint(center)) * deltaAngle));
+                float sides = Mathf.Ceil(angle / (LodArc(UnityEngine.Gizmos.matrix.MultiplyPoint(center)) * deltaAngle));
                 deltaAngle = angle / sides;
                 Quaternion rot = Quaternion.AngleAxis(-angle * 0.5f, normal);
                 Vector3 p0 = rot * direction;
                 if (drawSide)
-                    Gizmos.DrawRay(center, p0);
+					UnityEngine.Gizmos.DrawRay(center, p0);
                 rot = Quaternion.AngleAxis(deltaAngle, normal);
                 Vector3 p1 = p0;
                 for (int i = 0; i < sides; i++)
                 {
                     p1 = rot * p0;
-                    Gizmos.DrawLine(center + p0, center + p1);
+					UnityEngine.Gizmos.DrawLine(center + p0, center + p1);
                     p0 = p1;
                 }
 
                 if (drawSide)
-                    Gizmos.DrawRay(center, p1);
+					UnityEngine.Gizmos.DrawRay(center, p1);
             }
 
             public static void DrawArc(Vector3 center, Vector3 start, Vector3 end, Vector3 normal,
@@ -98,8 +104,8 @@ namespace ZeroFramework
                 Vector3 dir2 = end - center;
                 if (drawSide)
                 {
-                    Gizmos.DrawLine(center, start);
-                    Gizmos.DrawLine(center, end);
+					UnityEngine.Gizmos.DrawLine(center, start);
+					UnityEngine.Gizmos.DrawLine(center, end);
                 }
 
                 float degree = Vector3.Angle(dir1, dir2);
@@ -109,7 +115,7 @@ namespace ZeroFramework
                 dir1 = dir1.normalized;
                 float len2 = dir2.magnitude;
                 dir2 = dir2.normalized;
-                float sides = Mathf.Ceil(degree / (LodArc(Gizmos.matrix.MultiplyPoint(center)) * deltaAngle));
+                float sides = Mathf.Ceil(degree / (LodArc(UnityEngine.Gizmos.matrix.MultiplyPoint(center)) * deltaAngle));
                 deltaAngle = degree / sides;
                 Quaternion rot;
                 Vector3 p0 = start;
@@ -121,7 +127,7 @@ namespace ZeroFramework
                     dir = rot * dir1;
                     dir *= Mathf.Lerp(len1, len2, i * deltaAngle / degree);
                     p1 = center + dir;
-                    Gizmos.DrawLine(p0, p1);
+					UnityEngine.Gizmos.DrawLine(p0, p1);
                     p0 = p1;
                 }
             }
@@ -140,8 +146,8 @@ namespace ZeroFramework
                         p1 = p0 + cylen * Vector3.right;
                         p2 = p0 + Vector3.down * radius * 2;
                         p3 = p2 + cylen * Vector3.right;
-                        Gizmos.DrawLine(p0, p1);
-                        Gizmos.DrawLine(p2, p3);
+						UnityEngine.Gizmos.DrawLine(p0, p1);
+						UnityEngine.Gizmos.DrawLine(p2, p3);
                         DrawArc(p0 + Vector3.down * radius, p0, p2, Vector3.forward, 5, false);
                         DrawArc(p1 + Vector3.down * radius, p1, p3, Vector3.back, 5, false);
 
@@ -149,8 +155,8 @@ namespace ZeroFramework
                         p1 = p0 + cylen * Vector3.right;
                         p2 = p0 + Vector3.back * radius * 2;
                         p3 = p2 + cylen * Vector3.right;
-                        Gizmos.DrawLine(p0, p1);
-                        Gizmos.DrawLine(p2, p3);
+						UnityEngine.Gizmos.DrawLine(p0, p1);
+						UnityEngine.Gizmos.DrawLine(p2, p3);
                         DrawArc(p0 + Vector3.back * radius, p0, p2, Vector3.down, 5, false);
                         DrawArc(p1 + Vector3.back * radius, p1, p3, Vector3.up, 5, false);
                         break;
@@ -160,8 +166,8 @@ namespace ZeroFramework
 
                         p2 = p0 + Vector3.right * radius * 2;
                         p3 = p2 + cylen * Vector3.up;
-                        Gizmos.DrawLine(p0, p1);
-                        Gizmos.DrawLine(p2, p3);
+						UnityEngine.Gizmos.DrawLine(p0, p1);
+						UnityEngine.Gizmos.DrawLine(p2, p3);
                         DrawArc(p0 + Vector3.right * radius, p0, p2, Vector3.forward, 5, false);
                         DrawArc(p1 + Vector3.right * radius, p1, p3, Vector3.back, 5, false);
 
@@ -170,8 +176,8 @@ namespace ZeroFramework
 
                         p2 = p0 + Vector3.forward * radius * 2;
                         p3 = p2 + cylen * Vector3.up;
-                        Gizmos.DrawLine(p0, p1);
-                        Gizmos.DrawLine(p2, p3);
+						UnityEngine.Gizmos.DrawLine(p0, p1);
+						UnityEngine.Gizmos.DrawLine(p2, p3);
                         DrawArc(p0 + Vector3.forward * radius, p0, p2, Vector3.left, 5, false);
                         DrawArc(p1 + Vector3.forward * radius, p1, p3, Vector3.right, 5, false);
                         break;
@@ -181,8 +187,8 @@ namespace ZeroFramework
 
                         p2 = p0 + Vector3.right * radius * 2;
                         p3 = p2 + cylen * Vector3.forward;
-                        Gizmos.DrawLine(p0, p1);
-                        Gizmos.DrawLine(p2, p3);
+						UnityEngine.Gizmos.DrawLine(p0, p1);
+						UnityEngine.Gizmos.DrawLine(p2, p3);
                         DrawArc(p0 + Vector3.right * radius, p0, p2, Vector3.down, 5, false);
                         DrawArc(p1 + Vector3.right * radius, p1, p3, Vector3.up, 5, false);
 
@@ -191,8 +197,8 @@ namespace ZeroFramework
 
                         p2 = p0 + Vector3.up * radius * 2;
                         p3 = p2 + cylen * Vector3.forward;
-                        Gizmos.DrawLine(p0, p1);
-                        Gizmos.DrawLine(p2, p3);
+						UnityEngine.Gizmos.DrawLine(p0, p1);
+						UnityEngine.Gizmos.DrawLine(p2, p3);
                         DrawArc(p0 + Vector3.up * radius, p0, p2, Vector3.right, 5, false);
                         DrawArc(p1 + Vector3.up * radius, p1, p3, Vector3.left, 5, false);
                         break;
@@ -203,13 +209,13 @@ namespace ZeroFramework
 
             public static void MarkTransform(Transform trans, float size)
             {
-                Gizmos.matrix = Matrix4x4.identity;
-                Gizmos.color = Color.red;
-                Gizmos.DrawRay(trans.position, trans.right * size);
-                Gizmos.color = Color.blue;
-                Gizmos.DrawRay(trans.position, trans.forward * size);
-                Gizmos.color = Color.green;
-                Gizmos.DrawRay(trans.position, trans.up * size);
+				UnityEngine.Gizmos.matrix = Matrix4x4.identity;
+				UnityEngine.Gizmos.color = Color.red;
+				UnityEngine.Gizmos.DrawRay(trans.position, trans.right * size);
+				UnityEngine.Gizmos.color = Color.blue;
+				UnityEngine.Gizmos.DrawRay(trans.position, trans.forward * size);
+				UnityEngine.Gizmos.color = Color.green;
+				UnityEngine.Gizmos.DrawRay(trans.position, trans.up * size);
             }
 
             public static void MarkLine(Vector3 worldPos, float length, float rad)
@@ -218,12 +224,12 @@ namespace ZeroFramework
                 UnityEditor.SceneView scene = UnityEditor.SceneView.currentDrawingSceneView;
                 if (!scene || !scene.camera)
                     return;
-                Matrix4x4 defM = Gizmos.matrix;
-                Gizmos.matrix = scene.camera.cameraToWorldMatrix;
+                Matrix4x4 defM = UnityEngine.Gizmos.matrix;
+				UnityEngine.Gizmos.matrix = scene.camera.cameraToWorldMatrix;
 
                 Vector3 p = scene.camera.worldToCameraMatrix.MultiplyPoint(worldPos);
                 Vector3 sp = scene.camera.WorldToScreenPoint(worldPos);
-                Vector3 sp2 = scene.camera.WorldToScreenPoint(Gizmos.matrix.MultiplyPoint(p + Vector3.right));
+                Vector3 sp2 = scene.camera.WorldToScreenPoint(UnityEngine.Gizmos.matrix.MultiplyPoint(p + Vector3.right));
                 float pixScale = 1f / Vector3.Distance(sp, sp2);
 
                 Vector3 p1;
@@ -232,8 +238,8 @@ namespace ZeroFramework
                 p1.x = p.x + off.x;
                 p1.y = p.y + off.y;
                 p1.z = p.z;
-                Gizmos.DrawLine(p, p1);
-                Gizmos.matrix = defM;
+				UnityEngine.Gizmos.DrawLine(p, p1);
+				UnityEngine.Gizmos.matrix = defM;
 #endif
             }
 
@@ -250,12 +256,12 @@ namespace ZeroFramework
                 UnityEditor.SceneView scene = UnityEditor.SceneView.currentDrawingSceneView;
                 if (!scene || !scene.camera)
                     return;
-                Matrix4x4 defM = Gizmos.matrix;
-                Gizmos.matrix = scene.camera.cameraToWorldMatrix;
+                Matrix4x4 defM = UnityEngine.Gizmos.matrix;
+				UnityEngine.Gizmos.matrix = scene.camera.cameraToWorldMatrix;
 
                 Vector3 p = scene.camera.worldToCameraMatrix.MultiplyPoint(worldPos);
                 Vector3 sp = scene.camera.WorldToScreenPoint(worldPos);
-                Vector3 sp2 = scene.camera.WorldToScreenPoint(Gizmos.matrix.MultiplyPoint(p + Vector3.right));
+                Vector3 sp2 = scene.camera.WorldToScreenPoint(UnityEngine.Gizmos.matrix.MultiplyPoint(p + Vector3.right));
                 float pixScale = 1f / Vector3.Distance(sp, sp2);
 
                 Vector3 p1;
@@ -267,24 +273,24 @@ namespace ZeroFramework
                 Vector3 p2 = p1;
                 p2.x = p.x * 2f - p1.x;
                 p2.y = p.y * 2f - p1.y;
-                Gizmos.DrawLine(p1, p2);
+				UnityEngine.Gizmos.DrawLine(p1, p2);
                 p1.x = p.x + off.y;
                 p1.y = p.y - off.x;
                 p2.x = p.x * 2f - p1.x;
                 p2.y = p.y * 2f - p1.y;
-                Gizmos.DrawLine(p1, p2);
-                Gizmos.matrix = defM;
+				UnityEngine.Gizmos.DrawLine(p1, p2);
+				UnityEngine.Gizmos.matrix = defM;
 #endif
             }
 
             public static void MarkAxisSystem(float size)
             {
-                Gizmos.color = Color.red;
-                Gizmos.DrawRay(Vector3.zero, Vector3.right * size);
-                Gizmos.color = Color.green;
-                Gizmos.DrawRay(Vector3.zero, Vector3.up * size);
-                Gizmos.color = Color.blue;
-                Gizmos.DrawRay(Vector3.zero, Vector3.forward * size);
+				UnityEngine.Gizmos.color = Color.red;
+				UnityEngine.Gizmos.DrawRay(Vector3.zero, Vector3.right * size);
+				UnityEngine.Gizmos.color = Color.green;
+				UnityEngine.Gizmos.DrawRay(Vector3.zero, Vector3.up * size);
+				UnityEngine.Gizmos.color = Color.blue;
+				UnityEngine.Gizmos.DrawRay(Vector3.zero, Vector3.forward * size);
             }
 
             //屏幕像素大小与本地单位大小比值
