@@ -3,12 +3,12 @@ using UnityEditor;
 using System.Linq;
 using ZeroFramework.UI;
 
-namespace ZeroFramework.Editor
+namespace ZeroFramework.Editor.Package
 {
     public class ControlItemDrawer
     {
-        private UIControlDataEditor _container;
-        private CtrlItemData _itemData;
+        private readonly UIControlDataEditor _container;
+        private readonly CtrlItemData _itemData;
         private bool _foldout = true;
         private int _controlTypeIdx = 0;
 
@@ -21,25 +21,17 @@ namespace ZeroFramework.Editor
         public bool Match(string pattern)
         {
             if (string.IsNullOrEmpty(pattern))
-            {
                 return true;
-            }
-
+            
             pattern = pattern.Trim().ToLower();
             if (_itemData.name.ToLower().Contains(pattern))
-            {
                 return true;
-            }
 
             if (_itemData.type.ToLower().Contains(pattern))
-            {
                 return true;
-            }
 
             if (_itemData.targets.Any(t => t.name.ToLower().Contains(pattern)))
-            {
                 return true;
-            }
 
             return false;
         }
@@ -47,53 +39,24 @@ namespace ZeroFramework.Editor
         public bool Draw()
         {
             Rect rect = EditorGUILayout.BeginVertical();
-            EditorGUILayout.BeginHorizontal();
-            {
-                EditorGUILayout.LabelField("变量名 ", UIControlDataEditor.labelStyle, GUILayout.Width(60f));
-                _itemData.name = EditorGUILayout.TextField(_itemData.name, UIControlDataEditor.textFieldStyle).Trim();
-
-                EditorGUILayout.Space();
-                _foldout = EditorGUILayout.Foldout(_foldout, _foldout ? "收起" : "展开", true);
-
-                if (GUILayout.Button("+", EditorStyles.miniButton))
-                {
-                    _container.AddControlAfter(this);
-                    return false;
-                }
-
-                if (GUILayout.Button("-", EditorStyles.miniButton))
-                {
-                    _container.RemoveControl(this);
-                    return false;
-                }
-
-                GUILayout.FlexibleSpace();
-            }
-            EditorGUILayout.EndHorizontal();
-
-            // 控件列表
-            if (_foldout)
             {
                 EditorGUILayout.BeginHorizontal();
                 {
-                    EditorGUILayout.LabelField("变量类型 ", UIControlDataEditor.labelStyle, GUILayout.Width(60f));
+                    EditorGUILayout.LabelField("变量名 ", GUILayout.Width(60f));
+                    _itemData.name = EditorGUILayout.TextField(_itemData.name).Trim();
 
-                    if (_controlTypeIdx == 0 && !string.IsNullOrEmpty(_itemData.type))
-                        _controlTypeIdx = FindTypeIdx(_itemData.type);
+                    EditorGUILayout.Space(14f);
+                    _foldout = EditorGUILayout.Foldout(_foldout, _foldout ? "收起" : "展开", true);
 
-                    EditorGUI.BeginChangeCheck();
-                    _controlTypeIdx = EditorGUILayout.Popup(_controlTypeIdx, _container.allTypeNames,
-                        UIControlDataEditor.popupAlignLeft);
-                    if (EditorGUI.EndChangeCheck())
+                    if (GUILayout.Button("+", EditorStyles.miniButton))
                     {
-                        if (_controlTypeIdx != 0)
-                        {
-                            if (!ChangeControlsTypeTo(_controlTypeIdx))
-                                _controlTypeIdx = 0; // 切换失败，重置回自动
-                        }
-                        else // 被主动设置为了自动
-                            _itemData.type = string.Empty;
+                        _container.AddControlAfter(this);
+                        return false;
+                    }
 
+                    if (GUILayout.Button("-", EditorStyles.miniButton))
+                    {
+                        _container.RemoveControl(this);
                         return false;
                     }
 
@@ -101,57 +64,84 @@ namespace ZeroFramework.Editor
                 }
                 EditorGUILayout.EndHorizontal();
 
-
-                EditorGUILayout.Space();
-                for (int i = 0, imax = _itemData.targets.Length; i < imax; i++)
+                // 控件列表
+                if (_foldout)
                 {
-                    Object obj = _itemData.targets[i];
                     EditorGUILayout.BeginHorizontal();
-
-                    EditorGUI.BeginChangeCheck();
-                    _itemData.targets[i] = EditorGUILayout.ObjectField(obj, typeof(Object), true);
-                    if (EditorGUI.EndChangeCheck())
                     {
-                        EditorUtility.ClearDirty(_container.target);
-                        EditorUtility.SetDirty(_container.target);
-                    }
+                        EditorGUILayout.LabelField("变量类型 ", GUILayout.Width(60f));
 
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-                    if (GUILayout.Button("+", EditorStyles.miniButton))
-                    {
-                        InsertItem(i + 1);
-                        return false;
-                    }
+                        if (_controlTypeIdx == 0 && !string.IsNullOrEmpty(_itemData.type))
+                            _controlTypeIdx = FindTypeIdx(_itemData.type);
 
-                    if (GUILayout.Button("-", EditorStyles.miniButton))
-                    {
-                        if (_itemData.targets.Length == 1)
+                        EditorGUI.BeginChangeCheck();
+                        _controlTypeIdx = EditorGUILayout.Popup(_controlTypeIdx, _container.allTypeNames);
+                        if (EditorGUI.EndChangeCheck())
                         {
-                            Debug.LogError("至少应保留一个控件");
+                            if (_controlTypeIdx != 0)
+                            {
+                                if (!ChangeControlsTypeTo(_controlTypeIdx))
+                                    _controlTypeIdx = 0; // 切换失败，重置回自动
+                            }
+                            else // 被主动设置为了自动
+                                _itemData.type = string.Empty;
+
                             return false;
                         }
-                        else
-                        {
-                            RemoveItem(i);
-                            return false;
-                        }
-                    }
 
+                        GUILayout.FlexibleSpace();
+                    }
                     EditorGUILayout.EndHorizontal();
+
+
                     EditorGUILayout.Space();
+                    for (int i = 0, imax = _itemData.targets.Length; i < imax; i++)
+                    {
+                        Object obj = _itemData.targets[i];
+                        EditorGUILayout.BeginHorizontal();
+
+                        EditorGUI.BeginChangeCheck();
+                        _itemData.targets[i] = EditorGUILayout.ObjectField(obj, typeof(Object), true);
+                        if (EditorGUI.EndChangeCheck())
+                        {
+                            EditorUtility.ClearDirty(_container.target);
+                            EditorUtility.SetDirty(_container.target);
+                        }
+
+                        EditorGUILayout.Space();
+                        EditorGUILayout.Space();
+                        EditorGUILayout.Space();
+                        if (GUILayout.Button("+", EditorStyles.miniButton))
+                        {
+                            InsertItem(i + 1);
+                            return false;
+                        }
+
+                        if (GUILayout.Button("-", EditorStyles.miniButton))
+                        {
+                            if (_itemData.targets.Length == 1)
+                            {
+                                Debug.LogError("至少应保留一个控件");
+                                return false;
+                            }
+                            else
+                            {
+                                RemoveItem(i);
+                                return false;
+                            }
+                        }
+
+                        EditorGUILayout.EndHorizontal();
+                        EditorGUILayout.Space();
+                    }
                 }
             }
-
-
             EditorGUILayout.EndVertical();
 
             if (EditorGUIUtility.isProSkin)
                 GUI.Box(new Rect(rect.x - 10f, rect.y - 5f, rect.width + 20f, rect.height + 15f), "");
             else
-                GUI.Box(new Rect(rect.x - 10f, rect.y - 5f, rect.width + 20f, rect.height + 15f), "",
-                    UIControlDataEditor.boxStyle);
+                GUI.Box(new Rect(rect.x - 10f, rect.y - 5f, rect.width + 20f, rect.height + 15f), "");
 
             PostProcess();
             return true;

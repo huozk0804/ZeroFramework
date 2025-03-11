@@ -2,12 +2,12 @@
 using UnityEngine;
 using ZeroFramework.UI;
 
-namespace ZeroFramework.Editor
+namespace ZeroFramework.Editor.Package
 {
     public class SubUIItemDrawer
     {
-        private UIControlDataEditor _container;
-        private SubUIItemData _itemData;
+        private readonly UIControlDataEditor _container;
+        private readonly SubUIItemData _itemData;
         private bool _foldout = true;
 
         public SubUIItemDrawer(UIControlDataEditor container, SubUIItemData itemData)
@@ -22,10 +22,10 @@ namespace ZeroFramework.Editor
             {
                 EditorGUILayout.BeginHorizontal();
                 {
-                    EditorGUILayout.LabelField("子UI名 ", UIControlDataEditor.labelStyle);
-                    _itemData.name = EditorGUILayout.TextField(_itemData.name, UIControlDataEditor.textFieldStyle)
-                        .Trim();
-                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField("子UI名 ",GUILayout.Width(60f));
+                    _itemData.name = EditorGUILayout.TextField(_itemData.name).Trim();
+                    
+                    EditorGUILayout.Space(14f);
                     _foldout = EditorGUILayout.Foldout(_foldout, _foldout ? "收起" : "展开", true);
 
                     if (GUILayout.Button("+", EditorStyles.miniButton))
@@ -56,8 +56,7 @@ namespace ZeroFramework.Editor
             if (EditorGUIUtility.isProSkin)
                 GUI.Box(new Rect(rect.x - 10f, rect.y - 5f, rect.width + 20f, rect.height + 15f), "");
             else
-                GUI.Box(new Rect(rect.x - 10f, rect.y - 5f, rect.width + 20f, rect.height + 15f), "",
-                    UIControlDataEditor.boxStyle);
+                GUI.Box(new Rect(rect.x - 10f, rect.y - 5f, rect.width + 20f, rect.height + 15f), "");
 
             PostProcess();
             return true;

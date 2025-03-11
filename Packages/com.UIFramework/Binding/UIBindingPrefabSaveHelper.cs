@@ -3,11 +3,12 @@ using UnityEngine;
 using UnityEditor;
 
 #if UNITY_2019_1_OR_NEWER
-#   if UNITY_2020_1_OR_NEWER
+# if UNITY_2020_1_OR_NEWER
 using UnityEditor.SceneManagement;
-#   else
+
+# else
 using UnityEditor.Experimental.SceneManagement;
-#   endif
+# endif
 #endif
 
 namespace ZeroFramework.UI
@@ -23,7 +24,7 @@ namespace ZeroFramework.UI
 
 #if UNITY_2019_1_OR_NEWER
         /// <summary>
-        /// 当点击Perfab编辑场景的Save按钮时修改数据不会立刻保存，因此需要在其执行前主动保存一下
+        /// 当点击Prefab编辑场景的Save按钮时修改数据不会立刻保存，因此需要在其执行前主动保存一下
         /// </summary>
         static void OnPrefabStageSaving(GameObject go)
         {
@@ -40,7 +41,7 @@ namespace ZeroFramework.UI
         static string[] OnWillSaveAssets(string[] paths)
         {
             GameObject goInHierarchy = Selection.activeGameObject;
-            if(goInHierarchy != null)
+            if (goInHierarchy != null)
             {
                 // 从根节点开始遍历，以免当前prefab有多个子UI修改时无法被全部修正
                 var rootTran = goInHierarchy.transform;
@@ -98,12 +99,13 @@ namespace ZeroFramework.UI
 
             if (objValid != null)
 #if UNITY_2019_1_OR_NEWER
-                goPrefab = PrefabUtility.SaveAsPrefabAssetAndConnect(objValid, prefabPath, InteractionMode.AutomatedAction);
+                goPrefab = PrefabUtility.SaveAsPrefabAssetAndConnect(objValid, prefabPath,
+                    InteractionMode.AutomatedAction);
 #else
                 PrefabUtility.ReplacePrefab(goInHierarchy, goPrefab, ReplacePrefabOptions.ConnectToPrefab);
 #endif
             else
-                Debug.LogFormat("<color=red>当前对象不属于Prefab, 请将其保存为 Prefab</color>");
+                Log.Info("<color=red>当前对象不属于Prefab, 请将其保存为 Prefab</color>");
         }
     }
 }

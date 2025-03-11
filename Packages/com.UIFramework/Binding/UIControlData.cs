@@ -15,7 +15,6 @@
             ctrlData.BindDataTo(uiA);
         }
     ``
-
  */
 
 using System;
@@ -84,22 +83,22 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 所有绑定的组件，不允许重名
         /// </summary>
-        public List<CtrlItemData> ctrlItemDatas;
+        public List<CtrlItemData> ctrlItemData;
 
         /// <summary>
         /// 子UI数据
         /// </summary>
-        public List<SubUIItemData> subUIItemDatas;
+        public List<SubUIItemData> subUIItemData;
 
         /// <summary>
         /// 被绑定的UI
         /// </summary>
-        public List<WeakReference<IBindableUI>> bindUIRefs;
+        public List<WeakReference<IBindableUI>> bindUIRef;
 
         /// <summary>
         /// 缓存所有打开过的UI类型的字段数据（如果有需求可以在特定时机清理以节约内存）
         /// </summary>
-        public static Dictionary<Type, UIFieldsInfo> s_uiFieldsCache = new Dictionary<Type, UIFieldsInfo>();
+        public static readonly Dictionary<Type, UIFieldsInfo> UIFieldsCache = new Dictionary<Type, UIFieldsInfo>();
 
         #region Editor
 
@@ -107,7 +106,7 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 已知类型列表，自定义类型可以添加到下面指定区域
         /// </summary>
-        private static readonly Dictionary<string, Type> DefaultTypeMap = new Dictionary<string, Type>()
+        private static readonly Dictionary<string, Type> _DefaultTypeMap = new Dictionary<string, Type>()
         {
             { "Text", typeof(Text) },
             { "RawImage", typeof(RawImage) },
@@ -132,17 +131,17 @@ namespace ZeroFramework.UI
 
         public static string[] GetAllTypeNames()
         {
-            string[] keys = new string[DefaultTypeMap.Count + 1];
+            string[] keys = new string[_DefaultTypeMap.Count + 1];
             keys[0] = "自动";
-            DefaultTypeMap.Keys.CopyTo(keys, 1);
+            _DefaultTypeMap.Keys.CopyTo(keys, 1);
             return keys;
         }
 
         public static Type[] GetAllTypes()
         {
-            Type[] types = new Type[DefaultTypeMap.Count + 1];
+            Type[] types = new Type[_DefaultTypeMap.Count + 1];
             types[0] = typeof(UnityEngine.Object);
-            DefaultTypeMap.Values.CopyTo(types, 1);
+            _DefaultTypeMap.Values.CopyTo(types, 1);
             return types;
         }
 #endif
@@ -173,14 +172,14 @@ namespace ZeroFramework.UI
             for (int i = 0, imax = subUIs.Count; i < imax; i++)
                 BindSubUI(ui, subUIs[i]);
 
-            bindUIRefs ??= new List<WeakReference<IBindableUI>>();
-            bindUIRefs.Add(new WeakReference<IBindableUI>(ui));
+            bindUIRef ??= new List<WeakReference<IBindableUI>>();
+            bindUIRef.Add(new WeakReference<IBindableUI>(ui));
 
 #if DEBUG_LOG
             Profiler.EndSample();
             float span = Time.realtimeSinceStartup - time;
             if (span > 0.002f)
-                Debug.LogWarningFormat("BindDataTo {0} 耗时{1}ms", ui.GetType().Name, span * 1000f);
+                Log.Warning("BindDataTo {0} 耗时{1}ms", ui.GetType().Name, span * 1000f);
 #endif
         }
 
@@ -189,11 +188,11 @@ namespace ZeroFramework.UI
             int itemIdx = GetCtrlIndex(fi.Name);
             if (itemIdx == -1)
             {
-                Debug.LogErrorFormat("can not find binding control of name [{0}] in prefab", fi.Name);
+                Log.Error("can not find binding control of name [{0}] in prefab", fi.Name);
                 return;
             }
 
-            var objs = ctrlItemDatas[itemIdx];
+            var objs = ctrlItemData[itemIdx];
             Type fieldType = fi.FieldType;
             if (fieldType.IsArray)
             {
@@ -205,7 +204,7 @@ namespace ZeroFramework.UI
                     if (objs.targets[j] != null)
                         arrObj.SetValue(objs.targets[j], j);
                     else
-                        Debug.LogErrorFormat("Component {0}[{1}] is null", objs.name, j);
+                        Log.Error("Component {0}[{1}] is null", objs.name, j);
                 }
 
                 fi.SetValue(ui, arrObj);
@@ -216,7 +215,7 @@ namespace ZeroFramework.UI
                 if (component != null)
                     fi.SetValue(ui, component);
                 else
-                    Debug.LogErrorFormat("Component {0} is null", objs.name);
+                    Log.Error("Component {0} is null", objs.name);
             }
         }
 
@@ -225,11 +224,11 @@ namespace ZeroFramework.UI
             int subUIIdx = GetSubUIIndex(fi.Name);
             if (subUIIdx == -1)
             {
-                Debug.LogErrorFormat("can not find binding subUI of name [{0}] in prefab", fi.Name);
+                Log.Error("can not find binding subUI of name [{0}] in prefab", fi.Name);
                 return;
             }
 
-            fi.SetValue(ui, subUIItemDatas[subUIIdx].subUIData);
+            fi.SetValue(ui, subUIItemData[subUIIdx].subUIData);
         }
 
         /// <summary>
@@ -255,7 +254,7 @@ namespace ZeroFramework.UI
         /// </summary>
         private static UIFieldsInfo GetUIFieldsInfo(Type type)
         {
-            if (s_uiFieldsCache.TryGetValue(type, out var uIFieldsInfo))
+            if (UIFieldsCache.TryGetValue(type, out var uIFieldsInfo))
                 return uIFieldsInfo;
 
             uIFieldsInfo = new UIFieldsInfo() { type = type };
@@ -270,7 +269,7 @@ namespace ZeroFramework.UI
                     uIFieldsInfo.subUIs.Add(fi);
             }
 
-            s_uiFieldsCache.Add(type, uIFieldsInfo);
+            UIFieldsCache.Add(type, uIFieldsInfo);
             return uIFieldsInfo;
         }
 
@@ -281,26 +280,26 @@ namespace ZeroFramework.UI
         /// <summary>
         /// 找到指定名称的第一个组件, 不存在返回 null
         /// </summary>
-        public T GetComponent<T>(string name) where T : Component
+        public T GetComponent<T>(string comName) where T : Component
         {
-            int idx = GetCtrlIndex(name);
+            int idx = GetCtrlIndex(comName);
             if (idx == -1)
                 return null;
 
-            var targets = ctrlItemDatas[idx].targets;
+            var targets = ctrlItemData[idx].targets;
             if (targets.Length == 0)
                 return null;
 
             return targets[0] as T;
         }
 
-        public new UnityEngine.Object GetComponent(string name)
+        public new UnityEngine.Object GetComponent(string comName)
         {
-            int idx = GetCtrlIndex(name);
+            int idx = GetCtrlIndex(comName);
             if (idx == -1)
                 return null;
 
-            var targets = ctrlItemDatas[idx].targets;
+            var targets = ctrlItemData[idx].targets;
             if (targets.Length == 0)
                 return null;
 
@@ -309,51 +308,51 @@ namespace ZeroFramework.UI
 
         public UnityEngine.Object GetComponent(int idx)
         {
-            if (idx == -1 || idx >= ctrlItemDatas.Count)
+            if (idx == -1 || idx >= ctrlItemData.Count)
                 return null;
 
-            var targets = ctrlItemDatas[idx].targets;
+            var targets = ctrlItemData[idx].targets;
             if (targets.Length == 0)
                 return null;
 
             return targets[0];
         }
 
-        public UnityEngine.Object[] GetComponents(string name)
+        public UnityEngine.Object[] GetComponents(string comName)
         {
-            int idx = GetCtrlIndex(name);
+            int idx = GetCtrlIndex(comName);
             if (idx == -1)
                 return null;
 
-            return ctrlItemDatas[idx].targets;
+            return ctrlItemData[idx].targets;
         }
 
         public UnityEngine.Object[] GetComponents(int idx)
         {
-            if (idx == -1 || idx >= ctrlItemDatas.Count)
+            if (idx == -1 || idx >= ctrlItemData.Count)
                 return null;
 
-            return ctrlItemDatas[idx].targets;
+            return ctrlItemData[idx].targets;
         }
 
-        private int GetCtrlIndex(string name)
+        private int GetCtrlIndex(string comName)
         {
-            for (int i = 0, imax = ctrlItemDatas.Count; i < imax; i++)
+            for (int i = 0, imax = ctrlItemData.Count; i < imax; i++)
             {
-                CtrlItemData item = ctrlItemDatas[i];
-                if (item.name == name)
+                CtrlItemData item = ctrlItemData[i];
+                if (item.name == comName)
                     return i;
             }
 
             return -1;
         }
 
-        private int GetSubUIIndex(string name)
+        private int GetSubUIIndex(string comName)
         {
-            for (int i = 0, imax = subUIItemDatas.Count; i < imax; i++)
+            for (int i = 0, imax = subUIItemData.Count; i < imax; i++)
             {
-                SubUIItemData item = subUIItemDatas[i];
-                if (item.name == name)
+                SubUIItemData item = subUIItemData[i];
+                if (item.name == comName)
                     return i;
             }
 
@@ -371,20 +370,20 @@ namespace ZeroFramework.UI
         public bool CorrectComponents()
         {
             bool isOk = true;
-            for (int i = 0, imax = ctrlItemDatas.Count; i < imax; i++)
+            for (int i = 0, imax = ctrlItemData.Count; i < imax; i++)
             {
-                if (string.IsNullOrEmpty(ctrlItemDatas[i].name)) // TODO Check if is a valid varible name
+                if (ctrlItemData[i].name.IsNullOrEmpty())
                 {
-                    Debug.LogErrorFormat(gameObject, "[{1}]第 {0} 个控件没有名字，请修正", i + 1, gameObject.name);
+                    Log.Error($"{gameObject}, [{gameObject.name}]第 {i + 1} 个控件没有名字，请修正");
                     return false;
                 }
 
-                for (int j = ctrlItemDatas.Count - 1; j >= 0; j--)
+                for (int j = ctrlItemData.Count - 1; j >= 0; j--)
                 {
-                    if (ctrlItemDatas[i].name == ctrlItemDatas[j].name && i != j)
+                    if (ctrlItemData[i].name == ctrlItemData[j].name && i != j)
                     {
-                        Debug.LogErrorFormat(gameObject, "[{3}]控件名字 [{0}] 第 {1} 项与第 {2} 项重复，请修正", ctrlItemDatas[i].name,
-                            i + 1, j + 1, gameObject.name);
+                        Log.Error(
+                            $"{gameObject} [{gameObject.name}控件名字 [{ctrlItemData[i].name}] 第 {i + 1} 项与第 {j + 1} 项重复，请修正]");
                         return false;
                     }
                 }
@@ -392,41 +391,40 @@ namespace ZeroFramework.UI
 
             isOk = ReplaceTargetsToUIComponent();
             if (isOk)
-                Debug.LogFormat(gameObject, "[{0}]控件绑定修正完毕", gameObject.name);
+                Log.Info($"{gameObject} [{gameObject.name}]控件绑定修正完毕");
 
             return isOk;
         }
 
         public bool CheckSubUIs()
         {
-            for (int i = 0, imax = subUIItemDatas.Count; i < imax; i++)
+            for (int i = 0, imax = subUIItemData.Count; i < imax; i++)
             {
-                var subUI = subUIItemDatas[i];
+                var subUI = subUIItemData[i];
                 if (subUI != null)
                 {
                     if (string.IsNullOrEmpty(subUI.name))
                     {
-                        Debug.LogErrorFormat(gameObject, "[{0}]第 {1} 个子UI没有设置名字, 请修正", gameObject.name, i + 1);
+                        Log.Error($"{gameObject} [{gameObject.name}]第 {i + 1} 个子UI没有设置名字, 请修正");
                         return false;
                     }
 
                     if (subUI.subUIData == null)
                     {
-                        Debug.LogErrorFormat(gameObject, "[{0}]第 {1} 个子UI没有赋值, 请修正", gameObject.name, i + 1);
+                        Log.Error($"{gameObject} [{gameObject.name}]第 {i + 1} 个子UI没有赋值, 请修正");
                         return false;
                     }
 
                     // 必须拖当前 Prefab 下的子UI
                     if (!IsInCurrentPrefab(subUI.subUIData.transform))
                     {
-                        Debug.LogErrorFormat(gameObject, "[{0}]第 {1} 个子UI [{2}]不是当前 Prefab 下的对象，请修正", gameObject.name,
-                            i + 1, subUI.name);
+                        Log.Error($"{gameObject} [{gameObject.name}]第 {i + 1} 个子UI [{subUI.name}]不是当前 Prefab 下的对象，请修正");
                         return false;
                     }
                 }
                 else
                 {
-                    Debug.LogError("internal error at ControlBinding, pls contact author");
+                    Log.Error("internal error at ControlBinding, pls contact author");
                     return false;
                 }
             }
@@ -439,58 +437,57 @@ namespace ZeroFramework.UI
         /// </summary>
         private bool ReplaceTargetsToUIComponent()
         {
-            for (int i = 0, imax = ctrlItemDatas.Count; i < imax; i++)
+            for (int i = 0, imax = ctrlItemData.Count; i < imax; i++)
             {
-                var objs = ctrlItemDatas[i].targets;
+                var objs = ctrlItemData[i].targets;
                 Type type = null;
                 for (int j = 0, jmax = objs.Length; j < jmax; j++)
                 {
                     if (objs[j] == null)
                     {
-                        Debug.LogErrorFormat(gameObject, "[{2}]控件名字 [{0}] 第 {1} 项为空，请修正", ctrlItemDatas[i].name, j + 1,
-                            gameObject.name);
+                        Log.Error($"{gameObject} [{gameObject.name}]控件名字 [{ctrlItemData[i].name}] 第 {j + 1} 项为空，请修正");
                         return false;
                     }
 
                     GameObject go = objs[j] as GameObject;
                     if (go == null)
-                        go = (objs[j] as Component).gameObject;
+                        go = (objs[j] as Component)?.gameObject;
 
                     // 必须拖当前 Prefab 下的控件
                     if (!IsInCurrentPrefab(go.transform))
                     {
-                        Debug.LogErrorFormat(gameObject, "[{2}]控件名字 [{0}] 第 {1} 项不是当前 Prefab 下的控件，请修正",
-                            ctrlItemDatas[i].name, j + 1, gameObject.name);
+                        Log.Error(
+                            $"{gameObject} [{gameObject.name}]控件名字 [{ctrlItemData[i].name}] 第 {j + 1} 项不是当前 Prefab 下的控件，请修正");
                         return false;
                     }
 
-                    UnityEngine.Object correctComponent = FindCorrectComponent(go, ctrlItemDatas[i].type);
+                    UnityEngine.Object correctComponent = FindCorrectComponent(go, ctrlItemData[i].type);
                     if (correctComponent == null)
                     {
-                        Debug.LogErrorFormat(gameObject, "[{3}]控件 [{0}] 第 {1} 项不是 {2} 类型，请修正", ctrlItemDatas[i].name,
-                            j + 1, ctrlItemDatas[i].type, gameObject.name);
+                        Log.Error(
+                            $"{gameObject} [{gameObject.name}]控件 [{ctrlItemData[i].name}] 第 {j + 1} 项不是 {ctrlItemData[i].type} 类型，请修正");
                         return false;
                     }
 
                     if (type == null) // 当前变量的第一个控件时执行
                     {
-                        if (string.IsNullOrEmpty(ctrlItemDatas[i].type))
+                        if (string.IsNullOrEmpty(ctrlItemData[i].type))
                         {
                             type = correctComponent.GetType();
                         }
                         else
                         {
-                            if (!DefaultTypeMap.TryGetValue(ctrlItemDatas[i].type, out type))
+                            if (!_DefaultTypeMap.TryGetValue(ctrlItemData[i].type, out type))
                             {
-                                Debug.LogError("Internal Error, pls contact author");
+                                Log.Error("Internal Error, pls contact author");
                                 return false;
                             }
                         }
                     }
                     else if (correctComponent.GetType() != type && !correctComponent.GetType().IsSubclassOf(type))
                     {
-                        Debug.LogErrorFormat(gameObject, "[{2}]控件名字 [{0}] 第 {1} 项与第 1 项的类型不同，请修正",
-                            ctrlItemDatas[i].name, j + 1, gameObject.name);
+                        Log.Error(
+                            $"{gameObject} [{gameObject.name}]控件名字 [{ctrlItemData[i].name}] 第 {j + 1} 项与第 1 项的类型不同，请修正");
                         return false;
                     }
 
@@ -500,9 +497,9 @@ namespace ZeroFramework.UI
                     objs[j] = correctComponent;
                 }
 
-                if (type.Name != ctrlItemDatas[i].type)
+                if (type.Name != ctrlItemData[i].type)
                 {
-                    ctrlItemDatas[i].type = type.Name;
+                    ctrlItemData[i].type = type.Name;
 #if UNITY_2019_1_OR_NEWER
                     EditorUtility.ClearDirty(this);
 #endif
@@ -510,7 +507,7 @@ namespace ZeroFramework.UI
                     PrefabUtility.RecordPrefabInstancePropertyModifications(this);
                 }
 
-                ctrlItemDatas[i].type = type.Name;
+                ctrlItemData[i].type = type.Name;
             }
 
             return true;
@@ -536,7 +533,7 @@ namespace ZeroFramework.UI
             List<Component> components = new List<Component>();
             go.GetComponents(components);
 
-            Func<Type, Component> getSpecialTypeComp = (Type t) =>
+            Component GetSpecialTypeComp(Type t)
             {
                 foreach (var comp in components)
                 {
@@ -548,15 +545,15 @@ namespace ZeroFramework.UI
                 }
 
                 return null;
-            };
+            }
 
             Component newComp = null;
             if (string.IsNullOrEmpty(typename))
             {
                 // 类型名为空则为自动类型，在 _typeMap 里从上往下找
-                foreach (var kv in DefaultTypeMap)
+                foreach (var kv in _DefaultTypeMap)
                 {
-                    newComp = getSpecialTypeComp(kv.Value);
+                    newComp = GetSpecialTypeComp(kv.Value);
                     if (newComp != null)
                         break;
                 }
@@ -564,9 +561,9 @@ namespace ZeroFramework.UI
             else
             {
                 // 指定了类型名则只找指定类型的控件
-                if (DefaultTypeMap.TryGetValue(typename, out var type))
+                if (_DefaultTypeMap.TryGetValue(typename, out var type))
                 {
-                    newComp = getSpecialTypeComp(type);
+                    newComp = GetSpecialTypeComp(type);
                 }
             }
 
@@ -575,7 +572,7 @@ namespace ZeroFramework.UI
 
         private bool IsNeedSave()
         {
-            foreach (var ctrl in ctrlItemDatas)
+            foreach (var ctrl in ctrlItemData)
             {
                 if (string.IsNullOrEmpty(ctrl.type))
                     return true;
@@ -584,6 +581,10 @@ namespace ZeroFramework.UI
             return false;
         }
 
+        public void GenerateCodeTemplate(string path)
+        {
+            
+        }
 
         [ContextMenu("复制代码变量声明到剪贴板")]
         public void CopyCodeDefineToClipBoardPrivate()
@@ -596,7 +597,7 @@ namespace ZeroFramework.UI
             sb.AppendLine("#region 控件绑定变量声明，自动生成请勿手改");
             sb.AppendLine("\t\t#pragma warning disable 0649"); // 变量未赋值
 
-            foreach (var ctrl in ctrlItemDatas)
+            foreach (var ctrl in ctrlItemData)
             {
                 if (ctrl.targets.Length == 0)
                     continue;
@@ -608,7 +609,7 @@ namespace ZeroFramework.UI
             }
 
             sb.AppendLine();
-            foreach (var subUI in subUIItemDatas)
+            foreach (var subUI in subUIItemData)
             {
                 sb.AppendFormat($"\t\t[SubUIBinding]\r\n\t\tprivate UIControlData {subUI.name};\r\n");
             }
@@ -627,7 +628,7 @@ namespace ZeroFramework.UI
             sb.AppendLine("\t\t#pragma warning disable 0649"); // 变量未赋值
             sb.AppendFormat($"\t\tUIControlData uiData = GetComponent<UIControlData>();\r\n");
 
-            foreach (var ctrl in ctrlItemDatas)
+            foreach (var ctrl in ctrlItemData)
             {
                 if (ctrl.targets.Length == 0)
                     continue;
@@ -639,7 +640,7 @@ namespace ZeroFramework.UI
             }
 
             sb.AppendLine();
-            foreach (var subUI in subUIItemDatas)
+            foreach (var subUI in subUIItemData)
             {
                 sb.AppendFormat($"\t\t[SubUIBinding]\r\n\t\tprivate UIControlData {subUI.name};\r\n");
             }
@@ -649,36 +650,6 @@ namespace ZeroFramework.UI
 
             GUIUtility.systemCopyBuffer = sb.ToString();
         }
-
-        // [ContextMenu("复制代码到剪贴板(Lua)")]
-        // public void CopyCodeToClipBoardLua()
-        // {
-        //     // 调用保存资源会导致 prefab 发生变化，因此只有有需要时才保存
-        //     if (IsNeedSave())
-        //         UIBindingPrefabSaveHelper.SavePrefab(gameObject);
-        //
-        //     StringBuilder sb = new StringBuilder(1024);
-        //     sb.Append("-- 控件绑定变量声明，自动生成请勿手改\r\n");
-        //
-        //     foreach (var ctrl in ctrlItemDatas)
-        //     {
-        //         if (ctrl.targets.Length == 0)
-        //             continue;
-        //
-        //         sb.AppendFormat("local {0}\r\n", ctrl.name);
-        //     }
-        //
-        //     sb.AppendFormat("\r\n");
-        //     sb.AppendFormat("-- SubUI\r\n");
-        //     foreach (var subUI in subUIItemDatas)
-        //     {
-        //         sb.AppendFormat("local {0}\r\n", subUI.name);
-        //     }
-        //
-        //     sb.Append("-- 控件绑定定义结束\r\n\r\n");
-        //
-        //     GUIUtility.systemCopyBuffer = sb.ToString();
-        // }
 #endif
 
         #endregion
