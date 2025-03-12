@@ -258,7 +258,8 @@ namespace ZeroFramework.Scenes
         /// <returns>场景资源是否存在。</returns>
         public bool HasScene(string sceneAssetName)
         {
-            return Zero.Instance.Resource.HasAsset(sceneAssetName) != HasAssetResult.NotExist;
+            //return Zero.Instance.Resource.HasAsset(sceneAssetName) != HasAssetResult.NotExist;
+            return false;
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace ZeroFramework.Entity
     /// </summary>
     public class DefaultEntityHelper : EntityHelperBase
     {
-        private ResourceManager _resourceComponent;
+        //private ResourceManager _resourceComponent;
 
         /// <summary>
         /// 实例化实体。

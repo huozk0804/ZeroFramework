@@ -11,7 +11,7 @@ namespace ZeroFramework.Sound
     /// </summary>
     public class DefaultSoundHelper : SoundHelperBase
     {
-        private ResourceManager _resourceComponent = null;
+        //private ResourceManager _resourceComponent = null;
 
         /// <summary>
         /// 释放声音资源。
@@ -26,11 +26,11 @@ namespace ZeroFramework.Sound
         private void Start()
         {
             //m_ResourceComponent = GameEntry.GetComponent<ResourceComponent>();
-            if (_resourceComponent == null)
-            {
-                Log.Fatal("Resource component is invalid.");
-                return;
-            }
+            //if (_resourceComponent == null)
+            //{
+            //    Log.Fatal("Resource component is invalid.");
+            //    return;
+            //}
         }
     }
 }

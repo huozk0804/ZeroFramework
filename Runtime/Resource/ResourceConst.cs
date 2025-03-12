@@ -1,7 +1,7 @@
 namespace ZeroFramework
 {
-    internal static class ResourceConst
-    {
-        internal const int DefaultPriority = 0;
-    }
+	public class ResourceConst
+	{
+		public const int DefaultPriority = 1;
+	}
 }
