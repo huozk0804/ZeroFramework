@@ -151,6 +151,8 @@ namespace ZeroFramework
                 gameObject.AddComponent<DebuggerComponent>();
             }
 
+            Timer.RegisterManager(gameObject);
+
 #if UNITY_5_3_OR_NEWER || UNITY_5_3
             Utility.Converter.ScreenDpi = Screen.dpi;
             if (Utility.Converter.ScreenDpi <= 0)
@@ -170,7 +172,7 @@ namespace ZeroFramework
             Log.Info("Unity Version: {0}", Application.unityVersion);
             Log.Info("Game Version: {0} ({1})", Version.GameVersion, Version.InternalGameVersion);
             Log.Info("Game Resources Version: {0}", Version.GameResVersion);
-            Log.Info("Zero Frame Launch Succeed.");
+            Log.Info("Zero Framework Launch Succeed.");
         }
 
         private void Start()

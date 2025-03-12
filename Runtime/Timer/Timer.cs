@@ -51,9 +51,21 @@ namespace ZeroFramework
         /// </summary>
         public bool isDone => this.isCompleted || this.isCancelled || this.isOwnerDestroyed;
 
-        #endregion
+		#endregion
 
-        #region Public Static Methods
+		#region Public Static Methods
+
+		/// <summary>
+		/// Register new timer manager.
+		/// </summary>
+		/// <param name="go">loading object</param>
+		public static void RegisterManager(GameObject go) {
+            if (go == null)
+                return;
+
+            var manager = go.GetOrAddComponent<TimerManager>();
+            Timer._manager = manager;
+		}
 
         /// <summary>
         /// Register a new timer that should fire an event after a certain amount of time
