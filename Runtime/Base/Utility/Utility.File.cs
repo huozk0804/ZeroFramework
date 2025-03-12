@@ -46,7 +46,7 @@ namespace ZeroFramework
             public static bool CreateFile(string filePath, string info, bool isCreateDir = true)
             {
                 StreamWriter sw;
-                FileInfo t = new FileInfo(filePath);
+				System.IO.FileInfo t = new System.IO.FileInfo(filePath);
                 if (!t.Exists)
                 {
                     string dir = System.IO.Path.GetDirectoryName(filePath);

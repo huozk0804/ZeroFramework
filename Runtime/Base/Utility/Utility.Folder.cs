@@ -65,7 +65,7 @@ namespace ZeroFramework
                 {
                     string destFileName =
                         System.IO.Path.Combine(destRootPath, fileName.Substring(sourceRootPath.Length));
-                    FileInfo destFileInfo = new FileInfo(destFileName);
+                    System.IO.FileInfo destFileInfo = new System.IO.FileInfo(destFileName);
                     if (destFileInfo.Directory != null && !destFileInfo.Directory.Exists)
                     {
                         destFileInfo.Directory.Create();
@@ -125,9 +125,9 @@ namespace ZeroFramework
                 string[] fileNames = Directory.GetFiles(sourceRootPath, "*", searchOption);
                 foreach (string fileName in fileNames)
                 {
-                    FileInfo sourceFileInfo = new FileInfo(fileName);
+                    System.IO.FileInfo sourceFileInfo = new System.IO.FileInfo(fileName);
                     string destFileName = System.IO.Path.Combine(destRootPath, sourceFileInfo.Name);
-                    FileInfo destFileInfo = new FileInfo(destFileName);
+                    System.IO.FileInfo destFileInfo = new System.IO.FileInfo(destFileName);
                     if (destFileInfo.Directory != null && !destFileInfo.Directory.Exists)
                     {
                         destFileInfo.Directory.Create();

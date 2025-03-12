@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ZeroFramework.Timer
+namespace ZeroFramework
 {
     public class TestTimerBehaviour : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ZeroFramework.Timer
+namespace ZeroFramework
 {
     /// <summary>
     /// Contains extension methods related to <see cref="Timer"/>s.

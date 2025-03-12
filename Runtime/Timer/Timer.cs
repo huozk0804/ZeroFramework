@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Object = UnityEngine.Object;
 
-namespace ZeroFramework.Timer
+namespace ZeroFramework
 {
     /// <summary>
     /// Allows you to run events on a delay without the use of <see cref="Coroutine"/>s
