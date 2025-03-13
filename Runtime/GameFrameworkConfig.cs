@@ -24,7 +24,6 @@ namespace ZeroFramework
     public sealed class GameFrameworkConfig : ScriptableObjectSingleton<GameFrameworkConfig>
     {
         //Base
-        public bool editorResourceMode = true;
         public Language editorLanguage = Language.Unspecified;
         public string textHelperTypeName = "ZeroFramework.DefaultTextHelper";
         public string versionHelperTypeName = "ZeroFramework.DefaultVersionHelper";

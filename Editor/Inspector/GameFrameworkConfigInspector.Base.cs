@@ -11,8 +11,7 @@ namespace ZeroFramework.Editor
 
         private static readonly string[] _GameSpeedForDisplay = new string[]
             { "0x", "0.01x", "0.1x", "0.25x", "0.5x", "1x", "1.5x", "2x", "4x", "8x" };
-
-        private SerializedProperty _editorResourceMode = null;
+        
         private SerializedProperty _editorLanguage = null;
         private SerializedProperty _textHelperTypeName = null;
         private SerializedProperty _versionHelperTypeName = null;
@@ -47,7 +46,6 @@ namespace ZeroFramework.Editor
 
         void OnBaseEnable()
         {
-            _editorResourceMode = serializedObject.FindProperty("editorResourceMode");
             _editorLanguage = serializedObject.FindProperty("editorLanguage");
             _textHelperTypeName = serializedObject.FindProperty("textHelperTypeName");
             _versionHelperTypeName = serializedObject.FindProperty("versionHelperTypeName");
@@ -70,10 +68,7 @@ namespace ZeroFramework.Editor
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
             {
                 EditorGUILayout.LabelField("Base", EditorStyles.boldLabel);
-                _editorResourceMode.boolValue =
-                    EditorGUILayout.Toggle("Editor Resource Mode", _editorResourceMode.boolValue);
                 EditorGUILayout.PropertyField(_editorLanguage);
-
                 EditorGUILayout.BeginVertical("box");
                 {
                     EditorGUILayout.LabelField("Global Helpers", EditorStyles.boldLabel);
