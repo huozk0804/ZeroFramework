@@ -37,33 +37,41 @@ namespace ZeroFramework
         public bool neverSleep = true;
         public string[] runtimeAssemblyNames;
         public string[] runtimeOrEditorAssemblyNames;
+        
+        //ReferencePool
+        public ReferenceStrictCheckType enableStrictCheck = ReferenceStrictCheckType.AlwaysEnable;
 
-        //Download
-        public string downloadAgentHelperTypeName = "ZeroFramework.UnityWebRequestDownloadAgentHelper";
+        #region Download
+
+        public string downloadAgentHelperTypeName = "ZeroFramework.Download.UnityWebRequestDownloadAgentHelper";
         public DownloadAgentHelperBase downloadAgentCustomHelper = null;
         public int downloadAgentHelperCount = 3;
         public float downloadTimeout = 30f;
         public int flushSize = 1024 * 1024;
 
-        //ReferencePool
-        public ReferenceStrictCheckType enableStrictCheck = ReferenceStrictCheckType.AlwaysEnable;
+        #endregion
 
-        //WebRequest
-        public string webRequestAgentHelperTypeName = "ZeroFramework.UnityWebRequestAgentHelper";
+        #region WebRequest
+
+        public string webRequestAgentHelperTypeName = "ZeroFramework.WebRequest.UnityWebRequestAgentHelper";
         public WebRequestAgentHelperBase webRequestAgentCustomHelper = null;
         public int webRequestAgentHelperCount = 1;
         public float webRequestTimeout = 30f;
 
-		//Resources
-		public ResourceHelperBase resourceCustomHelper = null;
-		public string resourceHelperTypeName = "ZeroFramework.DefaultResourceHelper";
-	
+        #endregion
 
+        #region Resources
+
+        public ResourceHelperBase resourceCustomHelper = null;
+        public string resourceHelperTypeName = "ZeroFramework.DefaultResourceHelper";
+
+        #endregion
+        
 		#region com.Config
 
 		public bool enableLoadConfigUpdateEvent = false;
         public bool enableLoadConfigDependencyAssetEvent = false;
-        public string configHelperTypeName = "ZeroFramework.DefaultConfigHelper";
+        public string configHelperTypeName = "ZeroFramework.Config.DefaultConfigHelper";
         public ConfigHelperBase configCustomHelper = null;
         public int configCachedBytesSize = 0;
 
@@ -82,9 +90,9 @@ namespace ZeroFramework
 
         public bool enableShowEntityUpdateEvent = false;
         public bool enableShowEntityDependencyAssetEvent = false;
-        public string entityHelperTypeName = "ZeroFramework.DefaultEntityHelper";
+        public string entityHelperTypeName = "ZeroFramework.Entity.DefaultEntityHelper";
         public EntityHelperBase entityCustomHelper = null;
-        public string entityGroupHelperTypeName = "ZeroFramework.DefaultEntityGroupHelper";
+        public string entityGroupHelperTypeName = "ZeroFramework.Entity.DefaultEntityGroupHelper";
         public EntityGroupHelperBase entityGroupCustomHelper = null;
         public EntityGroup[] entityGroups = null;
 

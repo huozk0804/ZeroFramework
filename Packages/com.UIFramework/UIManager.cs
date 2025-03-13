@@ -60,12 +60,6 @@ namespace ZeroFramework.UI
                 return;
             }
             SetUIFormHelper(uiFormHelper);
-
-            UIGroupHelperBase uIGroupHelper = Helper.CreateHelper(GameFrameworkConfig.Instance.uiGroupHelperTypeName, GameFrameworkConfig.Instance.uiGroupCustomHelper);
-            if (uIGroupHelper == null) {
-                Log.Error("Can not create ui group helper.");
-                return;
-            }
         }
 
         /// <summary>

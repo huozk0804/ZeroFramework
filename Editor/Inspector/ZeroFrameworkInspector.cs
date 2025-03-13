@@ -19,8 +19,6 @@ namespace ZeroFramework.Editor
     [CustomEditor(typeof(ZeroFrameworkComponent))]
     public sealed class ZeroFrameworkInspector : GameFrameworkInspector
     {
-        private SerializedProperty m_IsInitialize = null;
-
         private readonly Dictionary<string, List<ReferencePoolInfo>> m_ReferencePoolInfos =
             new Dictionary<string, List<ReferencePoolInfo>>(StringComparer.Ordinal);
 
@@ -28,7 +26,6 @@ namespace ZeroFramework.Editor
 
         private void OnEnable()
         {
-            m_IsInitialize = serializedObject.FindProperty("_isInitialize");
         }
 
         public override void OnInspectorGUI()
@@ -36,11 +33,9 @@ namespace ZeroFramework.Editor
             base.OnInspectorGUI();
             serializedObject.Update();
 
-			ZeroFrameworkComponent t = (ZeroFrameworkComponent)target;
+            ZeroFrameworkComponent t = (ZeroFrameworkComponent)target;
             if (EditorApplication.isPlaying)
             {
-                EditorGUILayout.PropertyField(m_IsInitialize);
-
                 //Config
                 if (Zero.HasModule<ConfigManager>())
                 {
