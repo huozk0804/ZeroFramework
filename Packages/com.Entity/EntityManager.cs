@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using ZeroFramework.Resource;
 
 namespace ZeroFramework.Entity
 {
@@ -147,12 +148,14 @@ namespace ZeroFramework.Entity
             remove => _hideEntityCompleteEventHandler -= value;
         }
 
-        /// <summary>
-        /// 实体管理器轮询。
-        /// </summary>
-        /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
-        /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-        public override void Update(float elapseSeconds, float realElapseSeconds)
+		protected internal override int Priority => 11;
+
+		/// <summary>
+		/// 实体管理器轮询。
+		/// </summary>
+		/// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
+		/// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
+		protected internal override void Update(float elapseSeconds, float realElapseSeconds)
         {
             while (_recycleQueue.Count > 0)
             {
@@ -177,10 +180,10 @@ namespace ZeroFramework.Entity
             }
         }
 
-        /// <summary>
-        /// 关闭并清理实体管理器。
-        /// </summary>
-        public override void Shutdown()
+		/// <summary>
+		/// 关闭并清理实体管理器。
+		/// </summary>
+		protected internal override void Shutdown()
         {
             _isShutdown = true;
             HideAllLoadedEntities();

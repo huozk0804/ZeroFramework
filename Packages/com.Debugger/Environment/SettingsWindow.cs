@@ -30,7 +30,7 @@ namespace ZeroFramework.Debugger
                 return;
             }
 
-            _settingComponent = Zero.Instance.GetModule<ISettingManager>();
+            _settingComponent = Zero.setting;
             if (_settingComponent == null)
             {
                 Log.Fatal("Setting component is invalid.");

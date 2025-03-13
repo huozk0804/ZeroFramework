@@ -16,7 +16,7 @@ namespace ZeroFramework.Setting
     /// </summary>
     public class DefaultSettingHelper : SettingHelperBase
     {
-        private const string SettingFileName = "GameFrameworkSetting.dat";
+        private const string SettingFileName = "ZeroFrameworkSetting.dat";
 
         private string _filePath = null;
         private DefaultSetting _settings = null;

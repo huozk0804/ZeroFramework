@@ -15,7 +15,7 @@ namespace ZeroFramework.Debugger
             GUILayout.Label("<b>Operations</b>");
             GUILayout.BeginVertical("box");
             {
-                var objectPoolComponent = Zero.Instance.ObjectPool;
+                var objectPoolComponent = Zero.objectPool;
 				if (objectPoolComponent != null)
                 {
                     if (GUILayout.Button("Object Pool Release", GUILayout.Height(30f)))
@@ -46,7 +46,7 @@ namespace ZeroFramework.Debugger
                 
                 if (GUILayout.Button("Quit Game", GUILayout.Height(30f)))
                 {
-					Zero.Instance.Shutdown();
+					Zero.Shutdown();
                 }
             }
             GUILayout.EndVertical();

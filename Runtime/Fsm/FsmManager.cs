@@ -26,23 +26,23 @@ namespace ZeroFramework
             _tempFsms = new List<FsmBase>();
         }
 
-        /// <summary>
-        /// 获取游戏框架模块优先级。
-        /// </summary>
-        /// <remarks>优先级较高的模块会优先轮询，并且关闭操作会后进行。</remarks>
-        public override int Priority => 1;
+		/// <summary>
+		/// 获取游戏框架模块优先级。
+		/// </summary>
+		/// <remarks>优先级较高的模块会优先轮询，并且关闭操作会后进行。</remarks>
+		protected internal override int Priority => 1;
 
         /// <summary>
         /// 获取有限状态机数量。
         /// </summary>
         public int Count => _fsms.Count;
 
-        /// <summary>
-        /// 有限状态机管理器轮询。
-        /// </summary>
-        /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
-        /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-        public override void Update(float elapseSeconds, float realElapseSeconds)
+		/// <summary>
+		/// 有限状态机管理器轮询。
+		/// </summary>
+		/// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
+		/// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
+		protected internal override void Update(float elapseSeconds, float realElapseSeconds)
         {
             _tempFsms.Clear();
             if (_fsms.Count <= 0)
@@ -69,7 +69,7 @@ namespace ZeroFramework
         /// <summary>
         /// 关闭并清理有限状态机管理器。
         /// </summary>
-        public override void Shutdown()
+        protected internal override void Shutdown()
         {
             foreach (KeyValuePair<TypeNamePair, FsmBase> fsm in _fsms)
             {

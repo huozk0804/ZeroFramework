@@ -5,6 +5,7 @@
 //------------------------------------------------------------
 
 using UnityEngine;
+using ZeroFramework.Resource;
 
 #if UNITY_5_5_OR_NEWER
 using UnityEngine.Rendering;
@@ -18,7 +19,7 @@ namespace ZeroFramework.Debugger
 
         public override void Initialize(params object[] args)
         {
-            _resourceManager = Zero.Instance.Resource;
+            _resourceManager = Zero.resource;
             if (_resourceManager == null)
             {
                 Log.Fatal("Resource component is invalid.");

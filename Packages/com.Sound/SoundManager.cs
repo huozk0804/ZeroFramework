@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using ZeroFramework.Resource;
 
 namespace ZeroFramework.Sound
 {
@@ -84,19 +85,19 @@ namespace ZeroFramework.Sound
             remove { _playSoundDependencyAssetEventHandler -= value; }
         }
 
-        /// <summary>
-        /// 声音管理器轮询。
-        /// </summary>
-        /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
-        /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-        public override void Update(float elapseSeconds, float realElapseSeconds)
+		/// <summary>
+		/// 声音管理器轮询。
+		/// </summary>
+		/// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
+		/// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
+		protected internal override void Update(float elapseSeconds, float realElapseSeconds)
         {
         }
 
-        /// <summary>
-        /// 关闭并清理声音管理器。
-        /// </summary>
-        public override void Shutdown()
+		/// <summary>
+		/// 关闭并清理声音管理器。
+		/// </summary>
+		protected internal override void Shutdown()
         {
             StopAllLoadedSounds();
             _soundGroups.Clear();

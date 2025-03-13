@@ -39,7 +39,7 @@ namespace ZeroFramework
 				Debug.LogError($"日志文件初始化失败: {ex}");
 			}
 
-			_flushTimer = Timer.Register(FLUSH_INTERVAL, null, FlushCallback, true);
+			_flushTimer = Timer.Register(FLUSH_INTERVAL, null, FlushCallback, true, true);
 		}
 
 		/// <summary>

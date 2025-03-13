@@ -5,6 +5,7 @@
 //------------------------------------------------------------
 
 using UnityEngine;
+using ZeroFramework.Network;
 
 namespace ZeroFramework.Debugger
 {
@@ -14,7 +15,7 @@ namespace ZeroFramework.Debugger
 
         public override void Initialize(params object[] args)
         {
-            _networkManager = Zero.Instance.Network;
+            _networkManager = Zero.network;
             if (_networkManager == null)
             {
                 Log.Fatal("Network component is invalid.");

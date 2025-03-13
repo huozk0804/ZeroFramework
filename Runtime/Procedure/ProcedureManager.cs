@@ -29,7 +29,7 @@ namespace ZeroFramework
         /// 获取游戏框架模块优先级。
         /// </summary>
         /// <remarks>优先级较高的模块会优先轮询，并且关闭操作会后进行。</remarks>
-        public override int Priority => -2;
+        protected internal override int Priority => -2;
 
         /// <summary>
         /// 获取当前流程。
@@ -63,19 +63,19 @@ namespace ZeroFramework
             }
         }
 
-        /// <summary>
-        /// 流程管理器轮询。
-        /// </summary>
-        /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
-        /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-        public override void Update(float elapseSeconds, float realElapseSeconds)
+		/// <summary>
+		/// 流程管理器轮询。
+		/// </summary>
+		/// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
+		/// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
+		protected internal override void Update(float elapseSeconds, float realElapseSeconds)
         {
         }
 
-        /// <summary>
-        /// 关闭并清理流程管理器。
-        /// </summary>
-        public override void Shutdown()
+		/// <summary>
+		/// 关闭并清理流程管理器。
+		/// </summary>
+		protected internal override void Shutdown()
         {
             if (_fsmManager != null)
             {
@@ -96,12 +96,12 @@ namespace ZeroFramework
         /// <param name="procedures">流程管理器包含的流程。</param>
         public void Initialize(params ProcedureBase[] procedures)
         {
-            if (Zero.Instance.Fsm == null)
+            if (Zero.fsm == null)
             {
                 throw new GameFrameworkException("FSM manager is invalid.");
             }
 
-            _fsmManager = Zero.Instance.Fsm;
+            _fsmManager = Zero.fsm;
             _procedureFsm = _fsmManager.CreateFsm(this, procedures);
         }
 

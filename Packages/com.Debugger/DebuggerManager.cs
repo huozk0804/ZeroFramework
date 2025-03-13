@@ -26,7 +26,7 @@ namespace ZeroFramework.Debugger
 		/// 获取游戏框架模块优先级。
 		/// </summary>
 		/// <remarks>优先级较高的模块会优先轮询，并且关闭操作会后进行。</remarks>
-		public override int Priority => -1;
+		protected internal override int Priority => -1;
 
 		/// <summary>
 		/// 获取或设置调试器窗口是否激活。
@@ -46,7 +46,7 @@ namespace ZeroFramework.Debugger
 		/// </summary>
 		/// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
 		/// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-		public override void Update (float elapseSeconds, float realElapseSeconds) {
+		protected internal override void Update (float elapseSeconds, float realElapseSeconds) {
 			if (!_activeWindow) {
 				return;
 			}
@@ -57,7 +57,7 @@ namespace ZeroFramework.Debugger
 		/// <summary>
 		/// 关闭并清理调试器管理器。
 		/// </summary>
-		public override void Shutdown () {
+		protected internal override void Shutdown () {
 			_activeWindow = false;
 			_debuggerWindowRoot.Shutdown();
 		}

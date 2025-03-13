@@ -30,23 +30,23 @@ namespace ZeroFramework
             _objectPoolComparer = ObjectPoolComparer;
         }
 
-        /// <summary>
-        /// 获取游戏框架模块优先级。
-        /// </summary>
-        /// <remarks>优先级较高的模块会优先轮询，并且关闭操作会后进行。</remarks>
-        public override int Priority => 6;
+		/// <summary>
+		/// 获取对象池数量。
+		/// </summary>
+		public int Count => _objectPools.Count;
 
-        /// <summary>
-        /// 获取对象池数量。
-        /// </summary>
-        public int Count => _objectPools.Count;
+		/// <summary>
+		/// 获取游戏框架模块优先级。
+		/// </summary>
+		/// <remarks>优先级较高的模块会优先轮询，并且关闭操作会后进行。</remarks>
+		protected internal override int Priority => 6;
 
-        /// <summary>
-        /// 对象池管理器轮询。
-        /// </summary>
-        /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
-        /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-        public override void Update(float elapseSeconds, float realElapseSeconds)
+		/// <summary>
+		/// 对象池管理器轮询。
+		/// </summary>
+		/// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
+		/// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
+		protected internal override void Update(float elapseSeconds, float realElapseSeconds)
         {
             foreach (var objectPool in _objectPools)
             {
@@ -54,10 +54,10 @@ namespace ZeroFramework
             }
         }
 
-        /// <summary>
-        /// 关闭并清理对象池管理器。
-        /// </summary>
-        public override void Shutdown()
+		/// <summary>
+		/// 关闭并清理对象池管理器。
+		/// </summary>
+		protected internal override void Shutdown()
         {
             foreach (var objectPool in _objectPools)
             {

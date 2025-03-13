@@ -46,7 +46,7 @@ namespace ZeroFramework.Entity
 
                 _name = name;
                 _entityGroupHelper = entityGroupHelper;
-                _instancePool = Zero.Instance.ObjectPool.CreateSingleSpawnObjectPool<EntityInstanceObject>(
+                _instancePool = Zero.objectPool.CreateSingleSpawnObjectPool<EntityInstanceObject>(
                     Utility.Text.Format("Entity Instance Pool ({0})", name), instanceCapacity, instanceExpireTime,
                     instancePriority);
                 _instancePool.AutoReleaseInterval = instanceAutoReleaseInterval;

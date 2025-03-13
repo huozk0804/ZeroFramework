@@ -105,7 +105,7 @@ namespace ZeroFramework.Debugger
 
         public void Initialize(params object[] args)
         {
-            _settingManager = Zero.Instance.GetModule<ISettingManager>();
+            _settingManager = Zero.setting;
             if (_settingManager == null)
             {
                 Log.Fatal("Setting component is invalid.");

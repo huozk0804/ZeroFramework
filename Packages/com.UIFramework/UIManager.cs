@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using ZeroFramework.Resource;
 
 namespace ZeroFramework.UI
 {
@@ -49,7 +50,7 @@ namespace ZeroFramework.UI
             _closeUIFormCompleteEventHandler = null;
 
             _instancePool =
-                Zero.Instance.ObjectPool.CreateSingleSpawnObjectPool<UIPanelInstanceObject>("UI Instance Pool");
+                Zero.objectPool.CreateSingleSpawnObjectPool<UIPanelInstanceObject>("UI Instance Pool");
 
             UIPanelHelperBase uiFormHelper = Helper.CreateHelper(GameFrameworkConfig.Instance.uiFormHelperTypeName,
                 GameFrameworkConfig.Instance.uiFormCustomHelper);
@@ -153,12 +154,12 @@ namespace ZeroFramework.UI
             remove => _closeUIFormCompleteEventHandler -= value;
         }
 
-        /// <summary>
-        /// 界面管理器轮询。
-        /// </summary>
-        /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
-        /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-        public override void Update(float elapseSeconds, float realElapseSeconds)
+		/// <summary>
+		/// 界面管理器轮询。
+		/// </summary>
+		/// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
+		/// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
+		protected internal override void Update(float elapseSeconds, float realElapseSeconds)
         {
             while (_recycleQueue.Count > 0)
             {
@@ -173,10 +174,10 @@ namespace ZeroFramework.UI
             }
         }
 
-        /// <summary>
-        /// 关闭并清理界面管理器。
-        /// </summary>
-        public override void Shutdown()
+		/// <summary>
+		/// 关闭并清理界面管理器。
+		/// </summary>
+		protected internal override void Shutdown()
         {
             _isShutdown = true;
             CloseAllLoadedUIForms();
@@ -573,7 +574,7 @@ namespace ZeroFramework.UI
         /// <returns>界面的序列编号。</returns>
         public int OpenUIForm(string uiFormAssetName, string uiGroupName)
         {
-            return OpenUIForm(uiFormAssetName, uiGroupName, ResourceConst.DefaultPriority, false, null);
+            return OpenUIForm(uiFormAssetName, uiGroupName, Const.DefaultPriority, false, null);
         }
 
         /// <summary>
@@ -597,7 +598,7 @@ namespace ZeroFramework.UI
         /// <returns>界面的序列编号。</returns>
         public int OpenUIForm(string uiFormAssetName, string uiGroupName, bool pauseCoveredUIForm)
         {
-            return OpenUIForm(uiFormAssetName, uiGroupName, ResourceConst.DefaultPriority, pauseCoveredUIForm, null);
+            return OpenUIForm(uiFormAssetName, uiGroupName, Const.DefaultPriority, pauseCoveredUIForm, null);
         }
 
         /// <summary>
@@ -609,7 +610,7 @@ namespace ZeroFramework.UI
         /// <returns>界面的序列编号。</returns>
         public int OpenUIForm(string uiFormAssetName, string uiGroupName, object userData)
         {
-            return OpenUIForm(uiFormAssetName, uiGroupName, ResourceConst.DefaultPriority, false, userData);
+            return OpenUIForm(uiFormAssetName, uiGroupName, Const.DefaultPriority, false, userData);
         }
 
         /// <summary>
@@ -648,7 +649,7 @@ namespace ZeroFramework.UI
         /// <returns>界面的序列编号。</returns>
         public int OpenUIForm(string uiFormAssetName, string uiGroupName, bool pauseCoveredUIForm, object userData)
         {
-            return OpenUIForm(uiFormAssetName, uiGroupName, ResourceConst.DefaultPriority, pauseCoveredUIForm, userData);
+            return OpenUIForm(uiFormAssetName, uiGroupName, Const.DefaultPriority, pauseCoveredUIForm, userData);
         }
 
         /// <summary>

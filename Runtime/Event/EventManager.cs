@@ -33,26 +33,26 @@ namespace ZeroFramework
         /// </summary>
         public int EventCount => _eventPool.EventCount;
 
-        /// <summary>
-        /// 获取游戏框架模块优先级。
-        /// </summary>
-        /// <remarks>优先级较高的模块会优先轮询，并且关闭操作会后进行。</remarks>
-        public override int Priority => 7;
+		/// <summary>
+		/// 获取游戏框架模块优先级。
+		/// </summary>
+		/// <remarks>优先级较高的模块会优先轮询，并且关闭操作会后进行。</remarks>
+		protected internal override int Priority => 7;
 
-        /// <summary>
-        /// 事件管理器轮询。
-        /// </summary>
-        /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
-        /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-        public override void Update(float elapseSeconds, float realElapseSeconds)
+		/// <summary>
+		/// 事件管理器轮询。
+		/// </summary>
+		/// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
+		/// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
+		protected internal override void Update(float elapseSeconds, float realElapseSeconds)
         {
             _eventPool.Update(elapseSeconds, realElapseSeconds);
         }
 
-        /// <summary>
-        /// 关闭并清理事件管理器。
-        /// </summary>
-        public override void Shutdown()
+		/// <summary>
+		/// 关闭并清理事件管理器。
+		/// </summary>
+		protected internal override void Shutdown()
         {
             _eventPool.Shutdown();
         }
