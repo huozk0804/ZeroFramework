@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 namespace ZeroFramework.Resource
@@ -27,9 +28,9 @@ namespace ZeroFramework.Resource
 
     public sealed class AssetsReference : MonoBehaviour
     {
-        [SerializeField] private GameObject _sourceGameObject;
+        [FormerlySerializedAs("_sourceGameObject")] [SerializeField] private GameObject sourceGameObject;
 
-        [SerializeField] private List<AssetsRefInfo> _refAssetInfoList;
+        [FormerlySerializedAs("_refAssetInfoList")] [SerializeField] private List<AssetsRefInfo> refAssetInfoList;
 
         private IResourceManager _resourceManager;
 
@@ -37,7 +38,7 @@ namespace ZeroFramework.Resource
         {
             if (_resourceManager == null)
             {
-                _resourceManager = GameFrameworkSystem.GetModule<IResourceManager>();
+                _resourceManager = Zero.resource;
             }
 
             if (_resourceManager == null)
@@ -45,19 +46,19 @@ namespace ZeroFramework.Resource
                 throw new GameFrameworkException($"ResourceManager is null.");
             }
 
-            if (_sourceGameObject != null)
+            if (sourceGameObject != null)
             {
-                _resourceManager.UnloadAsset(_sourceGameObject);
+                _resourceManager.UnloadAsset(sourceGameObject);
             }
 
-            if (_refAssetInfoList != null)
+            if (refAssetInfoList != null)
             {
-                foreach (var refInfo in _refAssetInfoList)
+                foreach (var refInfo in refAssetInfoList)
                 {
                     _resourceManager.UnloadAsset(refInfo.refAsset);
                 }
 
-                _refAssetInfoList.Clear();
+                refAssetInfoList.Clear();
             }
         }
 
@@ -74,7 +75,7 @@ namespace ZeroFramework.Resource
             }
 
             _resourceManager = resourceManager;
-            _sourceGameObject = source;
+            sourceGameObject = source;
             return this;
         }
 
@@ -86,8 +87,7 @@ namespace ZeroFramework.Resource
             }
 
             _resourceManager = resourceManager;
-            _refAssetInfoList = new List<AssetsRefInfo>();
-            _refAssetInfoList.Add(new AssetsRefInfo(source));
+            refAssetInfoList = new List<AssetsRefInfo> { new AssetsRefInfo(source) };
             return this;
         }
 

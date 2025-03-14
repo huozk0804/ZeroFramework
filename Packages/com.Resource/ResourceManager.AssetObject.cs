@@ -8,7 +8,7 @@ using YooAsset;
 
 namespace ZeroFramework.Resource
 {
-    internal partial class ResourceManager
+    public partial class ResourceManager
     {
         /// <summary>
         /// 资源对象。
@@ -24,7 +24,8 @@ namespace ZeroFramework.Resource
                 m_AssetHandle = null;
             }
 
-            public static AssetObject Create(string name, object target, object assetHandle, ResourceManager resourceManager)
+            public static AssetObject Create(string name, object target, object assetHandle,
+                ResourceManager resourceManager)
             {
                 if (assetHandle == null)
                 {
@@ -63,6 +64,7 @@ namespace ZeroFramework.Resource
                     {
                         handle.Dispose();
                     }
+
                     handle = null;
                 }
             }

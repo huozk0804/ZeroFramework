@@ -17,7 +17,7 @@ namespace ZeroFramework.Resource
         {
             if (_resourceManager == null)
             {
-                _resourceManager = GameFrameworkSystem.GetModule<IResourceManager>();
+                _resourceManager = Zero.resource;
             }
         }
 /*

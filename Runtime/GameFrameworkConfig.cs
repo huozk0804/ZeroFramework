@@ -61,8 +61,7 @@ namespace ZeroFramework
 
         #region Resources
 
-        public ResourceHelperBase resourceCustomHelper = null;
-        public string resourceHelperTypeName = "ZeroFramework.DefaultResourceHelper";
+        
 
         #endregion
         

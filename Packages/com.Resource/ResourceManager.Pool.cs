@@ -6,17 +6,17 @@
 
 namespace ZeroFramework.Resource
 {
-    internal partial class ResourceManager
+    public partial class ResourceManager
     {
-        private IObjectPool<AssetObject> m_AssetPool;
-        
+        private IObjectPool<AssetObject> _assetPool;
+
         /// <summary>
         /// 获取或设置资源对象池自动释放可释放对象的间隔秒数。
         /// </summary>
         public float AssetAutoReleaseInterval
         {
-            get => m_AssetPool.AutoReleaseInterval;
-            set => m_AssetPool.AutoReleaseInterval = value;
+            get => _assetPool.AutoReleaseInterval;
+            set => _assetPool.AutoReleaseInterval = value;
         }
 
         /// <summary>
@@ -24,8 +24,8 @@ namespace ZeroFramework.Resource
         /// </summary>
         public int AssetCapacity
         {
-            get => m_AssetPool.Capacity;
-            set => m_AssetPool.Capacity = value;
+            get => _assetPool.Capacity;
+            set => _assetPool.Capacity = value;
         }
 
         /// <summary>
@@ -33,8 +33,8 @@ namespace ZeroFramework.Resource
         /// </summary>
         public float AssetExpireTime
         {
-            get => m_AssetPool.ExpireTime;
-            set => m_AssetPool.ExpireTime = value;
+            get => _assetPool.ExpireTime;
+            set => _assetPool.ExpireTime = value;
         }
 
         /// <summary>
@@ -42,22 +42,22 @@ namespace ZeroFramework.Resource
         /// </summary>
         public int AssetPriority
         {
-            get => m_AssetPool.Priority;
-            set => m_AssetPool.Priority = value;
+            get => _assetPool.Priority;
+            set => _assetPool.Priority = value;
         }
-        
+
         /// <summary>
         /// 卸载资源。
         /// </summary>
         /// <param name="asset">要卸载的资源。</param>
         public void UnloadAsset(object asset)
         {
-            if (m_AssetPool != null)
+            if (_assetPool != null)
             {
-                m_AssetPool.Unspawn(asset);
+                _assetPool.Unspawn(asset);
             }
         }
-        
+
         /// <summary>
         /// 设置对象池管理器。
         /// </summary>
@@ -68,7 +68,8 @@ namespace ZeroFramework.Resource
             {
                 throw new GameFrameworkException("Object pool manager is invalid.");
             }
-            m_AssetPool = objectPoolManager.CreateMultiSpawnObjectPool<AssetObject>("Asset Pool");
+
+            _assetPool = objectPoolManager.CreateMultiSpawnObjectPool<AssetObject>("Asset Pool");
         }
     }
 }
