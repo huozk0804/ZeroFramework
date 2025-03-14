@@ -246,12 +246,6 @@ namespace ZeroFramework
             Log.Info("Low memory reported...");
             objectPool.ReleaseAllUnused();
 
-            //ObjectPoolComponent objectPoolComponent = GameEntry.GetComponent<ObjectPoolComponent>();
-            //if (objectPoolComponent != null)
-            //{
-            //    objectPoolComponent.ReleaseAllUnused();
-            //}
-
             //ResourceComponent resourceCompoent = GameEntry.GetComponent<ResourceComponent>();
             //if (resourceCompoent != null)
             //{
