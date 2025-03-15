@@ -6,9 +6,9 @@ using UnityEngine;
 namespace ZeroFramework
 {
     /// <summary>
-    /// 最小堆
+    /// 最小堆数据结构
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">数据类型</typeparam>
     public class MinHeap<T> : ICollection<T>
     {
         private T[] _data;

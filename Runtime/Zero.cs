@@ -187,10 +187,10 @@ namespace ZeroFramework
             Application.lowMemory += OnLowMemory;
 #endif
 
-            Log.Info("Zero Framework Version: {0}", Version.GameFrameworkVersion);
+            Log.Info("Zero Framework Version: {0}", Version.ZeroFrameworkVersion);
             Log.Info("Unity Version: {0}", Application.unityVersion);
             Log.Info("Game Version: {0} ({1})", Version.GameVersion, Version.InternalGameVersion);
-            Log.Info("Game Resources Version: {0}", Version.GameResVersion);
+            Log.Info("Game Resources Version: {0}", Version.ResVersion);
             Log.Info("Zero Framework Launch Succeed.");
         }
 

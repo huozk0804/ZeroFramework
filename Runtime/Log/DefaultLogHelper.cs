@@ -5,7 +5,6 @@
 //------------------------------------------------------------
 
 using System;
-using System.Collections.Concurrent;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -21,7 +20,6 @@ namespace ZeroFramework
         private const int FLUSH_INTERVAL = 10;
 
         private readonly StringBuilder _buffer = new StringBuilder(BUFFER_SIZE);
-        private readonly ConcurrentQueue<string> _logQueue = new ConcurrentQueue<string>();
         private readonly object _fileLock = new object();
         private readonly Timer _flushTimer;
 

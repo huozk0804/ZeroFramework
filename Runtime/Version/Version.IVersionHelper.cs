@@ -13,20 +13,10 @@ namespace ZeroFramework
         /// </summary>
         public interface IVersionHelper
         {
-            /// <summary>
-            /// 获取游戏版本号。
-            /// </summary>
-            string GameVersion { get; }
-
-            /// <summary>
-            /// 游戏资源版本号
-            /// </summary>
-            string GameResVersion { get; }
-
-            /// <summary>
-            /// 获取内部游戏版本号。
-            /// </summary>
-            int InternalGameVersion { get; }
+            VersionInfo LoadLocalVersion (string path = null);
+			VersionInfo GetRemoteVersion (string url);
+            bool IsForceUpdate ();
+            void WriteNewVersion (string path = null);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace ZeroFramework.Debugger
 #else
                     DrawItem("Game Identifier", Application.bundleIdentifier);
 #endif
-                DrawItem("Game Framework Version", Version.GameFrameworkVersion);
+                DrawItem("Game Framework Version", Version.ZeroFrameworkVersion);
                 DrawItem("Game Version",
                     Utility.Text.Format("{0} ({1})", Version.GameVersion, Version.InternalGameVersion));
                 //TODO:资源框架引用待修改

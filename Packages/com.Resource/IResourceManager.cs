@@ -8,7 +8,6 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using YooAsset;
 
 namespace ZeroFramework.Resource
@@ -91,44 +90,25 @@ namespace ZeroFramework.Resource
 		/// </summary>
 		long Milliseconds { get; set; }
 
-		Transform InstanceRoot { get; set; }
-
-		/// <summary>
-		/// 热更链接URL。
-		/// </summary>
-		string HostServerURL { get; set; }
-
 		/// <summary>
 		/// 获取或设置资源对象池自动释放可释放对象的间隔秒数。
 		/// </summary>
-		float AssetAutoReleaseInterval {
-			get;
-			set;
-		}
+		float AssetAutoReleaseInterval { get; set; }
 
 		/// <summary>
 		/// 获取或设置资源对象池的容量。
 		/// </summary>
-		int AssetCapacity {
-			get;
-			set;
-		}
+		int AssetCapacity { get; set; }
 
 		/// <summary>
 		/// 获取或设置资源对象池对象过期秒数。
 		/// </summary>
-		float AssetExpireTime {
-			get;
-			set;
-		}
+		float AssetExpireTime { get; set; }
 
 		/// <summary>
 		/// 获取或设置资源对象池的优先级。
 		/// </summary>
-		int AssetPriority {
-			get;
-			set;
-		}
+		int AssetPriority { get; set; }
 
 		/// <summary>
 		/// 卸载资源。
@@ -186,6 +166,15 @@ namespace ZeroFramework.Resource
 		AssetInfo GetAssetInfo (string location, string packageName = "");
 
 		/// <summary>
+		/// 同步加载资源。
+		/// </summary>
+		/// <param name="location">资源的定位地址。</param>
+		/// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
+		/// <typeparam name="T">要加载资源的类型。</typeparam>
+		/// <returns>资源实例。</returns>
+		T LoadAsset<T> (string location, string packageName = "") where T : UnityEngine.Object;
+
+		/// <summary>
 		/// 异步加载资源。
 		/// </summary>
 		/// <param name="location">资源的定位地址。</param>
@@ -206,14 +195,7 @@ namespace ZeroFramework.Resource
 		/// <param name="packageName">指定资源包的名称。不传使用默认资源包。</param>
 		void LoadAssetAsync (string location, Type assetType, int priority, LoadAssetCallbacks loadAssetCallbacks, object userData, string packageName = "");
 
-		/// <summary>
-		/// 同步加载资源。
-		/// </summary>
-		/// <param name="location">资源的定位地址。</param>
-		/// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
-		/// <typeparam name="T">要加载资源的类型。</typeparam>
-		/// <returns>资源实例。</returns>
-		T LoadAsset<T> (string location, string packageName = "") where T : UnityEngine.Object;
+		
 
 		/// <summary>
 		/// 同步加载游戏物体并实例化。
