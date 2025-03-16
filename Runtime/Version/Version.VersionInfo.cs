@@ -8,24 +8,24 @@ using System;
 
 namespace ZeroFramework
 {
-	/// <summary>
-	/// 版本号信息类。
-	/// </summary>
-	public static partial class Version
-	{
-		[Serializable]
-		public abstract class VersionInfo
-		{
-			public string gameVersion;
-			public string resVersion;
-			public string cdnUrl;
-			public string serverUrl;
-			public string noticeUrl;
-			public int platform;
-			public int channel;
-			public string[] resPackage;
-			public string[] dllName;
-			public string[] aotDllName;
-		}
-	}
+    /// <summary>
+    /// 版本号信息类。
+    /// </summary>
+    public static partial class Version
+    {
+        [Serializable]
+        public class VersionInfo
+        {
+            public string gameVersion;
+            public string resVersion;
+            public string cdnUrl;
+            public string serverUrl;
+            public string noticeUrl;
+            public int platform;
+            public int channel;
+            public string[] resPackage;
+            public string[] dllName;
+            public string[] aotDllName;
+        }
+    }
 }

@@ -128,22 +128,22 @@ namespace ZeroFramework.Editor
 		/// </summary>
 		/// <exception cref="Exception"></exception>
 		public static void CollectSVC () {
-			string savePath = ShaderVariantCollectorSettingData.Setting.SavePath;
-			System.Action completedCallback = () => {
-				ShaderVariantCollection collection =
-					AssetDatabase.LoadAssetAtPath<ShaderVariantCollection>(savePath);
-				if (collection != null) {
-					Debug.Log($"ShaderCount : {collection.shaderCount}");
-					Debug.Log($"VariantCount : {collection.variantCount}");
-				} else {
-					throw new Exception("Failed to Collect shader Variants.");
-				}
-
-				EditorTools.CloseUnityGameWindow();
-				EditorApplication.Exit(0);
-			};
-
-			ShaderVariantCollector.Run(savePath, completedCallback);
+			// string savePath = ShaderVariantCollectorSettingData.Setting.SavePath;
+			// System.Action completedCallback = () => {
+			// 	ShaderVariantCollection collection =
+			// 		AssetDatabase.LoadAssetAtPath<ShaderVariantCollection>(savePath);
+			// 	if (collection != null) {
+			// 		Debug.Log($"ShaderCount : {collection.shaderCount}");
+			// 		Debug.Log($"VariantCount : {collection.variantCount}");
+			// 	} else {
+			// 		throw new Exception("Failed to Collect shader Variants.");
+			// 	}
+			//
+			// 	EditorTools.CloseUnityGameWindow();
+			// 	EditorApplication.Exit(0);
+			// };
+			//
+			// ShaderVariantCollector.Run(savePath, completedCallback);
 		}
 	}
 }

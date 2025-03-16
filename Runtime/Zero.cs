@@ -189,14 +189,13 @@ namespace ZeroFramework
 
             Log.Info("Zero Framework Version: {0}", Version.ZeroFrameworkVersion);
             Log.Info("Unity Version: {0}", Application.unityVersion);
-            Log.Info("Game Version: {0} ({1})", Version.GameVersion, Version.InternalGameVersion);
-            Log.Info("Game Resources Version: {0}", Version.ResVersion);
+            Log.Info("Game Name: {0}", Application.productName);
             Log.Info("Zero Framework Launch Succeed.");
         }
 
         public static void Update(float deltaTime, float unscaledDeltaTime)
         {
-            for (var current = _frameworkModules.First; current != null; current = current.Next)
+            for (var current = FrameworkModules.First; current != null; current = current.Next)
             {
                 current.Value.Update(deltaTime, unscaledDeltaTime);
             }
@@ -206,12 +205,12 @@ namespace ZeroFramework
         {
             Log.Info("Zero Framework is destroyed.");
             
-            for (var current = _frameworkModules.Last; current != null; current = current.Previous)
+            for (var current = FrameworkModules.Last; current != null; current = current.Previous)
             {
                 current.Value.Shutdown();
             }
 
-            _frameworkModules.Clear();
+            FrameworkModules.Clear();
             ReferencePool.ClearAll();
             Utility.Marshal.FreeCachedHGlobal();
             GameFrameworkLog.SetLogHelper(null);
@@ -230,7 +229,7 @@ namespace ZeroFramework
             Object.DestroyImmediate(_root);
             _root = null;
 
-            for (var current = _frameworkModules.Last; current != null; current = current.Previous)
+            for (var current = FrameworkModules.Last; current != null; current = current.Previous)
             {
                 current.Value.Shutdown();
             }
@@ -257,7 +256,7 @@ namespace ZeroFramework
 
         #region Framework Module
 
-        private readonly static GameFrameworkLinkedList<GameFrameworkModule> _frameworkModules =
+        private static readonly GameFrameworkLinkedList<GameFrameworkModule> FrameworkModules =
             new GameFrameworkLinkedList<GameFrameworkModule>();
 
         private static DataNodeManager _dataNodeManager;
@@ -554,7 +553,7 @@ namespace ZeroFramework
             string fullName = $"{@class.Namespace}.{@class.Name}";
             Type moduleType = Utility.Assembly.GetType(fullName);
 
-            foreach (GameFrameworkModule module in _frameworkModules)
+            foreach (GameFrameworkModule module in FrameworkModules)
             {
                 if (module.GetType() == moduleType)
                 {
@@ -570,7 +569,7 @@ namespace ZeroFramework
         /// </summary>
         private static GameFrameworkModule GetModule(Type moduleType)
         {
-            foreach (GameFrameworkModule module in _frameworkModules)
+            foreach (GameFrameworkModule module in FrameworkModules)
             {
                 if (module.GetType() == moduleType)
                 {
@@ -593,7 +592,7 @@ namespace ZeroFramework
                     moduleType.FullName));
             }
 
-            LinkedListNode<GameFrameworkModule> current = _frameworkModules.First;
+            LinkedListNode<GameFrameworkModule> current = FrameworkModules.First;
             while (current != null)
             {
                 if (module.Priority > current.Value.Priority)
@@ -606,11 +605,11 @@ namespace ZeroFramework
 
             if (current != null)
             {
-                _frameworkModules.AddBefore(current, module);
+                FrameworkModules.AddBefore(current, module);
             }
             else
             {
-                _frameworkModules.AddLast(module);
+                FrameworkModules.AddLast(module);
             }
 
             return module;

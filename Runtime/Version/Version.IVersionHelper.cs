@@ -4,6 +4,9 @@
 // Feedback: https://github.com/huozk0804/ZeroFramework
 //------------------------------------------------------------
 
+using System.Threading;
+using Cysharp.Threading.Tasks;
+
 namespace ZeroFramework
 {
     public static partial class Version
@@ -13,10 +16,14 @@ namespace ZeroFramework
         /// </summary>
         public interface IVersionHelper
         {
-            VersionInfo LoadLocalVersion (string path = null);
-			VersionInfo GetRemoteVersion (string url);
-            bool IsForceUpdate ();
-            void WriteNewVersion (string path = null);
+            string VersionFileName { get; }
+
+            VersionInfo LoadLocalVersion(string localPath = null);
+            UniTask<VersionInfo> GetRemoteVersion(string url);
+            bool IsForceUpdate(string localVer, string remoteVer);
+            void SaveNewVersion(VersionInfo data, string path = null);
+            VersionInfo ParseCustomString(string content);
+            string ParseCustomVersion(VersionInfo data);
         }
     }
 }
