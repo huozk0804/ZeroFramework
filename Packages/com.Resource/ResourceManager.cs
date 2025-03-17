@@ -21,11 +21,7 @@ namespace ZeroFramework.Resource
         /// <summary>
         /// 资源包名称。
         /// </summary>
-        public string DefaultPackageName
-        {
-            get => _defaultPackageName;
-            set => _defaultPackageName = value;
-        }
+        public string DefaultPackageName { get; set; } = "DefaultPackage";
 
         /// <summary>
         /// 资源系统运行模式。
@@ -42,65 +38,21 @@ namespace ZeroFramework.Resource
         /// </summary>
         public long Milliseconds { get; set; }
 
-        /// <summary>
-        /// 实例化的根节点。
-        /// </summary>
-        public Transform InstanceRoot { get; set; }
-
-        /// <summary>
-        /// Propagates notification that operations should be canceled.
-        /// </summary>
-        public CancellationToken CancellationToken { get; private set; }
-
-        /// <summary>
-        /// 资源服务器地址。
-        /// </summary>
-        public string HostServerURL { get; set; }
-
-        public string FallbackHostServerURL { get; set; }
-
-        private string m_ApplicableGameVersion;
-
-        private int m_InternalResourceVersion;
-
-        private string m_ReadOnlyPath;
-        private string m_ReadWritePath;
-        private string _defaultPackageName = "DefaultPackage";
-
-        /// <summary>
-        /// 获取资源只读区路径。
-        /// </summary>
-        public string ReadOnlyPath => m_ReadOnlyPath;
-
-        /// <summary>
-        /// 获取资源读写区路径。
-        /// </summary>
-        public string ReadWritePath => m_ReadWritePath;
-
-        /// <summary>
-        /// 获取当前资源适用的游戏版本号。
-        /// </summary>
-        public string ApplicableGameVersion => m_ApplicableGameVersion;
-
-        /// <summary>
-        /// 获取当前内部资源版本号。
-        /// </summary>
-        public int InternalResourceVersion => m_InternalResourceVersion;
 
         public int DownloadingMaxNum { get; set; }
         public int FailedTryAgain { get; set; }
-        
+
         /// <summary>
         /// 默认资源包。
         /// </summary>
         internal ResourcePackage DefaultPackage { private set; get; }
-        
+
         /// <summary>
         /// 获取游戏框架模块优先级。
         /// </summary>
         /// <remarks>优先级较高的模块会优先轮询，并且关闭操作会后进行。</remarks>
         protected internal override int Priority => 4;
-        
+
         /// <summary>
         /// 资源包列表。
         /// </summary>
@@ -123,76 +75,38 @@ namespace ZeroFramework.Resource
         {
         }
 
-        public void Initialize(string defaultPackageName = null)
+        public void Initialize(string defaultPackageName = null, long milliseconds = 10)
         {
-            // 初始化资源系统
             if (!YooAssets.Initialized)
             {
                 YooAssets.Initialize(new ResourceLogger());
             }
 
+            Milliseconds = milliseconds;
             YooAssets.SetOperationSystemMaxTimeSlice(Milliseconds);
 
-            // 创建默认的资源包
-            string packageName = defaultPackageName.IsNullOrEmpty()? DefaultPackageName : defaultPackageName;
-            var defaultPackage = YooAssets.TryGetPackage(packageName);
+            if (!defaultPackageName.IsNullOrEmpty())
+                DefaultPackageName = defaultPackageName;
+            var defaultPackage = YooAssets.TryGetPackage(DefaultPackageName);
             if (defaultPackage == null)
             {
-                defaultPackage = YooAssets.CreatePackage(packageName);
+                defaultPackage = YooAssets.CreatePackage(DefaultPackageName);
                 YooAssets.SetDefaultPackage(defaultPackage);
                 DefaultPackage = defaultPackage;
             }
 
-            CancellationToken = InstanceRoot.gameObject.GetCancellationTokenOnDestroy();
             SetObjectPoolManager(Zero.objectPool);
         }
 
-        /// <summary>
-        /// 设置资源只读区路径。
-        /// </summary>
-        /// <param name="readOnlyPath">资源只读区路径。</param>
-        public void SetReadOnlyPath(string readOnlyPath)
+
+        public async UniTask<InitializationOperation> InitPackage(EPlayMode playMode, string packageName)
         {
-            if (string.IsNullOrEmpty(readOnlyPath))
-            {
-                throw new GameFrameworkException("Read-only path is invalid.");
-            }
-
-            m_ReadOnlyPath = readOnlyPath;
-        }
-
-        /// <summary>
-        /// 设置资源读写区路径。
-        /// </summary>
-        /// <param name="readWritePath">资源读写区路径。</param>
-        public void SetReadWritePath(string readWritePath)
-        {
-            if (string.IsNullOrEmpty(readWritePath))
-            {
-                throw new GameFrameworkException("Read-write path is invalid.");
-            }
-
-            m_ReadWritePath = readWritePath;
-        }
-
-        public async UniTask<InitializationOperation> InitPackage(string packageName)
-        {
-#if UNITY_EDITOR
-            //编辑器模式使用。
-            EPlayMode playMode = (EPlayMode)UnityEditor.EditorPrefs.GetInt("EditorPlayMode");
-            Log.Warning($"Editor Module Used :{playMode}");
-#else
-            //运行时使用。
-            EPlayMode playMode = (EPlayMode)PlayMode;
-#endif
-
             if (PackageMap.ContainsKey(packageName))
             {
                 Log.Error($"ResourceSystem has already init package : {packageName}");
                 return null;
             }
 
-            // 创建资源包裹类
             var package = YooAssets.TryGetPackage(packageName);
             if (package == null)
             {
@@ -210,8 +124,10 @@ namespace ZeroFramework.Resource
                 var buildResult = EditorSimulateModeHelper.SimulateBuild(packageName);
                 var packageRoot = buildResult.PackageRootDirectory;
                 var editorFileSystemParams = FileSystemParameters.CreateDefaultEditorFileSystemParameters(packageRoot);
-                var initParameters = new EditorSimulateModeParameters();
-                initParameters.EditorFileSystemParameters = editorFileSystemParams;
+                var initParameters = new EditorSimulateModeParameters
+                {
+                    EditorFileSystemParameters = editorFileSystemParams
+                };
                 initializationOperation = package.InitializeAsync(initParameters);
             }
 
@@ -219,8 +135,10 @@ namespace ZeroFramework.Resource
             if (playMode == EPlayMode.OfflinePlayMode)
             {
                 var buildinFileSystemParams = FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
-                var initParameters = new OfflinePlayModeParameters();
-                initParameters.BuildinFileSystemParameters = buildinFileSystemParams;
+                var initParameters = new OfflinePlayModeParameters
+                {
+                    BuildinFileSystemParameters = buildinFileSystemParams
+                };
                 initializationOperation = package.InitializeAsync(initParameters);
             }
 
@@ -231,9 +149,11 @@ namespace ZeroFramework.Resource
                 var cacheFileSystemParams = FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices);
                 var buildinFileSystemParams = FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
 
-                var initParameters = new HostPlayModeParameters();
-                initParameters.BuildinFileSystemParameters = buildinFileSystemParams;
-                initParameters.CacheFileSystemParameters = cacheFileSystemParams;
+                var initParameters = new HostPlayModeParameters
+                {
+                    BuildinFileSystemParameters = buildinFileSystemParams,
+                    CacheFileSystemParameters = cacheFileSystemParams
+                };
                 initializationOperation = package.InitializeAsync(initParameters);
             }
 
@@ -245,20 +165,21 @@ namespace ZeroFramework.Resource
                 var webRemoteFileSystemParams =
                     FileSystemParameters.CreateDefaultWebRemoteFileSystemParameters(remoteServices); //支持跨域下载
 
-                var initParameters = new WebPlayModeParameters();
-                initParameters.WebServerFileSystemParameters = webServerFileSystemParams;
-                initParameters.WebRemoteFileSystemParameters = webRemoteFileSystemParams;
+                var initParameters = new WebPlayModeParameters
+                {
+                    WebServerFileSystemParameters = webServerFileSystemParams,
+                    WebRemoteFileSystemParameters = webRemoteFileSystemParams
+                };
 
                 initializationOperation = package.InitializeAsync(initParameters);
             }
 
             await initializationOperation.ToUniTask();
-
             Log.Info($"Init resource package version : {initializationOperation?.Status}");
 
             return initializationOperation;
         }
-        
+
         protected internal override void Update(float elapseSeconds, float realElapseSeconds)
         {
         }
@@ -273,7 +194,7 @@ namespace ZeroFramework.Resource
             // YooAssets.Destroy();
 #endif
         }
-        
+
         /// <summary>
         /// 是否需要从远端更新下载。
         /// </summary>
@@ -532,9 +453,7 @@ namespace ZeroFramework.Resource
             {
                 try
                 {
-                    await UniTask.WaitUntil(
-                            () => !_assetLoadingList.Contains(assetObjectKey),
-                            cancellationToken: CancellationToken)
+                    await UniTask.WaitUntil(() => !_assetLoadingList.Contains(assetObjectKey))
 #if UNITY_EDITOR
                         .AttachExternalCancellation(_timeoutController.Timeout(TimeSpan.FromSeconds(60)));
                     _timeoutController.Reset();
