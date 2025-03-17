@@ -123,7 +123,7 @@ namespace ZeroFramework.Resource
         {
         }
 
-        public void Initialize()
+        public void Initialize(string defaultPackageName = null)
         {
             // 初始化资源系统
             if (!YooAssets.Initialized)
@@ -134,7 +134,7 @@ namespace ZeroFramework.Resource
             YooAssets.SetOperationSystemMaxTimeSlice(Milliseconds);
 
             // 创建默认的资源包
-            string packageName = DefaultPackageName;
+            string packageName = defaultPackageName.IsNullOrEmpty()? DefaultPackageName : defaultPackageName;
             var defaultPackage = YooAssets.TryGetPackage(packageName);
             if (defaultPackage == null)
             {

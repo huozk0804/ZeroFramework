@@ -6,6 +6,7 @@
 
 using System;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace ZeroFramework
 {
@@ -124,7 +125,7 @@ namespace ZeroFramework
         }
 
         /// <summary>
-        /// 
+        /// 请求远程版本的数据
         /// </summary>
         /// <param name="url"></param>
         public static async UniTask GetRemoteVersion(string url)
@@ -172,22 +173,23 @@ namespace ZeroFramework
         public static void SaveNewestVersion(VersionInfo newInfo)
         {
             /*
-             * 1.更新内存数据
-             * 2.更新本地txt数据
+             * 1.检测差异数据
+             * 2.更新内存数据
+             * 3.更新本地txt数据
              */
-            if (!LocalLoaded)
+            if (LocalLoaded)
             {
-                _LocalVersion = newInfo;
+				Utility.GameObject.UpdateIfDifferent(newInfo, _LocalVersion);
             }
             else
             {
-                if (_LocalVersion.gameVersion != newInfo.gameVersion)
-                    _LocalVersion.gameVersion = newInfo.gameVersion;
-            }
+				_LocalVersion = newInfo;
+			}
 
-            _LocalVersion = newInfo;
-        }
+			if (_VersionHelper == null)
+				throw new GameFrameworkException("VersionHelper is null.");
 
-        
+			_VersionHelper.SaveNewVersion(_LocalVersion, Application.streamingAssetsPath);
+		} 
     }
 }

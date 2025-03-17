@@ -110,19 +110,21 @@ namespace ZeroFramework
 
             try
             {
-                string jsonContent = ParseCustomVersion(data);
-                string targetDirectory = Application.persistentDataPath;
-                if (!string.IsNullOrEmpty(path))
+                string content = ParseCustomVersion(data);
+                string targetDirectory;
+                if (!path.IsNullOrEmpty())
                 {
-                    targetDirectory = Path.Combine(targetDirectory, path);
+                    targetDirectory = path;
                     if (!Directory.Exists(targetDirectory))
                         Directory.CreateDirectory(targetDirectory);
-                }
+                } else {
+					targetDirectory = Application.persistentDataPath;
+				}
 
-                string fullPath = Path.Combine(targetDirectory, VersionFileName);
+				string fullPath = Path.Combine(targetDirectory, VersionFileName);
                 string tempPath = Path.Combine(targetDirectory, $"_{VersionFileName}.tmp");
 
-                File.WriteAllText(tempPath, jsonContent, Encoding.UTF8);
+                File.WriteAllText(tempPath, content, Encoding.UTF8);
                 File.Move(tempPath, fullPath);
             }
             catch (Exception ex)
