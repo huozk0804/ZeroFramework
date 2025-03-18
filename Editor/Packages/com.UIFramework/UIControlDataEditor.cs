@@ -12,9 +12,7 @@ namespace ZeroFramework.Editor.Package
         public System.Type[] allTypes;
 
         private List<CtrlItemData> _ctrlItemData;
-        private List<SubUIItemData> _subUIItemData;
         private List<ControlItemDrawer> _ctrlItemDrawers;
-        private List<SubUIItemDrawer> _subUIItemDrawers;
         private string _searchPattern = string.Empty;
         private string _createPath = string.Empty;
 
@@ -32,11 +30,7 @@ namespace ZeroFramework.Editor.Package
             if (data.ctrlItemData == null)
                 data.ctrlItemData = new List<CtrlItemData>();
 
-            if (data.subUIItemData == null)
-                data.subUIItemData = new List<SubUIItemData>();
-
             _ctrlItemData = data.ctrlItemData;
-            _subUIItemData = data.subUIItemData;
             CheckDrawers();
 
             EditorGUILayout.BeginVertical();
@@ -72,35 +66,6 @@ namespace ZeroFramework.Editor.Package
                     GUILayout.Space(10f);
                 }
 
-                GUILayout.Space(10f);
-
-                // 绘制子UI
-                EditorGUILayout.BeginHorizontal();
-                {
-                    EditorGUILayout.LabelField("子UI绑定", EditorStyles.boldLabel);
-                    if (_subUIItemDrawers.Count == 0)
-                    {
-                        if (GUILayout.Button("+", EditorStyles.miniButton))
-                        {
-                            AddSubUIAfter(-1);
-                            Repaint();
-                            return;
-                        }
-                    }
-                }
-                EditorGUILayout.EndHorizontal();
-                foreach (var drawer in _subUIItemDrawers)
-                {
-                    GUILayout.Space(10f);
-                    if (!drawer.Draw())
-                    {
-                        Repaint();
-                        return;
-                    }
-
-                    GUILayout.Space(10f);
-                }
-                
                 GUILayout.Space(10f);
 
                 // 绘制子UI
@@ -157,28 +122,12 @@ namespace ZeroFramework.Editor.Package
             AddControlAfter(idx);
         }
 
-        public void AddSubUIAfter(SubUIItemDrawer drawer)
-        {
-            int idx = _subUIItemDrawers.IndexOf(drawer);
-            Debug.Assert(idx != -1);
-
-            AddSubUIAfter(idx);
-        }
-
         public void RemoveControl(ControlItemDrawer drawer)
         {
             int idx = _ctrlItemDrawers.IndexOf(drawer);
             Debug.Assert(idx != -1);
 
             RemoveControl(idx);
-        }
-
-        public void RemoveSubUI(SubUIItemDrawer drawer)
-        {
-            int idx = _subUIItemDrawers.IndexOf(drawer);
-            Debug.Assert(idx != -1);
-
-            RemoveSubUI(idx);
         }
 
         #region Private
@@ -194,16 +143,6 @@ namespace ZeroFramework.Editor.Package
                     _ctrlItemDrawers.Add(drawer);
                 }
             }
-
-            if (_subUIItemDrawers == null)
-            {
-                _subUIItemDrawers = new List<SubUIItemDrawer>(100);
-                foreach (var item in _subUIItemData)
-                {
-                    SubUIItemDrawer drawer = new SubUIItemDrawer(this, item);
-                    _subUIItemDrawers.Add(drawer);
-                }
-            }
         }
 
         private void AddControlAfter(int idx)
@@ -215,25 +154,10 @@ namespace ZeroFramework.Editor.Package
             _ctrlItemDrawers.Insert(idx + 1, drawer);
         }
 
-        private void AddSubUIAfter(int idx)
-        {
-            SubUIItemData itemData = new SubUIItemData();
-            _subUIItemData.Insert(idx + 1, itemData);
-
-            SubUIItemDrawer drawer = new SubUIItemDrawer(this, itemData);
-            _subUIItemDrawers.Insert(idx + 1, drawer);
-        }
-
         private void RemoveControl(int idx)
         {
             _ctrlItemData.RemoveAt(idx);
             _ctrlItemDrawers.RemoveAt(idx);
-        }
-
-        private void RemoveSubUI(int idx)
-        {
-            _subUIItemData.RemoveAt(idx);
-            _subUIItemDrawers.RemoveAt(idx);
         }
 
         #endregion

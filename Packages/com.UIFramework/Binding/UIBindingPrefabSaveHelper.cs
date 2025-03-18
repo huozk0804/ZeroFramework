@@ -54,7 +54,6 @@ namespace ZeroFramework.UI
                     foreach (var comp in uiControlData)
                     {
                         comp.CorrectComponents();
-                        comp.CheckSubUIs();
                     }
                 }
             }
