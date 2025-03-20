@@ -15,13 +15,13 @@ namespace ZeroFramework.Resource
         /// </summary>
         private sealed class AssetObject : ObjectBase
         {
-            private AssetHandle m_AssetHandle;
-            private ResourceManager m_ResourceManager;
+            private AssetHandle _assetHandle;
+            private ResourceManager _resourceManager;
 
 
             public AssetObject()
             {
-                m_AssetHandle = null;
+                _assetHandle = null;
             }
 
             public static AssetObject Create(string name, object target, object assetHandle,
@@ -39,15 +39,15 @@ namespace ZeroFramework.Resource
 
                 AssetObject assetObject = ReferencePool.Acquire<AssetObject>();
                 assetObject.Initialize(name, target);
-                assetObject.m_AssetHandle = (AssetHandle)assetHandle;
-                assetObject.m_ResourceManager = resourceManager;
+                assetObject._assetHandle = (AssetHandle)assetHandle;
+                assetObject._resourceManager = resourceManager;
                 return assetObject;
             }
 
             public override void Clear()
             {
                 base.Clear();
-                m_AssetHandle = null;
+                _assetHandle = null;
             }
 
             protected internal override void OnUnspawn()
@@ -59,7 +59,7 @@ namespace ZeroFramework.Resource
             {
                 if (!isShutdown)
                 {
-                    AssetHandle handle = m_AssetHandle;
+                    AssetHandle handle = _assetHandle;
                     if (handle is { IsValid: true })
                     {
                         handle.Dispose();

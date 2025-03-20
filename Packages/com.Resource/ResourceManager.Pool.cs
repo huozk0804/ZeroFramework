@@ -6,7 +6,10 @@
 
 namespace ZeroFramework.Resource
 {
-	public partial class ResourceManager
+	/// <summary>
+	/// 资源缓存
+	/// </summary>
+	public sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
 	{
 		private IObjectPool<AssetObject> _assetPool;
 

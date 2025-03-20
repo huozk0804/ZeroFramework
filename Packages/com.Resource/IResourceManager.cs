@@ -197,7 +197,7 @@ namespace ZeroFramework.Resource
 		T LoadSubAsset<T> (string location, string packageName = "") where T : UnityEngine.Object;
 
 		/// <summary>
-		/// 同步加载子资源。
+		/// 同步加载原生资源
 		/// </summary>
 		/// <param name="location">资源的定位地址。</param>
 		/// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
@@ -209,13 +209,13 @@ namespace ZeroFramework.Resource
 		#region 异步资源加载接口
 
 		/// <summary>
-		/// 异步加载资源。
+		/// 异步加载资源
 		/// </summary>
-		/// <param name="location">资源的定位地址。</param>
-		/// <param name="assetType">要加载的资源类型。</param>
-		/// <param name="loadAssetCallbacks">加载资源回调函数集。</param>
-		/// <param name="userData">用户自定义数据。</param>
-		/// <param name="packageName">指定资源包的名称。不传使用默认资源包。</param>
+		/// <param name="location">资源的定位地址</param>
+		/// <param name="assetType">要加载的资源类型</param>
+		/// <param name="loadAssetCallbacks">加载资源回调函数集</param>
+		/// <param name="userData">用户自定义数据</param>
+		/// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
 		void LoadAssetAsync (string location, Type assetType, Action<UnityEngine.Object, string> callback, object userData, string packageName = "");
 
 		/// <summary>
@@ -225,8 +225,7 @@ namespace ZeroFramework.Resource
 		/// <param name="callback">回调函数。</param>
 		/// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
 		/// <typeparam name="T">要加载资源的类型。</typeparam>
-		UniTask<T> LoadAssetAsync<T> (string location, Action<T, string> callback, string packageName = "")
-			where T : UnityEngine.Object;
+		UniTask<T> LoadAssetAsync<T> (string location, Action<T, string> callback, object userData, string packageName = "") where T : UnityEngine.Object;
 
 		/// <summary>
 		/// 异步加载子资源对象。

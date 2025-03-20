@@ -398,33 +398,5 @@ namespace ZeroFramework.Resource
 				}
 			}
 		}
-
-		T IResourceManager.LoadSubAsset<T> (string location, string packageName) {
-			throw new NotImplementedException();
-		}
-
-		byte[] IResourceManager.LoadRawAsset (string location, string packageName) {
-			throw new NotImplementedException();
-		}
-
-		void IResourceManager.LoadAssetAsync (string location, Type assetType, Action<UnityEngine.Object, string> callback, object userData, string packageName) {
-			throw new NotImplementedException();
-		}
-
-		UniTask<T> IResourceManager.LoadAssetAsync<T> (string location, Action<T, string> callback, string packageName) {
-			throw new NotImplementedException();
-		}
-
-		UniTask<T> IResourceManager.LoadSubAssetAsync<T> (string location, string packageName) {
-			throw new NotImplementedException();
-		}
-
-		UniTask<byte[]> IResourceManager.LoadRawAssetAsync (string location, CancellationToken cancellationToken, string packageName) {
-			throw new NotImplementedException();
-		}
-
-		UniTask<byte[]> IResourceManager.LoadSceneAsync (string location, LoadSceneMode sceneMode, CancellationToken cancellationToken, string packageName) {
-			throw new NotImplementedException();
-		}
 	}
 }
