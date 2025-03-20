@@ -125,7 +125,7 @@ namespace ZeroFramework
 
 		public static void Init () {
 			if (_root == null) {
-				_root = new GameObject("[ZERO]Framework");
+				_root = new GameObject("[<ZERO>]Framework");
 				_root.AddComponent<ZeroFrameworkComponent>();
 			}
 
@@ -242,8 +242,7 @@ namespace ZeroFramework
 
 		#region Framework Module
 
-		private const int DesignModuleCount = 16;
-		private const string ModuleRootNameSpace = "GameFramework.";
+		private const int DesignModuleCount = 18;
 		private static bool _IsExecuteListDirty;
 
 		private static readonly List<GameFrameworkModule> _UpdateExecuteList = new List<GameFrameworkModule>(DesignModuleCount);

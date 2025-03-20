@@ -78,7 +78,7 @@ namespace ZeroFramework
 			}
 
 			Timer timer = new Timer(duration, onComplete, onUpdate, isLooped, useRealTime, autoDestroyOwner);
-			Timer._manager.RegisterTimer(timer);
+			Timer._manager.ReigisterTimer(timer);
 			return timer;
 		}
 
@@ -117,7 +117,7 @@ namespace ZeroFramework
 
 		public static void CancelAllRegisteredTimers () {
 			if (Timer._manager != null) {
-				Timer._manager.CancelAllTimers();
+				Timer._manager.CancelAllTimer();
 			}
 
 			// if the manager doesn't exist, we don't have any registered timers yet, so don't
@@ -126,7 +126,7 @@ namespace ZeroFramework
 
 		public static void PauseAllRegisteredTimers () {
 			if (Timer._manager != null) {
-				Timer._manager.PauseAllTimers();
+				Timer._manager.PauseAllTimer();
 			}
 
 			// if the manager doesn't exist, we don't have any registered timers yet, so don't
@@ -135,7 +135,7 @@ namespace ZeroFramework
 
 		public static void ResumeAllRegisteredTimers () {
 			if (Timer._manager != null) {
-				Timer._manager.ResumeAllTimers();
+				Timer._manager.ResumeAllTimer();
 			}
 
 			// if the manager doesn't exist, we don't have any registered timers yet, so don't
@@ -231,7 +231,7 @@ namespace ZeroFramework
 		#region Private Static Properties/Fields
 
 		// responsible for updating all registered timers
-		private static TimerManager _manager;
+		private static ITimerManager _manager;
 
 		#endregion
 

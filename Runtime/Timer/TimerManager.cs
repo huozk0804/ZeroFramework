@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace ZeroFramework
 {
-	public sealed partial class TimerManager : GameFrameworkModule
+	public sealed partial class TimerManager : GameFrameworkModule, ITimerManager
 	{
 		// buffer adding timers so we don't edit a collection during iteration
 		private List<Timer> _timersToAdd = new List<Timer>();
@@ -15,14 +15,14 @@ namespace ZeroFramework
 		}
 
 		protected internal override void Shutdown () {
-			CancelAllTimers();
+			CancelAllTimer();
 		}
 
-		public void RegisterTimer (Timer timer) {
+		public void ReigisterTimer (Timer timer) {
 			this._timersToAdd.Add(timer);
 		}
 
-		public void CancelAllTimers () {
+		public void CancelAllTimer () {
 			foreach (Timer timer in this._timers) {
 				timer.Cancel();
 			}
@@ -31,13 +31,13 @@ namespace ZeroFramework
 			this._timersToAdd = new List<Timer>();
 		}
 
-		public void PauseAllTimers () {
+		public void PauseAllTimer () {
 			foreach (Timer timer in this._timers) {
 				timer.Pause();
 			}
 		}
 
-		public void ResumeAllTimers () {
+		public void ResumeAllTimer () {
 			foreach (Timer timer in this._timers) {
 				timer.Resume();
 			}
