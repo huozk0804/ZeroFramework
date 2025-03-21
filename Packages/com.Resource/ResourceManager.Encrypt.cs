@@ -14,7 +14,7 @@ namespace ZeroFramework.Resource
 	/// <summary>
 	/// 资源加解密操作
 	/// </summary>
-	public sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
+	public sealed partial class ResourceManager
 	{
 		/// <summary>
 		/// 文件流加密方式

@@ -21,8 +21,8 @@ using ZeroFramework.Sound;
 using ZeroFramework.UI;
 using ZeroFramework.WebRequest;
 using Object = UnityEngine.Object;
-using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using System.Linq;
+using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 
 namespace ZeroFramework
 {
@@ -601,6 +601,19 @@ namespace ZeroFramework
 			}
 
 			return CreateModule(@class, @inter.Name) as T;
+		}
+
+		/// <summary>
+		/// 是否包含该接口的组件
+		/// </summary>
+		/// <typeparam name="T">要获取的游戏框架模块类型</typeparam>
+		/// <returns></returns>
+		public static bool HasModule<T> () {
+			var ins = typeof(T);
+			if (!ins.IsInterface)
+				throw new GameFrameworkException("not interface! use module interface check.");
+
+			return _GameFrameworkModuleMaps.ContainsKey(ins.Name);
 		}
 
 		/// <summary>

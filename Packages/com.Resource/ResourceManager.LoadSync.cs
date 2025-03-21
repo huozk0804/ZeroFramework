@@ -5,9 +5,9 @@ using YooAsset;
 namespace ZeroFramework.Resource
 {
 	/// <summary>
-	/// ͬ��������Դ�ӿ�
+	/// 同步加载资源接口
 	/// </summary>
-	public sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
+	public sealed partial class ResourceManager
 	{
 		/// <summary>
 		/// ͬ��������Դ��

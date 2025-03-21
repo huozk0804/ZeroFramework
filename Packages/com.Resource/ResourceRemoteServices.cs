@@ -7,20 +7,20 @@ namespace ZeroFramework.Resource
 	/// </summary>
 	internal class ResourceRemoteServices : IRemoteServices
 	{
-		private readonly string _defaultHostServer;
-		private readonly string _fallbackHostServer;
-
-		public ResourceRemoteServices (string defaultHostServer, string fallbackHostServer) {
-			_defaultHostServer = defaultHostServer;
-			_fallbackHostServer = fallbackHostServer;
-		}
+		private string channel => $"{Version.Platform}_{Version.Channel}";
 
 		string IRemoteServices.GetRemoteMainURL (string fileName) {
-			return $"{_defaultHostServer}/{fileName}";
+			if (!Version.LocalLoaded && !Version.RemoteLoaded)
+				throw new GameFrameworkException("No version file is loaded! need check.");
+
+			return $"{Version.CdnUrl}/{channel}/{Version.GameVersion}/{Version.ResVersion}/{fileName}";
 		}
 
 		string IRemoteServices.GetRemoteFallbackURL (string fileName) {
-			return $"{_fallbackHostServer}/{fileName}";
+			if (!Version.LocalLoaded && !Version.RemoteLoaded)
+				throw new GameFrameworkException("No version file is loaded! need check.");
+
+			return $"{Version.CdnUrl}/{channel}/{Version.GameVersion}/{Version.ResVersion}/{fileName}";
 		}
 	}
 }

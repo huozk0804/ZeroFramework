@@ -37,7 +37,7 @@ namespace ZeroFramework.Editor
             if (EditorApplication.isPlaying)
             {
                 //Config
-                if (Zero.HasModule<ConfigManager>())
+                if (Zero.HasModule<IConfigManager>())
                 {
                     EditorGUILayout.LabelField("Config", EditorStyles.boldLabel);
                     EditorGUILayout.LabelField("Config Count", Zero.config.Count.ToString());
@@ -45,7 +45,7 @@ namespace ZeroFramework.Editor
                 }
 
                 //DataNode
-                if (Zero.HasModule<DataNodeManager>())
+                if (Zero.HasModule<IDataNodeManager>())
                 {
                     EditorGUILayout.Space(10);
                     EditorGUILayout.LabelField("DataNode", EditorStyles.boldLabel);
@@ -53,7 +53,7 @@ namespace ZeroFramework.Editor
                 }
 
                 //Download
-                if (Zero.HasModule<DownloadManager>())
+                if (Zero.HasModule<IDownloadManager>())
                 {
                     EditorGUILayout.Space(10);
                     EditorGUILayout.LabelField("Download", EditorStyles.boldLabel);
@@ -115,7 +115,7 @@ namespace ZeroFramework.Editor
                 }
 
                 //Entity
-                if (Zero.HasModule<EntityManager>())
+                if (Zero.HasModule<IEntityManager>())
                 {
                     EditorGUILayout.Space(10);
                     EditorGUILayout.LabelField("Entity", EditorStyles.boldLabel);
@@ -131,7 +131,7 @@ namespace ZeroFramework.Editor
                 }
 
                 //Localization
-                if (Zero.HasModule<LocalizationManager>())
+                if (Zero.HasModule<ILocalizationManager>())
                 {
                     EditorGUILayout.Space(10);
                     EditorGUILayout.LabelField("Localization", EditorStyles.boldLabel);
@@ -236,7 +236,7 @@ namespace ZeroFramework.Editor
                 EditorGUILayout.EndVertical();
 
                 //Scene
-                if (Zero.HasModule<ScenesManager>())
+                if (Zero.HasModule<IScenesManager>())
                 {
                     EditorGUILayout.Space(10);
                     EditorGUILayout.LabelField("Scene", EditorStyles.boldLabel);
@@ -251,7 +251,7 @@ namespace ZeroFramework.Editor
                 }
 
                 //Setting
-                if (Zero.HasModule<SettingManager>())
+                if (Zero.HasModule<ISettingManager>())
                 {
                     EditorGUILayout.Space(10);
                     EditorGUILayout.LabelField("Setting", EditorStyles.boldLabel);
@@ -287,7 +287,7 @@ namespace ZeroFramework.Editor
                 }
 
                 //Sound
-                if (Zero.HasModule<SoundManager>())
+                if (Zero.HasModule<ISoundManager>())
                 {
                     EditorGUILayout.Space(10);
                     EditorGUILayout.LabelField("Sound", EditorStyles.boldLabel);
@@ -296,7 +296,7 @@ namespace ZeroFramework.Editor
                 }
 
                 //UI
-                if (Zero.HasModule<UIManager>())
+                if (Zero.HasModule<IUIManager>())
                 {
                     EditorGUILayout.Space(10);
                     EditorGUILayout.LabelField("UI", EditorStyles.boldLabel);
@@ -304,7 +304,7 @@ namespace ZeroFramework.Editor
                 }
 
                 //WebRequest
-                if (Zero.HasModule<WebRequestManager>())
+                if (Zero.HasModule<IWebRequestManager>())
                 {
                     EditorGUILayout.Space(10);
                     EditorGUILayout.LabelField("WebRequest", EditorStyles.boldLabel);

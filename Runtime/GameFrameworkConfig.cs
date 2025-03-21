@@ -7,6 +7,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Audio;
+using YooAsset;
 using ZeroFramework.Config;
 using ZeroFramework.Debugger;
 using ZeroFramework.Download;
@@ -61,10 +62,19 @@ namespace ZeroFramework
 
         #region Resources
 
-        
+        public string defaultPackageName;
+        public EPlayMode resourcePlayMode = EPlayMode.EditorSimulateMode;
+        public EFileVerifyLevel fileVerifyLevel = EFileVerifyLevel.Low;
+        public long milliseconds = 30;
+        public int downloadingMaxNum = 10;
+        public int failedDownloadTryAgainNum = 3;
+        public float assetAutoReleaseInterval;
+        public int assetPoolCapacity;
+        public int assetPoolExpireTime;
+        public int assetPoolPriority;
 
-        #endregion
-        
+		#endregion
+
 		#region com.Config
 
 		public bool enableLoadConfigUpdateEvent = false;

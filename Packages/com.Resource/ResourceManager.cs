@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using YooAsset;
 
 namespace ZeroFramework.Resource
@@ -20,11 +18,6 @@ namespace ZeroFramework.Resource
 	public sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
 	{
 		/// <summary>
-		/// 默认资源包名称。
-		/// </summary>
-		public string DefaultPackageName { get; set; }
-
-		/// <summary>
 		/// 默认资源包
 		/// </summary>
 		public ResourcePackage DefaultPackage { get; set; }
@@ -33,26 +26,6 @@ namespace ZeroFramework.Resource
 		/// 获取或设置运行模式。
 		/// </summary>
 		public EPlayMode PlayMode { get; set; }
-
-		/// <summary>
-		/// 缓存系统启动时的验证级别。
-		/// </summary>
-		public EFileVerifyLevel VerifyLevel { get; set; }
-
-		/// <summary>
-		/// 获取或设置异步系统参数，每帧执行消耗的最大时间切片（单位：毫秒）。
-		/// </summary>
-		public long Milliseconds { get; set; }
-
-		/// <summary>
-		/// 同时下载的最大数目。
-		/// </summary>
-		public int DownloadingMaxNum { get; set; }
-
-		/// <summary>
-		/// 失败重试最大数目。
-		/// </summary>
-		public int FailedTryAgain { get; set; }
 
 		/// <summary>
 		/// UniTask取消句柄
@@ -70,13 +43,30 @@ namespace ZeroFramework.Resource
 		private readonly HashSet<string> _assetLoadingList;
 		private readonly TimeoutController _timeoutController;
 
+		private string _defaultPackageName;
+		private EFileVerifyLevel _fileVerifyLevel = EFileVerifyLevel.Low;
+		private long _milliseconds = 30;
+		private int _downloadingMaxNum = 10;
+		private int _failedDownloadTryAgainNum = 3;
+
 		public ResourceManager () {
 			_assetLoadingList = new HashSet<string>();
 			_assetInfoMap = new Dictionary<string, AssetInfo>();
 			_packageMap = new Dictionary<string, ResourcePackage>();
 			_timeoutController = new TimeoutController();
+			
+			_defaultPackageName = GameFrameworkConfig.Instance.defaultPackageName;
+			PlayMode = GameFrameworkConfig.Instance.resourcePlayMode;
+			_fileVerifyLevel = GameFrameworkConfig.Instance.fileVerifyLevel;
+			_milliseconds = GameFrameworkConfig.Instance.milliseconds;
+			_downloadingMaxNum = GameFrameworkConfig.Instance.downloadingMaxNum;
+			_failedDownloadTryAgainNum = GameFrameworkConfig.Instance.failedDownloadTryAgainNum;
 
 			SetObjectPoolManager(Zero.objectPool);
+			AssetAutoReleaseInterval = GameFrameworkConfig.Instance.assetAutoReleaseInterval;
+			AssetCapacity = GameFrameworkConfig.Instance.assetPoolCapacity;
+			AssetExpireTime = GameFrameworkConfig.Instance.assetPoolExpireTime;
+			AssetPriority = GameFrameworkConfig.Instance.assetPoolPriority;
 		}
 
 		protected internal override void Update (float elapseSeconds, float realElapseSeconds) {
@@ -99,19 +89,23 @@ namespace ZeroFramework.Resource
 		/// </summary>
 		/// <param name="defaultPackageName">默认资源包名称</param>
 		/// <param name="milliseconds">每帧用于资源加载的最大用时</param>
-		public void Initialize (string defaultPackageName = null, long milliseconds = 10) {
+		public void Initialize (string defaultPackageName = null) {
 			if (!YooAssets.Initialized) {
 				YooAssets.Initialize(new ResourceLogger());
 			}
 
-			Milliseconds = milliseconds;
-			YooAssets.SetOperationSystemMaxTimeSlice(Milliseconds);
+			YooAssets.SetOperationSystemMaxTimeSlice(_milliseconds);
 
 			if (!defaultPackageName.IsNullOrEmpty())
-				DefaultPackageName = defaultPackageName;
-			var defaultPackage = YooAssets.TryGetPackage(DefaultPackageName);
+				_defaultPackageName = defaultPackageName;
+
+			if (_defaultPackageName.IsNullOrEmpty()) {
+				throw new GameFrameworkException("resources default package name is none. error!");
+			}
+
+			var defaultPackage = YooAssets.TryGetPackage(_defaultPackageName);
 			if (defaultPackage == null) {
-				defaultPackage = YooAssets.CreatePackage(DefaultPackageName);
+				defaultPackage = YooAssets.CreatePackage(_defaultPackageName);
 				YooAssets.SetDefaultPackage(defaultPackage);
 				DefaultPackage = defaultPackage;
 			}
@@ -135,8 +129,6 @@ namespace ZeroFramework.Resource
 			}
 
 			_packageMap[packageName] = package;
-			string defaultHostServer = "http://127.0.0.1/CDN/Android/v1.0";
-			string fallbackHostServer = "http://127.0.0.1/CDN/Android/v1.0";
 
 			// 编辑器下的模拟模式
 			InitializationOperation initializationOperation = null;
@@ -161,7 +153,7 @@ namespace ZeroFramework.Resource
 
 			// 联机运行模式
 			if (playMode == EPlayMode.HostPlayMode) {
-				IRemoteServices remoteServices = new RemoteServices(defaultHostServer, fallbackHostServer);
+				IRemoteServices remoteServices = new ResourceRemoteServices();
 				var cacheFileSystemParams = FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices);
 				var buildinFileSystemParams = FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
 
@@ -174,10 +166,10 @@ namespace ZeroFramework.Resource
 
 			// WebGL运行模式
 			if (playMode == EPlayMode.WebPlayMode) {
-				IRemoteServices remoteServices = new RemoteServices(defaultHostServer, fallbackHostServer);
+				IRemoteServices remoteServices = new ResourceRemoteServices();
 				var webServerFileSystemParams = FileSystemParameters.CreateDefaultWebServerFileSystemParameters();
 				var webRemoteFileSystemParams =
-					FileSystemParameters.CreateDefaultWebRemoteFileSystemParameters(remoteServices); //支持跨域下载
+					FileSystemParameters.CreateDefaultWebRemoteFileSystemParameters(new ResourceRemoteServices()); //支持跨域下载
 
 				var initParameters = new WebPlayModeParameters {
 					WebServerFileSystemParameters = webServerFileSystemParams,
@@ -359,7 +351,7 @@ namespace ZeroFramework.Resource
 		/// <param name="packageName">资源包名称。</param>
 		/// <returns>资源定位地址的缓存Key。</returns>
 		private string GetCacheKey (string location, string packageName = "") {
-			if (string.IsNullOrEmpty(packageName) || packageName.Equals(DefaultPackageName)) {
+			if (string.IsNullOrEmpty(packageName) || packageName.Equals(_defaultPackageName)) {
 				return location;
 			}
 

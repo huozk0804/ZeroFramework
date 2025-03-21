@@ -19,11 +19,6 @@ namespace ZeroFramework.Resource
 	public interface IResourceManager
 	{
 		/// <summary>
-		/// 默认资源包名称。
-		/// </summary>
-		string DefaultPackageName { get; set; }
-
-		/// <summary>
 		/// 默认资源包
 		/// </summary>
 		ResourcePackage DefaultPackage { get; set; }
@@ -32,46 +27,6 @@ namespace ZeroFramework.Resource
 		/// 获取或设置运行模式。
 		/// </summary>
 		EPlayMode PlayMode { get; set; }
-
-		/// <summary>
-		/// 缓存系统启动时的验证级别。
-		/// </summary>
-		EFileVerifyLevel VerifyLevel { get; set; }
-
-		/// <summary>
-		/// 获取或设置异步系统参数，每帧执行消耗的最大时间切片（单位：毫秒）。
-		/// </summary>
-		long Milliseconds { get; set; }
-
-		/// <summary>
-		/// 同时下载的最大数目。
-		/// </summary>
-		int DownloadingMaxNum { get; set; }
-
-		/// <summary>
-		/// 失败重试最大数目。
-		/// </summary>
-		int FailedTryAgain { get; set; }
-
-		/// <summary>
-		/// 获取或设置资源对象池自动释放可释放对象的间隔秒数。
-		/// </summary>
-		float AssetAutoReleaseInterval { get; set; }
-
-		/// <summary>
-		/// 获取或设置资源对象池的容量。
-		/// </summary>
-		int AssetCapacity { get; set; }
-
-		/// <summary>
-		/// 获取或设置资源对象池对象过期秒数。
-		/// </summary>
-		float AssetExpireTime { get; set; }
-
-		/// <summary>
-		/// 获取或设置资源对象池的优先级。
-		/// </summary>
-		int AssetPriority { get; set; }
 
 		/// <summary>
 		/// UniTask取消句柄
@@ -85,7 +40,7 @@ namespace ZeroFramework.Resource
 		/// </summary>
 		/// <param name="defaultPackageName">默认资源包名称</param>
 		/// <param name="milliseconds">每帧用于资源加载的最大用时</param>
-		void Initialize (string defaultPackageName, long milliseconds);
+		void Initialize (string defaultPackageName);
 
 		/// <summary>
 		/// 初始化构建资源包
