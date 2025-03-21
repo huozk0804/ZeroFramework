@@ -22,7 +22,6 @@ using ZeroFramework.UI;
 using ZeroFramework.WebRequest;
 using Object = UnityEngine.Object;
 using System.Linq;
-using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 
 namespace ZeroFramework
 {

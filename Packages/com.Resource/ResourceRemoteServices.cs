@@ -3,24 +3,24 @@ using YooAsset;
 namespace ZeroFramework.Resource
 {
 	/// <summary>
-	/// Ô¶¶Ë×ÊÔ´µØÖ·²éÑ¯·þÎñÀà
+	/// Ô¶ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½Ö·ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	internal class ResourceRemoteServices : IRemoteServices
 	{
-		private string channel => $"{Version.Platform}_{Version.Channel}";
+		private string Channel => $"{Version.Platform}_{Version.Channel}";
 
 		string IRemoteServices.GetRemoteMainURL (string fileName) {
 			if (!Version.LocalLoaded && !Version.RemoteLoaded)
 				throw new GameFrameworkException("No version file is loaded! need check.");
 
-			return $"{Version.CdnUrl}/{channel}/{Version.GameVersion}/{Version.ResVersion}/{fileName}";
+			return $"{Version.CdnUrl}/{Channel}/{Version.GameVersion}/{Version.ResVersion}/{fileName}";
 		}
 
 		string IRemoteServices.GetRemoteFallbackURL (string fileName) {
 			if (!Version.LocalLoaded && !Version.RemoteLoaded)
 				throw new GameFrameworkException("No version file is loaded! need check.");
 
-			return $"{Version.CdnUrl}/{channel}/{Version.GameVersion}/{Version.ResVersion}/{fileName}";
+			return $"{Version.CdnUrl}/{Channel}/{Version.GameVersion}/{Version.ResVersion}/{fileName}";
 		}
 	}
 }

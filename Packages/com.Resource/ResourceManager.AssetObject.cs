@@ -15,14 +15,8 @@ namespace ZeroFramework.Resource
         /// </summary>
         private sealed class AssetObject : ObjectBase
         {
-            private AssetHandle _assetHandle;
+            private AssetHandle _assetHandle = null;
             private ResourceManager _resourceManager;
-
-
-            public AssetObject()
-            {
-                _assetHandle = null;
-            }
 
             public static AssetObject Create(string name, object target, object assetHandle,
                 ResourceManager resourceManager)
@@ -48,11 +42,6 @@ namespace ZeroFramework.Resource
             {
                 base.Clear();
                 _assetHandle = null;
-            }
-
-            protected internal override void OnUnspawn()
-            {
-                base.OnUnspawn();
             }
 
             protected internal override void Release(bool isShutdown)

@@ -134,7 +134,7 @@ namespace ZeroFramework.Debugger
 		void Awake()
         {
             Instance = this;
-            m_DebuggerManager =  Zero.GetModule<DebuggerManager>();
+            m_DebuggerManager =  Zero.GetModule<IDebuggerManager>();
             if (m_DebuggerManager == null)
             {
                 Log.Fatal("Debugger manager is invalid.");
